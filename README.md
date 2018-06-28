@@ -1,24 +1,36 @@
-# README
+# Tabc-si
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting Started
 
-Things you may want to cover:
+After you have cloned this repo, run this setup script to set up your machine
+with the necessary dependencies to run and test this app:
 
-* Ruby version
+    % ./bin/setup
 
-* System dependencies
+It assumes you have a machine equipped with Ruby, Postgres, etc. If not, set up
+your machine with [this script].
 
-* Configuration
+[this script]: https://github.com/thoughtbot/laptop
 
-* Database creation
+After setting up, you can run the application using [Heroku Local]:
 
-* Database initialization
+    % heroku local
 
-* How to run the test suite
+[Heroku Local]: https://devcenter.heroku.com/articles/heroku-local
 
-* Services (job queues, cache servers, search engines, etc.)
+## Guidelines
 
-* Deployment instructions
+Use the following guides for getting things done, programming well, and
+programming in style.
 
-* ...
+* [Protocol](http://github.com/thoughtbot/guides/blob/master/protocol)
+* [Best Practices](http://github.com/thoughtbot/guides/blob/master/best-practices)
+* [Style](http://github.com/thoughtbot/guides/blob/master/style)
+
+## Deploying
+
+If you have previously run the `./bin/setup` script,
+you can deploy to staging and production with:
+
+    % ./bin/deploy staging
+    % ./bin/deploy production

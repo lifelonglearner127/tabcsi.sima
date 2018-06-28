@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/vim,node,rails,linux,macos,windows,jetbrains,chefcookbook,visualstudiocode
 
 ### Linux ###
@@ -124,7 +123,7 @@ tags
 ### Node ###
 # Logs
 logs/
-*.log
+#*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -180,6 +179,7 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -199,15 +199,11 @@ typings/
 ### Rails ###
 *.rbc
 capybara-*.html
-.rspec
 /log/*
 /tmp/*
-!/log/.keep
-!/tmp/.keep
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system/
-/coverage/
 /spec/tmp/
 *.orig
 rerun.txt
@@ -215,7 +211,6 @@ pickle-email-*.html
 
 # Ignore uploaded files in development
 /storage/*
-!/storage/.keep
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
@@ -228,9 +223,9 @@ config/master.key
 # TODO Comment out this rule if environment variables can be committed
 
 ## Environment normalization:
-# /.bundle
 /vendor/bundle/
 /public/assets/
+/public/packs/
 
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
@@ -250,3 +245,5 @@ bower.json
 .byebug_history
 
 # End of https://www.gitignore.io/api/vim,node,rails,linux,macos,windows,jetbrains,chefcookbook,visualstudiocode
+
+!.keep

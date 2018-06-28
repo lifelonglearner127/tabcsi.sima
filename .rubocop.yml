@@ -1,0 +1,56 @@
+---
+AllCops:
+  DefaultFormatter: progress
+  DisplayCopNames: true
+  DisplayStyleGuide: false
+  Exclude:
+    - "**/bin/**/*"
+    - "**/node_modules/**/*"
+    - "**/tmp/**/*"
+    - "db/schema.rb"
+  ExtraDetails: true
+  TargetRubyVersion: 2.5
+
+#################################### Layout ####################################
+
+################################### Linting ####################################
+
+################################### Metrics ####################################
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+#################################### Naming ####################################
+
+################################# Performance ##################################
+
+#################################### Rails #####################################
+
+################################### Security ###################################
+
+#################################### Style #####################################
+
+Style/CommentAnnotation:
+  Keywords:
+    - TODO
+    - FIXME
+    - OPTIMIZE
+    - HACK
+    - REVIEW
+    - NOTE
+
+Style/CommentedKeyword:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+################################### Bundler ####################################
+
+################################### Gemspec ####################################
