@@ -25,6 +25,14 @@ gem 'tzinfo-data', '~> 1.2018'
 gem 'uglifier', '~> 4.1'
 
 group :development do
+  gem 'capistrano', '3.11.0', require: false
+  # gem 'capistrano-nvm', '~> 0.0.7', require: false
+  gem 'capistrano-passenger', '~> 0.2.0', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
+  # gem 'capistrano-resque', '~> 0.2.3', require: false
+  gem 'capistrano-rvm', '~> 0.1.2', require: false
+  gem 'capistrano-yarn', '~> 2.0', '>= 2.0.2', require: false
+  gem 'hipchat', '~> 1.6', require: false
   gem 'listen', '>= 3.1.5', '< 3.2'
   gem 'rack-mini-profiler', '~> 1.0', require: false
   gem 'rubocop', '~> 0.57.2', require: false
