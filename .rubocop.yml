@@ -8,6 +8,7 @@ AllCops:
     - "**/node_modules/**/*"
     - "**/tmp/**/*"
     - "db/schema.rb"
+    - "**/.delivery/**/*"
   ExtraDetails: true
   TargetRubyVersion: 2.5
 
