@@ -1,12 +1,28 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  scope(:api, defaults: { format: :json }) do
-    resources :examples
+  root 'doorkeeper/applications#index'
 
-    devise_for :users, controllers: { sessions: 'sessions' }
-    devise_scope :user do
-      get 'users/current', to: 'sessions#show'
+  use_doorkeeper do
+    skip_controllers :authorizations, :authorized_applications, :token_info
+  end
+
+  namespace(:api, defaults: { format: :json }) do
+    namespace(
+      :v1 # , constraints: ApiConstraints.new(version: 1, default: true)
+    ) do
+      devise_for(
+        :users,
+        controllers: { registrations: 'api/v1/users/registrations' },
+        skip: %i[password sessions]
+      )
+
+      # devise_scope :user do
+      #   scope :users do
+      #     get :current, to: 'sessions#show'
+      #     post :validate_email, to: 'sessions#validate_email'
+      #   end
+      # end
     end
   end
 end

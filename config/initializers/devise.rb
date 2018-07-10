@@ -3,6 +3,8 @@
 # Use this hook to configure devise mailer, warden hooks and so forth. Many of
 # these configuration options can be set straight in your model.
 Devise.setup do |config|
+  Devise::Doorkeeper.configure_devise(config)
+
   # The secret key used by Devise. Devise uses this key to generate random
   # tokens. Changing this key will render invalid all existing confirmation,
   # reset password, and unlock tokens in the database. Devise will use the
@@ -12,7 +14,7 @@ Devise.setup do |config|
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  config.parent_controller = 'ApiController'
+  config.parent_controller = 'Api::BaseController'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer, note
@@ -99,7 +101,7 @@ Devise.setup do |config|
   # skipping storage for all authentication paths, you may want to disable
   # generating routes to Devise's sessions controller by passing
   # `skip: :sessions` to `devise_for` in your `config/routes.rb`.
-  config.skip_session_storage = %i[http_auth]
+  config.skip_session_storage = %i[http_auth doorkeeper]
 
   # By default, Devise cleans up the CSRF token on authentication to avoid CSRF
   # token fixation attacks. This means that, when using AJAX requests for
@@ -177,7 +179,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 6..128
+  config.password_length = 8..Float::INFINITY
 
   # Email regex used to validate email formats. It simply asserts that one (and
   # only one) @ exists in the given string. This is mainly to give user feedback
@@ -299,9 +301,4 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path, so you
   # need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-
-  # ==> JWT configurations
-  config.jwt do |jwt|
-    jwt.secret = Nenv.instance.jwt_secret
-  end
 end
