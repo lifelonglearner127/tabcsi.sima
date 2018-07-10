@@ -11,11 +11,14 @@ gem 'bootsnap', '~> 1.3', require: false
 gem 'bourbon', '~> 5.0'
 gem 'bundler', '~> 1.16', '>= 1.16.1'
 gem 'delayed_job_active_record', '~> 4.1'
+gem 'devise-jwt', '~> 0.5.7'
 gem 'dotenv-rails', '~> 2.5'
 gem 'flutie', '~> 2.0'
 gem 'high_voltage', '~> 3.1'
+gem 'jbuilder', '~> 2.7'
 gem 'neat', '~> 3.0'
 gem 'nenv', '~> 0.3.0'
+gem 'oj', '~> 3.6'
 gem 'pg', '~> 1.0'
 gem 'puma', '~> 3.11'
 gem 'rack-canonical-host', '~> 0.2.3'
@@ -39,7 +42,7 @@ group :development do
   gem 'hipchat', '~> 1.6', require: false
   gem 'listen', '>= 3.1.5', '< 3.2'
   gem 'rack-mini-profiler', '~> 1.0', require: false
-  gem 'rubocop', '~> 0.57.2', require: false
+  gem 'rubocop', '~> 0.58.0', require: false
   gem 'spring', '~> 2.0'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'spring-watcher-listen', '~> 2.0.0'

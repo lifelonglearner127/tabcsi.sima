@@ -15,6 +15,8 @@ require 'sprockets/railtie'
 
 Bundler.require(*Rails.groups)
 
+Oj.optimize_rails
+
 module TabcSi
   class Application < Rails::Application
     config.assets.quiet = true

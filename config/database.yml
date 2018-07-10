@@ -1,3 +1,4 @@
+---
 shared:
   adapter: postgresql
   encoding: unicode
