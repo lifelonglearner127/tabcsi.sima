@@ -5,7 +5,7 @@ shared:
   min_messages: warning
   timeout: 5000
   pool: <%= [Integer(Nenv.instance.max_threads || 5), Integer(Nenv.instance.db_pool || 5)].max %>
-  reaping_frequency: <%= Integer(Nenv.instance.db_reaping_frequency) || 10 %>
+  reaping_frequency: <%= Integer(Nenv.instance.db_reaping_frequency || 10) %>
   host: <%= Nenv.instance.db_host %>
   username: <%= Nenv.instance.db_user %>
   password: <%= Nenv.instance.db_password %>
