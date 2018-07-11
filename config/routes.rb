@@ -17,12 +17,9 @@ Rails.application.routes.draw do
         skip: %i[password sessions]
       )
 
-      # devise_scope :user do
-      #   scope :users do
-      #     get :current, to: 'sessions#show'
-      #     post :validate_email, to: 'sessions#validate_email'
-      #   end
-      # end
+      namespace :users do
+        post :validate_email, to: 'sessions#validate_email'
+      end
     end
   end
 end

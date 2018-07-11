@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class BaseController < ActionController::API
+  class BaseApiController < ActionController::API
     respond_to :json
 
     def current_resource_owner

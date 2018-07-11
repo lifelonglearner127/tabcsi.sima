@@ -17,6 +17,8 @@ Bundler.require(*Rails.groups)
 
 Oj.optimize_rails
 
+require_relative '../lib/patches'
+
 module TabcSi
   class Application < Rails::Application
     config.assets.quiet = true
