@@ -48,5 +48,3 @@ Rails.application.configure do
   config.middleware.use(Rack::CanonicalHost, HEROKU_APPLICATION_HOST)
   config.middleware.use(Rack::Deflater)
 end
-
-Rack::Timeout.timeout = ENV.fetch('RACK_TIMEOUT', 10).to_i
