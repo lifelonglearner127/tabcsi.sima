@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
       namespace :users do
         post :validate_email, to: 'sessions#validate_email'
+        post :request_pin, to: 'sessions#request_pin'
       end
     end
   end

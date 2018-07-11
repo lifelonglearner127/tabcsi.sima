@@ -6,8 +6,27 @@ module Api
       class SessionsController < BaseApiController
         before_action :authenticate_api_v1_user!
 
+        def request_pin
+          email = params[:email]
+          fail! 'Missing required parameter: email' if email.blank?
+
+          user = User.find_by(email: email)
+          fail! 'Unknown user.' if user.blank?
+
+          pin = user.generate_pin
+
+          UsersMailer.with(
+            recipient: email,
+            pin: pin
+          ).request_pin.deliver_now
+
+          head :no_content
+        end
+
         def validate_email
-          @is_valid = User.find_by(email: params[:email]).present?
+          success!(
+            is_valid: User.find_by(email: params[:email]).present?
+          )
         end
       end
     end

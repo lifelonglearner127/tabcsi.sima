@@ -7,6 +7,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'autoprefixer-rails', '~> 8.6'
+gem 'aws-sdk-rails', '~> 2.0'
 gem 'bootsnap', '~> 1.3', require: false
 gem 'bourbon', '~> 5.0'
 gem 'bundler', '~> 1.16', '>= 1.16.1'
@@ -21,8 +22,10 @@ gem 'high_voltage', '~> 3.1'
 gem 'jbuilder', '~> 2.7'
 gem 'neat', '~> 3.0'
 gem 'nenv', '~> 0.3.0'
+gem 'nokogiri', '~> 1.8'
 gem 'oj', '~> 3.6'
 gem 'pg', '~> 1.0'
+gem 'premailer-rails', '~> 1.10'
 gem 'puma', '~> 3.11'
 gem 'rack-canonical-host', '~> 0.2.3'
 gem 'rack-cors', '~> 1.0', '>= 1.0.2'

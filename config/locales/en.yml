@@ -17,4 +17,8 @@ en:
         "%B %d"
 
   titles:
-    application: Tabc-si
+    application: "TABC: SI"
+
+  users_mailer:
+    request_pin:
+      subject: TABC Audit Pin Request
