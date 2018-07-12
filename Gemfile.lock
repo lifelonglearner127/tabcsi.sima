@@ -218,6 +218,9 @@ GEM
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
+    passenger (5.3.3)
+      rack
+      rake (>= 0.8.1)
     pg (1.0.0)
     powerpack (0.1.2)
     premailer (1.11.1)
@@ -430,6 +433,7 @@ DEPENDENCIES
   nenv (~> 0.3.0)
   nokogiri (~> 1.8)
   oj (~> 3.6)
+  passenger (~> 5.3)
   pg (~> 1.0)
   premailer-rails (~> 1.10)
   pry-byebug (~> 3.6)

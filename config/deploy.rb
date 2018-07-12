@@ -30,7 +30,10 @@ set(:linked_files, %w[.env config/master.key])
 # RVM
 set :rvm_type, :system
 set :rvm_ruby_version, File.read('.ruby-version').chomp
-set :rvm_map_bins, %w[bundle gem rails rake ruby]
+set(
+  :rvm_map_bins,
+  %w[bundle gem passenger passenger-config passenger-status rails rake ruby]
+)
 
 # NVM
 # set :nvm_type, :system
@@ -52,7 +55,9 @@ set :rails_env, 'production'
 set :migration_role, :app
 
 # Passenger
-set :passenger_rvm_ruby_version, '2.4.1'
+set :passenger_rvm_ruby_version, '2.5.1'
+# set :passenger_restart_with_sudo, true
+set :passenger_in_gemfile, true
 
 # HipChat
 # set :hipchat_token, 'LhzIHa85TlY8t5gtsMpO0wxB9KkLShgmCZT0GJc9'

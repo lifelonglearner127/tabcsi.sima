@@ -79,5 +79,6 @@ group :test do
 end
 
 group :production do
+  gem 'passenger', '~> 5.3'
   gem 'rack-timeout', '~> 0.5.1'
 end
