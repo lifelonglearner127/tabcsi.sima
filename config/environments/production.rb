@@ -30,7 +30,7 @@ Rails.application.configure do
   config.cache_classes = true
   config.consider_all_requests_local = false
   config.eager_load = true
-  # config.force_ssl = true
+  config.force_ssl = true
   config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
   config.log_level = :debug
@@ -39,6 +39,15 @@ Rails.application.configure do
 
   config.public_file_server.headers = {
     'Cache-Control' => 'public, max-age=31557600'
+  }
+
+  config.ssl_options = {
+    hsts: {
+      expires: 365.days,
+      preload: false,
+      subdomains: true
+    },
+    secure_cookies: true
   }
 
   if Nenv.instance.rails_log_to_stdout?
