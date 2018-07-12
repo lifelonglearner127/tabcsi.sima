@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :jwt_blacklist do
-    jti 'MyString'
-    exp '2018-07-06 16:02:48'
+  factory :push_token do
+    user nil
+    device_type 0
+    token 'MyText'
   end
 
   factory :user do

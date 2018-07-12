@@ -28,6 +28,8 @@ class User < ApplicationRecord
     dependent: :delete_all
   )
 
+  has_many :push_tokens, dependent: :delete_all
+
   def generate_pin
     pin = self.class.new_pin
 
