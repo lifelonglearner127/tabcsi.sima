@@ -17,4 +17,4 @@ test:
   database: tabc_si_test
 
 production:
-  database: <%= Nenv.instance.vbox_db_name %>
+  database: <%= Nenv.instance.db_name %>
