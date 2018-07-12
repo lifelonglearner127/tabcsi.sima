@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   root 'doorkeeper/applications#index'
 
   use_doorkeeper do
-    skip_controllers :authorized_applications
+    if Rails.env.production?
+      skip_controllers(
+        :applications, :authorizations, :authorized_applications, :token_info
+      )
+    end
   end
 
   namespace(:api, defaults: { format: :json }) do
