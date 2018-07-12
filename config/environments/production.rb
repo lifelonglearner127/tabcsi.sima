@@ -12,13 +12,8 @@ HEROKU_APPLICATION_HOST =
     APPLICATION_HOST
   end
 
-ASSET_HOST = Nenv.instance.asset_host || APPLICATION_HOST
-MAILER_ASSET_HOST = Nenv.instance.asset_host || HEROKU_APPLICATION_HOST
-
 Rails.application.configure do
-  config.action_controller.asset_host = ASSET_HOST
   config.action_controller.perform_caching = true
-  config.action_mailer.asset_host = MAILER_ASSET_HOST
   config.action_mailer.default_url_options = { host: HEROKU_APPLICATION_HOST }
   config.action_mailer.delivery_method = :aws_sdk
   config.action_mailer.perform_caching = false
@@ -47,6 +42,7 @@ Rails.application.configure do
       preload: false,
       subdomains: true
     },
+    redirect: false,
     secure_cookies: true
   }
 
