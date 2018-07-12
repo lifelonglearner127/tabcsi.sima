@@ -13,7 +13,8 @@ done
 DIR="$(cd -P "$(dirname "${SOURCE}")" && pwd)"
 
 cd "${DIR}/.."
+rvm_path="$(which rvm)"
 ruby_version="$(cat .ruby-version)"
 passenger_command="$1"
 shift
-/usr/bin/env rvm "${ruby_version}" do passenger "${passenger_command}" "$@"
+sudo "${rvm_path}" "${ruby_version}" do passenger "${passenger_command}" "$@"
