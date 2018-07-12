@@ -1,0 +1,7 @@
+{
+  "socket_file": "tmp/sockets/passenger.socket",
+  "daemonize": true,
+  "pid_file": "tmp/pids/passenger.pid",
+  "environment": "production",
+  "user": "tabcsi"
+}

@@ -55,9 +55,12 @@ set :rails_env, 'production'
 set :migration_role, :app
 
 # Passenger
-set :passenger_rvm_ruby_version, '2.5.1'
+set :passenger_restart_with_touch, false
+# set :passenger_rvm_ruby_version, '2.5.1'
 # set :passenger_restart_with_sudo, true
 set :passenger_in_gemfile, true
+set :passenger_restart_command, "#{release_path}/bin/restart"
+set :passenger_restart_options, -> { '' }
 
 # HipChat
 # set :hipchat_token, 'LhzIHa85TlY8t5gtsMpO0wxB9KkLShgmCZT0GJc9'
