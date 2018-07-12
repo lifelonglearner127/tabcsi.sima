@@ -4,5 +4,6 @@
   "daemonize": true,
   "pid_file": "tmp/pids/passenger.pid",
   "environment": "production",
-  "user": "tabcsi"
+  "user": "tabcsi",
+  "log_file": "log/passenger.log"
 }

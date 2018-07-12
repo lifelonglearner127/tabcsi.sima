@@ -5,7 +5,7 @@
   deploy
   bundler
   passenger
-  rails/migrations
+  rails
   rvm
   scm/git
   yarn
