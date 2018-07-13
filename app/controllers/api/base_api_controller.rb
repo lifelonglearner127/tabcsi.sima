@@ -8,25 +8,55 @@ module Api
       raise e unless %r{^/api}.match?(request.env['ORIGINAL_FULLPATH'])
 
       unless e.is_a?(ApiError)
-        message = "#{e.class.name} : #{e.message}"
         error_data = nil
-        error_data = { trace: e.backtrace } if Rails.env.development?
 
-        e = ApiError.new(:error, error_data, message, :internal_server_error)
+        case e
+        when ActionController::ParameterMissing
+          status = :fail
+          error_data = { message: e.message }
+          code = :unprocessable_entity
+        else
+          status = :error
+          message = "#{e.class.name} : #{e.message}"
+          error_data = { trace: e.backtrace } if Rails.env.development?
+          code = :internal_server_error
+        end
+
+        e = ApiError.new(status, error_data, message, code)
       end
 
       render json: e.to_json, status: e.status_code
     end
 
     def current_resource_owner
-      User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+      return nil unless doorkeeper_token&.resource_owner_id
+
+      User.find(doorkeeper_token.resource_owner_id)
     end
 
-    def success!(data)
+    def current_application
+      doorkeeper_token&.application
+    end
+
+    def success!(message_or_data)
+      data =
+        if message_or_data.is_a?(Hash)
+          message_or_data
+        else
+          { message: message_or_data }
+        end
+
       jsend!(:success, data)
     end
 
-    def fail!(data, code = :bad_request)
+    def fail!(message_or_data, code = :bad_request)
+      data =
+        if message_or_data.is_a?(Hash)
+          message_or_data
+        else
+          { message: message_or_data }
+        end
+
       jsend!(:fail, data, code: code)
     end
 

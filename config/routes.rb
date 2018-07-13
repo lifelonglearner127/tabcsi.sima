@@ -25,6 +25,8 @@ Rails.application.routes.draw do
         post :validate_email, to: 'sessions#validate_email'
         post :request_pin, to: 'sessions#request_pin'
       end
+
+      resources :push_tokens, only: %i[create]
     end
   end
 end
