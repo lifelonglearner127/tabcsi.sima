@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_183844) do
+ActiveRecord::Schema.define(version: 2018_07_13_193607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2018_07_13_183844) do
   create_table "choices", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.string "choice_text", null: false
-    t.boolean "picture_attachment", null: false
+    t.boolean "picture_attachment", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_choices_on_question_id"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 2018_07_13_183844) do
     t.boolean "multiline", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_questions_on_question_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
