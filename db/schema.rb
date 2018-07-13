@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_183139) do
+ActiveRecord::Schema.define(version: 2018_07_13_183844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 2018_07_13_183139) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_choices_on_question_id"
+  end
+
+  create_table "conditions", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.string "condition_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_conditions_on_question_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -130,6 +138,7 @@ ActiveRecord::Schema.define(version: 2018_07_13_183139) do
   end
 
   add_foreign_key "choices", "questions"
+  add_foreign_key "conditions", "questions"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"

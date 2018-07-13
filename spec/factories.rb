@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :condition do
+    question nil
+    condition_value 'MyString'
+  end
+
   factory :choice do
     question nil
     choice_text 'MyString'
