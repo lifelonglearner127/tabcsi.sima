@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_154947) do
+ActiveRecord::Schema.define(version: 2018_07_13_162157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(version: 2018_07_13_154947) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["permit_name"], name: "index_audit_forms_on_permit_name", unique: true
+  end
+
+  create_table "audit_forms_questions", id: false, force: :cascade do |t|
+    t.bigint "audit_form_id", null: false
+    t.bigint "question_id", null: false
+    t.index ["audit_form_id", "question_id"], name: "index_audit_forms_questions_on_audit_form_id_and_question_id", unique: true
+    t.index ["question_id", "audit_form_id"], name: "index_audit_forms_questions_on_question_id_and_audit_form_id", unique: true
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
