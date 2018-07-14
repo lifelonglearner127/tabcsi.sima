@@ -10,23 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_193607) do
+ActiveRecord::Schema.define(version: 2018_07_14_005439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audit_form_questions", force: :cascade do |t|
+    t.bigint "audit_form_id", null: false
+    t.bigint "question_id", null: false
+    t.string "next_question"
+    t.boolean "finish", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["audit_form_id", "question_id"], name: "index_audit_form_questions_on_audit_form_id_and_question_id", unique: true
+    t.index ["question_id", "audit_form_id"], name: "index_audit_form_questions_on_question_id_and_audit_form_id", unique: true
+  end
 
   create_table "audit_forms", force: :cascade do |t|
     t.string "permit_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["permit_name"], name: "index_audit_forms_on_permit_name", unique: true
-  end
-
-  create_table "audit_forms_questions", id: false, force: :cascade do |t|
-    t.bigint "audit_form_id", null: false
-    t.bigint "question_id", null: false
-    t.index ["audit_form_id", "question_id"], name: "index_audit_forms_questions_on_audit_form_id_and_question_id", unique: true
-    t.index ["question_id", "audit_form_id"], name: "index_audit_forms_questions_on_question_id_and_audit_form_id", unique: true
   end
 
   create_table "choices", force: :cascade do |t|
@@ -43,6 +47,7 @@ ActiveRecord::Schema.define(version: 2018_07_13_193607) do
     t.string "condition_value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "conditional_question_number", null: false
     t.index ["question_id"], name: "index_conditions_on_question_id"
   end
 
@@ -111,14 +116,14 @@ ActiveRecord::Schema.define(version: 2018_07_13_193607) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string "question_id", null: false
+    t.string "question_number", null: false
     t.text "question_text", null: false
     t.integer "question_type", null: false
     t.integer "max_characters", default: 0, null: false
     t.boolean "multiline", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["question_id"], name: "index_questions_on_question_id", unique: true
+    t.index ["question_number"], name: "index_questions_on_question_number", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -138,6 +143,8 @@ ActiveRecord::Schema.define(version: 2018_07_13_193607) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "audit_form_questions", "audit_forms"
+  add_foreign_key "audit_form_questions", "questions"
   add_foreign_key "choices", "questions"
   add_foreign_key "conditions", "questions"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"

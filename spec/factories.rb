@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :audit_form_question do
+    audit_form nil
+    question nil
+    next_question 'MyString'
+    finish false
+  end
+
   factory :condition do
     question nil
+    conditional_question_number 'MyString'
     condition_value 'MyString'
   end
 
@@ -13,7 +21,7 @@ FactoryBot.define do
   end
 
   factory :question do
-    question_id 'MyString'
+    question_number 'MyString'
     question_text 'MyText'
     question_type 1
     max_characters 0

@@ -8,24 +8,24 @@ questions_map = {}
 {
   '1': {
     question_text: 'Name of Person Filling Out Survey (First & Last)',
-    question_type: QUESTION_TYPE_TEXT_BOX,
+    question_type: :text_box,
     max_characters: 50
   },
   '2': {
     question_text: 'Position of person filling out survey',
-    question_type: QUESTION_TYPE_TEXT_BOX,
+    question_type: :text_box,
     max_characters: 10
   },
   '3': {
     question_text: 'Name/position of person(s) authorized to purchase alcohol' \
       ' for the business',
-    question_type: QUESTION_TYPE_TEXT_BOX,
+    question_type: :text_box,
     max_characters: 50,
     multiline: true
   },
   '4': {
     question_text: 'Is your permit posted where it can be seen by the public?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -36,7 +36,7 @@ questions_map = {}
   },
   '5': {
     question_text: 'Public Information Sign Posted',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -47,7 +47,7 @@ questions_map = {}
   },
   '6': {
     question_text: 'Consumption Warning Sign Posted',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -58,7 +58,7 @@ questions_map = {}
   },
   '7': {
     question_text: 'Weapons Sign Posted (Blue/Red/Both/None)',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Blue',
@@ -77,7 +77,7 @@ questions_map = {}
   },
   '8': {
     question_text: "Fetal Alcohol Sign Posted in Men's & Women's Restrooms",
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -88,7 +88,7 @@ questions_map = {}
   },
   '9': {
     question_text: 'Human Trafficking Sign Posted',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -99,7 +99,7 @@ questions_map = {}
   },
   '10': {
     question_text: '"21" To Enter Sign Posted',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -111,7 +111,7 @@ questions_map = {}
   '11A': {
     question_text: 'Do you have alcohol advertising on the outside of the' \
       ' business?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -122,7 +122,7 @@ questions_map = {}
   },
   '11B': {
     question_text: 'Does your business have a "Happy Hour"?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -130,7 +130,7 @@ questions_map = {}
   },
   '11C': {
     question_text: 'Does your business run a "Reverse Happy Hour"?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -138,41 +138,41 @@ questions_map = {}
   },
   '12': {
     question_text: 'List the vendors you purchase alcohol from',
-    question_type: QUESTION_TYPE_TEXT_BOX,
+    question_type: :text_box,
     max_characters: 100,
     multiline: true
   },
   '13A': {
     question_text: 'Are you holding any product that is damaged?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
     ],
     conditions: [
       {
-        question_id: '13B',
+        conditional_question_number: '13B',
         condition_value: 'Yes'
       }
     ]
   },
   '13B': {
     question_text: 'What product are you holding and why?',
-    question_type: QUESTION_TYPE_TEXT_BOX,
+    question_type: :text_box,
     max_characters: 100,
     multiline: true
   },
   '14A': {
     question_text: 'Is seller training required for all employees that' \
       ' sell/serve alcohol?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
     ],
     conditions: [
       {
-        question_id: '14B',
+        conditional_question_number: '14B',
         condition_value: 'Yes'
       }
     ]
@@ -180,7 +180,7 @@ questions_map = {}
   '14B': {
     question_text: 'If seller training is required for employees, do you have' \
       ' alcohol service policies?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       {
         choice_text: 'Yes',
@@ -191,7 +191,7 @@ questions_map = {}
   },
   '15': {
     question_text: 'Do you conduct product tastings at the location?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -199,7 +199,7 @@ questions_map = {}
   },
   '16': {
     question_text: 'Are TABC Stamps on ALL distilled spirit bottles?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -208,7 +208,7 @@ questions_map = {}
   '17': {
     question_text: "Do you mutilate the TABC Stamp on the bottle when it's" \
       ' empty?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -216,7 +216,7 @@ questions_map = {}
   },
   '18': {
     question_text: 'Do you maintain food service at the location?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -225,7 +225,7 @@ questions_map = {}
   '19': {
     question_text: 'Is there a permanent food service facility at the' \
       ' location?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -234,14 +234,14 @@ questions_map = {}
   '20A': {
     question_text: 'Is the designated food service area at the location run' \
       ' by a separate business entity from the permit?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
     ],
     conditions: [
       {
-        question_id: '20B',
+        conditional_question_number: '20B',
         condition_value: 'Yes'
       }
     ]
@@ -249,7 +249,7 @@ questions_map = {}
   '20B': {
     question_text: 'Does the separate business entity maintain food service' \
       ' records?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -257,7 +257,7 @@ questions_map = {}
   },
   '21': {
     question_text: 'Do you have multiple entrees per meal period?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -266,7 +266,7 @@ questions_map = {}
   '22': {
     question_text: 'Are food items completely prepared or assembled on the' \
       ' premise?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -274,7 +274,7 @@ questions_map = {}
   },
   '23': {
     question_text: 'Is prepared food to be consumed on the premise?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -282,21 +282,21 @@ questions_map = {}
   },
   '24A': {
     question_text: 'Are prepackaged food items sold?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
     ],
     conditions: [
       {
-        question_id: '24B',
+        conditional_question_number: '24B',
         condition_value: 'Yes'
       }
     ]
   },
   '24B': {
     question_text: 'Are prepackaged food items from a non-commercial source?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
@@ -305,14 +305,14 @@ questions_map = {}
   '25A': {
     question_text: 'Are hours of operation for food and alcohol service the' \
       ' same?',
-    question_type: QUESTION_TYPE_RADIO,
+    question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
     ],
     conditions: [
       {
-        question_id: '25B',
+        conditional_question_number: '25B',
         condition_value: 'Yes'
       }
     ]
@@ -320,28 +320,36 @@ questions_map = {}
   '25B': {
     question_text: 'What are your hours of operations for both food and' \
       ' alcohol service?',
-    question_type: QUESTION_TYPE_TEXT_BOX,
+    question_type: :text_box,
     max_characters: 50
   }
-}.each do |question_id, question_params|
-  question = Question.find_by(question_id: question_id)
+}.each do |question_number, question_params|
+  question = Question.find_by(question_number: question_number)
   if question.blank?
     choices = question_params.delete(:choices)
     conditions = question_params.delete(:conditions)
 
-    question_params[:question_id] = question_id
-    question = Question.create!(question_params)
+    question = Question.create!(
+      question_number: question_number,
+      **question_params
+    )
 
     choices&.each do |choice_params|
-      Choice.create!(question: question, **choice_params)
+      Choice.create!(
+        question: question,
+        **choice_params
+      )
     end
 
     conditions&.each do |condition_params|
-      Condition.create!(question: question, **condition_params)
+      Condition.create!(
+        question: question,
+        **condition_params
+      )
     end
   end
 
-  questions_map[question_id] = question
+  questions_map[question_number] = question
 end
 
 {
@@ -377,11 +385,33 @@ end
   ],
   V: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B],
   Y: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B]
-}.each do |permit_name, question_ids|
+}.each do |permit_name, question_numbers|
   audit_form = AuditForm.find_by(permit_name: permit_name)
   audit_form = AuditForm.create!(permit_name: permit_name) if audit_form.blank?
 
-  question_ids.each do |question_id|
-    audit_form.questions << questions_map[question_id]
+  last_index = question_numbers.size - 1
+  question_numbers.each_with_index do |question_number, index|
+    question = questions_map[question_number]
+    next_question = nil
+    is_finish = index == last_index
+
+    unless is_finish
+      next_question =
+        if question.conditions.empty?
+          question_numbers[index + 1]
+        else
+          question_number = question_number.to_s.to_i
+          nq = question_numbers.find { |qnum| qnum.to_s.to_i > question_number }
+          is_finish = true if nq.blank?
+          nq
+        end
+    end
+
+    AuditFormQuestion.create!(
+      audit_form: audit_form,
+      question: question,
+      next_question: next_question,
+      finish: is_finish
+    )
   end
 end
