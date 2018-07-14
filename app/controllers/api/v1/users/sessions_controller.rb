@@ -3,9 +3,7 @@
 module Api
   module V1
     module Users
-      class SessionsController < BaseApiController
-        before_action :authenticate_api_v1_user!
-
+      class SessionsController < BaseV1Controller
         def request_pin
           email = params[:email]
           fail! 'Missing required parameter: email' if email.blank?

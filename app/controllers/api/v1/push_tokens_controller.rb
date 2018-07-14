@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class PushTokensController < BaseApiController
+    class PushTokensController < BaseV1Controller
       def create
         token = push_token_params[:token]
 
