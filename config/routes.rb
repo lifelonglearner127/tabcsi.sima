@@ -21,12 +21,18 @@ Rails.application.routes.draw do
         skip: %i[password sessions]
       )
 
+      resources :audit_forms, only: %i[] do
+        collection do
+          get :find
+        end
+      end
+
+      resources :push_tokens, only: %i[create]
+
       namespace :users do
         post :validate_email, to: 'sessions#validate_email'
         post :request_pin, to: 'sessions#request_pin'
       end
-
-      resources :push_tokens, only: %i[create]
     end
   end
 end

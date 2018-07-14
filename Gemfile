@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'active_model_serializers', '~> 0.10.7'
 gem 'autoprefixer-rails', '~> 8.6'
 gem 'aws-sdk-rails', '~> 2.0'
 gem 'bootsnap', '~> 1.3', require: false
