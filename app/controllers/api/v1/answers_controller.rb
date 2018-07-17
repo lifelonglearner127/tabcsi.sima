@@ -1,0 +1,65 @@
+# frozen_string_literal: true
+
+module Api
+  module V1
+    class AnswersController < BaseV1Controller
+      def create
+        license_number = answer_params[:license_number]
+        values = answer_params[:values]
+        answers = map_values(license_number, values)
+
+        success! answers: answers_as_json(answers)
+      end
+
+      private
+
+      def answer_params
+        {
+          license_number: params.require(:license_number),
+          values: validate_values_param(params.require(:values))
+        }
+      end
+
+      def validate_values_param(values_param)
+        unless values_param.is_a?(ActionController::Parameters)
+          fail!(
+            'The `values` parameter must be a hash, a collection of' \
+            ' question-id:value pairs.'
+          )
+        end
+
+        values = {}
+
+        values_param.permit!.each do |question_number, value|
+          question = Question.find_by(question_number: question_number)
+
+          fail! "Invalid question-id: #{question_number}" if question.blank?
+
+          values[question.id] = value
+        end
+
+        values
+      end
+
+      def map_values(license_number, values)
+        answers = []
+
+        values.each do |question_id, value|
+          answers << Answer.create!(
+            question_id: question_id,
+            license_number: license_number,
+            answer_value: value
+          )
+        end
+
+        answers
+      end
+
+      def answers_as_json(answers)
+        ActiveModelSerializers::SerializableResource.new(
+          answers, include: ''
+        ).as_json
+      end
+    end
+  end
+end

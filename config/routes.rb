@@ -21,6 +21,8 @@ Rails.application.routes.draw do
         skip: %i[password sessions]
       )
 
+      resources :answers, only: %i[create]
+
       resources :audit_forms, only: %i[] do
         collection do
           get :find
