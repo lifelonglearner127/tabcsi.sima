@@ -9,6 +9,7 @@ module Api
 
       unless e.is_a?(ApiError)
         error_data = nil
+        message = nil
 
         case e
         when ActionController::ParameterMissing
@@ -28,10 +29,16 @@ module Api
       render json: e.to_json, status: e.status_code
     end
 
+    before_action :set_paper_trail_whodunnit
+
     def current_resource_owner
       return nil unless doorkeeper_token&.resource_owner_id
 
       User.find(doorkeeper_token.resource_owner_id)
+    end
+
+    def current_user
+      current_resource_owner
     end
 
     def current_application

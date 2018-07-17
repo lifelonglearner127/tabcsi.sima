@@ -6,4 +6,6 @@ class ApplicationRecord < ActiveRecord::Base
   include Discard::Model
 
   default_scope -> { kept }
+
+  has_paper_trail
 end
