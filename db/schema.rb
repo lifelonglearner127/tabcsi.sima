@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_195319) do
+ActiveRecord::Schema.define(version: 2018_07_17_202327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.text "answer_value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_answers_on_discarded_at"
     t.index ["license_number"], name: "index_answers_on_license_number"
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
@@ -53,7 +55,9 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.boolean "finish", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["audit_form_id", "question_id"], name: "index_audit_form_questions_on_audit_form_id_and_question_id", unique: true
+    t.index ["discarded_at"], name: "index_audit_form_questions_on_discarded_at"
     t.index ["question_id", "audit_form_id"], name: "index_audit_form_questions_on_question_id_and_audit_form_id", unique: true
   end
 
@@ -61,6 +65,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.string "permit_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_audit_forms_on_discarded_at"
     t.index ["permit_name"], name: "index_audit_forms_on_permit_name", unique: true
   end
 
@@ -70,6 +76,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.boolean "picture_attachment", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_choices_on_discarded_at"
     t.index ["question_id"], name: "index_choices_on_question_id"
   end
 
@@ -79,6 +87,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "conditional_question_number", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_conditions_on_discarded_at"
     t.index ["question_id"], name: "index_conditions_on_question_id"
   end
 
@@ -106,6 +116,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.decimal "back_long", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_licenses_on_discarded_at"
     t.index ["license_number"], name: "index_licenses_on_license_number"
     t.index ["user_id"], name: "index_licenses_on_user_id"
   end
@@ -156,6 +168,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.text "token", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_push_tokens_on_discarded_at"
     t.index ["user_id", "device_type"], name: "index_push_tokens_on_user_id_and_device_type", unique: true
     t.index ["user_id"], name: "index_push_tokens_on_user_id"
   end
@@ -168,6 +182,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.boolean "multiline", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_questions_on_discarded_at"
     t.index ["question_number"], name: "index_questions_on_question_number", unique: true
   end
 
@@ -184,6 +200,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_195319) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

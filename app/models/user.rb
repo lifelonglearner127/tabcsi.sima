@@ -17,19 +17,17 @@ class User < ApplicationRecord
   has_many(
     :access_grants,
     class_name: 'Doorkeeper::AccessGrant',
-    foreign_key: :resource_owner_id,
-    dependent: :delete_all
+    foreign_key: :resource_owner_id
   )
 
   has_many(
     :access_tokens,
     class_name: 'Doorkeeper::AccessToken',
-    foreign_key: :resource_owner_id,
-    dependent: :delete_all
+    foreign_key: :resource_owner_id
   )
 
-  has_many :push_tokens, dependent: :delete_all
-  has_many :licenses, dependent: :delete_all
+  has_many :push_tokens
+  has_many :licenses
 
   def generate_pin
     pin = self.class.new_pin
