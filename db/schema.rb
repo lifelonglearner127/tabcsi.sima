@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_202327) do
+ActiveRecord::Schema.define(version: 2018_07_17_205751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_202327) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_push_tokens_on_discarded_at"
-    t.index ["user_id", "device_type"], name: "index_push_tokens_on_user_id_and_device_type", unique: true
+    t.index ["user_id", "token"], name: "index_push_tokens_on_user_id_and_token", unique: true
     t.index ["user_id"], name: "index_push_tokens_on_user_id"
   end
 
