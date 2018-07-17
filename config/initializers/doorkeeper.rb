@@ -135,7 +135,7 @@ end
 Doorkeeper::JWT.configure do
   token_payload do |opts|
     # Makes each token unique; required to pass Doorkeeper's validations.
-    payload = { uid: SecureRandom.hex }
+    payload = { nonce: SecureRandom.hex }
 
     if opts[:resource_owner_id].present?
       user = User.find(opts[:resource_owner_id])
