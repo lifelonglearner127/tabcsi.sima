@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Question < ApplicationRecord
+  has_many :answers, -> { order(id: :asc) }
   has_many :audit_form_questions, -> { order(id: :asc) }
   has_many :choices, -> { order(id: :asc) }
   has_many :conditions, -> { order(id: :asc) }

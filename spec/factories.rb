@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :answer do
+    question nil
+    license_number 'MyString'
+    answer_value 'MyText'
+  end
+
   factory :audit_form_question do
     audit_form nil
     question nil

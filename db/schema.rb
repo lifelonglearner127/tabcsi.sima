@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_14_005439) do
+ActiveRecord::Schema.define(version: 2018_07_17_122603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.string "license_number", null: false
+    t.text "answer_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["license_number"], name: "index_answers_on_license_number"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
 
   create_table "audit_form_questions", force: :cascade do |t|
     t.bigint "audit_form_id", null: false
@@ -143,6 +153,7 @@ ActiveRecord::Schema.define(version: 2018_07_14_005439) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "answers", "questions"
   add_foreign_key "audit_form_questions", "audit_forms"
   add_foreign_key "audit_form_questions", "questions"
   add_foreign_key "choices", "questions"
