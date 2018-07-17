@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_165023) do
+ActiveRecord::Schema.define(version: 2018_07_17_195319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_165023) do
     t.string "scopes", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "confidential", default: true, null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
@@ -187,6 +188,27 @@ ActiveRecord::Schema.define(version: 2018_07_17_165023) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "version_associations", force: :cascade do |t|
+    t.bigint "version_id", null: false
+    t.string "foreign_key_name", null: false
+    t.bigint "foreign_key_id", null: false
+    t.index ["foreign_key_id"], name: "index_version_associations_on_foreign_key_id"
+    t.index ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key"
+    t.index ["version_id"], name: "index_version_associations_on_version_id"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at", null: false
+    t.bigint "transaction_id"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+    t.index ["transaction_id"], name: "index_versions_on_transaction_id"
+  end
+
   add_foreign_key "answers", "questions"
   add_foreign_key "audit_form_questions", "audit_forms"
   add_foreign_key "audit_form_questions", "questions"
@@ -198,4 +220,5 @@ ActiveRecord::Schema.define(version: 2018_07_17_165023) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "push_tokens", "users"
+  add_foreign_key "version_associations", "versions"
 end

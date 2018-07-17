@@ -7,7 +7,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'active_model_serializers', '~> 0.10.7'
-gem 'autoprefixer-rails', '~> 8.6'
+gem 'autoprefixer-rails', '~> 9.0'
 gem 'aws-sdk-rails', '~> 2.0'
 gem 'bootsnap', '~> 1.3', require: false
 gem 'bourbon', '~> 5.0'
@@ -25,6 +25,7 @@ gem 'neat', '~> 3.0'
 gem 'nenv', '~> 0.3.0'
 gem 'nokogiri', '~> 1.8'
 gem 'oj', '~> 3.6'
+gem 'paper_trail', '~> 9.2'
 gem 'pg', '~> 1.0'
 gem 'premailer-rails', '~> 1.10'
 gem 'puma', '~> 3.11'
