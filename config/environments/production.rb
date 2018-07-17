@@ -18,7 +18,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :aws_sdk
   config.action_mailer.perform_caching = false
   config.active_record.dump_schema_after_migration = false
-  config.active_storage.service = :local
+  config.active_storage.service = :production
   config.active_support.deprecation = :notify
   config.assets.compile = false
   config.assets.js_compressor = :uglifier
