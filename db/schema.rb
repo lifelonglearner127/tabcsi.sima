@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_135424) do
+ActiveRecord::Schema.define(version: 2018_07_17_165023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,19 @@ ActiveRecord::Schema.define(version: 2018_07_17_135424) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "licenses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "license_number", null: false
+    t.decimal "front_lat", null: false
+    t.decimal "front_long", null: false
+    t.decimal "back_lat", null: false
+    t.decimal "back_long", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["license_number"], name: "index_licenses_on_license_number"
+    t.index ["user_id"], name: "index_licenses_on_user_id"
+  end
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer "resource_owner_id", null: false
     t.bigint "application_id", null: false
@@ -179,6 +192,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_135424) do
   add_foreign_key "audit_form_questions", "questions"
   add_foreign_key "choices", "questions"
   add_foreign_key "conditions", "questions"
+  add_foreign_key "licenses", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"

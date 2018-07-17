@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :license do
+    license_number 'MyString'
+    front_lat '9.99'
+    front_long '9.99'
+    back_lat '9.99'
+    back_long '9.99'
+  end
+
   factory :answer do
     question nil
     license_number 'MyString'
