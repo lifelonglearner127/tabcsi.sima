@@ -9,8 +9,8 @@ class AuditFormQuestion < ApplicationRecord
   validates :question, uniqueness: { scope: :audit_form }
 
   delegate(
-    :max_characters, :multiline, :question_number, :question_text,
-    :question_type,
+    :max_characters, :multiline, :other, :question_number, :question_text,
+    :question_type, :source,
     to: :question
   )
 end
