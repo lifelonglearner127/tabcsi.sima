@@ -409,8 +409,8 @@ end
       conditional_question_number =
         if conditional_question_number_param.is_a?(Hash)
           key =
-            conditional_question_number_param.keys.find do |qnums|
-              qnums.include?(question_number)
+            conditional_question_number_param.keys.find do |permit_names|
+              permit_names.include?(permit_name)
             end
 
           conditional_question_number_param[key]
