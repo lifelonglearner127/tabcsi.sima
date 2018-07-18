@@ -35,6 +35,12 @@ Rails.application.routes.draw do
         post :validate_email, to: 'sessions#validate_email'
         post :request_pin, to: 'sessions#request_pin'
       end
+
+      resources :vendors, only: %i[] do
+        collection do
+          get :names
+        end
+      end
     end
   end
 end
