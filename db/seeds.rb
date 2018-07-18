@@ -138,9 +138,9 @@ questions_map = {}
   },
   '12': {
     question_text: 'List the vendors you purchase alcohol from',
-    question_type: :text_box,
-    max_characters: 100,
-    multiline: true
+    question_type: :drop_down,
+    source: '/api/v1/vendors/names',
+    other: 50
   },
   '13A': {
     question_text: 'Are you holding any product that is damaged?',
@@ -173,7 +173,7 @@ questions_map = {}
     conditions: [
       {
         conditional_question_number: {
-          %i[BE BG NB V Y] => nil,
+          %i[BE BG NB V Y] => '26A',
           %i[BE-FB BG-FB] => '18',
           %i[BF BQ P Q] => '15',
           %i[MB MB-FB N N-FB NE RM] => '16'
@@ -317,7 +317,7 @@ questions_map = {}
     ],
     conditions: [
       {
-        conditional_question_number: nil,
+        conditional_question_number: '26A',
         condition_value: 'Yes'
       }
     ]
@@ -325,8 +325,86 @@ questions_map = {}
   '25B': {
     question_text: 'What are your hours of operations for both food and' \
       ' alcohol service?',
+    question_type: :radio,
+    choices: [
+      {
+        choice_text: 'Monday - Friday',
+        fields: [
+          {
+            label: 'Food',
+            field_type: :time_range
+          },
+          {
+            label: 'Alcohol',
+            field_type: :time_range
+          }
+        ]
+      },
+      {
+        choice_text: 'Sunday',
+        fields: [
+          {
+            label: 'Food',
+            field_type: :time_range
+          },
+          {
+            label: 'Alcohol',
+            field_type: :time_range
+          }
+        ]
+      }
+    ]
+  },
+  '26A': {
+    question_text: 'Have you had a Breach of the Peace at your establishment' \
+      ' in the last year?',
+    question_type: :radio,
+    choices: [
+      { choice_text: 'Yes' },
+      { choice_text: 'No' }
+    ],
+    conditions: [
+      {
+        conditional_question_number: '27',
+        condition_value: 'No'
+      }
+    ]
+  },
+  '26B': {
+    question_text: 'Who did you report any of the Breaches of the Peace to?',
+    question_type: :drop_down,
+    choices: [
+      { choice_text: 'Local Law Enforcement' },
+      { choice_text: 'TABC' },
+      { choice_text: 'Neither' },
+      { choice_text: 'Both' }
+    ],
+    conditions: [
+      {
+        conditional_question_number: '27',
+        condition_value: 'TABC'
+      },
+      {
+        conditional_question_number: '27',
+        condition_value: 'Both'
+      }
+    ]
+  },
+  '26C': {
+    question_text: 'What date did the Breach of Peace occur? Describe the' \
+      ' incident.',
     question_type: :text_box,
-    max_characters: 50
+    max_characters: 100,
+    multiline: true
+  },
+  '27': {
+    question_text: 'Have there been changes since your original or renewal' \
+      ' applications that have not been reported to TABC?',
+    question_type: :radio,
+    choices: [
+      { choice_text: 'Yes' },
+      { choice_text: 'No' }
+    ]
   }
 }.each do |question_number, question_params|
   question = Question.find_by(question_number: question_number)
@@ -341,10 +419,19 @@ questions_map = {}
     )
 
     choices&.each do |choice_params|
-      Choice.create!(
+      fields = choice_params.delete(:fields)
+
+      choice = Choice.create!(
         question: question,
         **choice_params
       )
+
+      fields&.each do |field_params|
+        Field.create!(
+          choice: choice,
+          **field_params
+        )
+      end
     end
   end
 
@@ -355,38 +442,38 @@ questions_map = {}
 end
 
 {
-  BE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B],
+  BE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27],
   'BE-FB': %i[
     1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 18 19 20A 20B 21 22 23 24A
-    24B 25A 25B
+    24B 25A 25B 26A 26B 26C 27
   ],
-  BF: %i[1 2 3 4 5 6 7 9 11A 12 13A 13B 14A 14B 15],
-  BG: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B],
+  BF: %i[1 2 3 4 5 6 7 9 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
+  BG: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27],
   'BG-FB': %i[
     1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 18 19 20A 20B 21 22 23 24A
-    24B 25A 25B
+    24B 25A 25B 26A 26B 26C 27
   ],
-  BQ: %i[1 2 3 4 5 6 7 9 11A 12 13A 13B 14A 14B 15],
-  MB: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17],
+  BQ: %i[1 2 3 4 5 6 7 9 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
+  MB: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27],
   'MB-FB': %i[
     1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22
-    23 24A 24B 25A 25B
+    23 24A 24B 25A 25B 26A 26B 26C 27
   ],
-  N: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17],
+  N: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27],
   'N-FB': %i[
     1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22
-    23 24A 24B 25A 25B
+    23 24A 24B 25A 25B 26A 26B 26C 27
   ],
-  NB: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B],
-  NE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17],
-  P: %i[1 2 3 4 5 6 7 10 11A 12 13A 13B 14A 14B 15],
-  Q: %i[1 2 3 4 5 6 7 11A 12 13A 13B 14A 14B 15],
+  NB: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27],
+  NE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27],
+  P: %i[1 2 3 4 5 6 7 10 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
+  Q: %i[1 2 3 4 5 6 7 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
   RM: %i[
     1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22
-    23 24A 24B 25A 25B
+    23 24A 24B 25A 25B 26A 26B 26C 27
   ],
-  V: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B],
-  Y: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B]
+  V: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27],
+  Y: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27]
 }.each do |permit_name, question_numbers|
   audit_form = AuditForm.find_by(permit_name: permit_name)
   audit_form = AuditForm.create!(permit_name: permit_name) if audit_form.blank?

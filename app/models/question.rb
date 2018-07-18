@@ -9,5 +9,5 @@ class Question < ApplicationRecord
   validates :question_number, :question_text, :question_type, presence: true
   validates :question_number, uniqueness: { case_sensitive: false }
 
-  enum question_type: %i[radio text_box]
+  enum question_type: %i[radio text_box drop_down]
 end
