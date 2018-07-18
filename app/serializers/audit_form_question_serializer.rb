@@ -2,7 +2,7 @@
 
 class AuditFormQuestionSerializer < ActiveModel::Serializer
   attributes(
-    :question_text, :next_question, :max_characters, :multiline, :finish
+    :question_text, :max_characters, :multiline, :finish
   )
 
   attribute :question_number, key: :question_id

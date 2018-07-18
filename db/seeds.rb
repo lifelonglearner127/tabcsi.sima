@@ -392,25 +392,25 @@ end
   last_index = question_numbers.size - 1
   question_numbers.each_with_index do |question_number, index|
     question = questions_map[question_number]
-    next_question = nil
+    # next_question = nil
     is_finish = index == last_index
 
-    unless is_finish
-      next_question =
-        if question.conditions.empty?
-          question_numbers[index + 1]
-        else
-          question_number = question_number.to_s.to_i
-          nq = question_numbers.find { |qnum| qnum.to_s.to_i > question_number }
-          is_finish = true if nq.blank?
-          nq
-        end
-    end
+    # unless is_finish
+    #   # next_question =
+    #   #   if question.conditions.empty?
+    #   #     question_numbers[index + 1]
+    #   #   else
+    #   #     question_number = question_number.to_s.to_i
+    #   #     nq = question_numbers.find { |qnum| qnum.to_s.to_i > question_number }
+    #   #     is_finish = true if nq.blank?
+    #   #     nq
+    #   #   end
+    # end
 
     AuditFormQuestion.create!(
       audit_form: audit_form,
       question: question,
-      next_question: next_question,
+      # next_question: next_question,
       finish: is_finish
     )
   end
