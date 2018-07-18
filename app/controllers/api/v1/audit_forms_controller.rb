@@ -6,11 +6,7 @@ module Api
       def find
         permit_name = audit_form_params[:permit_name]
         audit_form =
-          AuditForm.includes(
-            audit_form_questions: {
-              question: %i[choices conditions]
-            }
-          )
+          AuditForm.includes(audit_form_questions: %i[choices conditions])
                    .find_by(permit_name: permit_name)
 
         if audit_form.blank?
