@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class AuditFormQuestionSerializer < ActiveModel::Serializer
-  attributes(
-    :question_text, :max_characters, :multiline, :finish
-  )
-
+  attributes :question_text, :max_characters, :multiline
   attribute :question_number, key: :question_id
   attribute :question_type, key: :type
 

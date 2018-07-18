@@ -151,8 +151,8 @@ questions_map = {}
     ],
     conditions: [
       {
-        conditional_question_number: '13B',
-        condition_value: 'Yes'
+        conditional_question_number: '14A',
+        condition_value: 'No'
       }
     ]
   },
@@ -172,8 +172,13 @@ questions_map = {}
     ],
     conditions: [
       {
-        conditional_question_number: '14B',
-        condition_value: 'Yes'
+        conditional_question_number: {
+          %i[BE BG NB V Y] => nil,
+          %i[BE-FB BG-FB] => '18',
+          %i[BF BQ P Q] => '15',
+          %i[MB MB-FB N N-FB NE RM] => '16'
+        },
+        condition_value: 'No'
       }
     ]
   },
@@ -241,8 +246,8 @@ questions_map = {}
     ],
     conditions: [
       {
-        conditional_question_number: '20B',
-        condition_value: 'Yes'
+        conditional_question_number: '21',
+        condition_value: 'No'
       }
     ]
   },
@@ -289,8 +294,8 @@ questions_map = {}
     ],
     conditions: [
       {
-        conditional_question_number: '24B',
-        condition_value: 'Yes'
+        conditional_question_number: '25A',
+        condition_value: 'No'
       }
     ]
   },
@@ -312,7 +317,7 @@ questions_map = {}
     ],
     conditions: [
       {
-        conditional_question_number: '25B',
+        conditional_question_number: nil,
         condition_value: 'Yes'
       }
     ]
@@ -325,9 +330,10 @@ questions_map = {}
   }
 }.each do |question_number, question_params|
   question = Question.find_by(question_number: question_number)
+  conditions = question_params.delete(:conditions)
+
   if question.blank?
     choices = question_params.delete(:choices)
-    conditions = question_params.delete(:conditions)
 
     question = Question.create!(
       question_number: question_number,
@@ -340,16 +346,12 @@ questions_map = {}
         **choice_params
       )
     end
-
-    conditions&.each do |condition_params|
-      Condition.create!(
-        question: question,
-        **condition_params
-      )
-    end
   end
 
-  questions_map[question_number] = question
+  questions_map[question_number] = {
+    question: question,
+    conditions: conditions
+  }
 end
 
 {
@@ -389,29 +391,38 @@ end
   audit_form = AuditForm.find_by(permit_name: permit_name)
   audit_form = AuditForm.create!(permit_name: permit_name) if audit_form.blank?
 
-  last_index = question_numbers.size - 1
-  question_numbers.each_with_index do |question_number, index|
-    question = questions_map[question_number]
-    # next_question = nil
-    is_finish = index == last_index
+  question_numbers.each do |question_number|
+    question_group = questions_map[question_number]
+    question = question_group[:question]
+    conditions = question_group[:conditions]
 
-    # unless is_finish
-    #   # next_question =
-    #   #   if question.conditions.empty?
-    #   #     question_numbers[index + 1]
-    #   #   else
-    #   #     question_number = question_number.to_s.to_i
-    #   #     nq = question_numbers.find { |qnum| qnum.to_s.to_i > question_number }
-    #   #     is_finish = true if nq.blank?
-    #   #     nq
-    #   #   end
-    # end
-
-    AuditFormQuestion.create!(
+    audit_form_question = AuditFormQuestion.create!(
       audit_form: audit_form,
-      question: question,
-      # next_question: next_question,
-      finish: is_finish
+      question: question
     )
+
+    conditions&.each do |condition_params|
+      condition_value = condition_params[:condition_value]
+      conditional_question_number_param =
+        condition_params[:conditional_question_number]
+
+      conditional_question_number =
+        if conditional_question_number_param.is_a?(Hash)
+          key =
+            conditional_question_number_param.keys.find do |qnums|
+              qnums.include?(question_number)
+            end
+
+          conditional_question_number_param[key]
+        else
+          conditional_question_number_param
+        end
+
+      Condition.create!(
+        audit_form_question: audit_form_question,
+        conditional_question_number: conditional_question_number,
+        condition_value: condition_value
+      )
+    end
   end
 end

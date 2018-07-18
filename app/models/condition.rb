@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Condition < ApplicationRecord
-  belongs_to :question
+  belongs_to :audit_form_question
+  belongs_to :question, optional: true
 
-  validates :conditional_question_number, :condition_value, presence: true
+  validates :condition_value, presence: true
 end
