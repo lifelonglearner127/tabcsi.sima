@@ -2,6 +2,7 @@
 
 class Choice < ApplicationRecord
   belongs_to :question
+  has_many :fields
 
   validates :choice_text, presence: true
 end

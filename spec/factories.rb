@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :field do
+    choice nil
+    label 'MyString'
+    field_type 1
+  end
+
   factory :license do
     license_number 'MyString'
     front_lat '9.99'

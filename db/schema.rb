@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_18_204514) do
+ActiveRecord::Schema.define(version: 2018_07_18_205144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,17 @@ ActiveRecord::Schema.define(version: 2018_07_18_204514) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "fields", force: :cascade do |t|
+    t.bigint "choice_id", null: false
+    t.string "label", null: false
+    t.integer "field_type", default: 0, null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["choice_id"], name: "index_fields_on_choice_id"
+    t.index ["discarded_at"], name: "index_fields_on_discarded_at"
   end
 
   create_table "licenses", force: :cascade do |t|
@@ -235,6 +246,7 @@ ActiveRecord::Schema.define(version: 2018_07_18_204514) do
   add_foreign_key "choices", "questions"
   add_foreign_key "conditions", "audit_form_questions"
   add_foreign_key "conditions", "questions"
+  add_foreign_key "fields", "choices"
   add_foreign_key "licenses", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
