@@ -6,8 +6,7 @@ class AuditFormQuestion < ApplicationRecord
   has_many :choices, through: :question
   has_many :conditions, through: :question
 
-  validates :audit_form, :question, presence: true
-  validates :question_id, uniqueness: { scope: :audit_form_id }
+  validates :question, uniqueness: { scope: :audit_form }
 
   delegate(
     :max_characters, :multiline, :question_number, :question_text,
