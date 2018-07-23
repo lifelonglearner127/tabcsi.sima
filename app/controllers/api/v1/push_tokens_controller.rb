@@ -19,11 +19,7 @@ module Api
           token: token
         )
 
-        success!(
-          user_id: push_token.user.id,
-          device_type: push_token.device_type,
-          token: push_token.token
-        )
+        success! push_token: as_json(push_token)
       end
 
       private
