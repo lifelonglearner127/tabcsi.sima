@@ -4,7 +4,6 @@ module Api
   module V1
     class AuditFormsController < BaseV1Controller
       def find
-        permit_name = audit_form_params[:permit_name]
         audit_form =
           AuditForm.includes(
             audit_form_questions: [
@@ -28,8 +27,8 @@ module Api
 
       private
 
-      def audit_form_params
-        { permit_name: params.require(:permit_name) }
+      def permit_name
+        @permit_name ||= params.require(:permit_name)
       end
 
       def audit_form_as_json(audit_form)

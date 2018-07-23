@@ -4,8 +4,6 @@ module Api
   module V1
     class AnswersController < BaseV1Controller
       def create
-        license_number = answer_params[:license_number]
-        values = answer_params[:values]
         answers = map_values(license_number, values)
 
         success! answers: answers_as_json(answers)
@@ -13,11 +11,12 @@ module Api
 
       private
 
-      def answer_params
-        {
-          license_number: params.require(:license_number),
-          values: validate_values_param(params.require(:values))
-        }
+      def license_number
+        @license_number ||= params.require(:license_number)
+      end
+
+      def values
+        @values ||= validate_values_param(params.require(:values))
       end
 
       def validate_values_param(values_param)

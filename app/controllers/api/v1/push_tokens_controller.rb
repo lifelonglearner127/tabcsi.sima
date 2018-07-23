@@ -4,14 +4,12 @@ module Api
   module V1
     class PushTokensController < BaseV1Controller
       def create
-        token = push_token_params[:token]
-
         fail! 'No OAuth application present.' if current_application.blank?
         fail! 'No user present.' if current_resource_owner.blank?
 
         device_type = current_application.name.to_sym
         unless valid_device_type?(device_type)
-          device_type = push_token_params[:device_type]
+          device_type = self.device_type
           fail! 'Invalid device type.' unless valid_device_type?(device_type)
         end
 
@@ -30,11 +28,12 @@ module Api
 
       private
 
-      def push_token_params
-        {
-          token: params.require(:token),
-          device_type: params[:device_type]&.to_s&.downcase
-        }
+      def token
+        @token ||= params.require(:token)
+      end
+
+      def device_type
+        @device_type ||= params[:device_type]&.to_s&.downcase
       end
 
       def valid_device_type?(device_type)
