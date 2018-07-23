@@ -5,7 +5,7 @@ module Api
     class VendorsController < BaseV1Controller
       def names
         success!(
-          names: %w[
+          %w[
             Spec's\ Wine,\ Spirits\ &\ Finer\ Foods
             Test\ Bar\ &\ Grill
           ]

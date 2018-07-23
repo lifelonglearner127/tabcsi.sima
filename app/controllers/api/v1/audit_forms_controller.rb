@@ -22,7 +22,7 @@ module Api
           )
         end
 
-        success! audit_form: as_json(audit_form)
+        success! audit_form
       end
 
       private

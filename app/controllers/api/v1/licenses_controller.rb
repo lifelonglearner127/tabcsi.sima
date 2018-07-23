@@ -15,7 +15,7 @@ module Api
 
         licenses = licenses.where(user: user) if user.present?
 
-        success! licenses: as_json(licenses)
+        success! licenses
       end
 
       def create
@@ -31,7 +31,7 @@ module Api
           photos: photos
         )
 
-        success! license: as_json(license)
+        success! license
       end
 
       def find
@@ -43,7 +43,7 @@ module Api
           )
         end
 
-        success! license: as_json(license)
+        success! license
       end
 
       private

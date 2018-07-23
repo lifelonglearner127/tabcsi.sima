@@ -22,9 +22,7 @@ module Api
         end
 
         def validate_email
-          success!(
-            is_valid: User.find_by(email: params[:email]).present?
-          )
+          success! is_valid: User.find_by(email: params[:email]).present?
         end
       end
     end

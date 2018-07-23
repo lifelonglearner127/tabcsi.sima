@@ -45,20 +45,13 @@ module Api
       doorkeeper_token&.application
     end
 
-    def success!(message_or_data)
-      data =
-        if message_or_data.is_a?(Hash)
-          message_or_data
-        else
-          { message: message_or_data }
-        end
-
-      jsend!(:success, data)
+    def success!(data)
+      jsend!(:success, as_json(data))
     end
 
     def fail!(message_or_data, code = :bad_request)
       data =
-        if message_or_data.is_a?(Hash)
+        if message_or_data.is_a?(Hash) || message_or_data.is_a?(Array)
           message_or_data
         else
           { message: message_or_data }

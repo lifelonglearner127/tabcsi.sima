@@ -7,7 +7,7 @@ module Api
         fail! 'No OAuth application present.' if current_application.blank?
         fail! 'No user present.' if current_resource_owner.blank?
 
-        device_type = self.device_type
+        device_type = __send__(:device_type)
         unless valid_device_type?(device_type)
           device_type = current_application.name.to_sym
           fail! 'Invalid device type.' unless valid_device_type?(device_type)
@@ -19,7 +19,7 @@ module Api
           token: token
         )
 
-        success! push_token: as_json(push_token)
+        success! push_token
       end
 
       private

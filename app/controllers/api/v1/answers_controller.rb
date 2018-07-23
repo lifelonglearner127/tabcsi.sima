@@ -6,7 +6,7 @@ module Api
       def create
         answers = map_values(license_number, values)
 
-        success! answers: as_json(answers)
+        success! answers
       end
 
       private
