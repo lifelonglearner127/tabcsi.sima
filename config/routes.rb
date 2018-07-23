@@ -29,7 +29,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :licenses, only: %i[index]
+      resources :licenses, only: %i[index create]
       resources :push_tokens, only: %i[create]
 
       namespace :users do
