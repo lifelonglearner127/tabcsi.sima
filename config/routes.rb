@@ -29,6 +29,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :distributors, only: %i[index]
+
       resources :licenses, only: %i[index create] do
         collection do
           get :find
