@@ -22,7 +22,7 @@ module Api
           )
         end
 
-        success! audit_form: audit_form_as_json(audit_form)
+        success! audit_form: as_json(audit_form)
       end
 
       private
@@ -31,10 +31,8 @@ module Api
         @permit_name ||= params.require(:permit_name)
       end
 
-      def audit_form_as_json(audit_form)
-        ActiveModelSerializers::SerializableResource
-          .new(audit_form, include: '**')
-          .as_json
+      def as_json(object)
+        super(object, include: '**')
       end
     end
   end

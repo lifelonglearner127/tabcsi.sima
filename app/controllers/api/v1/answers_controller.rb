@@ -6,7 +6,7 @@ module Api
       def create
         answers = map_values(license_number, values)
 
-        success! answers: answers_as_json(answers)
+        success! answers: as_json(answers)
       end
 
       private
@@ -52,12 +52,6 @@ module Api
         end
 
         answers
-      end
-
-      def answers_as_json(answers)
-        ActiveModelSerializers::SerializableResource
-          .new(answers, include: '')
-          .as_json
       end
     end
   end

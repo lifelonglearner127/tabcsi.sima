@@ -71,6 +71,12 @@ module Api
       jsend!(:error, data, message: message, code: code)
     end
 
+    def as_json(object, include: '')
+      ActiveModelSerializers::SerializableResource
+        .new(object, include: include)
+        .as_json
+    end
+
     private
 
     def jsend!(status, data, message: nil, code: nil)
