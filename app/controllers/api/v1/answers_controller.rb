@@ -55,9 +55,9 @@ module Api
       end
 
       def answers_as_json(answers)
-        ActiveModelSerializers::SerializableResource.new(
-          answers, include: ''
-        ).as_json
+        ActiveModelSerializers::SerializableResource
+          .new(answers, include: '')
+          .as_json
       end
     end
   end

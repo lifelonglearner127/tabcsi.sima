@@ -32,9 +32,9 @@ module Api
       end
 
       def audit_form_as_json(audit_form)
-        ActiveModelSerializers::SerializableResource.new(
-          audit_form, include: '**'
-        ).as_json
+        ActiveModelSerializers::SerializableResource
+          .new(audit_form, include: '**')
+          .as_json
       end
     end
   end
