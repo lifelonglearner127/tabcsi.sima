@@ -34,6 +34,18 @@ module Api
         success! license: as_json(license)
       end
 
+      def find
+        license = License.find_by(license_number: license_number)
+
+        if license.blank?
+          fail!(
+            'A License with the specified license number could not be found.'
+          )
+        end
+
+        success! license: as_json(license)
+      end
+
       private
 
       def filter
