@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_140640) do
+ActiveRecord::Schema.define(version: 2018_07_24_160036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,16 @@ ActiveRecord::Schema.define(version: 2018_07_24_140640) do
     t.integer "other"
     t.index ["discarded_at"], name: "index_questions_on_discarded_at"
     t.index ["question_number"], name: "index_questions_on_question_number", unique: true
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "value"
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_settings_on_discarded_at"
+    t.index ["name"], name: "index_settings_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|

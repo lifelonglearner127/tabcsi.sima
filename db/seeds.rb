@@ -1,9 +1,21 @@
 # frozen_string_literal: true
 
-QUESTION_TYPE_RADIO = Question.question_types[:radio]
-QUESTION_TYPE_TEXT_BOX = Question.question_types[:text_box]
-
 questions_map = {}
+
+puts 'Seeding: Settings...'
+
+{
+  business_point_radius: 100 # feet
+}.each do |name, value|
+  next if Setting.find_by(name: name).present?
+
+  Setting.create!(name: name, value: value)
+
+  puts "* Setting added: #{name} = #{value}"
+end
+
+puts 'Settings seeded.'
+puts 'Seeding: Questions, choices, and fields...'
 
 {
   '1': {
@@ -418,6 +430,8 @@ questions_map = {}
       **question_params
     )
 
+    puts "* Question added: #{question_number}"
+
     choices&.each do |choice_params|
       fields = choice_params.delete(:fields)
 
@@ -426,11 +440,15 @@ questions_map = {}
         **choice_params
       )
 
+      puts '  * Choice added to question.'
+
       fields&.each do |field_params|
         Field.create!(
           choice: choice,
           **field_params
         )
+
+        puts '    * Field added to choice.'
       end
     end
   end
@@ -440,6 +458,9 @@ questions_map = {}
     conditions: conditions
   }
 end
+
+puts 'Questions, choices, and fields seeded.'
+puts 'Seeding: Audit forms, audit form questions, and conditions...'
 
 {
   BE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27],
@@ -475,8 +496,11 @@ end
   V: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27],
   Y: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27]
 }.each do |permit_name, question_numbers|
-  audit_form = AuditForm.find_by(permit_name: permit_name)
-  audit_form = AuditForm.create!(permit_name: permit_name) if audit_form.blank?
+  next if AuditForm.find_by(permit_name: permit_name).present?
+
+  audit_form = AuditForm.create!(permit_name: permit_name)
+
+  puts "* Audit form added: #{permit_name}"
 
   question_numbers.each do |question_number|
     question_group = questions_map[question_number]
@@ -487,6 +511,8 @@ end
       audit_form: audit_form,
       question: question
     )
+
+    puts "  * Audit form question added: #{question.question_number}"
 
     conditions&.each do |condition_params|
       condition_value = condition_params[:condition_value]
@@ -510,6 +536,10 @@ end
         conditional_question_number: conditional_question_number,
         condition_value: condition_value
       )
+
+      puts '    * Condition added to audit form question.'
     end
   end
 end
+
+puts 'Audit forms, audit form questions, and conditions seeded.'
