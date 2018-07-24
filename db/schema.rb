@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_160036) do
+ActiveRecord::Schema.define(version: 2018_07_24_205808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,29 @@ ActiveRecord::Schema.define(version: 2018_07_24_160036) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vendors", force: :cascade do |t|
+    t.bigint "company_id"
+    t.string "owner_id", null: false
+    t.string "license_number", null: false
+    t.string "name", null: false
+    t.text "address1", null: false
+    t.text "address2"
+    t.text "address3"
+    t.string "city", null: false
+    t.string "county"
+    t.string "state"
+    t.string "country", null: false
+    t.string "postal_code", null: false
+    t.string "subordinate"
+    t.string "related_to"
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_vendors_on_company_id"
+    t.index ["discarded_at"], name: "index_vendors_on_discarded_at"
+    t.index ["license_number"], name: "index_vendors_on_license_number", unique: true
+  end
+
   create_table "version_associations", force: :cascade do |t|
     t.bigint "version_id", null: false
     t.string "foreign_key_name", null: false
@@ -277,5 +300,6 @@ ActiveRecord::Schema.define(version: 2018_07_24_160036) do
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "push_tokens", "users"
   add_foreign_key "users", "companies"
+  add_foreign_key "vendors", "companies"
   add_foreign_key "version_associations", "versions"
 end

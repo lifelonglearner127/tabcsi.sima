@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :vendor do
+    company nil
+    owner_id 'MyString'
+    license_number 'MyString'
+    name 'MyString'
+    address1 'MyText'
+    address2 'MyText'
+    address3 'MyText'
+    city 'MyString'
+    county 'MyString'
+    state 'MyString'
+    country 'MyString'
+    postal_code 'MyString'
+    subordinate 'MyString'
+    related_to 'MyString'
+  end
+
   factory :setting do
     name 'MyString'
     value 'MyText'
