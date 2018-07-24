@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :location do
+    company nil
+    vendor nil
+  end
+
   factory :vendor do
     company nil
     owner_id 'MyString'

@@ -2,6 +2,7 @@
 
 class Company < ApplicationRecord
   has_many :licenses
+  has_many :locations
   has_many :users
   has_many :vendors
 

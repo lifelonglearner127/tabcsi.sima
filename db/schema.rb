@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_205808) do
+ActiveRecord::Schema.define(version: 2018_07_24_210801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,17 @@ ActiveRecord::Schema.define(version: 2018_07_24_205808) do
     t.index ["discarded_at"], name: "index_licenses_on_discarded_at"
     t.index ["license_number"], name: "index_licenses_on_license_number"
     t.index ["user_id"], name: "index_licenses_on_user_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.bigint "vendor_id", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_locations_on_company_id"
+    t.index ["discarded_at"], name: "index_locations_on_discarded_at"
+    t.index ["vendor_id"], name: "index_locations_on_vendor_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -294,6 +305,8 @@ ActiveRecord::Schema.define(version: 2018_07_24_205808) do
   add_foreign_key "fields", "choices"
   add_foreign_key "licenses", "companies"
   add_foreign_key "licenses", "users"
+  add_foreign_key "locations", "companies"
+  add_foreign_key "locations", "vendors"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
