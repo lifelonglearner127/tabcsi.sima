@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_210801) do
+ActiveRecord::Schema.define(version: 2018_07_24_211352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,8 +127,8 @@ ActiveRecord::Schema.define(version: 2018_07_24_210801) do
   end
 
   create_table "licenses", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "license_number", null: false
+    t.bigint "user_id"
+    t.string "license_number"
     t.decimal "front_lat", null: false
     t.decimal "front_long", null: false
     t.decimal "back_lat", null: false
@@ -137,10 +137,14 @@ ActiveRecord::Schema.define(version: 2018_07_24_210801) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.bigint "company_id"
+    t.bigint "location_id"
+    t.bigint "vendor_id"
     t.index ["company_id"], name: "index_licenses_on_company_id"
     t.index ["discarded_at"], name: "index_licenses_on_discarded_at"
     t.index ["license_number"], name: "index_licenses_on_license_number"
+    t.index ["location_id"], name: "index_licenses_on_location_id"
     t.index ["user_id"], name: "index_licenses_on_user_id"
+    t.index ["vendor_id"], name: "index_licenses_on_vendor_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -304,7 +308,9 @@ ActiveRecord::Schema.define(version: 2018_07_24_210801) do
   add_foreign_key "conditions", "questions"
   add_foreign_key "fields", "choices"
   add_foreign_key "licenses", "companies"
+  add_foreign_key "licenses", "locations"
   add_foreign_key "licenses", "users"
+  add_foreign_key "licenses", "vendors"
   add_foreign_key "locations", "companies"
   add_foreign_key "locations", "vendors"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
