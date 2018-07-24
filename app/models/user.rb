@@ -27,7 +27,7 @@ class User < ApplicationRecord
   )
 
   belongs_to :company
-  has_many :licenses
+  has_and_belongs_to_many :licenses
   has_many :push_tokens
 
   def generate_pin
