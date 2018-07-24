@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
       resources :distributors, only: %i[index]
 
-      resources :licenses, only: %i[index create] do
+      resources :licenses, only: %i[index] do
         collection do
           get :find
         end
