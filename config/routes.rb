@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       end
 
       resources :push_tokens, only: %i[create]
+      resources :settings, only: %i[index]
 
       namespace :users do
         post :validate_email, to: 'sessions#validate_email'
