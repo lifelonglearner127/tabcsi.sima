@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_213101) do
+ActiveRecord::Schema.define(version: 2018_07_24_213401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,6 +163,13 @@ ActiveRecord::Schema.define(version: 2018_07_24_213101) do
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
     t.index ["vendor_id"], name: "index_locations_on_vendor_id"
+  end
+
+  create_table "locations_users", id: false, force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["location_id", "user_id"], name: "index_locations_users_on_location_id_and_user_id"
+    t.index ["user_id", "location_id"], name: "index_locations_users_on_user_id_and_location_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
