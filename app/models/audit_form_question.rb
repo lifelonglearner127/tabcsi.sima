@@ -2,9 +2,9 @@
 
 class AuditFormQuestion < ApplicationRecord
   belongs_to :audit_form
+  has_many :conditions
   belongs_to :question
   has_many :choices, through: :question
-  has_many :conditions
 
   validates :question, uniqueness: { scope: :audit_form }
 

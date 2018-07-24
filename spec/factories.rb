@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :company do
+    name 'MyText'
+  end
+
   factory :field do
     choice nil
     label 'MyString'

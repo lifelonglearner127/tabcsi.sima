@@ -26,8 +26,9 @@ class User < ApplicationRecord
     foreign_key: :resource_owner_id
   )
 
-  has_many :push_tokens
+  belongs_to :company
   has_many :licenses
+  has_many :push_tokens
 
   def generate_pin
     pin = self.class.new_pin

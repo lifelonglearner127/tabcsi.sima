@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_18_205144) do
+ActiveRecord::Schema.define(version: 2018_07_24_140640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,14 @@ ActiveRecord::Schema.define(version: 2018_07_18_205144) do
     t.index ["question_id"], name: "index_choices_on_question_id"
   end
 
+  create_table "companies", force: :cascade do |t|
+    t.text "name", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_companies_on_discarded_at"
+  end
+
   create_table "conditions", force: :cascade do |t|
     t.string "condition_value", null: false
     t.datetime "created_at", null: false
@@ -128,6 +136,8 @@ ActiveRecord::Schema.define(version: 2018_07_18_205144) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_licenses_on_company_id"
     t.index ["discarded_at"], name: "index_licenses_on_discarded_at"
     t.index ["license_number"], name: "index_licenses_on_license_number"
     t.index ["user_id"], name: "index_licenses_on_user_id"
@@ -214,6 +224,8 @@ ActiveRecord::Schema.define(version: 2018_07_18_205144) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -247,11 +259,13 @@ ActiveRecord::Schema.define(version: 2018_07_18_205144) do
   add_foreign_key "conditions", "audit_form_questions"
   add_foreign_key "conditions", "questions"
   add_foreign_key "fields", "choices"
+  add_foreign_key "licenses", "companies"
   add_foreign_key "licenses", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "push_tokens", "users"
+  add_foreign_key "users", "companies"
   add_foreign_key "version_associations", "versions"
 end
