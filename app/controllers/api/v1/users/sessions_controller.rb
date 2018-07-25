@@ -13,6 +13,8 @@ module Api
 
           pin = user.generate_pin
 
+          error! 'There was a problem generating a new pin.' if pin.blank?
+
           UsersMailer.with(
             recipient: email,
             pin: pin

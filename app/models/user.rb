@@ -26,7 +26,7 @@ class User < ApplicationRecord
     foreign_key: :resource_owner_id
   )
 
-  belongs_to :company
+  belongs_to :company, optional: true
   has_and_belongs_to_many :licenses
   has_and_belongs_to_many :locations
   has_many :push_tokens
@@ -34,7 +34,7 @@ class User < ApplicationRecord
   def generate_pin
     pin = self.class.new_pin
 
-    update(password: pin)
+    return nil unless update(password: pin)
 
     pin
   end
