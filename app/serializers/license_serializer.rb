@@ -2,12 +2,8 @@
 
 class LicenseSerializer < ActiveModel::Serializer
   attributes(
-    :email, :license_number, :front, :back, :photo_count
+    :license_number, :front, :back, :photo_count
   )
-
-  def email
-    object.user.email
-  end
 
   def front
     {
