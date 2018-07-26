@@ -21,6 +21,9 @@ require_relative '../lib/patches'
 
 module TabcSi
   class Application < Rails::Application
+    config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('lib')
+
     config.assets.quiet = true
 
     config.generators do |generate|

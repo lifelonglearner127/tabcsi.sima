@@ -14,12 +14,16 @@ gem 'bourbon', '~> 5.0'
 gem 'bundler', '~> 1.16', '>= 1.16.1'
 gem 'delayed_job_active_record', '~> 4.1'
 gem 'devise', '~> 4.4'
-gem 'devise-doorkeeper'
+gem 'devise-doorkeeper', '~> 1.1'
 gem 'discard', '~> 1.0'
-gem 'doorkeeper'
+gem 'doorkeeper', '~> 4.4'
 gem 'doorkeeper-jwt', github: 'jpickwell/doorkeeper-jwt', branch: 'improvements'
 gem 'dotenv-rails', '~> 2.5'
 gem 'flutie', '~> 2.0'
+gem 'grape', '~> 1.0'
+gem 'grape-entity', '~> 0.7.1'
+gem 'grape-swagger', '~> 0.30.1'
+gem 'grape-swagger-entity', '~> 0.2.5'
 gem 'high_voltage', '~> 3.1'
 gem 'jbuilder', '~> 2.7'
 gem 'neat', '~> 3.0'
@@ -42,15 +46,15 @@ gem 'tzinfo-data', '~> 1.2018'
 gem 'uglifier', '~> 4.1'
 
 group :development do
-  gem 'capistrano', '3.11.0', require: false
+  gem 'capistrano', '~> 3.11', require: false
   # gem 'capistrano-nvm', '~> 0.0.7', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false
   gem 'capistrano-rails', '~> 1.4', require: false
   # gem 'capistrano-resque', '~> 0.2.3', require: false
   gem 'capistrano-rvm', '~> 0.1.2', require: false
-  gem 'capistrano-yarn', '~> 2.0', '>= 2.0.2', require: false
+  gem 'capistrano-yarn', '~> 2.0', require: false
   gem 'hipchat', '~> 1.6', require: false
-  gem 'listen', '>= 3.1.5', '< 3.2'
+  gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
   gem 'rubocop', '~> 0.58.0', require: false
   gem 'spring', '~> 2.0'
