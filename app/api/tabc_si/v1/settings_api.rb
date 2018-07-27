@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Audit
+module TabcSi
   module V1
     class SettingsApi < Grape::API
       resources :settings do
         desc 'Get Settings' do
-          detail 'Retrieve all global settings.'
+          detail 'Retrieves all global settings.'
         end
         get do
           Setting.all

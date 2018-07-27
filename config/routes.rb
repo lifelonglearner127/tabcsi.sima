@@ -65,5 +65,5 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  mount Audit::Api => '/'
+  mount TabcSi::Api => '/'
 end

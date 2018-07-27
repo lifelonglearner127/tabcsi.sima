@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Audit
+module TabcSi
   module V1
     class PushTokensApi < Grape::API
       resources :push_tokens do

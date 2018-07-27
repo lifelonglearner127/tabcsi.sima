@@ -2,16 +2,16 @@
 
 require 'doorkeeper/grape/helpers'
 
-module Audit
+module TabcSi
   class Api < Grape::API
-    helpers ::Doorkeeper::Grape::Helpers
-    helpers ::Audit::Helpers::Errors
+    helpers Doorkeeper::Grape::Helpers
+    helpers TabcSi::Helpers::Errors
 
     content_type :json, 'application/json'
 
     default_format :json
 
-    rescue_from ::Audit::Error do |error|
+    rescue_from TabcSi::Error do |error|
       error! error.message, error.code
     end
 

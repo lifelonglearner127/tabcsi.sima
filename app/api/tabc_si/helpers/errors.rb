@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Audit
+module TabcSi
   module Helpers
     module Errors
       {

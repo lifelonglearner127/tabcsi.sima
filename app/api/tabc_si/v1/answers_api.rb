@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Audit
+module TabcSi
   module V1
     class AnswersApi < Grape::API
       resources :answers do

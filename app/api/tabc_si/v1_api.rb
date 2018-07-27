@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Audit
+module TabcSi
   class V1Api < Grape::API
     prefix 'api'
     version 'v1', using: :path
