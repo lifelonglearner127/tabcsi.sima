@@ -10,6 +10,13 @@ class AllowedIpConstraint
   end
 
   def matches?(request)
-    @ips.include?(request.remote_ip)
+    @request = request
+    @ips.include?(ip)
+  end
+
+  private
+
+  def ip
+    @request.respond_to?(:remote_ip) ? @request.remote_ip : @request.ip
   end
 end

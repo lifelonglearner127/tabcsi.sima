@@ -2,6 +2,7 @@
 
 module Audit
   class V1Api < Grape::API
+    prefix 'api'
     version 'v1', using: :path
 
     mount V1::AnswersApi
@@ -16,7 +17,41 @@ module Audit
     add_swagger_documentation(
       mount_path: '/docs_spec',
       doc_version: '1.0',
-      info: { title: 'TABC Audit/SI APIs' }
+      info: { title: 'TABC Audit/SI APIs' },
+      tags: [
+        {
+          name: 'answers',
+          description: 'Answers API'
+        },
+        {
+          name: 'audit_forms',
+          description: 'Audit Forms (A.K.A. Questions) API'
+        },
+        {
+          name: 'distributors',
+          description: 'Distributors API'
+        },
+        {
+          name: 'licenses',
+          description: 'Licenses/Permits API'
+        },
+        {
+          name: 'push_tokens',
+          description: 'Push Tokens API'
+        },
+        {
+          name: 'settings',
+          description: 'Global settings for use by consuming applications.'
+        },
+        {
+          name: 'users',
+          description: 'Users API'
+        },
+        {
+          name: 'vendors',
+          description: 'Vendors API'
+        }
+      ]
     )
   end
 end

@@ -12,7 +12,12 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    get ':version/docs', action: :docs, format: false
+    get(
+      ':version/docs',
+      action: :docs,
+      format: false,
+      constraints: AllowedIpConstraint.new
+    )
   end
 
   # namespace(:api, defaults: { format: :json }) do
@@ -60,5 +65,5 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  mount Audit::Api => '/api'
+  mount Audit::Api => '/'
 end
