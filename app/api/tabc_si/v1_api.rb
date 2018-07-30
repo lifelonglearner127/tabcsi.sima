@@ -2,6 +2,10 @@
 
 module TabcSi
   class V1Api < Grape::API
+    OAUTH_PROTOCOL = Rails.env.development? ? 'http' : 'https'
+    OAUTH_HOST = "#{OAUTH_PROTOCOL}://#{Nenv.instance.application_host}"
+    OAUTH_TOKEN_URL = "#{OAUTH_HOST}/oauth/token"
+
     prefix 'api'
     version 'v1', using: :path
 
@@ -25,20 +29,21 @@ module TabcSi
         license: 'Proprietary'
       },
       security_definitions: {
-        tabc_si_auth: {
+        oauth_client: {
           type: 'oauth2',
-          description: '',
-          flows: {
-            application: {
-              tokenUrl: '/oauth/token'
-            },
-            password: {
-              tokenUrl: '/oauth/token'
-            }
-          }
+          description: File.read(Rails.root.join('docs', 'oauth_client.md')),
+          flow: 'application',
+          tokenUrl: OAUTH_TOKEN_URL,
+          scopes: {}
+        },
+        oauth_password: {
+          type: 'oauth2',
+          description: File.read(Rails.root.join('docs', 'oauth_password.md')),
+          flow: 'password',
+          tokenUrl: OAUTH_TOKEN_URL,
+          scopes: {}
         }
       },
-      security: { tabc_si_auth: [] },
       tags: [
         {
           name: 'answers',
