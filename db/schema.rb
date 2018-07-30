@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_213401) do
+ActiveRecord::Schema.define(version: 2018_07_30_120357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,9 +288,10 @@ ActiveRecord::Schema.define(version: 2018_07_24_213401) do
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "license_type", null: false
     t.index ["company_id"], name: "index_vendors_on_company_id"
     t.index ["discarded_at"], name: "index_vendors_on_discarded_at"
-    t.index ["license_number"], name: "index_vendors_on_license_number", unique: true
+    t.index ["license_type", "license_number"], name: "index_vendors_on_license_type_and_license_number", unique: true
   end
 
   create_table "version_associations", force: :cascade do |t|
