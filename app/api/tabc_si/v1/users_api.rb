@@ -45,9 +45,19 @@ module TabcSi
         )
         params do
           requires :email, type: String, allow_blank: false
+          optional :location_id, type: Integer, allow_blank: false
         end
         post :validate_email do
-          respond { valid_email: User.find_by(email: params[:email]).present? }
+          user = User.find_by(email: params[:email])
+          valid_email = user.present?
+          response = { valid_email: valid_email }
+
+          if params[:location_id].present?
+            valid_location = valid_email && user.locations.exists?(location_id)
+            response[:valid_location] = valid_location
+          end
+
+          respond response
         end
       end
     end
