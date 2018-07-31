@@ -13,10 +13,7 @@ module TabcSi
           }
         )
         get :names do
-          %w[
-            Spec's\ Wine,\ Spirits\ &\ Finer\ Foods
-            Test\ Bar\ &\ Grill
-          ]
+          respond Vendor.order(name: :asc).pluck(:name)
         end
       end
     end

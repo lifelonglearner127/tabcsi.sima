@@ -4,7 +4,14 @@ module TabcSi
   module Entities
     class VendorNames < Grape::Entity
       present_collection true
-      expose :items, documentation: { is_array: true }
+
+      expose(
+        :items,
+        documentation: {
+          is_array: true,
+          desc: 'The set of vendor names.'
+        }
+      )
     end
   end
 end
