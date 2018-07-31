@@ -28,9 +28,11 @@ module TabcSi
     rescue_from :all do |error|
       log_error =
         case error
-        when ActiveRecord::RecordNotFound,
-             Grape::Exceptions::ValidationErrors,
-             TabcSi::Error
+        when ActiveRecord::RecordInvalid,
+          ActiveRecord::RecordNotFound,
+          Grape::Exceptions::ValidationErrors,
+          TabcSi::Error
+          # do not log these types of errors
           false
         else
           true
@@ -38,6 +40,8 @@ module TabcSi
 
       status =
         case error
+        when ActiveRecord::RecordInvalid
+          400
         when ActiveRecord::RecordNotFound
           404
         else

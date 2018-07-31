@@ -3,26 +3,54 @@
 module TabcSi
   module V1
     class PushTokensApi < Grape::API
-      resources :push_tokens do
-        post do
-          # fail! 'No OAuth application present.' if current_application.blank?
-          # fail! 'No user present.' if current_resource_owner.blank?
-          #
-          # device_type = __send__(:device_type)
-          # unless valid_device_type?(device_type)
-          #   device_type = current_application.name.to_sym
-          #   fail! 'Invalid device type.' unless valid_device_type?(device_type)
-          # end
-          #
-          # push_token = PushToken.create!(
-          #   user: current_resource_owner,
-          #   device_type: device_type,
-          #   token: token
-          # )
-          #
-          # success! push_token
+      helpers do
+        def valid_device_type?(device_type)
+          PushToken.device_types.key?(device_type)
+        end
+      end
 
-          'POST push_tokens'
+      resources :push_tokens do
+        desc(
+          'Add Push Token',
+          detail: 'Add a push token for the user attached to the password' \
+            ' authorization token used.',
+          success: {
+            code: 200,
+            model: Entities::PushToken,
+            message: 'The created push token object.'
+          }
+        )
+        params do
+          requires :token, type: String
+
+          optional(
+            :device_type, type: String, values: PushToken.device_types.keys
+          )
+        end
+        post do
+          if current_application.blank?
+            error_bad_request! 'missing OAuth application'
+          end
+
+          if current_user.blank?
+            error_bad_request! 'missing user; please use a password token'
+          end
+
+          device_type = params[:device_type] || current_application.name
+          unless valid_device_type?(device_type)
+            error_bad_request!(
+              'invalid device type from authorization token; please specify' \
+              ' `device_type` parameter'
+            )
+          end
+
+          push_token = PushToken.create!(
+            user: current_user,
+            device_type: device_type,
+            token: params[:token]
+          )
+
+          respond push_token
         end
       end
     end

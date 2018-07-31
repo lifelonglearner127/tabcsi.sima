@@ -5,7 +5,7 @@ module TabcSi
     module Response
       # Use route's success model for data representation.
       def respond(data, **options)
-        success_object = route.settings.dig(:description, :success)
+        success_object = route.settings.dig(:description, :success) || {}
         model = success_object[:model]
         code = success_object[:code]
         options = { with: model }.merge(options) if model.present?
