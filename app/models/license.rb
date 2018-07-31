@@ -7,6 +7,11 @@ class License < ApplicationRecord
   has_and_belongs_to_many :users
   belongs_to :vendor
 
+  delegate(
+    :license_number, :license_type, :related_to, :subordinate,
+    to: :vendor
+  )
+
   def permit_names
     name = vendor.license_type
 

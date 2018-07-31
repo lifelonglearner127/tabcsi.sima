@@ -12,7 +12,7 @@ module TabcSi
     mount V1::AnswersApi
     mount V1::AuditFormsApi
     mount V1::DistributorsApi
-    mount V1::LicensesApi
+    mount V1::LocationsApi
     mount V1::PushTokensApi
     mount V1::SettingsApi
     mount V1::UsersApi
@@ -58,8 +58,8 @@ module TabcSi
           description: 'Distributors API'
         },
         {
-          name: 'licenses',
-          description: 'Licenses/Permits API'
+          name: 'locations',
+          description: 'Locations API'
         },
         {
           name: 'push_tokens',
@@ -90,7 +90,7 @@ module TabcSi
           },
           {
             name: 'Vendors',
-            tags: %w[distributors licenses vendors]
+            tags: %w[distributors locations vendors]
           }
         ]
       }
