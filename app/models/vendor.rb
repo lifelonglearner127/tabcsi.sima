@@ -5,7 +5,7 @@ class Vendor < ApplicationRecord
 
   belongs_to :company, optional: true
   has_one :license
-  has_one :location
+  belongs_to :location
 
   validates(
     :owner_id, :license_type, :license_number, :name, :address1, :city,

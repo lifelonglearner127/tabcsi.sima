@@ -1,36 +1,24 @@
-# Tabc-si
-
-## Getting Started
-
-After you have cloned this repo, run this setup script to set up your machine
-with the necessary dependencies to run and test this app:
-
-    % ./bin/setup
-
-It assumes you have a machine equipped with Ruby, Postgres, etc. If not, set up
-your machine with [this script].
-
-[this script]: https://github.com/thoughtbot/laptop
-
-After setting up, you can run the application using [Heroku Local]:
-
-    % heroku local
-
-[Heroku Local]: https://devcenter.heroku.com/articles/heroku-local
-
-## Guidelines
-
-Use the following guides for getting things done, programming well, and
-programming in style.
-
-* [Protocol](http://github.com/thoughtbot/guides/blob/master/protocol)
-* [Best Practices](http://github.com/thoughtbot/guides/blob/master/best-practices)
-* [Style](http://github.com/thoughtbot/guides/blob/master/style)
+# TABC: SI (Self-Inspection, a.k.a. Audit)
 
 ## Deploying
 
-If you have previously run the `./bin/setup` script,
-you can deploy to staging and production with:
+    > bin/deploy sandbox
+    > bin/deploy production
 
-    % ./bin/deploy staging
-    % ./bin/deploy production
+## Vendor Associations
+
+The `vendors` table is a source table. What this means is that `licenses` and
+`locations` act as proxies. Vendors essentially represent licenses/permits, but
+there's location data associated with them as well. This location data is
+repetitive; in the future, the relationships between these tables may become
+more succinct.
+
+The "location-vendor" relationship is interesting in that a vendor belongs to a
+location, but the location proxies to the vendor. The reason this "chicken-egg"
+problem can work is because a location represents a physical, addressable
+location; e.g., a bar or convenient store. This means the location only needs to
+proxy to the first vendor in the `vendors` association.
+
+The "license-vendor" relationship is simple and straightforward. Since a vendor
+is essentially a license/permit, a license only needs to belong to a single
+`vendor`, and thus a vendor only needs to have one `license`.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_30_120357) do
+ActiveRecord::Schema.define(version: 2018_07_31_194805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,13 +156,11 @@ ActiveRecord::Schema.define(version: 2018_07_30_120357) do
 
   create_table "locations", force: :cascade do |t|
     t.bigint "company_id", null: false
-    t.bigint "vendor_id", null: false
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
-    t.index ["vendor_id"], name: "index_locations_on_vendor_id"
   end
 
   create_table "locations_users", id: false, force: :cascade do |t|
@@ -289,9 +287,11 @@ ActiveRecord::Schema.define(version: 2018_07_30_120357) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "license_type", null: false
+    t.bigint "location_id", null: false
     t.index ["company_id"], name: "index_vendors_on_company_id"
     t.index ["discarded_at"], name: "index_vendors_on_discarded_at"
     t.index ["license_type", "license_number"], name: "index_vendors_on_license_type_and_license_number", unique: true
+    t.index ["location_id"], name: "index_vendors_on_location_id"
   end
 
   create_table "version_associations", force: :cascade do |t|
@@ -327,7 +327,6 @@ ActiveRecord::Schema.define(version: 2018_07_30_120357) do
   add_foreign_key "licenses", "users"
   add_foreign_key "licenses", "vendors"
   add_foreign_key "locations", "companies"
-  add_foreign_key "locations", "vendors"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
@@ -335,5 +334,6 @@ ActiveRecord::Schema.define(version: 2018_07_30_120357) do
   add_foreign_key "push_tokens", "users"
   add_foreign_key "users", "companies"
   add_foreign_key "vendors", "companies"
+  add_foreign_key "vendors", "locations"
   add_foreign_key "version_associations", "versions"
 end
