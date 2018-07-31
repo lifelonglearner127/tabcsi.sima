@@ -4,28 +4,35 @@ module TabcSi
   module V1
     class AuditFormsApi < Grape::API
       resources :audit_forms do
+        desc(
+          'Find Questions',
+          detail: 'Retrieve self-inspection survey questions based on license' \
+            ' number.',
+          success: {
+            model: Entities::AuditForm,
+            message: 'A set of questions for a self-inspection survey.'
+          }
+        )
+        params do
+          requires :license_number, type: String
+        end
         get :find do
-          # audit_form =
-          #   AuditForm.includes(
-          #     audit_form_questions: [
-          #       {
-          #         choices: %i[fields]
-          #       },
-          #       :conditions
-          #     ]
-          #   )
-          #     .find_by(permit_name: permit_name)
-          #
-          # if audit_form.blank?
-          #   fail!(
-          #     'Permit name is either unknown or is not associated with any' \
-          #   ' questions.'
-          #   )
-          # end
-          #
-          # success! audit_form
+          vendor = Vendor.find_by(
+            Vendor.split_license_number(params[:license_number])
+          )
 
-          'GET audit_forms/find'
+          audit_form =
+            AuditForm
+            .includes(
+              audit_form_questions: [
+                { choices: %i[fields] },
+                :conditions
+              ]
+            )
+            .where(permit_name: vendor.license.permit_names)
+            .first
+
+          respond audit_form
         end
       end
     end
