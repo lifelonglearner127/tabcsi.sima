@@ -5,20 +5,39 @@
     > bin/deploy sandbox
     > bin/deploy production
 
-## Vendor Associations
+## Data Feed
 
-The `vendors` table is a source table. What this means is that `licenses` and
-`locations` act as proxies. Vendors essentially represent licenses/permits, but
-there's location data associated with them as well. This location data is
-repetitive; in the future, the relationships between these tables may become
-more succinct.
+The data feed includes "vendor" info. This info is split into three groups:
 
-The "location-vendor" relationship is interesting in that a vendor belongs to a
-location, but the location proxies to the vendor. The reason this "chicken-egg"
-problem can work is because a location represents a physical, addressable
-location; e.g., a bar or convenient store. This means the location only needs to
-proxy to the first vendor in the `vendors` association.
+* owner-related
+* location-related
+* license-related
 
-The "license-vendor" relationship is simple and straightforward. Since a vendor
-is essentially a license/permit, a license only needs to belong to a single
-`vendor`, and thus a vendor only needs to have one `license`.
+### Owner-Related
+
+The `companies` table contains all owner-related info. Current fields are:
+
+* `owner_id`
+
+### Location-Related
+
+The `locations` table contains all location-related info. Current fields are:
+
+* `name`
+* `address1`
+* `address2`
+* `address3`
+* `city`
+* `county`
+* `state`
+* `country`
+* `postal_code`
+
+### License-Related
+
+The `licenses` table contains all license-related info. Current fields are:
+
+* `license_type`
+* `license_number`
+* `subordinate`
+* `related_to`
