@@ -6,12 +6,4 @@ class ApiController < ApplicationController
   def docs
     @spec_url = "/grape/api/#{params[:version]}/docs_spec"
   end
-
-  # def spec
-  #   binding.pry
-  #
-  #   json_schema = OpenApi.build_schema
-  #
-  #   render json: json_schema
-  # end
 end
