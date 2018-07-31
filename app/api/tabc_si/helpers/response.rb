@@ -7,11 +7,18 @@ module TabcSi
       def respond(data, **options)
         success_object = route.settings.dig(:description, :success)
         model = success_object[:model]
+        code = success_object[:code]
         options = { with: model }.merge(options) if model.present?
 
-        status success_object[:code] if success_object[:code].present?
+        status code if code.present?
+
+        body(false) && return if data.nil? && code == 204
 
         present data, **options
+      end
+
+      def no_content
+        respond nil
       end
     end
   end
