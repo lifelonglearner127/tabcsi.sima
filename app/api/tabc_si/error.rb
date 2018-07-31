@@ -1,18 +1,25 @@
 # frozen_string_literal: true
 
 module TabcSi
-  class Error < RuntimeError
+  class Error < StandardError
+    attr_reader :status
     attr_reader :code
+    attr_reader :title
+    attr_reader :detail
 
-    def initialize(message, code)
-      if message.is_a?(Array)
-        @errors = message
-        message = nil
-      end
+    def initialize(title, detail: nil, status: :bad_request, code: nil)
+      super(title)
 
-      super(message)
+      @title = title
+      @detail = detail || title
+      self.status = status
+      @code = code || self.status
+    end
 
-      @code = Rack::Utils::SYMBOL_TO_STATUS_CODE[code]
+    def status=(value)
+      @status =
+        (value.is_a?(Symbol) && Rack::Utils::SYMBOL_TO_STATUS_CODE[value]) ||
+        value
     end
   end
 end
