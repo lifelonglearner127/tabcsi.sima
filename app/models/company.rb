@@ -4,7 +4,6 @@ class Company < ApplicationRecord
   has_many :licenses
   has_many :locations
   has_many :users
-  has_many :vendors
 
-  validates :name, presence: true
+  validates :owner_id, presence: true, uniqueness: { case_sensitive: false }
 end

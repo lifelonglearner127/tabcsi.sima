@@ -13,7 +13,7 @@ module TabcSi
           }
         )
         get :names do
-          respond Vendor.order(name: :asc).pluck(:name)
+          respond Location.order(name: :asc).pluck(:name)
         end
       end
     end

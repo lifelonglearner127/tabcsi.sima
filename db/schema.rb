@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_31_194805) do
+ActiveRecord::Schema.define(version: 2018_07_31_212314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,11 +80,13 @@ ActiveRecord::Schema.define(version: 2018_07_31_194805) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.text "name", null: false
+    t.text "name"
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "owner_id", null: false
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
+    t.index ["owner_id"], name: "index_companies_on_owner_id", unique: true
   end
 
   create_table "conditions", force: :cascade do |t|
@@ -127,24 +129,19 @@ ActiveRecord::Schema.define(version: 2018_07_31_194805) do
   end
 
   create_table "licenses", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "license_number"
-    t.decimal "front_lat", null: false
-    t.decimal "front_long", null: false
-    t.decimal "back_lat", null: false
-    t.decimal "back_long", null: false
+    t.string "license_number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
-    t.bigint "company_id"
-    t.bigint "location_id"
-    t.bigint "vendor_id"
+    t.bigint "company_id", null: false
+    t.bigint "location_id", null: false
+    t.string "license_type", null: false
+    t.string "subordinate"
+    t.string "related_to"
     t.index ["company_id"], name: "index_licenses_on_company_id"
     t.index ["discarded_at"], name: "index_licenses_on_discarded_at"
-    t.index ["license_number"], name: "index_licenses_on_license_number"
+    t.index ["license_type", "license_number"], name: "index_licenses_on_license_type_and_license_number", unique: true
     t.index ["location_id"], name: "index_licenses_on_location_id"
-    t.index ["user_id"], name: "index_licenses_on_user_id"
-    t.index ["vendor_id"], name: "index_licenses_on_vendor_id"
   end
 
   create_table "licenses_users", id: false, force: :cascade do |t|
@@ -159,6 +156,19 @@ ActiveRecord::Schema.define(version: 2018_07_31_194805) do
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.text "address1", null: false
+    t.text "address2"
+    t.text "address3"
+    t.string "city", null: false
+    t.string "county"
+    t.string "state"
+    t.string "country", null: false
+    t.string "postal_code", null: false
+    t.decimal "front_lat"
+    t.decimal "front_long"
+    t.decimal "back_lat"
+    t.decimal "back_long"
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
   end
@@ -268,32 +278,6 @@ ActiveRecord::Schema.define(version: 2018_07_31_194805) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "vendors", force: :cascade do |t|
-    t.bigint "company_id"
-    t.string "owner_id", null: false
-    t.string "license_number", null: false
-    t.string "name", null: false
-    t.text "address1", null: false
-    t.text "address2"
-    t.text "address3"
-    t.string "city", null: false
-    t.string "county"
-    t.string "state"
-    t.string "country", null: false
-    t.string "postal_code", null: false
-    t.string "subordinate"
-    t.string "related_to"
-    t.datetime "discarded_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "license_type", null: false
-    t.bigint "location_id", null: false
-    t.index ["company_id"], name: "index_vendors_on_company_id"
-    t.index ["discarded_at"], name: "index_vendors_on_discarded_at"
-    t.index ["license_type", "license_number"], name: "index_vendors_on_license_type_and_license_number", unique: true
-    t.index ["location_id"], name: "index_vendors_on_location_id"
-  end
-
   create_table "version_associations", force: :cascade do |t|
     t.bigint "version_id", null: false
     t.string "foreign_key_name", null: false
@@ -324,8 +308,6 @@ ActiveRecord::Schema.define(version: 2018_07_31_194805) do
   add_foreign_key "fields", "choices"
   add_foreign_key "licenses", "companies"
   add_foreign_key "licenses", "locations"
-  add_foreign_key "licenses", "users"
-  add_foreign_key "licenses", "vendors"
   add_foreign_key "locations", "companies"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
@@ -333,7 +315,5 @@ ActiveRecord::Schema.define(version: 2018_07_31_194805) do
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "push_tokens", "users"
   add_foreign_key "users", "companies"
-  add_foreign_key "vendors", "companies"
-  add_foreign_key "vendors", "locations"
   add_foreign_key "version_associations", "versions"
 end

@@ -17,8 +17,8 @@ module TabcSi
           requires :license_number, type: String
         end
         get :find do
-          vendor = Vendor.find_by(
-            Vendor.split_license_number(params[:license_number])
+          license = License.find_by(
+            License.split_license_number(params[:license_number])
           )
 
           audit_form =
@@ -29,7 +29,7 @@ module TabcSi
                 :conditions
               ]
             )
-            .where(permit_name: vendor.license.permit_names)
+            .where(permit_name: license.permit_names)
             .first
 
           respond audit_form

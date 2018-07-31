@@ -16,10 +16,18 @@ module TabcSi
           }
         )
         get do
-          locations = current_user&.locations || Location.includes(:vendor)
+          locations = current_user&.locations || Location.all
 
           respond locations
         end
+
+        # params do
+        #   requires :id, type: Integer, desc: 'Location id.'
+        # end
+        # route_param :id do
+        #   get :history do
+        #   end
+        # end
       end
     end
   end
