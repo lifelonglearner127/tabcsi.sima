@@ -35,11 +35,13 @@ module TabcSi
         end
 
         desc(
-          'Validate User Email',
-          detail: 'Checks if a specified email address is valid/exists.',
+          'Validate User',
+          detail: 'Checks if a specified email address is valid/exists. Can' \
+            ' also check if a specified location is valid for the specified' \
+            ' user.',
           success: {
             code: 200,
-            model: Entities::ValidateEmail,
+            model: Entities::Validate,
             message: 'A validation object.'
           }
         )
@@ -47,7 +49,7 @@ module TabcSi
           requires :email, type: String, allow_blank: false
           optional :location_id, type: Integer, allow_blank: false
         end
-        post :validate_email do
+        post :validate do
           user = User.find_by(email: params[:email])
           valid_email = user.present?
           response = { valid_email: valid_email }
