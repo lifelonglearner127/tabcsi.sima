@@ -31,11 +31,16 @@ namespace :dev do
 
       print line
 
-      company = Company.find_or_create_by!(owner_id: owner_id)
+      company = Company.find_by(owner_id: owner_id)
+      if company.blank?
+        company = Company.create!(
+          name: owner_id,
+          owner_id: owner_id
+        )
+      end
 
-      location = Location.find_or_create_by!(
+      location_data = {
         company: company,
-        name: name,
         address1: row_hash.delete(:address1),
         address2: row_hash.delete(:address2),
         address3: row_hash.delete(:address3),
@@ -44,7 +49,15 @@ namespace :dev do
         state: row_hash.delete(:state),
         country: 'United States',
         postal_code: row_hash.delete(:postal_code)
-      )
+      }
+
+      location = Location.find_by(**location_data)
+      if location.blank?
+        location = Location.create!(
+          name: name,
+          **location_data
+        )
+      end
 
       License.create!(
         company: company,
@@ -65,5 +78,7 @@ namespace :dev do
 
       previous_line_length = line.length
     end
+
+    puts ''
   end
 end
