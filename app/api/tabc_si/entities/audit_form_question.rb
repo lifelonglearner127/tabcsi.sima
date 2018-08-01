@@ -10,7 +10,7 @@ module TabcSi
       expose :multiline
       expose :source
       expose :other
-      expose :multiple, description: { type: 'boolean' }
+      expose :multiple, documentation: { type: 'boolean' }
       expose :choices, using: Entities::Choice
       expose :conditions, using: Entities::Condition
     end
