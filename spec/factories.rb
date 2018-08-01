@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :inspection do
+    location nil
+    audit_form nil
+    user nil
+    started_at '2018-08-01 16:53:56'
+    completed_at '2018-08-01 16:53:56'
+  end
+
   factory :location do
     company nil
     vendor nil

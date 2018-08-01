@@ -2,6 +2,7 @@
 
 class Location < ApplicationRecord
   belongs_to :company
+  has_many :inspections, -> { order(id: :asc) }
   has_many :licenses, -> { order(id: :asc) }
   has_many_attached :photos
   has_and_belongs_to_many :users, -> { order(id: :asc) }

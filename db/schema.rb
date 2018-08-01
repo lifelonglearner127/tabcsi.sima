@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_01_211203) do
+ActiveRecord::Schema.define(version: 2018_08_01_215356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,19 @@ ActiveRecord::Schema.define(version: 2018_08_01_211203) do
     t.datetime "updated_at", null: false
     t.index ["choice_id"], name: "index_fields_on_choice_id"
     t.index ["discarded_at"], name: "index_fields_on_discarded_at"
+  end
+
+  create_table "inspections", force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.bigint "audit_form_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "started_at", null: false
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["audit_form_id"], name: "index_inspections_on_audit_form_id"
+    t.index ["location_id"], name: "index_inspections_on_location_id"
+    t.index ["user_id"], name: "index_inspections_on_user_id"
   end
 
   create_table "licenses", force: :cascade do |t|
@@ -304,6 +317,9 @@ ActiveRecord::Schema.define(version: 2018_08_01_211203) do
   add_foreign_key "choices", "questions"
   add_foreign_key "conditions", "audit_form_questions"
   add_foreign_key "fields", "choices"
+  add_foreign_key "inspections", "audit_forms"
+  add_foreign_key "inspections", "locations"
+  add_foreign_key "inspections", "users"
   add_foreign_key "licenses", "companies"
   add_foreign_key "licenses", "locations"
   add_foreign_key "locations", "companies"
