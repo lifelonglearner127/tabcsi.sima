@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_01_173528) do
+ActiveRecord::Schema.define(version: 2018_08_01_203415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,11 +95,9 @@ ActiveRecord::Schema.define(version: 2018_08_01_173528) do
     t.datetime "updated_at", null: false
     t.string "conditional_question_number"
     t.datetime "discarded_at"
-    t.bigint "question_id"
     t.bigint "audit_form_question_id", null: false
     t.index ["audit_form_question_id"], name: "index_conditions_on_audit_form_question_id"
     t.index ["discarded_at"], name: "index_conditions_on_discarded_at"
-    t.index ["question_id"], name: "index_conditions_on_question_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -304,7 +302,6 @@ ActiveRecord::Schema.define(version: 2018_08_01_173528) do
   add_foreign_key "audit_form_questions", "questions"
   add_foreign_key "choices", "questions"
   add_foreign_key "conditions", "audit_form_questions"
-  add_foreign_key "conditions", "questions"
   add_foreign_key "fields", "choices"
   add_foreign_key "licenses", "companies"
   add_foreign_key "licenses", "locations"
