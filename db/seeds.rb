@@ -153,7 +153,8 @@ puts 'Seeding: Questions, choices, and fields...'
     question_text: 'List the vendors you purchase alcohol from',
     question_type: :drop_down,
     source: '/api/v1/vendors/names',
-    other: 50
+    other: 50,
+    multiple: true
   },
   '13A': {
     question_text: 'Are you holding any product that is damaged?',
