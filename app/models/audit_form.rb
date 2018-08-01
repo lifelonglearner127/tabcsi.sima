@@ -5,7 +5,11 @@ class AuditForm < ApplicationRecord
     BE BE-FB BF BG BG-FB BQ MB MB-FB N N-FB NB NE P Q RM V Y
   ].freeze
 
+  include LastUpdatable
+
   has_many :audit_form_questions, -> { order(id: :asc) }
 
   validates :permit_name, presence: true, uniqueness: { case_sensitive: false }
+
+  last_updated_by :audit_form_questions
 end
