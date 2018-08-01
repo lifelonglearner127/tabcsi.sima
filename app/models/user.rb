@@ -27,9 +27,9 @@ class User < ApplicationRecord
   )
 
   belongs_to :company, optional: true
-  has_and_belongs_to_many :licenses
-  has_and_belongs_to_many :locations
-  has_many :push_tokens
+  has_and_belongs_to_many :licenses, -> { order(id: :asc) }
+  has_and_belongs_to_many :locations, -> { order(id: :asc) }
+  has_many :push_tokens, -> { order(id: :desc) }
 
   def generate_pin
     pin = self.class.new_pin
