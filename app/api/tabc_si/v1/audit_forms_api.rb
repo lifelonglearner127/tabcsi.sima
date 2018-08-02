@@ -14,7 +14,7 @@ module TabcSi
           }
         )
         params do
-          requires :license_number, type: String
+          requires :license_number, type: String, desc: 'Example: "MB123456"'
         end
         get :find do
           license = License.find_by(

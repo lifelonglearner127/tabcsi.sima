@@ -3,7 +3,7 @@
 module TabcSi
   module Entities
     class Location < Grape::Entity
-      expose :id
+      expose :id, documentation: { type: 'integer', format: 'int64' }
       expose :name
       expose :address1
       expose :address2
@@ -14,7 +14,12 @@ module TabcSi
       expose :country
       expose :postal_code
       expose :locked, documentation: { type: 'boolean' }
-      expose :licenses, using: Entities::License
+
+      expose(
+        :licenses,
+        using: Entities::License,
+        documentation: { is_array: true }
+      )
     end
   end
 end

@@ -6,13 +6,23 @@ module TabcSi
       expose :question_number, as: :question_id
       expose :question_text
       expose :question_type, as: :type
-      expose :max_characters
-      expose :multiline
+      expose :max_characters, documentation: { type: 'integer' }
+      expose :multiline, documentation: { type: 'boolean' }
       expose :source
-      expose :other
+      expose :other, documentation: { type: 'integer' }
       expose :multiple, documentation: { type: 'boolean' }
-      expose :choices, using: Entities::Choice
-      expose :conditions, using: Entities::Condition
+
+      expose(
+        :choices,
+        using: Entities::Choice,
+        documentation: { is_array: true }
+      )
+
+      expose(
+        :conditions,
+        using: Entities::Condition,
+        documentation: { is_array: true }
+      )
     end
   end
 end

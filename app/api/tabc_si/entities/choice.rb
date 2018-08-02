@@ -3,10 +3,15 @@
 module TabcSi
   module Entities
     class Choice < Grape::Entity
-      expose :id
+      expose :id, documentation: { type: 'integer', format: 'int64' }
       expose :choice_text, as: :text
-      expose :picture_attachment
-      expose :fields, using: Entities::Field
+      expose :picture_attachment, documentation: { type: 'boolean' }
+
+      expose(
+        :fields,
+        using: Entities::Field,
+        documentation: { is_array: true }
+      )
     end
   end
 end
