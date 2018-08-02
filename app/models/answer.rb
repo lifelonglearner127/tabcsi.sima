@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Answer < ApplicationRecord
-  belongs_to :question
-
-  validates :license_number, :answer_value, presence: true
+  belongs_to :inspection
+  
+  validates(
+    :question_number,
+    presence: true,
+    uniqueness: { scope: :inspection, case_sensitive: false }
+  )
 end

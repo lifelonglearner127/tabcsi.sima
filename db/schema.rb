@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_02_131755) do
+ActiveRecord::Schema.define(version: 2018_08_02_140226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,15 +37,15 @@ ActiveRecord::Schema.define(version: 2018_08_02_131755) do
   end
 
   create_table "answers", force: :cascade do |t|
-    t.bigint "question_id", null: false
-    t.string "license_number", null: false
-    t.text "answer_value", null: false
+    t.text "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
+    t.bigint "inspection_id", null: false
+    t.string "question_number", null: false
     t.index ["discarded_at"], name: "index_answers_on_discarded_at"
-    t.index ["license_number"], name: "index_answers_on_license_number"
-    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["inspection_id", "question_number"], name: "index_answers_on_inspection_id_and_question_number", unique: true
+    t.index ["inspection_id"], name: "index_answers_on_inspection_id"
   end
 
   create_table "audit_form_questions", force: :cascade do |t|
@@ -312,7 +312,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_131755) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
-  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "inspections"
   add_foreign_key "audit_form_questions", "audit_forms"
   add_foreign_key "audit_form_questions", "questions"
   add_foreign_key "choices", "questions"
