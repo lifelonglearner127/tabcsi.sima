@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_01_215356) do
+ActiveRecord::Schema.define(version: 2018_08_02_131755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(version: 2018_08_01_215356) do
     t.decimal "front_long"
     t.decimal "back_lat"
     t.decimal "back_long"
+    t.boolean "locked", default: false, null: false
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
   end
