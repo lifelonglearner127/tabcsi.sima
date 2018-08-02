@@ -20,8 +20,13 @@ class License < ApplicationRecord
   def permit_names
     name = license_type
 
-    return [name] if subordinate.blank?
+    permit_names =
+      if subordinate.present?
+        subordinate.split(',').map { |s| "#{name}-#{s}" }
+      else
+        []
+      end
 
-    subordinate.split(',').map { |s| "#{name}-#{s}" }
+    permit_names << name
   end
 end
