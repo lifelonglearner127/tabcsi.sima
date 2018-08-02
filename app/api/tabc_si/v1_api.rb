@@ -9,9 +9,9 @@ module TabcSi
     prefix 'api'
     version 'v1', using: :path
 
-    mount V1::AnswersApi
+    # mount V1::AnswersApi
     mount V1::AuditFormsApi
-    mount V1::DistributorsApi
+    # mount V1::DistributorsApi
     mount V1::LocationsApi
     mount V1::PushTokensApi
     mount V1::SettingsApi
@@ -45,18 +45,18 @@ module TabcSi
         }
       },
       tags: [
-        {
-          name: 'answers',
-          description: 'Answers API'
-        },
+        # {
+        #   name: 'answers',
+        #   description: 'Answers API'
+        # },
         {
           name: 'audit_forms',
           description: 'Audit Forms (A.K.A. Questions) API'
         },
-        {
-          name: 'distributors',
-          description: 'Distributors API'
-        },
+        # {
+        #   name: 'distributors',
+        #   description: 'Distributors API'
+        # },
         {
           name: 'locations',
           description: 'Locations API'
@@ -82,15 +82,17 @@ module TabcSi
         tagGroups: [
           {
             name: 'General',
-            tags: %w[push_tokens settings users]
-          },
-          {
-            name: 'Questions',
-            tags: %w[answers audit_forms]
+            tags: %w[settings users push_tokens]
           },
           {
             name: 'Vendors',
-            tags: %w[distributors locations vendors]
+            # tags: %w[locations vendors distributors]
+            tags: %w[locations vendors]
+          },
+          {
+            name: 'Questions',
+            # tags: %w[answers audit_forms]
+            tags: %w[audit_forms]
           }
         ]
       }
