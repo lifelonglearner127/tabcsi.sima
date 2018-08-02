@@ -15,10 +15,17 @@ module LastUpdatable
         end
 
         define_method :last_updated_at do
+          associations_last_updated_at =
+            last_updated_at_associations
+            .flatten
+            .map(&:last_updated_at)
+            .compact
+            .max
+
           [
             updated_at,
-            last_updated_at_associations.flatten.map(&:last_updated_at)
-          ].max
+            associations_last_updated_at
+          ].compact.max
         end
       end
     end
