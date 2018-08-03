@@ -3,9 +3,28 @@
 module TabcSi
   module Entities
     class Choice < Grape::Entity
-      expose :id, documentation: { type: 'integer', format: 'int64' }
-      expose :choice_text, as: :text
-      expose :picture_attachment, documentation: { type: 'boolean' }
+      expose(
+        :id,
+        documentation: {
+          desc: 'A unique identifier for choice tracking.',
+          type: 'integer',
+          format: 'int64'
+        }
+      )
+
+      expose(
+        :choice_text,
+        as: :text,
+        documentation: { desc: 'The choice text.' }
+      )
+
+      expose(
+        :picture_attachment,
+        documentation: {
+          desc: 'If `true`, then a picture is required to be included.',
+          type: 'boolean'
+        }
+      )
 
       expose(
         :fields,

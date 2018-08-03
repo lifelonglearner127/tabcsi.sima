@@ -3,10 +3,29 @@
 module TabcSi
   module Entities
     class AuditForm < Grape::Entity
-      expose :permit_name
-      expose :last_updated_at, documentation: { format: 'date-time' }
+      expose(
+        :permit_name,
+        documentation: {
+          desc: 'The name of the permit that the questions apply to.'
+        }
+      )
 
-      expose(:total_questions, documentation: { type: 'integer' }) do |object|
+      expose(
+        :last_updated_at,
+        documentation: {
+          desc: 'The date and time of when any part of the audit form was' \
+            ' last updated.',
+          format: 'date-time'
+        }
+      )
+
+      expose(
+        :total_questions,
+        documentation: {
+          desc: 'The total number of questions.',
+          type: 'integer'
+        }
+      ) do |object|
         object.audit_form_questions.count
       end
 
