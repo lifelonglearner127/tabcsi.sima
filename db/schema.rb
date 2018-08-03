@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_02_213341) do
+ActiveRecord::Schema.define(version: 2018_08_03_140659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_213341) do
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "owner_id", null: false
+    t.string "owner_id"
     t.text "owner_name", null: false
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["owner_id"], name: "index_companies_on_owner_id", unique: true
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_213341) do
     t.string "license_type", null: false
     t.string "subordinate"
     t.string "related_to"
-    t.string "license_status", null: false
+    t.string "status", null: false
     t.date "expires_on"
     t.index ["company_id"], name: "index_licenses_on_company_id"
     t.index ["discarded_at"], name: "index_licenses_on_discarded_at"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_213341) do
     t.decimal "back_lat"
     t.decimal "back_long"
     t.boolean "locked", default: false, null: false
+    t.string "phone_number"
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
   end

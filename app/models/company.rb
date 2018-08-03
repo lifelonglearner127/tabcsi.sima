@@ -5,5 +5,5 @@ class Company < ApplicationRecord
   has_many :locations, -> { order(id: :asc) }
   has_many :users, -> { order(id: :asc) }
 
-  validates :owner_id, presence: true, uniqueness: { case_sensitive: false }
+  validates :owner_name, presence: true, uniqueness: { case_sensitive: false }
 end

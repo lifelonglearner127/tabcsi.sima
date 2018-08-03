@@ -13,6 +13,7 @@ module TabcSi
       expose :state
       expose :country
       expose :postal_code
+      expose :phone_number
       expose :locked, documentation: { type: 'boolean' }
 
       expose(
