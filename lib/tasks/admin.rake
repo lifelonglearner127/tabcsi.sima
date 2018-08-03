@@ -22,4 +22,9 @@ namespace :admin do
 
     Setting.server_status = :inactive
   end
+
+  desc 'Load TABC data feed.'
+  task data_feed: :environment do
+    TabcSi::DataFeed.load
+  end
 end
