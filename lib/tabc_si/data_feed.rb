@@ -187,6 +187,12 @@ module TabcSi
     end
 
     def create_license(license_info, company, location)
+      license = License.find_by(
+        license_type: license_type, license_number: license_number
+      )
+
+      return if license.present?
+
       License.create!(
         company: company,
         location: location,
