@@ -185,6 +185,8 @@ module TabcSi
     end
 
     def create_license(license_info, company, location)
+      license_type = license_info[:license_type]
+      license_number = license_info[:license_number]
       license = License.find_by(
         license_type: license_type, license_number: license_number
       )
