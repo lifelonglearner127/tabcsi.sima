@@ -7,8 +7,6 @@ module TabcSi
     include Singleton
     include Output
 
-    DATA_FEED_PATH = Rails.root.join('lib', 'sample_data_feed.csv')
-
     COLUMN_REMAP = {
       relClp: :related_to,
       tradename: :name,
@@ -40,8 +38,8 @@ module TabcSi
       @current_line_length = 0
     end
 
-    def self.load
-      instance.load(DATA_FEED_PATH)
+    def self.load(path)
+      instance.load(path)
     end
 
     def load(path)

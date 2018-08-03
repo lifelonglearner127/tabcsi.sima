@@ -25,6 +25,6 @@ namespace :admin do
 
   desc 'Load TABC data feed.'
   task data_feed: :environment do
-    TabcSi::DataFeed.load
+    TabcSi::DataFeed.load(Rails.root.join('lib', 'sample_data_feed.csv'))
   end
 end
