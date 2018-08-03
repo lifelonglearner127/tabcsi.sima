@@ -29,7 +29,7 @@ module TabcSi
                 :conditions
               ]
             )
-            .where(permit_name: license.permit_names)
+            .where(permit_name: license&.permit_names)
             .first
 
           respond audit_form
