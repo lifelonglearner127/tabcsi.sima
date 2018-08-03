@@ -21,6 +21,8 @@ module TabcSi
             License.split_license_number(params[:license_number])
           )
 
+          error_bad_request! 'license number does not exist' if license.blank?
+
           audit_form =
             AuditForm
             .includes(
@@ -29,8 +31,12 @@ module TabcSi
                 :conditions
               ]
             )
-            .where(permit_name: license&.permit_names)
+            .where(permit_name: license.permit_names)
             .first
+
+          if audit_form.blank?
+            error_bad_request! 'there are no applicable questions for license'
+          end
 
           respond audit_form
         end
