@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_03_142058) do
+ActiveRecord::Schema.define(version: 2018_08_03_142212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,8 +184,10 @@ ActiveRecord::Schema.define(version: 2018_08_03_142058) do
     t.decimal "back_long"
     t.boolean "locked", default: false, null: false
     t.string "phone_number"
+    t.integer "tabc_id"
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
+    t.index ["tabc_id"], name: "index_locations_on_tabc_id", unique: true
   end
 
   create_table "locations_users", id: false, force: :cascade do |t|
