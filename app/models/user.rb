@@ -32,6 +32,8 @@ class User < ApplicationRecord
   has_and_belongs_to_many :locations, -> { order(id: :asc) }
   has_many :push_tokens, -> { order(id: :desc) }
 
+  before_validation :generate_random_password, if: :generate_password?
+
   def generate_pin
     pin = self.class.new_pin
 
@@ -43,5 +45,15 @@ class User < ApplicationRecord
   def self.new_pin
     # based on SecureRandom.alphanumeric
     SecureRandom.__send__(:choose, PIN_CHARS, PIN_LENGTH)
+  end
+
+  private
+
+  def generate_password?
+    !persisted? && password.blank?
+  end
+
+  def generate_random_password
+    self.password = SecureRandom.hex
   end
 end
