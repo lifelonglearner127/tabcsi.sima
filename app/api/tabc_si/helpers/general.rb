@@ -8,13 +8,23 @@ module TabcSi
       end
 
       def current_user
-        return nil unless doorkeeper_token&.resource_owner_id
-
-        User.find(doorkeeper_token.resource_owner_id)
+        @current_user ||= find_current_user
       end
 
       def current_application
         doorkeeper_token&.application
+      end
+
+      private
+
+      def find_current_user
+        user_id = doorkeeper_token&.resource_owner_id || params[:user_id]
+
+        return nil unless user_id.present?
+
+        User.find(user_id)
+      rescue ActiveRecord::RecordNotFound
+        nil
       end
     end
   end
