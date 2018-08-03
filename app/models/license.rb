@@ -7,7 +7,7 @@ class License < ApplicationRecord
   belongs_to :location
   has_and_belongs_to_many :users, -> { order(id: :asc) }
 
-  validates :license_type, :license_number, presence: true
+  validates :license_type, :license_number, :status, presence: true
 
   validates(
     :license_number, uniqueness: { scope: :license_type, case_sensitive: false }

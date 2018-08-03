@@ -7,7 +7,7 @@ module TabcSi
       expose :license_number, as: :number
       expose :subordinate
       expose :related_to
-      expose :license_status
+      expose :status
       expose :expires_on, documentation: { format: 'date' }
     end
   end
