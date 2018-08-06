@@ -12,6 +12,7 @@ module TabcSi
     # mount V1::AnswersApi
     mount V1::AuditFormsApi
     # mount V1::DistributorsApi
+    mount V1::InspectionsApi
     mount V1::LocationsApi
     mount V1::PushTokensApi
     mount V1::SettingsApi

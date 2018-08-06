@@ -7,4 +7,21 @@ class Inspection < ApplicationRecord
   belongs_to :user
 
   validates :started_at, presence: true
+
+  after_create :lock_location
+
+  def complete
+    update!(completed_at: Time.zone.now)
+    unlock_location
+  end
+
+  private
+
+  def lock_location
+    location.update!(locked: true)
+  end
+
+  def unlock_location
+    location.update!(locked: false)
+  end
 end

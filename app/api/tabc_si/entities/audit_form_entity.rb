@@ -3,6 +3,8 @@
 module TabcSi
   module Entities
     class AuditFormEntity < Grape::Entity
+      expose :id, documentation: { type: 'integer', format: 'int64' }
+
       expose(
         :permit_name,
         documentation: {
