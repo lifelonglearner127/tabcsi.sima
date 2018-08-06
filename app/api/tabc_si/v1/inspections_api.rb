@@ -6,10 +6,10 @@ module TabcSi
       resources :inspections do
         desc(
           'Start Inspection',
-          detail: '',
+          detail: 'Start an inspection for a specified location.',
           success: {
             model: Entities::InspectionEntity,
-            message: ''
+            message: 'An inspection object.'
           }
         )
         params do
@@ -39,6 +39,39 @@ module TabcSi
           )
 
           respond inspection
+        end
+
+        params do
+          requires :inspection_id, type: Integer, desc: 'Inspection id.'
+        end
+        route_param :inspection_id do
+          desc(
+            'Finish Inspection',
+            detail: 'Finish the specified inspection.',
+            success: {
+              model: Entities::InspectionEntity,
+              message: 'An inspection object.'
+            }
+          )
+          params do
+            requires(
+              :finished_at,
+              type: String,
+              desc: 'Date and time, in UTC, when the inspection was finished.',
+              documentation: { format: 'date-time' }
+            )
+          end
+          post :finish do
+            inspection = Inspection.find(params[:inspection_id])
+
+            if inspection.finished_at.present?
+              error_bad_request! 'inspection has already been finished'
+            end
+
+            inspection.finish(params[:finished_at])
+
+            respond inspection
+          end
         end
       end
     end

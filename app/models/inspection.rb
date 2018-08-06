@@ -10,8 +10,12 @@ class Inspection < ApplicationRecord
 
   after_create :lock_location
 
-  def complete
-    update!(completed_at: Time.zone.now)
+  def finish(finished_at)
+    update!(
+      finished_at: finished_at,
+      completed_at: Time.zone.now
+    )
+
     unlock_location
   end
 
