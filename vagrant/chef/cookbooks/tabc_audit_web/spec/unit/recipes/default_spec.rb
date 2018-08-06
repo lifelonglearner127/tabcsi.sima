@@ -1,4 +1,5 @@
-#
+# frozen_string_literal: true
+
 # Cookbook:: tabc_audit_web
 # Spec:: default
 #
@@ -24,7 +25,10 @@ describe 'tabc_audit_web::default' do
     let(:chef_run) do
       # for a complete list of available platforms and versions see:
       # https://github.com/customink/fauxhai/blob/master/PLATFORMS.md
-      runner = ChefSpec::ServerRunner.new(platform: 'centos', version: '7.4.1708')
+      runner = ChefSpec::ServerRunner.new(
+        platform: 'centos', version: '7.4.1708'
+      )
+
       runner.converge(described_recipe)
     end
 

@@ -2,7 +2,7 @@
 
 class Answer < ApplicationRecord
   belongs_to :inspection
-  
+
   validates(
     :question_number,
     presence: true,

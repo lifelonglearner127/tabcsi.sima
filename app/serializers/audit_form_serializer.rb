@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuditFormSerializer < ActiveModel::Serializer
   attributes :permit_name, :total_questions
 

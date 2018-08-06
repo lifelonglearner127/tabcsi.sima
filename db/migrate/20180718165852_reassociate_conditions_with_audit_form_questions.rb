@@ -8,7 +8,10 @@ class ReassociateConditionsWithAuditFormQuestions < ActiveRecord::Migration[5.2]
     change_column_null :conditions, :question_id, true
 
     if Question.first.respond_to?(:conditions)
-      Question.includes(:conditions, :audit_form_questions).all.each do |question|
+      Question
+        .includes(:conditions, :audit_form_questions)
+        .all
+        .each do |question|
         question.audit_form_questions.each do |audit_form_question|
           question.conditions.each do |condition|
             Condition.create!(

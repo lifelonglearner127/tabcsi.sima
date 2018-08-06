@@ -33,6 +33,7 @@ default['system']['packages']['install'] = %w[
 
 default['nodejs']['repo'] = 'https://deb.nodesource.com/node_8.x'
 
+# rubocop:disable Metrics/LineLength
 # default['nginx']['install_method'] = 'source'
 # default['nginx']['version'] = '1.14.0'
 # default['nginx']['default']['modules'] = %w[passenger]
@@ -61,6 +62,7 @@ default['nodejs']['repo'] = 'https://deb.nodesource.com/node_8.x'
 #   node['nginx']['install_method']
 # default['nginx']['passenger']['root'] = ''
 # default['nginx']['passenger']['ruby'] = ''
+# rubocop:enable Metrics/LineLength
 
 default['taw']['psql_version'] = '10'
 default['taw']['ruby_version'] = get_ruby_version

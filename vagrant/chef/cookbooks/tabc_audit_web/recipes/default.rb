@@ -46,6 +46,7 @@ execute 'rvm use default && gem install rack' do
   user 'vagrant'
 end
 
+# rubocop:disable Metrics/LineLength
 # rbenv_system_install 'system'
 #
 # execute 'chgrp -R staff /usr/local/rbenv'
@@ -191,3 +192,4 @@ end
 #   to '/etc/nginx/sites-available/tabc-si.conf'
 #   notifies :restart, 'systemd_unit[nginx.service]'
 # end
+# rubocop:enable Metrics/LineLength

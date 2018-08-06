@@ -8,4 +8,3 @@ class AuditFormQuestionSerializer < ActiveModel::Serializer
   has_many :choices
   has_many :conditions
 end
-
