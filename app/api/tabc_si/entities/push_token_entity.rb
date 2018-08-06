@@ -2,12 +2,12 @@
 
 module TabcSi
   module Entities
-    class PushToken < Grape::Entity
+    class PushTokenEntity < Grape::Entity
       expose :user_id, documentation: { type: 'integer', format: 'int64' }
 
       expose(
         :device_type,
-        documentation: { values: ::PushToken.device_types.keys }
+        documentation: { values: PushToken.device_types.keys }
       )
 
       expose :token

@@ -9,7 +9,7 @@ module TabcSi
           detail: 'Retrieve self-inspection survey questions based on license' \
             ' number.',
           success: {
-            model: Entities::AuditForm,
+            model: Entities::AuditFormEntity,
             message: 'A set of questions for a self-inspection survey.'
           }
         )

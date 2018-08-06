@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class AuditFormQuestion < Grape::Entity
+    class AuditFormQuestionEntity < Grape::Entity
       expose(
         :question_number,
         as: :question_id,
@@ -21,7 +21,7 @@ module TabcSi
             * `text_box` A text box field for the user to enter textual data.
             * `drop_down` A drop-down menu. The user can only select one choice.
           DESC
-          values: ::Question.question_types.keys
+          values: Question.question_types.keys
         }
       )
 
@@ -90,7 +90,7 @@ module TabcSi
 
       expose(
         :choices,
-        using: Entities::Choice,
+        using: ChoiceEntity,
         documentation: {
           desc: 'Only valid for question types `radio` and `drop_down`.',
           is_array: true
@@ -99,7 +99,7 @@ module TabcSi
 
       expose(
         :conditions,
-        using: Entities::Condition,
+        using: ConditionEntity,
         documentation: {
           desc: <<~DESC,
             Allows for conditional question skipping based on the choice or

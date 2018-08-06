@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class Validate < Grape::Entity
+    class ValidateEntity < Grape::Entity
       expose(
         :valid_email,
         documentation: {

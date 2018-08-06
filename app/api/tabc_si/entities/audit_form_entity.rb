@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class AuditForm < Grape::Entity
+    class AuditFormEntity < Grape::Entity
       expose(
         :permit_name,
         documentation: {
@@ -31,7 +31,7 @@ module TabcSi
 
       expose(
         :audit_form_questions,
-        using: Entities::AuditFormQuestion,
+        using: AuditFormQuestionEntity,
         as: :questions,
         documentation: { is_array: true }
       )

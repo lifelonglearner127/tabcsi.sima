@@ -9,7 +9,7 @@ module TabcSi
           detail: 'Retrieves all global settings.',
           is_array: true,
           success: {
-            model: Entities::Setting,
+            model: Entities::SettingEntity,
             message: 'A collection of system-level settings.'
           }
         )

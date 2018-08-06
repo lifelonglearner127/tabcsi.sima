@@ -8,7 +8,7 @@ module TabcSi
           'Get Vendor Names',
           detail: 'Retrieves all vendor names.',
           success: {
-            model: Entities::VendorNames,
+            model: Entities::VendorNamesEntity,
             message: 'A collection of vendor names.'
           }
         )

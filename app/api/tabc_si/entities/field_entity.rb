@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class Field < Grape::Entity
+    class FieldEntity < Grape::Entity
       expose :label, documentation: { desc: 'The field text.' }
 
       expose(
@@ -13,7 +13,7 @@ module TabcSi
             * `time_range` Two time selection boxes that allow specifying a time
               range; e.g., open-close times.
           DESC
-          values: ::Field.field_types.keys
+          values: Field.field_types.keys
         }
       )
     end

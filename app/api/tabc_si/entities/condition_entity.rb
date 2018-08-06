@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class Condition < Grape::Entity
+    class ConditionEntity < Grape::Entity
       expose(
         :conditional_question_number,
         as: :conditional_question_id,

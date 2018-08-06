@@ -16,7 +16,7 @@ module TabcSi
             ' authorization token used.',
           success: {
             code: 200,
-            model: Entities::PushToken,
+            model: Entities::PushTokenEntity,
             message: 'The created push token object.'
           }
         )

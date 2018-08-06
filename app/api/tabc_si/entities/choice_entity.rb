@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class Choice < Grape::Entity
+    class ChoiceEntity < Grape::Entity
       expose(
         :id,
         documentation: {
@@ -28,7 +28,7 @@ module TabcSi
 
       expose(
         :fields,
-        using: Entities::Field,
+        using: FieldEntity,
         documentation: { is_array: true }
       )
     end

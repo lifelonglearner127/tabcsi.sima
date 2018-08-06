@@ -41,7 +41,7 @@ module TabcSi
             ' user.',
           success: {
             code: 200,
-            model: Entities::Validate,
+            model: Entities::ValidateEntity,
             message: 'A validation object.'
           }
         )

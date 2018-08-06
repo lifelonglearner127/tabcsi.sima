@@ -6,12 +6,13 @@ module TabcSi
       resources :locations do
         desc(
           'Get Locations',
-          detail: 'Returns all locations. If a password authorization token' \
-            ' is used, then returns only locations associated with the' \
-            ' attached user.',
+          detail: <<~DESC,
+            Returns all locations. If a password authorization token is used,
+            then returns only locations associated with the attached user.
+          DESC
           is_array: true,
           success: {
-            model: Entities::Location,
+            model: Entities::LocationEntity,
             message: 'A location object.'
           }
         )
@@ -22,9 +23,9 @@ module TabcSi
         end
 
         # params do
-        #   requires :id, type: Integer, desc: 'Location id.'
+        #   requires :location_id, type: Integer, desc: 'Location id.'
         # end
-        # route_param :id do
+        # route_param :location_id do
         #   get :history do
         #   end
         # end

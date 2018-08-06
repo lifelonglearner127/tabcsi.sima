@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class Setting < Grape::Entity
+    class SettingEntity < Grape::Entity
       expose :name, documentation: { desc: 'The name of the setting.' }
       expose :value, documentation: { desc: 'The value of the setting.' }
     end

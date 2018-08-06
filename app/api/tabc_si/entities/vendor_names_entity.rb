@@ -2,7 +2,7 @@
 
 module TabcSi
   module Entities
-    class VendorNames < Grape::Entity
+    class VendorNamesEntity < Grape::Entity
       present_collection true
 
       expose(
