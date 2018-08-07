@@ -20,7 +20,7 @@ puts 'Seeding: Questions, choices, and fields...'
 
 {
   '1': {
-    question_text: 'Name of Person Filling Out Survey (First & Last)',
+    question_text: 'Name of person filling out survey (First & Last)',
     question_type: :text_box,
     max_characters: 50
   },
@@ -30,8 +30,9 @@ puts 'Seeding: Questions, choices, and fields...'
     max_characters: 10
   },
   '3': {
-    question_text: 'Name/position of person(s) authorized to purchase alcohol' \
-      ' for the business',
+    question_text: <<~TEXT,
+      Name/position of person(s) authorized to purchase alcohol for the business
+    TEXT
     question_type: :text_box,
     max_characters: 50,
     multiline: true
@@ -70,7 +71,7 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '7': {
-    question_text: 'Weapons Sign Posted (Blue/Red/Both/None)',
+    question_text: 'Weapons Sign Posted',
     question_type: :radio,
     choices: [
       {
@@ -122,8 +123,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '11A': {
-    question_text: 'Do you have alcohol advertising on the outside of the' \
-      ' business?',
+    question_text: <<~TEXT,
+      Do you have alcohol advertising on the outside of the business?
+    TEXT
     question_type: :radio,
     choices: [
       {
@@ -177,8 +179,9 @@ puts 'Seeding: Questions, choices, and fields...'
     multiline: true
   },
   '14A': {
-    question_text: 'Is seller training required for all employees that' \
-      ' sell/serve alcohol?',
+    question_text: <<~TEXT,
+      Is seller training required for all employees that sell/serve alcohol?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -197,8 +200,10 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '14B': {
-    question_text: 'If seller training is required for employees, do you have' \
-      ' alcohol service policies?',
+    question_text: <<~TEXT,
+      If seller training is required for employees, do you have alcohol service
+      policies?
+    TEXT
     question_type: :radio,
     choices: [
       {
@@ -225,8 +230,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '17': {
-    question_text: "Do you mutilate the TABC Stamp on the bottle when it's" \
-      ' empty?',
+    question_text: <<~TEXT,
+      Do you mutilate the TABC Stamp on the bottle when it's empty?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -242,8 +248,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '19': {
-    question_text: 'Is there a permanent food service facility at the' \
-      ' location?',
+    question_text: <<~TEXT,
+      Is there a permanent food service facility at the location?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -251,8 +258,10 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '20A': {
-    question_text: 'Is the designated food service area at the location run' \
-      ' by a separate business entity from the permit?',
+    question_text: <<~TEXT,
+      Is the designated food service area at the location run by a separate
+      business entity from the permit?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -266,8 +275,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '20B': {
-    question_text: 'Does the separate business entity maintain food service' \
-      ' records?',
+    question_text: <<~TEXT,
+      Does the separate business entity maintain food service records?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -283,8 +293,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '22': {
-    question_text: 'Are food items completely prepared or assembled on the' \
-      ' premise?',
+    question_text: <<~TEXT,
+      Are food items completely prepared or assembled on the premise?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -322,8 +333,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '25A': {
-    question_text: 'Are hours of operation for food and alcohol service the' \
-      ' same?',
+    question_text: <<~TEXT,
+      Are hours of operation for food and alcohol service the same?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -337,8 +349,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '25B': {
-    question_text: 'What are your hours of operations for both food and' \
-      ' alcohol service?',
+    question_text: <<~TEXT,
+      What are your hours of operations for both food and alcohol service?
+    TEXT
     question_type: :radio,
     choices: [
       {
@@ -370,8 +383,9 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '26A': {
-    question_text: 'Have you had a Breach of the Peace at your establishment' \
-      ' in the last year?',
+    question_text: <<~TEXT,
+      Have you had a Breach of the Peace at your establishment in the last year?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
@@ -405,19 +419,35 @@ puts 'Seeding: Questions, choices, and fields...'
     ]
   },
   '26C': {
-    question_text: 'What date did the Breach of Peace occur? Describe the' \
-      ' incident.',
+    question_text: <<~TEXT,
+      What date did the Breach of Peace occur? Describe the incident.
+    TEXT
     question_type: :text_box,
     max_characters: 100,
     multiline: true
   },
   '27': {
-    question_text: 'Have there been changes since your original or renewal' \
-      ' applications that have not been reported to TABC?',
+    question_text: <<~TEXT,
+      Have there been changes since your original or renewal applications that
+      have not been reported to TABC?
+    TEXT
     question_type: :radio,
     choices: [
       { choice_text: 'Yes' },
       { choice_text: 'No' }
+    ]
+  },
+  '28': {
+    question_text: <<~TEXT,
+      What is the minimum age that you employ a person to sell/serve alcohol at
+      your location?
+    TEXT
+    question_type: :radio,
+    choices: [
+      { choice_text: '16 years old' },
+      { choice_text: 'Younger than 16 years of age' },
+      { choice_text: '18 years old' },
+      { choice_text: '21 years old' }
     ]
   }
 }.each do |question_number, question_params|
@@ -426,9 +456,11 @@ puts 'Seeding: Questions, choices, and fields...'
 
   if question.blank?
     choices = question_params.delete(:choices)
+    question_text = question_params.delete(:question_text).tr("\n", ' ').strip
 
     question = Question.create!(
       question_number: question_number,
+      question_text: question_text,
       **question_params
     )
 
@@ -465,38 +497,42 @@ puts 'Questions, choices, and fields seeded.'
 puts 'Seeding: Audit forms, audit form questions, and conditions...'
 
 {
-  BE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27],
+  BE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27 28],
   'BE-FB': %i[
     1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 18 19 20A 20B 21 22 23 24A
-    24B 25A 25B 26A 26B 26C 27
+    24B 25A 25B 26A 26B 26C 27 28
   ],
   BF: %i[1 2 3 4 5 6 7 9 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
-  BG: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27],
+  BG: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27 28],
   'BG-FB': %i[
     1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 18 19 20A 20B 21 22 23 24A
-    24B 25A 25B 26A 26B 26C 27
+    24B 25A 25B 26A 26B 26C 27 28
   ],
   BQ: %i[1 2 3 4 5 6 7 9 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
-  MB: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27],
+  MB: %i[
+    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27 28
+  ],
   'MB-FB': %i[
-    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22
-    23 24A 24B 25A 25B 26A 26B 26C 27
+    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22 23
+    24A 24B 25A 25B 26A 26B 26C 27 28
   ],
-  N: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27],
+  N: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27 28],
   'N-FB': %i[
-    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22
-    23 24A 24B 25A 25B 26A 26B 26C 27
+    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22 23
+    24A 24B 25A 25B 26A 26B 26C 27 28
   ],
-  NB: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27],
-  NE: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27],
-  P: %i[1 2 3 4 5 6 7 10 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
-  Q: %i[1 2 3 4 5 6 7 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27],
+  NB: %i[1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 26A 26B 26C 27 28],
+  NE: %i[
+    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 26A 26B 26C 27 28
+  ],
+  P: %i[1 2 3 4 5 6 7 10 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27 28],
+  Q: %i[1 2 3 4 5 6 7 11A 12 13A 13B 14A 14B 15 26A 26B 26C 27 28],
   RM: %i[
-    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22
-    23 24A 24B 25A 25B 26A 26B 26C 27
+    1 2 3 4 5 7 8 9 11A 11B 11C 12 13A 13B 14A 14B 16 17 18 19 20A 20B 21 22 23
+    24A 24B 25A 25B 26A 26B 26C 27 28
   ],
-  V: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27],
-  Y: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27]
+  V: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27 28],
+  Y: %i[1 2 3 4 5 7 8 9 12 13A 13B 14A 14B 26A 26B 26C 27 28]
 }.each do |permit_name, question_numbers|
   next if AuditForm.find_by(permit_name: permit_name).present?
 
