@@ -59,6 +59,10 @@ module TabcSi
         #   description: 'Distributors API'
         # },
         {
+          name: 'inspections',
+          description: 'Inspections API'
+        },
+        {
           name: 'locations',
           description: 'Locations API'
         },
@@ -93,7 +97,7 @@ module TabcSi
           {
             name: 'Questions',
             # tags: %w[answers audit_forms]
-            tags: %w[audit_forms]
+            tags: %w[audit_forms inspections]
           }
         ]
       }
