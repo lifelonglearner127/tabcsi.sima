@@ -2,7 +2,7 @@
 
 namespace :doorkeeper do
   desc 'Create new Doorkeeper app.'
-  task :application, %i[name] => :environment do |_task, args|
+  task(:application, %i[name] => :environment) do |_task, args|
     application_params = {
       name: args[:name],
       redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'

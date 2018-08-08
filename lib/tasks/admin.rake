@@ -27,4 +27,11 @@ namespace :admin do
   task data_feed: :environment do
     TabcSi::DataFeed.load(Rails.root.join('lib', 'sample_data_feed.csv'))
   end
+
+  desc 'Run migration script.'
+  task(:migrations, %i[version] => :environment) do |_task, args|
+    version = args[:version]
+
+    TabcSi::MigrationRunner.migrate(version)
+  end
 end
