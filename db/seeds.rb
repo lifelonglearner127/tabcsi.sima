@@ -2,20 +2,6 @@
 
 questions_map = {}
 
-puts 'Seeding: Settings...'
-
-{
-  business_point_radius: 100, # feet
-  server_status: :active
-}.each do |name, value|
-  next if Setting.find_by(name: name).present?
-
-  Setting.create!(name: name, value: value)
-
-  puts "* Setting added: #{name} = #{value}"
-end
-
-puts 'Settings seeded.'
 puts 'Seeding: Questions, choices, and fields...'
 
 {
