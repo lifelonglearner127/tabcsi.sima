@@ -3,7 +3,7 @@
 class Choice < ApplicationRecord
   include LastUpdatable
 
-  has_many :fields, -> { order(id: :asc) }
+  has_many :fields, -> { order(id: :asc) }, dependent: :destroy
   belongs_to :question
 
   validates :choice_text, presence: true

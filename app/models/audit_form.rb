@@ -7,8 +7,8 @@ class AuditForm < ApplicationRecord
 
   include LastUpdatable
 
-  has_many :audit_form_questions, -> { order(id: :asc) }
-  has_many :inspections, -> { order(id: :asc) }
+  has_many :audit_form_questions, -> { order(id: :asc) }, dependent: :destroy
+  has_many :inspections, -> { order(id: :asc) }, dependent: :nullify
 
   validates :permit_name, presence: true, uniqueness: { case_sensitive: false }
 

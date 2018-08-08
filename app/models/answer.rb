@@ -2,10 +2,7 @@
 
 class Answer < ApplicationRecord
   belongs_to :inspection
+  belongs_to :question, optional: true
 
-  validates(
-    :question_number,
-    presence: true,
-    uniqueness: { scope: :inspection, case_sensitive: false }
-  )
+  validates :question, uniqueness: { scope: :inspection }
 end

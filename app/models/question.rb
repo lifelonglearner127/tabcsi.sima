@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Question < ApplicationRecord
-  has_many :answers, -> { order(id: :asc) }
-  has_many :audit_form_questions, -> { order(id: :asc) }
-  has_many :choices, -> { order(id: :asc) }
+  has_many :answers, -> { order(id: :asc) }, dependent: :nullify
+  has_many :audit_form_questions, -> { order(id: :asc) }, dependent: :destroy
+  has_many :choices, -> { order(id: :asc) }, dependent: :destroy
 
   validates :question_number, :question_text, :question_type, presence: true
   validates :question_number, uniqueness: { case_sensitive: false }
