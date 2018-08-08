@@ -8,10 +8,18 @@ class Setting < ApplicationRecord
   end
 
   def self.server_status=(value)
-    server_status.update(value: value)
+    server_status.update!(value: value)
   end
 
   def self.server_active?
     server_status.value.to_sym == :active
+  end
+
+  def self.deactivate_server!
+    self.server_status = :inactive
+  end
+
+  def self.activate_server!
+    self.server_status = :active
   end
 end

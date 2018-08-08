@@ -9,7 +9,7 @@ namespace :admin do
       return
     end
 
-    Setting.server_status = :active
+    Setting.activate_server!
   end
 
   desc 'Deactivate the server'
@@ -20,7 +20,7 @@ namespace :admin do
       return
     end
 
-    Setting.server_status = :inactive
+    Setting.deactivate_server!
   end
 
   desc 'Load TABC data feed'
