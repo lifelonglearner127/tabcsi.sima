@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_06_210100) do
+ActiveRecord::Schema.define(version: 2018_08_08_163619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,10 +42,11 @@ ActiveRecord::Schema.define(version: 2018_08_06_210100) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.bigint "inspection_id", null: false
-    t.string "question_number", null: false
+    t.bigint "question_id"
     t.index ["discarded_at"], name: "index_answers_on_discarded_at"
-    t.index ["inspection_id", "question_number"], name: "index_answers_on_inspection_id_and_question_number", unique: true
+    t.index ["inspection_id", "question_id"], name: "index_answers_on_inspection_id_and_question_id", unique: true
     t.index ["inspection_id"], name: "index_answers_on_inspection_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
   create_table "audit_form_questions", force: :cascade do |t|
@@ -128,7 +129,7 @@ ActiveRecord::Schema.define(version: 2018_08_06_210100) do
 
   create_table "inspections", force: :cascade do |t|
     t.bigint "location_id", null: false
-    t.bigint "audit_form_id", null: false
+    t.bigint "audit_form_id"
     t.bigint "user_id", null: false
     t.datetime "started_at", null: false
     t.datetime "completed_at"
@@ -322,6 +323,7 @@ ActiveRecord::Schema.define(version: 2018_08_06_210100) do
   end
 
   add_foreign_key "answers", "inspections"
+  add_foreign_key "answers", "questions"
   add_foreign_key "audit_form_questions", "audit_forms"
   add_foreign_key "audit_form_questions", "questions"
   add_foreign_key "choices", "questions"
