@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       ':version/docs',
       action: :docs,
       format: false,
-      constraints: AllowedIpConstraint.new
+      constraints: AllowedIpConstraint
     )
   end
 

@@ -1,22 +1,29 @@
 # frozen_string_literal: true
 
 class AllowedIpConstraint
-  def initialize
-    @ips = %w[
-      127.0.0.1
-      ::1
-      72.48.136.69
-    ]
+  include Singleton
+
+  def self.matches?(request)
+    instance.matches?(request)
   end
 
   def matches?(request)
     @request = request
-    @ips.include?(ip)
+    allowed_ip_addresses.include?(ip)
   end
 
   private
 
+  def allowed_ip_addresses
+    Nenv.instance.allowed_ip_addresses.split(',')
+  end
+
   def ip
-    @request.respond_to?(:remote_ip) ? @request.remote_ip : @request.ip
+    ip_address =
+      @request.respond_to?(:remote_ip) ? @request.remote_ip : @request.ip
+
+    Rails.logger.debug("AllowedIpConstraint: ip = #{ip_address}")
+
+    ip_address
   end
 end
