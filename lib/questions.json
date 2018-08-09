@@ -1,0 +1,508 @@
+{
+  "build_date": "20180808",
+  "questions": {
+    "1": {
+      "question_text": "Name of person filling out survey (First & Last)",
+      "question_type": "text_box",
+      "max_characters": 50
+    },
+    "2": {
+      "question_text": "Position of person filling out survey",
+      "question_type": "text_box",
+      "max_characters": 10
+    },
+    "3": {
+      "question_text": "Name/position of person(s) authorized to purchase alcohol for the business",
+      "question_type": "text_box",
+      "max_characters": 50,
+      "multiline": true
+    },
+    "4": {
+      "question_text": "Is your permit posted where it can be seen by the public?",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "5": {
+      "question_text": "Public Information Sign Posted",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "6": {
+      "question_text": "Consumption Warning Sign Posted",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "7": {
+      "question_text": "Weapons Sign Posted",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Blue",
+          "picture_attachment": true
+        },
+        {
+          "choice_text": "Red",
+          "picture_attachment": true
+        },
+        {
+          "choice_text": "Both",
+          "picture_attachment": true
+        },
+        { "choice_text": "None" }
+      ]
+    },
+    "8": {
+      "question_text": "Fetal Alcohol Sign Posted in Men's & Women's Restrooms",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "9": {
+      "question_text": "Human Trafficking Sign Posted",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "10": {
+      "question_text": "\"21\" To Enter Sign Posted",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "11A": {
+      "question_text": "Do you have alcohol advertising on the outside of the business?",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "11B": {
+      "question_text": "Does your business have a \"Happy Hour\"?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "11C": {
+      "question_text": "Does your business run a \"Reverse Happy Hour\"?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "12": {
+      "question_text": "Choose the vendors that you purchase beer from.",
+      "question_type": "drop_down",
+      "source": "/api/v1/vendors/names",
+      "other": 50,
+      "multiple": true
+    },
+    "13": {
+      "question_text": "Choose the vendors that you purchase wine / distilled spirits from.",
+      "question_type": "drop_down",
+      "source": "/api/v1/vendors/names",
+      "other": 50,
+      "multiple": true
+    },
+    "14A": {
+      "question_text": "Are you holding any product that is damaged?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "No",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "14B": {
+      "question_text": "What product are you holding and why?",
+      "question_type": "text_box",
+      "max_characters": 100,
+      "multiline": true
+    },
+    "15A": {
+      "question_text": "Is seller training required for all employees that sell/serve alcohol?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "No",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "15B": {
+      "question_text": "If seller training is required for employees, do you have alcohol service policies?",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Yes",
+          "picture_attachment": true
+        },
+        { "choice_text": "No" }
+      ]
+    },
+    "16": {
+      "question_text": "Do you conduct product tastings at the location?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "17": {
+      "question_text": "Are TABC Stamps on ALL distilled spirit bottles?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "18": {
+      "question_text": "Do you mutilate the TABC Stamp on the bottle when it's empty?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "19": {
+      "question_text": "Do you maintain food service at the location?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "20": {
+      "question_text": "Is there a permanent food service facility at the location?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "21A": {
+      "question_text": "Is the designated food service area at the location run by a separate business entity from the permit?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "No",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "21B": {
+      "question_text": "Does the separate business entity maintain food service records?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "22": {
+      "question_text": "Do you have multiple entrees per meal period?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "23": {
+      "question_text": "Are food items completely prepared or assembled on the premise?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "24": {
+      "question_text": "Is prepared food to be consumed on the premise?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "25A": {
+      "question_text": "Are prepackaged food items sold?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "No",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "25B": {
+      "question_text": "Are prepackaged food items from a non-commercial source?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "26A": {
+      "question_text": "Are hours of operation for food and alcohol service the same?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "Yes",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "26B": {
+      "question_text": "What are your hours of operations for both food and alcohol service?",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Monday - Friday",
+          "fields": [
+            {
+              "label": "Food",
+              "field_type": "time_range"
+            },
+            {
+              "label": "Alcohol",
+              "field_type": "time_range"
+            }
+          ]
+        },
+        {
+          "choice_text": "Sunday",
+          "fields": [
+            {
+              "label": "Food",
+              "field_type": "time_range"
+            },
+            {
+              "label": "Alcohol",
+              "field_type": "time_range"
+            }
+          ]
+        }
+      ]
+    },
+    "27": {
+      "question_text": "What are your hours of operation for alcohol service on the weekend?",
+      "question_type": "radio",
+      "choices": [
+        {
+          "choice_text": "Friday",
+          "fields": [
+            {
+              "label": "Alcohol",
+              "field_type": "time_range"
+            }
+          ]
+        },
+        {
+          "choice_text": "Saturday",
+          "fields": [
+            {
+              "label": "Alcohol",
+              "field_type": "time_range"
+            }
+          ]
+        }
+      ]
+    },
+    "28A": {
+      "question_text": "Have you had a Breach of the Peace at your establishment in the last year?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "No",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "28B": {
+      "question_text": "Who did you report any of the Breaches of the Peace to?",
+      "question_type": "drop_down",
+      "choices": [
+        { "choice_text": "Local Law Enforcement" },
+        { "choice_text": "TABC" },
+        { "choice_text": "Neither" },
+        { "choice_text": "Both" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "TABC",
+          "skip_question_group": true
+        },
+        {
+          "condition_value": "Both",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "28C": {
+      "question_text": "What date did the Breach of Peace occur? Describe the incident.",
+      "question_type": "text_box",
+      "max_characters": 100,
+      "multiline": true
+    },
+    "29": {
+      "question_text": "Have there been changes since your original or renewal applications that have not been reported to TABC?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ]
+    },
+    "30": {
+      "question_text": "What is the minimum age that you employ a person to sell/serve alcohol at your location?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "16 years old" },
+        { "choice_text": "Younger than 16 years of age" },
+        { "choice_text": "18 years old" },
+        { "choice_text": "21 years old" }
+      ]
+    }
+  },
+  "forms": {
+    "BE": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "14A", "14B", "15A", "15B", "27", "28A", "28B",
+      "28C", "29", "30"
+    ],
+    "BE/BL": ["27"],
+    "BE/BL/FB": ["27"],
+    "BE/FB": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "14A", "14B", "15A", "15B", "19", "20", "21A",
+      "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "BF": [
+      "1", "2", "3", "4", "5", "6", "7", "9", "11A", "12", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C", "29"
+    ],
+    "BG": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "27", "28A",
+      "28B", "28C", "29", "30"
+    ],
+    "BG/BL": ["27"],
+    "BG/BL/FB": ["27"],
+    "BG/FB": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "19", "20",
+      "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "BQ": [
+      "1", "2", "3", "4", "5", "6", "7", "9", "11A", "12", "13", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C",
+      "29"
+    ],
+    "MB": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
+      "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "MB/FB": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
+      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "MB/FB/LB": ["27"],
+    "MB/LB": ["27"],
+    "N": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
+      "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "N/FB": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
+      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "N/FB/LB": ["27"],
+    "N/NL": ["27"],
+    "NB": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "27", "28A",
+      "28B", "28C", "29", "30"
+    ],
+    "NB/NL": ["27"],
+    "NE": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
+      "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "NE/NL": ["27"],
+    "P": [
+      "1", "2", "3", "4", "5", "6", "7", "10", "11A", "12", "13", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C",
+      "29", "30"
+    ],
+    "Q": [
+      "1", "2", "3", "4", "5", "6", "7", "11A", "12", "13", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C", "29",
+      "30"
+    ],
+    "RM": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
+      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+    ],
+    "RM/LB": ["27"],
+    "V": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "12", "13", "14A", "14B", "15A", "15B", "27", "28A", "28B", "28C",
+      "29", "30"
+    ],
+    "Y": [
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "12", "13", "14A", "14B", "15A", "15B", "27", "28A", "28B", "28C",
+      "29", "30"
+    ]
+  }
+}

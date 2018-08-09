@@ -5,7 +5,8 @@ module TabcSi
     def self.run
       {
         business_point_radius: 100, # feet
-        server_status: :active
+        server_status: :active,
+        forms_build_date: 0
       }.each do |name, value|
         next if Setting.find_by(name: name).present?
 

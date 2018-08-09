@@ -32,4 +32,9 @@ namespace :admin do
   task load_settings: :environment do
     TabcSi::SettingsLoader.run
   end
+
+  desc 'Build audit forms'
+  task build_forms: :environment do
+    TabcSi::FormsBuilder.run
+  end
 end
