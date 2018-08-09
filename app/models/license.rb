@@ -30,14 +30,22 @@ class License < ApplicationRecord
 
   def permit_names
     name = license_type
-
-    permit_names =
-      if subordinate.present?
-        subordinate.split(',').map { |s| "#{name}-#{s}" }
-      else
-        []
-      end
-
+    permit_names = subordinate_combinations.map { |c| "#{name}/#{c.join('/')}" }
     permit_names << name
+  end
+
+  private
+
+  def subordinate_combinations
+    combs = []
+
+    if subordinate.present?
+      subs = subordinate.split(',')
+      subs.size.downto(1) do |i|
+        combs.push(*subs.combination(i))
+      end
+    end
+
+    combs
   end
 end
