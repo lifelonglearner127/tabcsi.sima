@@ -22,13 +22,25 @@ module TabcSi
           respond locations
         end
 
-        # params do
-        #   requires :location_id, type: Integer, desc: 'Location id.'
-        # end
-        # route_param :location_id do
-        #   get :history do
-        #   end
-        # end
+        params do
+          requires :location_id, type: Integer, desc: 'Location id.'
+        end
+        route_param :location_id do
+          desc(
+            'Get Location History',
+            detail: 'Returns the locations inspection history.',
+            is_array: true,
+            success: {
+              model: Entities::InspectionEntity,
+              message: 'An inspection object.'
+            }
+          )
+          get :history do
+            location = Location.find(params[:location_id])
+
+            respond location.inspections
+          end
+        end
       end
     end
   end
