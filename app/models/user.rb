@@ -27,10 +27,15 @@ class User < ApplicationRecord
   )
 
   belongs_to :company, optional: true
-  has_many :inspections, -> { order(id: :asc) }
-  has_and_belongs_to_many :licenses, -> { order(id: :asc) }
-  has_and_belongs_to_many :locations, -> { order(id: :asc) }
-  has_many :push_tokens, -> { order(id: :desc) }
+  has_many :inspections, -> { order(:id) }
+
+  has_and_belongs_to_many(
+    :licenses,
+    -> { order(:license_type, :license_number) }
+  )
+
+  has_and_belongs_to_many :locations, -> { order(:id) }
+  has_many :push_tokens, -> { order(:id) }
 
   before_validation :generate_random_password, if: :generate_password?
 

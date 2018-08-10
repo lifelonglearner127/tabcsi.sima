@@ -4,9 +4,9 @@ class AuditFormQuestion < ApplicationRecord
   include LastUpdatable
 
   belongs_to :audit_form
-  has_many :conditions, -> { order(id: :asc) }, dependent: :destroy
+  has_many :conditions, -> { order(:id) }, dependent: :destroy
   belongs_to :question
-  has_many :choices, -> { order(id: :asc) }, through: :question
+  has_many :choices, -> { order(:id) }, through: :question
 
   validates :question, uniqueness: { scope: :audit_form }
 

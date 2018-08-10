@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Inspection < ApplicationRecord
-  has_many :answers, -> { order(id: :asc) }, dependent: :destroy
+  has_many :answers, -> { order(:id) }, dependent: :destroy
   belongs_to :audit_form, optional: true
   belongs_to :location
   belongs_to :user
