@@ -10,7 +10,17 @@ class Inspection < ApplicationRecord
 
   after_create :lock_location
 
-  def finish(finished_at)
+  def finish(finished_at, answers)
+    answers.each do |question_number, a|
+      answer = Answer.create!(
+        inspection: self,
+        question: Question.find_by(question_number: question_number),
+        value: a[:value]
+      )
+
+      answer.pictures.attach(a[:pictures]) if a[:pictures].present?
+    end
+
     update!(
       finished_at: finished_at,
       completed_at: Time.zone.now

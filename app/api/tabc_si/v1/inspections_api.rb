@@ -3,6 +3,33 @@
 module TabcSi
   module V1
     class InspectionsApi < Grape::API
+      def self.questions
+        @questions ||= Question.order(id: :asc)
+      end
+
+      def self.picture_questions
+        @picture_questions ||=
+          questions
+          .includes(:choices)
+          .where(choices: { picture_attachment: true })
+      end
+
+      helpers do
+        def process_answers(answers, pictures)
+          answers.each_with_object({}) do |(question_number, value), obj|
+            pics =
+              pictures[question_number]&.map do |p|
+                ActionDispatch::Http::UploadedFile.new(p)
+              end
+
+            obj[question_number] = {
+              value: value,
+              pictures: pics
+            }
+          end
+        end
+      end
+
       resources :inspections do
         desc(
           'Start Inspection',
@@ -60,6 +87,18 @@ module TabcSi
               desc: 'Date and time, in UTC, when the inspection was finished.',
               documentation: { format: 'date-time' }
             )
+
+            requires(:answers, type: Hash) do
+              InspectionsApi.questions.each do |q|
+                optional q.question_number, type: String
+              end
+            end
+
+            optional(:pictures, type: Hash) do
+              InspectionsApi.picture_questions.each do |q|
+                optional q.question_number, type: Array[File]
+              end
+            end
           end
           post :finish do
             inspection = Inspection.find(params[:inspection_id])
@@ -68,7 +107,10 @@ module TabcSi
               error_bad_request! 'inspection has already been finished'
             end
 
-            inspection.finish(params[:finished_at])
+            inspection.finish(
+              params[:finished_at],
+              process_answers(params[:answers], params[:pictures])
+            )
 
             respond inspection
           end
