@@ -38,7 +38,7 @@ module TabcSi
           get :history do
             location = Location.find(params[:location_id])
 
-            respond location.inspections
+            respond location.inspections.includes(:audit_form)
           end
         end
       end
