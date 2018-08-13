@@ -1,5 +1,8 @@
 import includes from 'lodash/includes'
+import isPlainObject from 'lodash/isPlainObject'
 import map from 'lodash/map'
+import mapKeys from 'lodash/mapKeys'
+import mapValues from 'lodash/mapValues'
 import toUpper from 'lodash/toUpper'
 import Vue from 'vue'
 
@@ -20,3 +23,18 @@ export const genEnumValidator = (values) => {
 export const NO_PROMISE_RETURNED = null
 
 export const noopPromiseHandler = () => NO_PROMISE_RETURNED
+
+export const deepMapKeys = (object, iteratee) => mapKeys(
+  mapValues(object, (v) => {
+    if (isPlainObject(v)) {
+      return deepMapKeys(v, iteratee)
+    }
+
+    if (Array.isArray(v)) {
+      return map(v, (item) => deepMapKeys(item, iteratee))
+    }
+
+    return v
+  }),
+  iteratee
+)

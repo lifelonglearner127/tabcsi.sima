@@ -2,26 +2,35 @@
 
 class UsersController < ApplicationController
   def new
-    build_user
+    build_sign_up_user
+    set_sign_up_data
   end
 
   def create
-    build_user
-    save_user || render('new')
+    build_sign_up_user
+    set_sign_up_data
+    save_sign_up_user || render('new')
   end
 
   private
 
-  def build_user
-    @user ||= user_scope.build
-    @user.attributes = sign_up_params
+  def build_sign_up_user
+    @sign_up_user ||= user_scope.build
+    @sign_up_user.attributes = sign_up_user_params
   end
 
-  def save_user
-    redirect_to new_user_path if @user.save_admin
+  def set_sign_up_data
+    self.page_data_options = {
+      model: @sign_up_user,
+      local: true
+    }
   end
 
-  def sign_up_params
+  def save_sign_up_user
+    redirect_to log_in_users if @sign_up_user.save_admin
+  end
+
+  def sign_up_user_params
     return {} if action_name == 'new'
 
     params.require(:user).permit(

@@ -1,6 +1,8 @@
 <script>
 import { mdbBtn, mdbCard, mdbCardBody, mdbCardHeader, mdbCardTitle } from 'mdbvue'
 import MdInput from '~/components/md-input'
+import PageMixin from '~/mixins/page'
+import RailsForm from '~/components/rails-form'
 
 export default {
   name: 'UsersNew',
@@ -11,8 +13,11 @@ export default {
     mdbCardBody,
     mdbCardHeader,
     mdbCardTitle,
-    MdInput
+    MdInput,
+    RailsForm
   },
+
+  mixins: [PageMixin],
 
   data () {
     return {
@@ -34,7 +39,7 @@ export default {
     <mdb-card>
       <mdb-card-header class="pb-4 pt-4 text-white">
         <img
-          alt=""
+          alt="logo"
           class="card-img-top"
           src="~@/assets/images/logo.png"
         >
@@ -48,14 +53,16 @@ export default {
           Create a New Account
         </mdb-card-title>
 
-        <b-form
-          accept-charset="UTF-8"
-          action="/users"
-          class="text-center needs-validation"
-          method="post"
-          novalidate
+        <rails-form
+          :accept-charset="acceptCharset"
+          :action="action"
+          :enforce-utf8="enforceUtf8"
+          :hidden-method="hiddenMethod"
+          :method="method"
+          :token-name="tokenName"
+          :token-value="tokenValue"
+          class="text-center"
         >
-          <slot />
           <md-input
             id="user_full_name"
             v-model="user.fullName"
@@ -76,8 +83,8 @@ export default {
             error-msg="You did not enter a valid e-mail"
             icon="fas-fa-envelope"
             label="E-mail"
-            type="email"
             name="user[email]"
+            type="email"
             validation="email"
           >
           </md-input>
@@ -154,7 +161,7 @@ export default {
               Sign Up
             </mdb-btn>
           </div>
-        </b-form>
+        </rails-form>
       </mdb-card-body>
     </mdb-card>
   </b-row>

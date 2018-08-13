@@ -1,5 +1,7 @@
 import '~/vendor'
 import BootstrapVue from 'bootstrap-vue'
+import camelCase from 'lodash/camelCase'
+import { deepMapKeys } from '~/lib/utils'
 import FontAwesome from '~/plugins/font-awesome'
 import isFunction from 'lodash/isFunction'
 import map from 'lodash/map'
@@ -34,7 +36,10 @@ export default class App {
         el: 'main',
 
         data () {
-          return { defaultPageSlotTemplates: [] }
+          return {
+            defaultPageSlotTemplates: [],
+            pageData: {}
+          }
         },
 
         beforeCreate () {
@@ -42,13 +47,20 @@ export default class App {
         },
 
         beforeMount () {
+          const pageDataAttr = this.$el.attributes['data-page'] || {}
+          const json = JSON.parse(pageDataAttr.value || '{}')
+
+          this.pageData = deepMapKeys(json, (value, key) => camelCase(key))
           this.defaultPageSlotTemplates = map(this.$el.children, 'outerHTML')
         },
 
         render (h) {
           const page = h(
             pageComponent,
-            { scopedSlots: { default: () => map(this.defaultPageSlotTemplates, (template) => h({ template })) } }
+            {
+              props: { pageData: this.pageData },
+              scopedSlots: { default: () => map(this.defaultPageSlotTemplates, (template) => h({ template })) }
+            }
           )
 
           const sprites = h(Sprites)

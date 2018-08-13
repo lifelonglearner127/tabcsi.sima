@@ -19,7 +19,8 @@ en:
   titles:
     application: "TABC: Retail"
     users:
-      new: "Sign-Up"
+      new: "Sign Up"
+      create: "Sign Up"
 
   users_mailer:
     request_pin:
