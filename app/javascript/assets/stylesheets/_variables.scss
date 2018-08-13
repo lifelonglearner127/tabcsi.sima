@@ -1,0 +1,28 @@
+@import '~mdbvue/build/scss/core/colors';
+
+$body-bg: $grey-lighten-4;
+$input-height: auto;
+$input-height-sm: auto;
+$input-height-lg: auto;
+$navbar-light-active-color: $white;
+$card-border-radius: 0;
+$card-inner-border-radius: 0;
+
+$roboto-font-path: '~mdbvue/build/font/roboto/';
+$image-path: '~mdbvue/build/img';
+$input-prefix-top: 0.875rem;
+$input-prefix-font-size: 1rem;
+$input-prefix-margin-left: 0;
+$input-prefix-width: calc(100% - #{$input-prefix-margin-left});
+$input-form-text-ml: $input-prefix-margin-left + 0.1rem;
+$input-prefix-top-lg: 1.025rem;
+$input-prefix-font-size-lg: 1.25rem;
+$input-prefix-margin-left-lg: 0.5rem;
+$input-prefix-width-lg: calc(100% - #{$input-prefix-margin-left-lg});
+$input-form-text-ml-lg: $input-prefix-margin-left-lg + 0.1rem;
+$input-prefix-top-sm: 0.975rem;
+$input-prefix-font-size-sm: 0.75rem;
+$input-prefix-margin-left-sm: -0.5rem;
+$input-prefix-width-sm: calc(100% - #{$input-prefix-margin-left-sm});
+$input-form-text-ml-sm: $input-prefix-margin-left-sm;
+$input-form-control-padding-top: 0.6rem;

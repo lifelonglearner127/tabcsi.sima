@@ -2,16 +2,35 @@ doctype html
 html lang="en"
   head
     meta charset="utf-8"
-    meta content="NOODP" name="ROBOTS"
-    meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"
-    / Configure default, controller-, and view-specific titles in `config/locales/en.yml`. For more see:
-    / https://github.com/calebthompson/title#usage
-    title = title
-    = stylesheet_link_tag :application, media: "all"
-    = csrf_meta_tags
+    meta name="ROBOTS" content="NOODP"
 
-  body class="#{body_class}"
-    = render 'flashes'
-    = yield
-    = render 'javascript'
-    = render 'css_overrides'
+    title = full_page_title
+
+    meta[
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover, user-scalable=no, minimum-scale=1, maximum-scale=1"
+    ]
+
+    = csrf_meta_tags
+    = csp_meta_tag
+    = controller_stylesheet_pack_tags
+
+  body class=body_class
+    /[if lte IE 9]
+      p.browser-upgrade
+        | You are using an
+        strong<> outdated
+        | browser. Please
+        a<> href="https://browsehappy.com" upgrade your browser
+        | to improve your experience and security.
+
+    /- if flash.any?
+      .flashes
+        - user_facing_flashes.each do |key, value|
+          div class="flash-#{key}"
+            = value
+
+    main
+      = yield
+
+    = controller_javascript_pack_tags defer: true

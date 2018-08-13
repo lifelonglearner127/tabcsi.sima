@@ -13,6 +13,8 @@ HEROKU_APPLICATION_HOST =
   end
 
 Rails.application.configure do
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  config.webpacker.check_yarn_integrity = false
   config.action_controller.perform_caching = true
   config.action_mailer.default_url_options = { host: HEROKU_APPLICATION_HOST }
   config.action_mailer.delivery_method = :aws_sdk

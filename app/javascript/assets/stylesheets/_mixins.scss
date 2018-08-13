@@ -1,0 +1,5 @@
+@mixin xxs_breakpoint {
+  @media only screen and (max-width: 420px) {
+    @content;
+  }
+}

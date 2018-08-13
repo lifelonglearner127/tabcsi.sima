@@ -6,12 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
-gem 'active_model_serializers', '~> 0.10.7'
-gem 'autoprefixer-rails', '~> 9.0'
-gem 'aws-sdk-rails', '~> 2.0'
 gem 'bootsnap', '~> 1.3', require: false
-gem 'bourbon', '~> 5.0'
-gem 'bundler', '~> 1.16', '>= 1.16.1'
+gem 'bundler', '~> 1.16'
 gem 'delayed_job_active_record', '~> 4.1'
 gem 'devise', '~> 4.4'
 gem 'devise-doorkeeper', '~> 1.1'
@@ -26,8 +22,6 @@ gem 'grape-swagger', '~> 0.30.1'
 gem 'grape-swagger-entity', '~> 0.2.5'
 gem 'grape_logging', '~> 1.8'
 gem 'high_voltage', '~> 3.1'
-gem 'jbuilder', '~> 2.7'
-gem 'neat', '~> 3.0'
 gem 'nenv', '~> 0.3.0'
 gem 'nokogiri', '~> 1.8'
 gem 'oj', '~> 3.6'
@@ -36,15 +30,14 @@ gem 'pg', '~> 1.0'
 gem 'premailer-rails', '~> 1.10'
 gem 'puma', '~> 3.11'
 gem 'rack-canonical-host', '~> 0.2.3'
-gem 'rack-cors', '~> 1.0', '>= 1.0.2'
+gem 'rack-cors', '~> 1.0'
 gem 'rails', '~> 5.2.0'
-gem 'recipient_interceptor', '~> 0.2.0'
-gem 'sass-rails', '~> 5.0'
 gem 'simple_form', '~> 4.0'
 gem 'slim-rails', '~> 3.1'
 gem 'title', '~> 0.0.7'
 gem 'tzinfo-data', '~> 1.2018'
 gem 'uglifier', '~> 4.1'
+gem 'webpacker', '~> 3.5'
 
 group :development do
   gem 'capistrano', '~> 3.11', require: false
@@ -72,8 +65,6 @@ group :development, :test do
   gem 'pry-byebug', '~> 3.6'
   gem 'pry-rails', '~> 0.3.6'
   gem 'rspec-rails', '~> 3.7'
-  gem 'skylight', '~> 2.0'
-  gem 'suspenders', '~> 1.47'
 end
 
 group :test do
@@ -87,6 +78,7 @@ group :test do
 end
 
 group :production do
+  gem 'aws-sdk-rails', '~> 2.0'
   gem 'aws-sdk-s3', '~> 1'
   gem 'passenger', '~> 5.3'
   gem 'rack-timeout', '~> 0.5.1'

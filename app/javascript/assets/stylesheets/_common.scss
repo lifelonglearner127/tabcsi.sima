@@ -1,0 +1,382 @@
+html {
+  font-size: 100%;
+}
+
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~mdbvue/build/scss/mdb';
+@import 'mixins';
+
+.card {
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+
+  .md-form {
+    .prefix {
+      //font-size: 1rem;
+      font-weight: 900;
+      left: -25px;
+      //top: 14px;
+
+      //~ input,
+      //~ textarea {
+      //  margin-left: 0;
+      //  width: 100%;
+      //}
+      //
+      //~ label {
+      //  margin-left: 0;
+      //}
+    }
+
+    //&.form-lg {
+    //  .prefix {
+    //    left: ;
+    //  }
+    //}
+    //
+    //&.form-sm {
+    //  .prefix {
+    //    left: ;
+    //  }
+    //}
+  }
+}
+
+.md-form {
+  .fa-phone {
+    transform: rotate(90deg);
+  }
+}
+
+.card-img-top {
+  width: 300px;
+}
+
+/*
+.navbar-light .fa-chevron-down {
+  color: #fff !important;
+}
+
+.login-card,
+.passcodeForm {
+  margin: -225px 0 0 -175px;
+  top: 50%;
+  width: 350px;
+}
+
+.passcodeForm input {
+  text-align: center;
+}
+
+.login-card .card-body,
+.passcodeForm .card-body {
+  padding-top: 10%;
+}
+
+.btn .fa {
+  padding-left: 5px;
+  padding-top: 3px;
+  transition: 300ms;
+}
+
+.card .btn:hover .fa {
+  padding-left: 15px;
+  transition: 300ms;
+}
+
+.form-error {
+  color: rgb(185, 74, 72);
+  text-align: left !important;
+}
+
+.header {
+  background-color: #5cc5c8;
+  padding: 1rem 15px;
+}
+
+.indig {
+  background-color: #ffffff !important;
+  border-radius: 0 !important;
+}
+
+.nav-tabs .nav-item .nav-link {
+  color: #2e2e2e !important;
+}
+
+.nav-tabs .nav-item {
+  background: #eee !important;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  background-color: #7674e1 !important;
+  border-color: #7674e1 !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+}
+
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  border-color: transparent !important;
+}
+
+.table {
+  border: none;
+}
+
+.table-definition thead th:first-child {
+  background: white;
+  border: none;
+  pointer-events: none;
+}
+
+.table td {
+  vertical-align: middle !important;
+}
+
+.page-item > * {
+  border: none;
+}
+
+.custom-control.material-checkbox {
+  --color: #7674e1;
+  cursor: pointer;
+}
+
+.custom-control.material-checkbox .material-control-input {
+  display: none;
+}
+
+.custom-control.material-checkbox .material-control-input:checked ~ .material-control-indicator {
+  border-color: var(--color);
+  border-left: 0 solid #fff;
+  border-top: 0 solid #fff;
+  -webkit-transform: rotateZ(45deg) translate(1px, -5px);
+  transform: rotateZ(45deg) translate(1px, -5px);
+  width: 10px;
+}
+
+.custom-control.material-checkbox .material-control-indicator {
+  border: 2px solid #aaa;
+  display: inline-block;
+  height: 16px;
+  left: 0;
+  position: absolute;
+  top: 4px;
+  transition: .3s;
+  width: 16px;
+}
+
+.header-list-menu {
+  position: relative;
+}
+
+.header-list-menu > li > ul.ht-account,
+.action li.invite-user > ul.ht-dropdown {
+  left: auto;
+  right: 0;
+}
+
+.ht-dropdown > li {
+  list-style: none !important;
+}
+
+.header-list-menu.right-menu li > a:first-child {
+  padding-right: 0;
+}
+
+.header-list-menu > li > ul.ht-dropdown > li > a,
+.middle-menu-list > li > ul.ht-dropdown > li > a {
+  color: #888;
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 24px;
+  padding: 5px 0;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.ht-dropdown {
+  background: #fff;
+  -ms-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  left: 0;
+  opacity: 0;
+  padding: 10px 20px;
+  position: absolute;
+  text-align: left;
+  top: 100%;
+  -webkit-transform: scaleY(0);
+  transform: scaleY(0);
+  -webkit-transform-origin: 0 0 0;
+  transform-origin: 0 0 0;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  visibility: hidden;
+  width: 150px;
+  z-index: 99999999;
+}
+
+.header-list-menu li:hover > ul.ht-dropdown,
+.action > .user-invite:hover > ul.ht-dropdown {
+  opacity: 1;
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
+  transition: 0.5s;
+  visibility: visible;
+}
+
+.user-invite {
+  position: relative;
+}
+
+.action li {
+  padding: 0 15px;
+}
+
+.user-invite li {
+  padding-left: 0 !important;
+}
+
+.user-invite ul {
+  margin-left: 15px;
+}
+
+.action li a {
+  color: #333;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  text-transform: capitalize;
+  transition: .5s;
+}
+
+.action a:hover,
+.action a:active {
+  color: #555;
+  transition: .5s;
+}
+
+.mdl-grid {
+  padding: 8px;
+  width: 100% !important;
+}
+
+#users table label {
+  margin-left: 20px;
+}
+
+.form-inline label {
+  display: block !important;
+}
+
+.view {
+  cursor: pointer !important;
+}
+
+.mdl-button {
+  min-width: auto !important;
+}
+
+.selected {
+  background-color: #eee;
+}
+
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 2px);
+  margin: -5px 10px !important;
+}
+
+.table-responsive {
+  overflow: hidden !important;
+}
+*/
+
+/* responsive
+@media only screen and (max-width: 420px) {
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .login-card,
+  .signup-card,
+  .passcodeForm {
+    border-radius: 0 !important;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    left: 0;
+    margin: auto;
+    overflow: auto;
+    text-align: center;
+    top: 0;
+    width: 100%;
+  }
+
+  .login-card .card-body,
+  .passcodeForm .card-body {
+    padding-top: 30%;
+  }
+
+  .card-body h3 {
+    font-size: 1.4rem;
+  }
+
+  .login-card .md-form,
+  .signup-card .md-form {
+    margin-left: 2rem;
+  }
+
+  .form-check {
+    margin-left: 2rem;
+  }
+
+  .btn.btn-md {
+    font-size: 0.7rem;
+    padding: 0.7rem 1rem;
+  }
+
+  .mdl-cell {
+    margin: 0 !important;
+  }
+
+  div.dataTables_wrapper div.dataTables_filter {
+    text-align: left !important;
+  }
+
+  div.dataTables_wrapper div.dataTables_filter label {
+    display: block !important;
+  }
+
+  div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0 !important;
+  }
+
+  .Locations-column .view {
+    display: none;
+  }
+
+  .Locations-column .col-md-10 {
+    padding: 0;
+    width: 100%;
+  }
+
+  .mdl-cell.mdl-cell--6-col.text-right {
+    padding: 15px;
+    text-align: center !important;
+  }
+
+  .d-mobile-hidden {
+    display: none;
+  }
+
+  .form-inline label {
+    display: inline-flex !important;
+  }
+}
+*/
