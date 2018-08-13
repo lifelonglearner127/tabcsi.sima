@@ -12,8 +12,10 @@ module TabcSi
       resources :push_tokens do
         desc(
           'Add Push Token',
-          detail: 'Add a push token for the user attached to the password' \
-            ' authorization token used.',
+          detail: <<~DESC,
+            Add a push token for the user attached to the password authorization
+            token used.
+          DESC
           success: {
             code: 200,
             model: Entities::PushTokenEntity,
@@ -38,10 +40,9 @@ module TabcSi
 
           device_type = params[:device_type] || current_application.name
           unless valid_device_type?(device_type)
-            error_bad_request!(
-              'invalid device type from authorization token; please specify' \
-              ' `device_type` parameter'
-            )
+            error_bad_request! <<~MSG
+              invalid device type from authorization token; please specify `device_type` parameter
+            MSG
           end
 
           push_token = PushToken.create!(

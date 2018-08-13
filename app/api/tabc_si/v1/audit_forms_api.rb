@@ -6,8 +6,9 @@ module TabcSi
       resources :audit_forms do
         desc(
           'Find Questions',
-          detail: 'Retrieve self-inspection survey questions based on license' \
-            ' number.',
+          detail: <<~DESC,
+            Retrieve self-inspection survey questions based on license number.
+          DESC
           success: {
             model: Entities::AuditFormEntity,
             message: 'A set of questions for a self-inspection survey.'

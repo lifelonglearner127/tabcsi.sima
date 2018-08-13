@@ -36,9 +36,10 @@ module TabcSi
 
         desc(
           'Validate User',
-          detail: 'Checks if a specified email address is valid/exists. Can' \
-            ' also check if a specified location is valid for the specified' \
-            ' user.',
+          detail: <<~DESC,
+            Checks if a specified email address is valid/exists. Can also check
+            if a specified location is valid for the specified email address.
+          DESC
           success: {
             code: 200,
             model: Entities::ValidateEntity,

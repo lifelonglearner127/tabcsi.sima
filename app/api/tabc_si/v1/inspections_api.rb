@@ -33,7 +33,10 @@ module TabcSi
       resources :inspections do
         desc(
           'Start Inspection',
-          detail: 'Start an inspection for a specified location.',
+          detail: <<~DESC,
+            Start an inspection for a specified location. A password
+            authorization token is required.
+          DESC
           success: {
             model: Entities::InspectionEntity,
             message: 'An inspection object.'

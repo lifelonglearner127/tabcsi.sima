@@ -8,7 +8,7 @@ module TabcSi
           'Get Locations',
           detail: <<~DESC,
             Returns all locations. If a password authorization token is used,
-            then returns only locations associated with the attached user.
+            then returns only locations associated with that user.
           DESC
           is_array: true,
           success: {
