@@ -23,21 +23,45 @@ export default {
   data () {
     return {
       session: {
-        email: '',
+        email: this.pageOptions.email || '',
         pin: ''
       }
     }
   },
 
   computed: {
+    cardTitle () {
+      if (this.pinRequested) {
+        return 'Check your email for an "8 digit pin" and enter it here.'
+      }
+
+      return 'Enter your email address to get started.'
+    },
+
+    question () {
+      if (this.pinRequested) {
+        return {
+          linkHref: this.pageOptions.resendPinPath,
+          linkText: 'Resend',
+          text: 'Email not received?'
+        }
+      }
+
+      return {
+        linkHref: this.pageOptions.signUpPath,
+        linkText: 'Register',
+        text: 'Not a member?'
+      }
+    },
+
     pinRequested () {
-      return !isEmpty(this.pageOptions.email)
+      return Boolean(this.pageOptions.pinRequested)
     }
   },
 
-  beforeMount () {
-    if (this.pinRequested) {
-      this.session.email = this.pageOptions.email
+  methods: {
+    handlePinKeyUp (e) {
+      // e.target.nextElementSibling.focus()
     }
   }
 }
@@ -59,7 +83,7 @@ export default {
           class="text-center"
           tag="h5"
         >
-          Enter your Email Address to get Started
+          {{ cardTitle }}
         </mdb-card-title>
 
         <rails-form
@@ -72,7 +96,32 @@ export default {
           :token-value="tokenValue"
           class="text-center"
         >
+          <template v-if="pinRequested">
+            <md-input
+              id="sessions_pin"
+              input-class="text-center"
+              maxlength="8"
+              name="session[pin]"
+            >
+            </md-input>
+            <!--<b-form-row>
+              <b-col
+                v-for="n in 8"
+                :key="`pin${n}`"
+              >
+                <md-input
+                  :id="`session_pin${n}`"
+                  input-class="text-center"
+                  maxlength="1"
+                  name="session[pin][]"
+                  @keyup="handlePinKeyUp"
+                >
+                </md-input>
+              </b-col>
+            </b-form-row>-->
+          </template>
           <md-input
+            v-else
             id="session_email"
             v-model="session.email"
             error-msg="You did not enter a valid e-mail"
@@ -95,7 +144,7 @@ export default {
           </mdb-btn>
 
           <p>
-            <small>Not a member? <a :href="pageOptions.signUpPath">Register</a></small>
+            <small>{{ question.text }} <a :href="question.linkHref">{{ question.linkText }}</a></small>
           </p>
         </rails-form>
       </mdb-card-body>

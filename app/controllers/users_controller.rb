@@ -3,7 +3,9 @@
 class UsersController < ApplicationController
   before_action :set_page_options
 
-  def new; end
+  def new
+    redirect_to(dashboard_path) if logged_in?
+  end
 
   def create
     user = User.build

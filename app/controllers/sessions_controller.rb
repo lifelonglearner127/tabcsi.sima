@@ -4,33 +4,50 @@ class SessionsController < ApplicationController
   before_action :set_page_options, only: %i[create new]
 
   def new
-    # TODO: redirect to dashboard if user already logged in
+    redirect_to(dashboard_path) && return if logged_in?
 
-    self.session_email = nil
+    log_out unless pin_requested?
   end
 
   def create
-    if session_params.key?(:pin)
-      # TODO: validate pin
+    if pin_requested?
+      validate_pin
     else
       request_pin
     end
   end
 
-  def delete; end
+  def delete
+    log_out if logged_in?
+    redirect_to root_url
+  end
 
   private
 
-  def set_page_options
-    self.page_data_options = {
-      url: log_in_path,
-      method: 'post',
-      local: true,
-      html: {
-        sign_up_path: sign_up_path,
-        email: session_email
-      }
-    }
+  def log_out
+    reset_session
+  end
+
+  def pin_requested?
+    current_user.present? && session[:pin_requested]
+  end
+
+  def pin_requested=(value)
+    session[:pin_requested] = value
+    page_data_options[:html][:pin_requested] = value
+  end
+
+  def request_pin
+    self.session_email = session_params[:email]
+
+    user = User.find_by(email: session_email)
+    if user.present? && user.request_pin
+      self.session_email = nil
+      session[:user_id] = user.id
+      self.pin_requested = true
+    end
+
+    render 'new'
   end
 
   def session_email
@@ -42,19 +59,36 @@ class SessionsController < ApplicationController
     page_data_options[:html][:email] = value
   end
 
-  def request_pin
-    self.session_email = session_params[:email]
-
-    User.find_by(email: session_email)&.request_pin
-
-    render 'new'
-  end
-
   def session_params
     @session_params ||= params.require(:session).permit(:email, :pin)
   end
 
-  def log_in(user)
-    session[:user_id] = user&.id
+  def set_page_options
+    self.page_data_options = {
+      url: log_in_path,
+      method: 'post',
+      local: true,
+      html: {
+        sign_up_path: sign_up_path,
+        resend_pin_path: '#',
+        email: session_email,
+        pin_requested: pin_requested?
+      }
+    }
+  end
+
+  def validate_pin
+    pin = session_params[:pin]
+
+    if pin.present? && current_user.valid_pin?(pin)
+      self.pin_requested = false
+      session[:logged_in] = true
+
+      redirect_to dashboard_path
+
+      return
+    end
+
+    render 'new'
   end
 end

@@ -54,6 +54,10 @@ export default {
       type: Boolean,
       default: false
     },
+    inputClass: {
+      type: String,
+      default: null
+    },
     label: {
       type: String,
       default: null
@@ -63,6 +67,10 @@ export default {
       default: null
     },
     length: {
+      type: [String, Number],
+      default: null
+    },
+    maxlength: {
       type: [String, Number],
       default: null
     },
@@ -127,7 +135,7 @@ export default {
 
   computed: {
     className () {
-      const names = ['form-control']
+      const names = ['form-control', this.inputClass]
 
       if (this.valid) {
         names.push('validate valid')
@@ -230,20 +238,6 @@ export default {
       }
     },
 
-    handleFocus (e) {
-      this.isTouched = true
-
-      if (!this.disabled) {
-        this.$refs.input.focus()
-      }
-
-      // styles for navbar input
-      if (this.navInput) {
-        this.$el.firstElementChild.style.borderColor = 'transparent'
-        this.$el.firstElementChild.style.boxShadow = 'none'
-      }
-    },
-
     handleChange (e) {
       this.$emit('input', e.target.value)
 
@@ -262,6 +256,24 @@ export default {
       }
 
       this.$forceUpdate()
+    },
+
+    handleFocus (e) {
+      this.isTouched = true
+
+      if (!this.disabled) {
+        this.$refs.input.focus()
+      }
+
+      // styles for navbar input
+      if (this.navInput) {
+        this.$el.firstElementChild.style.borderColor = 'transparent'
+        this.$el.firstElementChild.style.boxShadow = 'none'
+      }
+    },
+
+    handleKeyUp (e) {
+      this.$emit('keyup', e)
     }
   }
 }
@@ -287,6 +299,7 @@ export default {
       :disabled="disabled"
       :id="id"
       :is="tag"
+      :maxlength="maxlength"
       :name="name"
       :placeholder="placeholder"
       :type="type"
@@ -296,6 +309,7 @@ export default {
       @click="wave"
       @focus="handleFocus"
       @input="handleChange"
+      @keyup="handleKeyUp"
     >
     <label
       v-if="label"

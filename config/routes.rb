@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root 'doorkeeper/applications#index'
+  root 'dashboards#show'
 
   use_doorkeeper do
     if Rails.env.production?
@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get :log_in, to: 'sessions#new'
   post :log_in, to: 'sessions#create'
   delete :log_out, to: 'sessions#destroy'
+
+  get :dashboard, to: 'dashboards#show'
 
   namespace :api do
     get(

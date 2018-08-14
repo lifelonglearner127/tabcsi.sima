@@ -94,6 +94,10 @@ class User < ApplicationRecord
     true
   end
 
+  def valid_pin?(pin)
+    valid_for_authentication? { valid_password?(pin) }
+  end
+
   private
 
   def generate_password?
