@@ -1,44 +1,30 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  def new
-    build_sign_up_user
-    set_sign_up_data
-  end
+  before_action :set_page_options
+
+  def new; end
 
   def create
-    build_sign_up_user
-    set_sign_up_data
-    save_sign_up_user || render('new')
+    user = User.build
+    user.attributes = params.require(:user).permit(
+      :full_name, :email, :phone, :company_name, :job_title, :license_number
+    )
+
+    if user.save_admin
+      redirect_to sign_up_path
+    else
+      render 'new'
+    end
   end
 
   private
 
-  def build_sign_up_user
-    @sign_up_user ||= user_scope.build
-    @sign_up_user.attributes = sign_up_user_params
-  end
-
-  def set_sign_up_data
+  def set_page_options
     self.page_data_options = {
-      model: @sign_up_user,
+      url: sign_up_path,
+      method: 'post',
       local: true
     }
-  end
-
-  def save_sign_up_user
-    redirect_to log_in_users if @sign_up_user.save_admin
-  end
-
-  def sign_up_user_params
-    return {} if action_name == 'new'
-
-    params.require(:user).permit(
-      :full_name, :email, :phone, :company_name, :job_title, :license_number
-    )
-  end
-
-  def user_scope
-    User.all
   end
 end
