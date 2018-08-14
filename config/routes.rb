@@ -24,48 +24,4 @@ Rails.application.routes.draw do
   end
 
   mount TabcSi::Api => '/'
-
-  # scope :old do
-  #   namespace(:api, defaults: { format: :json }) do
-  #     namespace(
-  #       :v1 # , constraints: ApiConstraints.new(version: 1, default: true)
-  #     ) do
-  #       devise_for(
-  #         :users,
-  #         controllers: { registrations: 'api/v1/users/registrations' },
-  #         skip: %i[password sessions]
-  #       )
-  #
-  #       resources :answers, only: %i[create]
-  #
-  #       resources :audit_forms, only: %i[] do
-  #         collection do
-  #           get :find
-  #         end
-  #       end
-  #
-  #       resources :distributors, only: %i[index]
-  #
-  #       resources :licenses, only: %i[index] do
-  #         collection do
-  #           get :find
-  #         end
-  #       end
-  #
-  #       resources :push_tokens, only: %i[create]
-  #       resources :settings, only: %i[index]
-  #
-  #       namespace :users do
-  #         post :validate_email, to: 'sessions#validate_email'
-  #         post :request_pin, to: 'sessions#request_pin'
-  #       end
-  #
-  #       resources :vendors, only: %i[] do
-  #         collection do
-  #           get :names
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
 end
