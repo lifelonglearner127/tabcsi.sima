@@ -5,7 +5,7 @@ import PageMixin from '~/mixins/page'
 import RailsForm from '~/components/rails-form'
 
 export default {
-  name: 'UsersNew',
+  name: 'Users',
 
   components: {
     mdbBtn,
