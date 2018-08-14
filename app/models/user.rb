@@ -81,6 +81,19 @@ class User < ApplicationRecord
     false
   end
 
+  def request_pin
+    pin = generate_pin
+
+    return false if pin.blank?
+
+    UsersMailer.with(
+      recipient: email,
+      pin: pin
+    ).request_pin.deliver_now
+
+    true
+  end
+
   private
 
   def generate_password?

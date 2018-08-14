@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     )
 
     if user.save_admin
-      redirect_to sign_up_path
+      redirect_to log_in_path
     else
       render 'new'
     end

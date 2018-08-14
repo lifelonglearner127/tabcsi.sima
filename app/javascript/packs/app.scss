@@ -21,6 +21,13 @@ html {
       left: -25px;
     }
   }
+
+  .btn {
+    .fa-container {
+      padding-left: 15px;
+      transition: 300ms;
+    }
+  }
 }
 
 .md-form {
@@ -33,36 +40,17 @@ html {
   width: 300px;
 }
 
+.btn {
+  .fa-container {
+    padding-left: 5px;
+    padding-top: 3px;
+    transition: 300ms;
+  }
+}
+
 /*
 .navbar-light .fa-chevron-down {
   color: #fff !important;
-}
-
-.login-card,
-.passcodeForm {
-  margin: -225px 0 0 -175px;
-  top: 50%;
-  width: 350px;
-}
-
-.passcodeForm input {
-  text-align: center;
-}
-
-.login-card .card-body,
-.passcodeForm .card-body {
-  padding-top: 10%;
-}
-
-.btn .fa {
-  padding-left: 5px;
-  padding-top: 3px;
-  transition: 300ms;
-}
-
-.card .btn:hover .fa {
-  padding-left: 15px;
-  transition: 300ms;
 }
 
 .form-error {

@@ -1,10 +1,11 @@
 import {
-  faEnvelope, faIdCard, faIndustry, faInfoCircle, faPhone, faUser, faUserTie
+  faArrowRight, faEnvelope, faIdCard, faIndustry, faInfoCircle, faPhone, faUser, faUserTie
 } from '@fortawesome/free-solid-svg-icons'
 import forEach from 'lodash/forEach'
 import map from 'lodash/map'
 
 const icons = [
+  faArrowRight,
   faEnvelope,
   faIdCard,
   faIndustry,

@@ -167,19 +167,13 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~mdbvue/build/scss/core/colors';
+@import '~@/assets/stylesheets/mixins';
+
+@include users_sessions_styles;
 
 .card {
   margin: 50px 0 50px -300px;
   top: 5%;
   width: 600px;
-}
-
-form {
-  color: $grey-darken-1;
-
-  small {
-    font-size: 75%;
-  }
 }
 </style>

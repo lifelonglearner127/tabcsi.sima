@@ -18,9 +18,12 @@ en:
 
   titles:
     application: "TABC: Retail"
+    sessions:
+      create: "Log In"
+      new: "Log In"
     users:
-      new: "Sign Up"
       create: "Sign Up"
+      new: "Sign Up"
 
   users_mailer:
     request_pin:

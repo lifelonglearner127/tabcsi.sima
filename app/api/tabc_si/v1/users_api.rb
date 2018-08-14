@@ -21,15 +21,7 @@ module TabcSi
           user = User.find_by(email: email)
 
           error_bad_request! "user doesn't exist" if user.blank?
-
-          pin = user.generate_pin
-
-          error! 'could not generate a new pin' if pin.blank?
-
-          UsersMailer.with(
-            recipient: email,
-            pin: pin
-          ).request_pin.deliver_now
+          error! 'could not generate a new pin' unless user.request_pin
 
           no_content
         end

@@ -1,5 +1,22 @@
+@import 'variables';
+
 @mixin xxs_breakpoint {
   @media only screen and (max-width: 420px) {
     @content;
+  }
+}
+
+@mixin users_sessions_styles {
+  .card-header {
+    background-color: $tabc-header-background-color;
+    border-bottom-width: 0;
+  }
+
+  form {
+    color: $grey-darken-1;
+
+    small {
+      font-size: 75%;
+    }
   }
 }
