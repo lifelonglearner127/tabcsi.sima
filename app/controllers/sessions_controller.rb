@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   before_action :set_page_options, only: %i[create new]
 
   def new
-    redirect_to(dashboard_path) && return if logged_in?
+    redirect_to(dashboard_url) && return if logged_in?
 
     log_out unless pin_requested?
   end
@@ -84,7 +84,7 @@ class SessionsController < ApplicationController
       self.pin_requested = false
       session[:logged_in] = true
 
-      redirect_to dashboard_path
+      redirect_to dashboard_url
 
       return
     end

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_page_options
 
   def new
-    redirect_to(dashboard_path) if logged_in?
+    redirect_to(dashboard_url) if logged_in?
   end
 
   def create
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     )
 
     if user.save_admin
-      redirect_to log_in_path
+      redirect_to log_in_url
     else
       render 'new'
     end

@@ -22,6 +22,6 @@ class ApplicationController < ActionController::Base
   helper_method :page_data_options
 
   def require_logged_in_user
-    redirect_to log_in_path unless logged_in?
+    redirect_to log_in_url unless logged_in?
   end
 end
