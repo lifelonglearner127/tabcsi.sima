@@ -1,6 +1,6 @@
 export default {
   props: {
-    pageData: {
+    pageOptions: {
       type: Object,
 
       default () {
@@ -11,27 +11,51 @@ export default {
 
   computed: {
     acceptCharset () {
-      return this.pageData.acceptCharset
+      return this.pageOptions.acceptCharset
     },
 
     action () {
-      return this.pageData.action
+      return this.pageOptions.action
     },
 
     authenticityToken () {
-      return this.pageData.authenticityToken || {}
+      return this.pageOptions.authenticityToken || {}
+    },
+
+    classNames () {
+      return this.pageOptions.class
+    },
+
+    data () {
+      return this.pageOptions.data
+    },
+
+    dataRemote () {
+      return 'dataRemote' in this.pageOptions && Boolean(this.pageOptions.dataRemote)
+    },
+
+    encodingType () {
+      return this.pageOptions.enctype
     },
 
     enforceUtf8 () {
-      return 'enforceUtf8' in this.pageData
+      return 'enforceUtf8' in this.pageOptions && Boolean(this.pageOptions.enforceUtf8)
     },
 
     hiddenMethod () {
-      return this.pageData.hiddenMethod
+      return this.pageOptions.hiddenMethod
+    },
+
+    id () {
+      return this.pageOptions.id
     },
 
     method () {
-      return this.pageData.method
+      return this.pageOptions.method
+    },
+
+    multiPart () {
+      return 'multipart' in this.pageOptions && Boolean(this.pageOptions.multipart)
     },
 
     tokenName () {

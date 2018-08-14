@@ -38,7 +38,7 @@ export default class App {
         data () {
           return {
             defaultPageSlotTemplates: [],
-            pageData: {}
+            pageOptions: {}
           }
         },
 
@@ -50,7 +50,7 @@ export default class App {
           const pageDataAttr = this.$el.attributes['data-page'] || {}
           const json = JSON.parse(pageDataAttr.value || '{}')
 
-          this.pageData = deepMapKeys(json, (value, key) => camelCase(key))
+          this.pageOptions = deepMapKeys(json, (value, key) => camelCase(key))
           this.defaultPageSlotTemplates = map(this.$el.children, 'outerHTML')
         },
 
@@ -58,7 +58,7 @@ export default class App {
           const page = h(
             pageComponent,
             {
-              props: { pageData: this.pageData },
+              props: { pageOptions: this.pageOptions },
               scopedSlots: { default: () => map(this.defaultPageSlotTemplates, (template) => h({ template })) }
             }
           )
