@@ -65,20 +65,11 @@ module ApplicationHelper
     html_options
   end
 
-  def token(token = nil, form_options: {})
-    return nil unless token != false && protect_against_forgery?
-
-    {
-      name: request_forgery_protection_token.to_s,
-      value: form_authenticity_token(form_options: form_options)
-    }
-  end
-
   private
 
   def pack_names(type)
     names =
-      [controller_path, "#{controller_path}/#{action_name}"].map do |name|
+      ['app', controller_path, "#{controller_path}/#{action_name}"].map do |name|
         next unless Webpacker.manifest.lookup(name_with_extension(name, type))
         name
       end
@@ -88,5 +79,14 @@ module ApplicationHelper
 
   def name_with_extension(name, type)
     "#{name}#{compute_asset_extname(name, type: type)}"
+  end
+
+  def token(token = nil, form_options: {})
+    return nil unless token != false && protect_against_forgery?
+
+    {
+      name: request_forgery_protection_token.to_s,
+      value: form_authenticity_token(form_options: form_options)
+    }
   end
 end

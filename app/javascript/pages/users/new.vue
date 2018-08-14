@@ -153,7 +153,6 @@ export default {
             <mdb-btn
               class="my-4 waves-effect z-depth-0"
               color="primary"
-              name="commit"
               rounded
               size="md"
               type="submit"

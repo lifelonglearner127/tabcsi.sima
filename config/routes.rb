@@ -11,7 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: %i[new create]
+  get :sign_up, to: 'users#new'
+  post :sign_up, to: 'users#create'
 
   namespace :api do
     get(

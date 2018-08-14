@@ -1,11 +1,13 @@
+@charset "utf-8";
+
 html {
   font-size: 100%;
 }
 
-@import 'variables';
+@import '~@/assets/stylesheets/variables';
 @import '~bootstrap/scss/bootstrap';
 @import '~mdbvue/build/scss/mdb';
-@import 'mixins';
+@import '~@/assets/stylesheets/mixins';
 
 .card {
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
