@@ -2,29 +2,26 @@
 en:
   date:
     formats:
-      default:
-        "%m/%d/%Y"
-      with_weekday:
-        "%a %m/%d/%y"
+      default: "%m/%d/%Y"
+      with_weekday: "%a %m/%d/%y"
 
   time:
     formats:
-      default:
-        "%a, %b %-d, %Y at %r"
-      date:
-        "%b %-d, %Y"
-      short:
-        "%B %d"
+      default: "%a, %b %-d, %Y at %r"
+      date: "%b %-d, %Y"
+      short: "%B %d"
 
   titles:
-    application: "TABC: Retail"
+    application: "TABC: RCR"
+    dashboards:
+      show: Dashboard
     sessions:
-      create: "Log In"
-      new: "Log In"
+      create: Log In
+      new: Log In
     users:
-      create: "Sign Up"
-      new: "Sign Up"
+      create: Sign Up
+      new: Sign Up
 
   users_mailer:
     request_pin:
-      subject: TABC Audit Pin Request
+      subject: "TABC: RCR — Pin Request"
