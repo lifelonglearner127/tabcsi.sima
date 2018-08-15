@@ -45,6 +45,5 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.middleware.use(Rack::CanonicalHost, APPLICATION_HOST)
   config.middleware.use(Rack::Deflater)
 end
