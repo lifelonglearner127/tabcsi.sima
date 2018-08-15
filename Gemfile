@@ -62,6 +62,7 @@ group :development, :test do
   gem 'bullet', '~> 5.7'
   gem 'bundler-audit', '~> 0.6.0', require: false
   gem 'factory_bot_rails', '~> 4.10'
+  gem 'faker', '~> 1.9'
   gem 'pry-byebug', '~> 3.6'
   gem 'pry-rails', '~> 0.3.6'
   gem 'rspec-rails', '~> 3.7'

@@ -1,22 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../smtp'
-
 APPLICATION_HOST = Nenv.instance.application_host
-HEROKU_APP_NAME = Nenv.instance.heroku_app_name || ''
-
-HEROKU_APPLICATION_HOST =
-  if HEROKU_APP_NAME.include?('staging-pr-')
-    "#{HEROKU_APP_NAME}.herokuapp.com"
-  else
-    APPLICATION_HOST
-  end
 
 Rails.application.configure do
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = false
   config.action_controller.perform_caching = true
-  config.action_mailer.default_url_options = { host: HEROKU_APPLICATION_HOST }
+  config.action_mailer.asset_host = APPLICATION_HOST
+  config.action_mailer.default_url_options = { host: APPLICATION_HOST }
   config.action_mailer.delivery_method = :aws_sdk
   config.action_mailer.perform_caching = false
   config.active_record.dump_schema_after_migration = false
@@ -48,12 +37,14 @@ Rails.application.configure do
     secure_cookies: true
   }
 
+  config.webpacker.check_yarn_integrity = false
+
   if Nenv.instance.rails_log_to_stdout?
     logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.middleware.use(Rack::CanonicalHost, HEROKU_APPLICATION_HOST)
+  config.middleware.use(Rack::CanonicalHost, APPLICATION_HOST)
   config.middleware.use(Rack::Deflater)
 end

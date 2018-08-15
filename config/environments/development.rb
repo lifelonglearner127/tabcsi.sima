@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
+APPLICATION_HOST = Nenv.instance.application_host
+
 Rails.application.configure do
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = true
-  config.action_mailer.asset_host = 'http://localhost:3000'
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.asset_host = APPLICATION_HOST
+  config.action_mailer.default_url_options = { host: APPLICATION_HOST }
   config.action_mailer.delivery_method = :file
   config.action_mailer.perform_caching = false
   config.action_mailer.raise_delivery_errors = true
@@ -19,6 +19,7 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.eager_load = false
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.webpacker.check_yarn_integrity = true
 
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true

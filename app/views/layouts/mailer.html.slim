@@ -1,9 +1,63 @@
-doctype html
+doctype strict
 html
   head
-    meta content="text/html; charset=utf-8" http-equiv="Content-Type"
+    meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+    meta name="viewport" content="width=device-width"
+    title = mailer_subject
+    = stylesheet_link_tag 'foundation-emails'
+
     css:
-      /* Email styles need to be inline */
+      @media only screen {
+        html {
+          background: #f5f5f5;
+        }
+      }
+
+      pre,
+      table.body {
+        background: #f5f5f5;
+      }
+
+      a,
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      table.body,
+      td,
+      th {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+      }
+
+      code,
+      kbd,
+      pre,
+      samp {
+        font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+
+      table.spacer-16 td {
+        font-size: 16px;
+        line-height: 16px;
+      }
+
+      table.spacer-32 td {
+        font-size: 32px;
+        line-height: 32px;
+      }
+
+    = content_for :css
 
   body
-    = yield
+    table.body[data-made-with-foundation]
+      tr
+        td.float-center[
+          align="center"
+          valign="top"
+        ]
+          center[data-parsed]
+            = yield
