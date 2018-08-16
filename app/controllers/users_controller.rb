@@ -8,9 +8,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.build
-    user.attributes = params.require(:user).permit(
-      :full_name, :email, :phone, :company_name, :job_title, :license_number
+    user = User.new(
+      params.require(:user).permit(
+        :full_name, :email, :phone, :company_name, :job_title, :license_number
+      )
     )
 
     if user.save_admin
