@@ -19,7 +19,7 @@ Oj.optimize_rails
 
 require_relative '../lib/patches'
 
-module TabcSi
+module Web
   class Application < Rails::Application
     config.autoload_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('lib')
@@ -42,5 +42,7 @@ module TabcSi
 
     config.generators.system_tests = nil
     config.active_job.queue_adapter = :delayed_job
+
+    config.middleware.use Rack::Attack
   end
 end

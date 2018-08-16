@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'action_controller/log_subscriber'
+
+ActionController::LogSubscriber.attach_to :doorkeeper_metal_controller
+
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (needs plugins).
   orm :active_record

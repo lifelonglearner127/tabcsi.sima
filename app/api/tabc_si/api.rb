@@ -4,10 +4,18 @@ require 'doorkeeper/grape/helpers'
 
 module TabcSi
   class Api < Grape::API
-    use(
+    logger Rails.logger
+
+    insert_after(
+      Rack::Head,
       GrapeLogging::Middleware::RequestLogger,
-      logger: logger,
-      formatter: GrapeLogging::Formatters::Rails.new
+      instrumentation_key: 'grape_key',
+      include: [
+        GrapeLogging::Loggers::ClientEnv.new,
+        GrapeLogging::Loggers::RequestHeaders.new,
+        GrapeLogging::Loggers::FilterParameters.new,
+        GrapeLogging::Loggers::Response.new
+      ]
     )
 
     helpers Doorkeeper::Grape::Helpers

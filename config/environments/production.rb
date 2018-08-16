@@ -20,7 +20,15 @@ Rails.application.configure do
   config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
   config.log_level = :debug
-  config.log_tags = %i[request_id]
+  config.log_tags = [->(request) { request.uuid[0, 8] }]
+
+  config.logger =
+    if Nenv.instance.rails_log_to_stdout?
+      TabcSi.create_logger(ActiveSupport::Logger.new(STDOUT))
+    else
+      TabcSi.create_logger(config.paths['log'].first)
+    end
+
   config.public_file_server.enabled = Nenv.instance.rails_serve_static_files?
 
   config.public_file_server.headers = {
@@ -38,12 +46,6 @@ Rails.application.configure do
   }
 
   config.webpacker.check_yarn_integrity = false
-
-  if Nenv.instance.rails_log_to_stdout?
-    logger = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger = ActiveSupport::TaggedLogging.new(logger)
-  end
 
   config.middleware.use(Rack::Deflater)
 end

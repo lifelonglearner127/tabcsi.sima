@@ -33,6 +33,9 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   Enabled: false
 
+Metrics/PerceivedComplexity:
+  Enabled: false
+
 #################################### Naming ####################################
 
 ################################# Performance ##################################
