@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-NUMBER_OF_RELEASES_TO_KEEP = 5
+NUMBER_OF_RELEASES_TO_KEEP = 2
 NUMBER_OF_BUNDLE_JOBS = 4
 # NUMBER_OF_BOX_SYNC_WORKERS = 1
 # NUMBER_OF_FOLDER_SYNC_WORKERS = 1
@@ -20,8 +20,8 @@ set :keep_releases, NUMBER_OF_RELEASES_TO_KEEP
 set(
   :linked_dirs,
   %w[
-    .bundle log node_modules public/system public/uploads tmp/cache tmp/pids
-    tmp/sockets tmp/uploads vendor/bundle
+    .bundle log node_modules public/packs public/system public/uploads tmp/cache
+    tmp/pids tmp/sockets tmp/uploads vendor/bundle
   ]
 )
 
