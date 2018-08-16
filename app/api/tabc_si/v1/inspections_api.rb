@@ -97,7 +97,7 @@ module TabcSi
               end
             end
 
-            optional(:pictures, type: Hash) do
+            optional(:pictures, type: Hash, default: {}) do
               InspectionsApi.picture_questions.each do |q|
                 optional q.question_number, type: Array[File]
               end
