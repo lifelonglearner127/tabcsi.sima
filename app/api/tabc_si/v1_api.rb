@@ -9,9 +9,7 @@ module TabcSi
     prefix 'api'
     version 'v1', using: :path
 
-    # mount V1::AnswersApi
     mount V1::AuditFormsApi
-    # mount V1::DistributorsApi
     mount V1::InspectionsApi
     mount V1::LocationsApi
     mount V1::PushTokensApi
@@ -46,18 +44,10 @@ module TabcSi
         }
       },
       tags: [
-        # {
-        #   name: 'answers',
-        #   description: 'Answers API'
-        # },
         {
           name: 'audit_forms',
           description: 'Audit Forms (A.K.A. Questions) API'
         },
-        # {
-        #   name: 'distributors',
-        #   description: 'Distributors API'
-        # },
         {
           name: 'inspections',
           description: 'Inspections API'
@@ -91,12 +81,10 @@ module TabcSi
           },
           {
             name: 'Vendors',
-            # tags: %w[locations vendors distributors]
             tags: %w[locations vendors]
           },
           {
             name: 'Questions',
-            # tags: %w[answers audit_forms]
             tags: %w[audit_forms inspections]
           }
         ]
