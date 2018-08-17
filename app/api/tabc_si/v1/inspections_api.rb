@@ -4,10 +4,17 @@ module TabcSi
   module V1
     class InspectionsApi < Grape::API
       def self.questions
+        # guard for test environment
+        if ActiveRecord::Base.connection.migration_context.needs_migration?
+          return []
+        end
+
         @questions ||= Question.order(id: :asc)
       end
 
       def self.picture_questions
+        return [] if questions.blank?
+
         @picture_questions ||=
           questions
           .includes(:choices)
