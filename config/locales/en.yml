@@ -32,3 +32,4 @@ en:
         presence: is required
         id: is not a valid id
         entity: does not exist
+        email: is not a valid email address

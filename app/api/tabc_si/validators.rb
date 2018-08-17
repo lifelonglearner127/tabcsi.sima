@@ -6,6 +6,7 @@ module TabcSi
 
     eager_autoload do
       autoload :Base
+      autoload :Email
       autoload :Id
       autoload :Entity
     end

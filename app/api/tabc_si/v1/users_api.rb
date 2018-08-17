@@ -14,7 +14,7 @@ module TabcSi
           ]
         )
         params do
-          requires :email, type: String, allow_blank: false
+          requires :email, type: String, email: true
         end
         post :request_pin do
           email = params[:email]
@@ -39,7 +39,7 @@ module TabcSi
           }
         )
         params do
-          requires :email, type: String, allow_blank: false
+          requires :email, type: String, email: true
           optional :location_id, type: Integer, id: true
         end
         post :validate do
