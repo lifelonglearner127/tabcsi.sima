@@ -50,8 +50,8 @@ module TabcSi
           }
         )
         params do
-          requires :location_id, type: Integer
-          requires :audit_form_id, type: Integer
+          requires :location_id, type: Integer, entity: Location
+          requires :audit_form_id, type: Integer, entity: AuditForm
 
           requires(
             :started_at,
@@ -61,8 +61,7 @@ module TabcSi
           )
         end
         post do
-          location = Location.find(params[:location_id])
-          audit_form = AuditForm.find(params[:audit_form_id])
+          location = params[:location]
 
           if location.locked?
             error_bad_request! 'inspection already started for location'
@@ -70,7 +69,7 @@ module TabcSi
 
           inspection = Inspection.create!(
             location: location,
-            audit_form: audit_form,
+            audit_form: params[:audit_form],
             user: current_user,
             started_at: params[:started_at]
           )
@@ -79,9 +78,14 @@ module TabcSi
         end
 
         params do
-          requires :inspection_id, type: Integer, desc: 'Inspection id.'
+          requires(
+            :inspection_id,
+            type: Integer,
+            entity: Inspection,
+            desc: 'Inspection id.'
+          )
         end
-        route_param :inspection_id do
+        segment ':inspection_id' do
           desc(
             'Finish Inspection',
             detail: 'Finish the specified inspection.',
@@ -111,7 +115,7 @@ module TabcSi
             end
           end
           post :finish do
-            inspection = Inspection.find(params[:inspection_id])
+            inspection = params[:inspection]
 
             if inspection.finished_at.present?
               error_bad_request! 'inspection has already been finished'

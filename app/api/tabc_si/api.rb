@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'doorkeeper/grape/helpers'
+require_relative 'validators'
 
 module TabcSi
   class Api < Grape::API

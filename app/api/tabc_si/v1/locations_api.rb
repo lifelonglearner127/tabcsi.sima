@@ -23,9 +23,14 @@ module TabcSi
         end
 
         params do
-          requires :location_id, type: Integer, desc: 'Location id.'
+          requires(
+            :location_id,
+            type: Integer,
+            entity: Location,
+            desc: 'Location id.'
+          )
         end
-        route_param :location_id do
+        segment ':location_id' do
           desc(
             'Get Location History',
             detail: 'Returns the locations inspection history.',
@@ -36,7 +41,7 @@ module TabcSi
             }
           )
           get :history do
-            location = Location.find(params[:location_id])
+            location = params[:location]
 
             respond location.inspections.includes(:audit_form)
           end

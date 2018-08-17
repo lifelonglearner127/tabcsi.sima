@@ -25,3 +25,10 @@ en:
   users_mailer:
     request_pin:
       subject: "TABC: RCR — Pin Request"
+
+  grape:
+    errors:
+      messages:
+        presence: is required
+        id: is not a valid id
+        entity: does not exist
