@@ -13,7 +13,7 @@ module TabcSi
           }
         )
         get :names do
-          respond Location.order(name: :asc).pluck(:name)
+          respond Location.order(name: :asc).pluck(:name).uniq
         end
       end
     end
