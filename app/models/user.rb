@@ -39,7 +39,10 @@ class User < ApplicationRecord
   has_and_belongs_to_many :locations, -> { order(:id) }
   has_many :push_tokens, -> { order(:id) }, dependent: :destroy
 
+  enum role: %i[user admin tabc]
+
   before_validation :generate_random_password, if: :generate_password?
+  after_initialize :set_default_role, if: :new_record?
 
   attr_accessor :company_name
   attr_accessor :license_number
@@ -106,5 +109,9 @@ class User < ApplicationRecord
 
   def generate_random_password
     self.password = SecureRandom.hex
+  end
+
+  def set_default_role
+    self.role ||= :user
   end
 end
