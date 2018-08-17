@@ -124,6 +124,7 @@ export default {
             v-else
             id="session_email"
             v-model="session.email"
+            autocomplete="email"
             error-msg="You did not enter a valid e-mail"
             icon="fas-fa-envelope"
             label="E-mail"

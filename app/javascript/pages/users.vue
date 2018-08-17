@@ -79,6 +79,7 @@ export default {
           <md-input
             id="user_email"
             v-model="user.email"
+            autocomplete="email"
             class="mt-0"
             error-msg="You did not enter a valid e-mail"
             icon="fas-fa-envelope"

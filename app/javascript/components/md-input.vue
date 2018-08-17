@@ -15,6 +15,10 @@ export default {
       type: Boolean,
       default: false
     },
+    autocomplete: {
+      type: String,
+      default: null
+    },
     checked: {
       type: Boolean,
       default: false
@@ -291,6 +295,7 @@ export default {
     </fa-sprite>
     <input
       ref="input"
+      :autocomplete="autocomplete"
       :checked="checked"
       :class="className"
       :data-validation="validation"
