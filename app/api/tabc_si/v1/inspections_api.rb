@@ -55,9 +55,9 @@ module TabcSi
 
           requires(
             :started_at,
-            type: String,
+            type: DateTime,
             desc: 'Date and time, in UTC, when the inspection was started.',
-            documentation: { format: 'date-time' }
+            documentation: { type: 'string', format: 'date-time' }
           )
         end
         post do
@@ -93,9 +93,9 @@ module TabcSi
           params do
             requires(
               :finished_at,
-              type: String,
+              type: DateTime,
               desc: 'Date and time, in UTC, when the inspection was finished.',
-              documentation: { format: 'date-time' }
+              documentation: { type: 'string', format: 'date-time' }
             )
 
             requires(:answers, type: Hash) do
