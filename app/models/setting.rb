@@ -3,16 +3,19 @@
 class Setting < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-  def self.server_status
-    @server_status ||= find_by(name: :server_status)
+  def self.by_name(name)
+    name = name.to_sym
+
+    @settings_cache ||= {}
+    @settings_cache[name] ||= find_by(name: name)
   end
 
   def self.server_status=(value)
-    server_status.update!(value: value)
+    by_name(:server_status).update!(value: value)
   end
 
   def self.server_active?
-    server_status.value.to_sym == :active
+    by_name(:server_status).value.to_sym == :active
   end
 
   def self.deactivate_server!
@@ -23,19 +26,15 @@ class Setting < ApplicationRecord
     self.server_status = :active
   end
 
-  def self.forms_build_date_object
-    @forms_build_date_object ||= find_by(name: :forms_build_date)
-  end
-
   def self.forms_build_date
-    forms_build_date_object.value.to_i
+    by_name(:forms_build_date).value.to_i
   end
 
   def self.forms_build_date=(value)
-    forms_build_date_object.update!(value: value)
+    by_name(:forms_build_date).update!(value: value)
   end
 
   def self.fiscal_year
-    @fiscal_year ||= find_by(name: :fiscal_year)
+    by_name(:fiscal_year).value.to_i
   end
 end
