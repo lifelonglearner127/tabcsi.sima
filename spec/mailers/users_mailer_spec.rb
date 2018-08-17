@@ -4,22 +4,31 @@ require 'rails_helper'
 
 RSpec.describe UsersMailer do
   describe 'request_pin' do
-    let(:mail) { UsersMailer.request_pin }
+    let(:email_subject) { t('users_mailer.request_pin.subject') }
+    let(:recipient_email) { Faker::Internet.safe_email }
+    let(:pin) { Faker::Number.number(8) }
+
+    let(:mail) do
+      described_class.with(
+        recipient: recipient_email,
+        pin: pin
+      ).request_pin
+    end
 
     it 'renders the subject' do
-      expect(mail.subject).to eq('Request pin')
+      expect(mail.subject).to eq(email_subject)
     end
 
     it 'renders the recipient email' do
-      expect(mail.to).to eq(['to@example.org'])
+      expect(mail.to).to eq([recipient_email])
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['support@neubus.com'])
     end
 
-    it 'renders the body' do
-      expect(mail.body.encoded).to match('Hi')
+    it 'assigns @pin' do
+      expect(mail.body.encoded).to match(pin)
     end
   end
 end
