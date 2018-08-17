@@ -3,13 +3,27 @@
 module TabcSi
   module V1
     class InspectionsApi < Grape::API
+      # def self.collect_questions
+      #   questions = Question.order(id: :asc)
+      #   picture_questions =
+      #     questions
+      #     .includes(:choices)
+      #     .where(choices: { picture_attachment: true })
+      #
+      #   questions.map do |q|
+      #     [q.question_number, picture_questions.include?(q)]
+      #   end
+      # end
+
       def self.questions
         # guard for test environment
         if ActiveRecord::Base.connection.migration_context.needs_migration?
           return []
+          # return {}
         end
 
         @questions ||= Question.order(id: :asc)
+        # @questions ||= Hash[collect_questions]
       end
 
       def self.picture_questions
@@ -111,6 +125,14 @@ module TabcSi
             optional(:pictures, type: Hash, default: {}) do
               InspectionsApi.picture_questions.each do |q|
                 optional q.question_number, type: Array[File]
+                # optional q.question_number, type: Types::FileArray
+                # optional q.question_number, type: Array do
+                #   requires :filename
+                #   requires :type
+                #   requires :name
+                #   requires :tempfile
+                #   requires :head
+                # end
               end
             end
           end
@@ -121,10 +143,8 @@ module TabcSi
               error_bad_request! 'inspection has already been finished'
             end
 
-            inspection.finish(
-              params[:finished_at],
-              process_answers(params[:answers], params[:pictures])
-            )
+            answers = process_answers(params[:answers])
+            inspection.finish(params[:finished_at], answers)
 
             respond inspection
           end
