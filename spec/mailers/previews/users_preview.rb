@@ -4,6 +4,9 @@
 class UsersPreview < ActionMailer::Preview
   # Preview this email at /rails/mailers/users/request_pin
   def request_pin
-    UsersMailer.with(pin: Faker::Number.number(8)).request_pin
+    UsersMailer.with(
+      recipient: Faker::Internet.safe_email,
+      pin: Faker::Number.number(8)
+    ).request_pin
   end
 end

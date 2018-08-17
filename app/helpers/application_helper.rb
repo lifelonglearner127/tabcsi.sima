@@ -69,7 +69,11 @@ module ApplicationHelper
 
   def pack_names(type)
     names =
-      ['app', controller_path, "#{controller_path}/#{action_name}"].map do |name|
+      [
+        'app',
+        controller_path,
+        "#{controller_path}/#{action_name}"
+      ].map do |name|
         next unless Webpacker.manifest.lookup(name_with_extension(name, type))
         name
       end

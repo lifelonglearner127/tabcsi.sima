@@ -7,9 +7,12 @@
     "build:compile": "yarn env:prod bin/rails webpacker:compile",
     "clean": "bin/rails webpacker:clobber",
     "env:prod": "cross-env RAILS_ENV=production RACK_ENV=production NODE_ENV=production",
+    "env:test": "cross-env RAILS_ENV=test RACK_ENV=test NODE_ENV=test",
     "install:clean": "rm -fr yarn.lock node_modules; yarn",
     "restart": "overmind r",
-    "start": "overmind s"
+    "start": "overmind s",
+    "test": "yarn test:spec || true",
+    "test:spec": "yarn env:test bin/rails spec || true"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "~1.2",
