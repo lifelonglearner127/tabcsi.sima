@@ -51,6 +51,7 @@ group :development do
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
   gem 'rubocop', '~> 0.58.0', require: false
+  gem 'rubocop-rspec', '~> 1.28'
   gem 'spring', '~> 2.0'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'spring-watcher-listen', '~> 2.0.0'

@@ -1,4 +1,5 @@
 ---
+require: rubocop-rspec
 AllCops:
   DefaultFormatter: progress
   DisplayCopNames: true
