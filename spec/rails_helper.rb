@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV['RACK_ENV'] = ENV['RAILS_ENV'] = 'test'
+
 require 'nenv'
 
 if Nenv.instance.coverage?
@@ -9,8 +11,6 @@ if Nenv.instance.coverage?
 end
 
 require 'spec_helper'
-
-ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../config/environment', __dir__)
 
