@@ -37,4 +37,8 @@ class Setting < ApplicationRecord
   def self.fiscal_year
     by_name(:fiscal_year).value.to_i
   end
+
+  def self.pin_length
+    by_name(:pin_length).value.to_i
+  end
 end

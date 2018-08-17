@@ -72,7 +72,8 @@ class SessionsController < ApplicationController
         sign_up_path: sign_up_path,
         resend_pin_path: '#',
         email: session_email,
-        pin_requested: pin_requested?
+        pin_requested: pin_requested?,
+        pin_length: Setting.pin_length
       }
     }
   end

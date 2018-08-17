@@ -2,7 +2,6 @@
 
 class User < ApplicationRecord
   PIN_CHARS = [*'0'..'9'].freeze
-  PIN_LENGTH = 8
 
   devise(
     :database_authenticatable,
@@ -49,7 +48,7 @@ class User < ApplicationRecord
 
   def self.new_pin
     # based on SecureRandom.alphanumeric
-    SecureRandom.__send__(:choose, PIN_CHARS, PIN_LENGTH)
+    SecureRandom.__send__(:choose, PIN_CHARS, Setting.pin_length)
   end
 
   def generate_pin

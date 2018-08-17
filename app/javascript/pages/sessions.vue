@@ -32,7 +32,8 @@ export default {
   computed: {
     cardTitle () {
       if (this.pinRequested) {
-        return 'Check your email for an "8 digit pin" and enter it here.'
+        return `Check your email for an "${this.pageOptions.pinLength} digit` +
+          ' pin" and enter it here.'
       }
 
       return 'Enter your email address to get started.'
@@ -99,8 +100,8 @@ export default {
           <template v-if="pinRequested">
             <md-input
               id="sessions_pin"
+              :maxlength="pageOptions.pinLength"
               input-class="text-center"
-              maxlength="8"
               name="session[pin]"
             >
             </md-input>
