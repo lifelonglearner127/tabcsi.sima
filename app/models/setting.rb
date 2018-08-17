@@ -34,4 +34,8 @@ class Setting < ApplicationRecord
   def self.forms_build_date=(value)
     forms_build_date_object.update!(value: value)
   end
+
+  def self.fiscal_year
+    @fiscal_year ||= find_by(name: :fiscal_year)
+  end
 end
