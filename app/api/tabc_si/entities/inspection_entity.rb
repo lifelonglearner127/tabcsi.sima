@@ -6,11 +6,13 @@ module TabcSi
       expose :id, documentation: { type: 'integer', format: 'int64' }
       expose :location_id, documentation: { type: 'integer', format: 'int64' }
       expose :user, using: UserEntity
-      expose :report_number
 
       expose :permit_name do |object|
         object.audit_form.permit_name
       end
+
+      expose :report_number
+      expose :cancellation_reason
 
       expose(
         :started_at,
@@ -60,6 +62,22 @@ module TabcSi
         :submitted_at,
         documentation: {
           desc: 'The date-time when the inspection was submitted to TABC.',
+          format: 'date-time'
+        }
+      )
+
+      expose(
+        :cancelled_at,
+        documentation: {
+          desc: 'The date-time when the inspection was cancelled.',
+          format: 'date-time'
+        }
+      )
+
+      expose(
+        :updated_at,
+        documentation: {
+          desc: 'The date-time when the inspection was last updated.',
           format: 'date-time'
         }
       )

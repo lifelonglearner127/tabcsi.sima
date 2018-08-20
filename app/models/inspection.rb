@@ -30,6 +30,15 @@ class Inspection < ApplicationRecord
     unlock_location
   end
 
+  def cancel(reason)
+    update!(
+      cancelled_at: Time.zone.now,
+      cancellation_reason: reason
+    )
+
+    unlock_location(inspected: false)
+  end
+
   private
 
   def lock_location
@@ -39,10 +48,11 @@ class Inspection < ApplicationRecord
     )
   end
 
-  def unlock_location
+  def unlock_location(inspected: true)
     location.update!(
       locked: false,
-      inspected: true
+      locked_by: nil,
+      inspected: inspected
     )
   end
 end

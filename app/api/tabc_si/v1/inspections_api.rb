@@ -152,6 +152,29 @@ module TabcSi
 
             respond inspection
           end
+
+          desc(
+            'Cancel Inspection',
+            detail: 'Cancels the started inspection.',
+            success: {
+              model: Entities::InspectionEntity,
+              message: 'An inspection object.'
+            }
+          )
+          params do
+            optional :reason, type: String
+          end
+          post :cancel do
+            inspection = params[:inspection]
+
+            if inspection.finished_at.present?
+              error_bad_request! 'cannot cancel a finished inspection'
+            end
+
+            inspection.cancel(params[:reason])
+
+            respond inspection
+          end
         end
       end
     end
