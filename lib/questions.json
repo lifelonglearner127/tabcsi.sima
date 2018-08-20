@@ -416,7 +416,7 @@
     },
     "30": {
       "question_text": "What is the minimum age that you employ a person to sell/serve alcohol at your location?",
-      "question_type": "radio",
+      "question_type": "drop_down",
       "choices": [
         { "choice_text": "16 years old" },
         { "choice_text": "Younger than 16 years of age" },
