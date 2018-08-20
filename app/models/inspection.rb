@@ -23,7 +23,8 @@ class Inspection < ApplicationRecord
 
     update!(
       finished_at: finished_at,
-      completed_at: Time.zone.now
+      completed_at: Time.zone.now,
+      report_number: "RCR#{Setting.fiscal_year}-#{location.id}"
     )
 
     unlock_location
