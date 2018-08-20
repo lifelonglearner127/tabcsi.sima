@@ -43,7 +43,13 @@ module TabcSi
           get :history do
             location = params[:location]
 
-            respond location.inspections.includes(:audit_form, :user)
+            inspections =
+              location
+              .inspections
+              .includes(:audit_form, :user)
+              .order(updated_at: :desc)
+
+            respond inspections
           end
         end
       end
