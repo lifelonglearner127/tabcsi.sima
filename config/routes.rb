@@ -20,6 +20,12 @@ Rails.application.routes.draw do
 
   get :dashboard, to: 'dashboards#show'
 
+  resources :questions, only: %i[] do
+    collection do
+      get :help
+    end
+  end
+
   namespace :api do
     get(
       ':version/docs',
