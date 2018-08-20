@@ -23,6 +23,14 @@ module TabcSi
       expose :back_long, documentation: { type: 'number', format: 'double' }
 
       expose(
+        :unpadded_diameter, documentation: { type: 'number', format: 'double' }
+      )
+
+      expose(
+        :padded_diameter, documentation: { type: 'number', format: 'double' }
+      )
+
+      expose(
         :licenses,
         using: LicenseEntity,
         documentation: { is_array: true }
