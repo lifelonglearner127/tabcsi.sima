@@ -147,7 +147,7 @@ module TabcSi
               error_bad_request! 'inspection has already been finished'
             end
 
-            answers = process_answers(params[:answers])
+            answers = process_answers(params[:answers], params[:pictures])
             inspection.finish(params[:finished_at], answers)
 
             respond inspection
