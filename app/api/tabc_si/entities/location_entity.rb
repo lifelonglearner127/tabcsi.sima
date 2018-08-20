@@ -15,6 +15,7 @@ module TabcSi
       expose :postal_code
       expose :phone_number
       expose :locked, documentation: { type: 'boolean' }
+      expose :inspected, documentation: { type: 'boolean' }
 
       expose(
         :licenses,

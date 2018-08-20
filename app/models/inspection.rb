@@ -36,6 +36,9 @@ class Inspection < ApplicationRecord
   end
 
   def unlock_location
-    location.update!(locked: false)
+    location.update!(
+      locked: false,
+      inspected: true
+    )
   end
 end

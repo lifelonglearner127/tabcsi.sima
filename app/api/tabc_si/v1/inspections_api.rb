@@ -81,6 +81,10 @@ module TabcSi
             error_bad_request! 'inspection already started for location'
           end
 
+          if location.inspected?
+            error_bad_request! 'location already inspected'
+          end
+
           inspection = Inspection.create!(
             location: location,
             audit_form: params[:audit_form],
