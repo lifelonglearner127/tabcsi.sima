@@ -132,14 +132,14 @@
     "12": {
       "question_text": "Choose the vendors that you purchase beer from.",
       "question_type": "drop_down",
-      "source": "/api/v1/vendors/names",
+      "source": "/api/v1/distributors",
       "other": 50,
       "multiple": true
     },
     "13": {
       "question_text": "Choose the vendors that you purchase wine / distilled spirits from.",
       "question_type": "drop_down",
-      "source": "/api/v1/vendors/names",
+      "source": "/api/v1/distributors",
       "other": 50,
       "multiple": true
     },

@@ -10,6 +10,7 @@ module TabcSi
     version 'v1', using: :path
 
     mount V1::AuditFormsApi
+    mount V1::DistributorsApi
     mount V1::InspectionsApi
     mount V1::LocationsApi
     mount V1::PushTokensApi
@@ -49,6 +50,10 @@ module TabcSi
           description: 'Audit Forms (A.K.A. Questions) API'
         },
         {
+          name: 'distributors',
+          description: 'Distributors API'
+        },
+        {
           name: 'inspections',
           description: 'Inspections API'
         },
@@ -81,7 +86,7 @@ module TabcSi
           },
           {
             name: 'Vendors',
-            tags: %w[locations vendors]
+            tags: %w[distributors locations vendors]
           },
           {
             name: 'Questions',
