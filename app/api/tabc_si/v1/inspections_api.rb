@@ -3,6 +3,37 @@
 module TabcSi
   module V1
     class InspectionsApi < Grape::API
+      DROP_DOWN_FORMAT ||= <<~DESC
+        Value format (braced text should be replaced with actual values):
+
+            {vendor name};{vendor name};...
+
+        Example:
+
+            ATX WHOLESALE LIQUORS LLC;BEN E. KEITH BEVERAGES;CRAFT DISTRIBUTORS TEXAS LLC
+      DESC
+
+      QUESTION_DESCRIPTIONS ||= {
+        '12': DROP_DOWN_FORMAT,
+        '13': DROP_DOWN_FORMAT,
+        '26B': <<~DESC,
+          Value format (braced text should be replaced with actual values):
+
+              {radio text}: [{field label}: {start value}-{end value}, ...]
+
+          Example:
+              Monday - Friday: [Food: 7:00AM-11:00PM, Alcohol: 10:00AM-10:00PM]
+        DESC
+        '27': <<~DESC
+          Value format (braced text should be replaced with actual values):
+
+              {radio text}: [{field label}: {start value}-{end value}, ...]
+
+          Example:
+              Friday: [Alcohol: 10:00AM-10:00PM]
+        DESC
+      }.freeze
+
       # def self.collect_questions
       #   questions = Question.order(id: :asc)
       #   picture_questions =
@@ -122,7 +153,11 @@ module TabcSi
 
             requires(:answers, type: Hash) do
               InspectionsApi.questions.each do |q|
-                optional q.question_number, type: String
+                optional(
+                  q.question_number,
+                  type: String,
+                  desc: QUESTION_DESCRIPTIONS[q.question_number.to_sym]
+                )
               end
             end
 
