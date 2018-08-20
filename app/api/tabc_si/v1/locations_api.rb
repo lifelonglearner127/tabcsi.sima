@@ -19,7 +19,7 @@ module TabcSi
         get do
           locations = current_user&.locations || Location.all
 
-          respond locations
+          respond locations.includes(:licenses, :locked_by)
         end
 
         params do

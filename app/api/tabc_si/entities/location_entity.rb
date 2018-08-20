@@ -16,6 +16,7 @@ module TabcSi
       expose :phone_number
       expose :locked, documentation: { type: 'boolean' }
       expose :inspected, documentation: { type: 'boolean' }
+      expose :locked_by, using: UserEntity
 
       expose(
         :licenses,
