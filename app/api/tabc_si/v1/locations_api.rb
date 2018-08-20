@@ -32,6 +32,78 @@ module TabcSi
         end
         segment ':location_id' do
           desc(
+            'Update Location',
+            detail: "Allows updating a location's coordinate data.",
+            success: {
+              model: Entities::LocationEntity,
+              message: 'A location object.'
+            }
+          )
+          params do
+            requires :front, type: Hash do
+              requires(
+                :lat,
+                type: BigDecimal,
+                desc: 'in decimal degrees',
+                documentation: { format: 'double' }
+              )
+
+              requires(
+                :long,
+                type: BigDecimal,
+                desc: 'in decimal degrees',
+                documentation: { format: 'double' }
+              )
+            end
+
+            requires :back, type: Hash do
+              requires(
+                :lat,
+                type: BigDecimal,
+                desc: 'in decimal degrees',
+                documentation: { format: 'double' }
+              )
+
+              requires(
+                :long,
+                type: BigDecimal,
+                desc: 'in decimal degrees',
+                documentation: { format: 'double' }
+              )
+            end
+
+            requires(
+              :unpadded_diameter,
+              type: BigDecimal,
+              desc: 'in feet',
+              documentation: { format: 'double' }
+            )
+
+            requires(
+              :padded_diameter,
+              type: BigDecimal,
+              desc: 'in feet',
+              documentation: { format: 'double' }
+            )
+          end
+          patch do
+            location = params[:location]
+            front = params[:front]
+            back = params[:back]
+
+            location.update!(
+              front_lat: front[:lat],
+              front_long: front[:long],
+              back_lat: back[:lat],
+              back_long: back[:long],
+              unpadded_diameter: params[:unpadded_diameter],
+              padded_diameter: params[:padded_diameter]
+            )
+
+            respond location
+          end
+
+          desc(
             'Get Location History',
             detail: 'Returns the locations inspection history.',
             is_array: true,
