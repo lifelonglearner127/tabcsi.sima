@@ -17,6 +17,10 @@ module TabcSi
       expose :locked, documentation: { type: 'boolean' }
       expose :inspected, documentation: { type: 'boolean' }
       expose :locked_by, using: UserEntity
+      expose :front_lat, documentation: { type: 'number', format: 'double' }
+      expose :front_long, documentation: { type: 'number', format: 'double' }
+      expose :back_lat, documentation: { type: 'number', format: 'double' }
+      expose :back_long, documentation: { type: 'number', format: 'double' }
 
       expose(
         :licenses,
