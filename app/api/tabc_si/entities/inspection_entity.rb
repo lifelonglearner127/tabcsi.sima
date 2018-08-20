@@ -5,6 +5,7 @@ module TabcSi
     class InspectionEntity < Grape::Entity
       expose :id, documentation: { type: 'integer', format: 'int64' }
       expose :location_id, documentation: { type: 'integer', format: 'int64' }
+      expose :user, using: UserEntity
 
       expose :permit_name do |object|
         object.audit_form.permit_name
