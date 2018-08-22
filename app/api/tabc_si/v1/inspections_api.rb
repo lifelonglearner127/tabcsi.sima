@@ -80,6 +80,20 @@ module TabcSi
             }
           end
         end
+
+        def verify_user!(inspection)
+          if inspection.user_id != current_user&.id
+            error_bad_request! 'user did not start the inspection'
+          end
+
+          unless inspection.location.users.include?(current_user)
+            error_bad_request! 'user is no longer assigned to location'
+          end
+
+          return if inspection.license.users.include?(current_user)
+
+          error_bad_request! 'user is no longer assigned to license'
+        end
       end
 
       resources :inspections do
@@ -114,8 +128,14 @@ module TabcSi
             error_bad_request! 'inspection already started for location'
           end
 
-          if location.inspected?
-            error_bad_request! 'location already inspected'
+          error_bad_request! 'location already inspected' if location.inspected?
+
+          unless location.users.include?(current_user)
+            error_bad_request! 'user is not assigned to location'
+          end
+
+          unless license.users.include?(current_user)
+            error_bad_request! 'user is not assigned to license'
           end
 
           inspection = Inspection.create!(
@@ -185,6 +205,8 @@ module TabcSi
               error_bad_request! 'inspection has already been finished'
             end
 
+            verify_user!(inspection)
+
             answers = process_answers(params[:answers], params[:pictures])
             inspection.finish(params[:finished_at], answers)
 
@@ -208,6 +230,8 @@ module TabcSi
             if inspection.finished_at.present?
               error_bad_request! 'cannot cancel a finished inspection'
             end
+
+            verify_user!(inspection)
 
             inspection.cancel(params[:reason])
 
