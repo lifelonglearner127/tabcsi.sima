@@ -95,8 +95,9 @@ module TabcSi
           }
         )
         params do
-          requires :location_id, type: Integer, entity: Location
           requires :audit_form_id, type: Integer, entity: AuditForm
+          requires :location_id, type: Integer, entity: Location
+          requires :license_id, type: Integer, entity: License
 
           requires(
             :started_at,
@@ -107,6 +108,7 @@ module TabcSi
         end
         post do
           location = params[:location]
+          license = params[:license]
 
           if location.locked?
             error_bad_request! 'inspection already started for location'
@@ -117,9 +119,10 @@ module TabcSi
           end
 
           inspection = Inspection.create!(
-            location: location,
             audit_form: params[:audit_form],
             user: current_user,
+            location: location,
+            license: license,
             started_at: params[:started_at]
           )
 

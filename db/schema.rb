@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_20_170041) do
+ActiveRecord::Schema.define(version: 2018_08_22_160729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,8 +142,10 @@ ActiveRecord::Schema.define(version: 2018_08_20_170041) do
     t.string "report_number"
     t.text "cancellation_reason"
     t.datetime "cancelled_at"
+    t.bigint "license_id"
     t.index ["audit_form_id"], name: "index_inspections_on_audit_form_id"
     t.index ["discarded_at"], name: "index_inspections_on_discarded_at"
+    t.index ["license_id"], name: "index_inspections_on_license_id"
     t.index ["location_id"], name: "index_inspections_on_location_id"
     t.index ["user_id"], name: "index_inspections_on_user_id"
   end
@@ -343,6 +345,7 @@ ActiveRecord::Schema.define(version: 2018_08_20_170041) do
   add_foreign_key "conditions", "audit_form_questions"
   add_foreign_key "fields", "choices"
   add_foreign_key "inspections", "audit_forms"
+  add_foreign_key "inspections", "licenses"
   add_foreign_key "inspections", "locations"
   add_foreign_key "inspections", "users"
   add_foreign_key "licenses", "companies"
