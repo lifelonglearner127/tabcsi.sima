@@ -11,5 +11,5 @@ production:
   service: S3
   access_key_id: <%= Rails.application.credentials.dig(:s3, :access_key_id) %>
   secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret_access_key) %>
-  region: <%= Nenv.instance.aws_region %>
-  bucket: tabcrcr-test
+  region: <%= Nenv.instance.s3_region %>
+  bucket: <%= Nenv.instance.s3_bucket %>
