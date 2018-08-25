@@ -43,7 +43,12 @@ module.exports = {
     'jsx-quotes': ERROR,
     'linebreak-style': ERROR,
     'lines-between-class-members': ERROR,
-    'lodash/prefer-lodash-method': [ERROR, { ignoreMethods: ['isArray'] }],
+    'lodash/prefer-lodash-method': [
+      ERROR,
+      {
+        ignoreMethods: ['isArray', 'replace', 'toLower', 'toUpper']
+      }
+    ],
     'max-len': [ERROR, {
       code: 120,
       ignoreTrailingComments: true,
