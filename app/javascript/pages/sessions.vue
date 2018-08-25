@@ -1,6 +1,5 @@
 <script>
 import { mdbBtn, mdbCard, mdbCardBody, mdbCardHeader, mdbCardTitle } from 'mdbvue'
-import isEmpty from 'lodash/isEmpty'
 import MdInput from '~/components/md-input'
 import PageMixin from '~/mixins/page'
 import RailsForm from '~/components/rails-form'
@@ -142,7 +141,12 @@ export default {
             size="md"
             type="submit"
           >
-            Continue <fa-sprite use="fas-fa-arrow-right"></fa-sprite>
+            Continue
+            <fa-sprite
+              slot="suffix"
+              use="fas-fa-arrow-right"
+            >
+            </fa-sprite>
           </mdb-btn>
 
           <p>

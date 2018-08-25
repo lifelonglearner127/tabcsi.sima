@@ -1,8 +1,6 @@
 <script>
 import classNames from 'classnames'
-import forEach from 'lodash/forEach'
 import includes from 'lodash/includes'
-import keys from 'lodash/keys'
 import waves from 'mdbvue/src/mixins/waves'
 
 export default {
@@ -233,7 +231,7 @@ export default {
   },
 
   methods: {
-    handleBlur (e) {
+    handleBlur () {
       this.isTouched = false
 
       // styles for navbar input
@@ -262,7 +260,7 @@ export default {
       this.$forceUpdate()
     },
 
-    handleFocus (e) {
+    handleFocus () {
       this.isTouched = true
 
       if (!this.disabled) {

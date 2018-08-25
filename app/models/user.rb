@@ -51,6 +51,13 @@ class User < ApplicationRecord
     SecureRandom.__send__(:choose, PIN_CHARS, Setting.pin_length)
   end
 
+  def info
+    {
+      full_name: full_name,
+      role: role
+    }
+  end
+
   def generate_pin
     pin = self.class.new_pin
 

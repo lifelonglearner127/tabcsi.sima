@@ -6,6 +6,7 @@ import FontAwesome from '~/plugins/font-awesome'
 import isFunction from 'lodash/isFunction'
 import map from 'lodash/map'
 import Sprites from '~/components/sprites'
+import Ujs from '~/plugins/ujs'
 import Vue from 'vue'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -15,6 +16,15 @@ Vue.config.performance = isDevelopment
 
 Vue.use(FontAwesome)
 Vue.use(BootstrapVue)
+Vue.use(Ujs)
+
+const onReady = (handler) => {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handler)
+  } else {
+    handler()
+  }
+}
 
 export default class App {
   static build (pageComponent, _config = {}, _preInit) {
@@ -31,7 +41,7 @@ export default class App {
       preInit(Vue)
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    onReady(() => {
       new Vue({ // eslint-disable-line no-new
         el: 'main',
 

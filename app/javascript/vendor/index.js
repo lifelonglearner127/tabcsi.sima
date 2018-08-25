@@ -3,5 +3,6 @@
 import 'babel-polyfill'
 // import 'eligrey-classlist-js-polyfill'
 // import './class-list'
-// import './dataset'
+import './dataset'
+import './custom-event'
 import './bluebird'
