@@ -79,7 +79,7 @@ export default {
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            no-wrapper
+            fixed-width
             use="fas-fa-key"
           >
           </fa-sprite>
@@ -117,7 +117,7 @@ export default {
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            no-wrapper
+            fixed-width
             use="fas-fa-envelope"
           >
           </fa-sprite>
@@ -136,7 +136,7 @@ export default {
     <template slot="submit">
       Continue
       <fa-sprite
-        slot="suffix"
+        fixed-width
         use="fas-fa-arrow-right"
       >
       </fa-sprite>

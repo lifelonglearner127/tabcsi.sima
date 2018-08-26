@@ -105,7 +105,7 @@ export default {
         <b-input-group-prepend is-text>
           <fa-sprite
             :use="options.icon"
-            no-wrapper
+            fixed-width
           >
           </fa-sprite>
         </b-input-group-prepend>
@@ -122,7 +122,12 @@ export default {
     </b-form-group>
 
     <b-form-text class="font-italic">
-      <fa-sprite use="fas-fa-info-circle"></fa-sprite> Enter one of the license/permit numbers you are managing. For
+      <fa-sprite
+        fixed-width
+        use="fas-fa-info-circle"
+      >
+      </fa-sprite>
+      Enter one of the license/permit numbers you are managing. For
       example: <strong>MB1234567</strong>. You will be assigned licenses/permits that are associated with this once you
       log in into the system.
     </b-form-text>

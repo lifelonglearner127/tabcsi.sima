@@ -8,20 +8,9 @@ html {
 @import '~bootstrap/scss/bootstrap';
 @import '~@/assets/stylesheets/mixins';
 
-.card {
-  .btn {
-    .fa-container {
-      padding-left: 15px;
-      transition: 300ms;
-    }
-  }
-}
-
 .btn {
   .fa-container {
-    padding-left: 5px;
-    padding-top: 3px;
-    transition: 300ms;
+    padding-left: 1rem;
   }
 }
 

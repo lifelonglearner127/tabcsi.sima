@@ -49,7 +49,8 @@ export default {
         class: 'fa-container',
         style: {
           display: 'inline-block',
-          height: iconSize(props.size)
+          height: iconSize(props.size),
+          verticalAlign: '-0.25em'
         }
       },
       children

@@ -27,14 +27,19 @@ export default {
     const noWrapper = props.noWrapper
     const size = props.size
     const use = props.use
+    const iconOptions = {
+      ...data,
+      props
+    }
 
     delete props.noWrapper
     delete props.use
 
-    const icon = h(FontAwesomeIcon, {
-      ...data,
-      props
-    })
+    if (!noWrapper) {
+      iconOptions.style = { verticalAlign: '0.125em' }
+    }
+
+    const icon = h(FontAwesomeIcon, iconOptions)
 
     if (!use && !props.symbol) {
       if (noWrapper) {
