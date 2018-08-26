@@ -1,21 +1,11 @@
 <script>
-import { mdbBtn, mdbCard, mdbCardBody, mdbCardHeader, mdbCardTitle } from 'mdbvue'
-import MdInput from '~/components/md-input'
 import PageMixin from '~/mixins/page'
-import RailsForm from '~/components/rails-form'
+import UsersSessionsContainer from '~/components/users-sessions-container'
 
 export default {
   name: 'Sessions',
 
-  components: {
-    mdbBtn,
-    mdbCard,
-    mdbCardBody,
-    mdbCardHeader,
-    mdbCardTitle,
-    MdInput,
-    RailsForm
-  },
+  components: { UsersSessionsContainer },
 
   mixins: [PageMixin],
 
@@ -68,112 +58,98 @@ export default {
 </script>
 
 <template>
-  <b-row>
-    <mdb-card>
-      <mdb-card-header>
-        <img
-          alt="logo"
-          class="card-img-top"
-          src="~@/assets/images/logo.png"
+  <users-sessions-container
+    :accept-charset="acceptCharset"
+    :action="action"
+    :enforce-utf8="enforceUtf8"
+    :hidden-method="hiddenMethod"
+    :method="method"
+    :title="cardTitle"
+    :token-name="tokenName"
+    :token-value="tokenValue"
+    cols="12"
+    sm="4"
+  >
+    <b-form-group
+      v-if="pinRequested"
+      id="session_pin_group"
+      label="PIN"
+      label-for="session_pin"
+    >
+      <b-input-group>
+        <b-input-group-prepend is-text>
+          <fa-sprite
+            no-wrapper
+            use="fas-fa-key"
+          >
+          </fa-sprite>
+        </b-input-group-prepend>
+        <b-form-input
+          id="session_pin"
+          v-model="session.pin"
+          :maxlength="pageOptions.pinLength"
+          name="session[pin]"
         >
-      </mdb-card-header>
-
-      <mdb-card-body class="px-lg-5">
-        <mdb-card-title
-          class="text-center"
-          tag="h5"
+        </b-form-input>
+      </b-input-group>
+      <!--<b-form-row>
+        <b-col
+          v-for="n in 8"
+          :key="`pin${n}`"
         >
-          {{ cardTitle }}
-        </mdb-card-title>
-
-        <rails-form
-          :accept-charset="acceptCharset"
-          :action="action"
-          :enforce-utf8="enforceUtf8"
-          :hidden-method="hiddenMethod"
-          :method="method"
-          :token-name="tokenName"
-          :token-value="tokenValue"
-          class="text-center"
-        >
-          <template v-if="pinRequested">
-            <md-input
-              id="sessions_pin"
-              :maxlength="pageOptions.pinLength"
-              input-class="text-center"
-              name="session[pin]"
-            >
-            </md-input>
-            <!--<b-form-row>
-              <b-col
-                v-for="n in 8"
-                :key="`pin${n}`"
-              >
-                <md-input
-                  :id="`session_pin${n}`"
-                  input-class="text-center"
-                  maxlength="1"
-                  name="session[pin][]"
-                  @keyup="handlePinKeyUp"
-                >
-                </md-input>
-              </b-col>
-            </b-form-row>-->
-          </template>
           <md-input
-            v-else
-            id="session_email"
-            v-model="session.email"
-            autocomplete="email"
-            error-msg="You did not enter a valid e-mail"
-            icon="fas-fa-envelope"
-            label="E-mail"
-            name="session[email]"
-            type="email"
-            validation="email"
+            :id="`session_pin${n}`"
+            input-class="text-center"
+            maxlength="1"
+            name="session[pin][]"
+            @keyup="handlePinKeyUp"
           >
           </md-input>
-
-          <mdb-btn
-            class="my-4 waves-effect z-depth-0"
-            color="primary"
-            rounded
-            size="md"
-            type="submit"
+        </b-col>
+      </b-form-row>-->
+    </b-form-group>
+    <b-form-group
+      v-else
+      id="session_email_group"
+      label="E-mail"
+      label-for="session_email"
+    >
+      <b-input-group>
+        <b-input-group-prepend is-text>
+          <fa-sprite
+            no-wrapper
+            use="fas-fa-envelope"
           >
-            Continue
-            <fa-sprite
-              slot="suffix"
-              use="fas-fa-arrow-right"
-            >
-            </fa-sprite>
-          </mdb-btn>
+          </fa-sprite>
+        </b-input-group-prepend>
+        <b-form-input
+          id="session_email"
+          v-model="session.email"
+          autocomplete="email"
+          name="session[email]"
+          type="email"
+        >
+        </b-form-input>
+      </b-input-group>
+    </b-form-group>
 
-          <p>
-            <small>{{ question.text }} <a :href="question.linkHref">{{ question.linkText }}</a></small>
-          </p>
-        </rails-form>
-      </mdb-card-body>
-    </mdb-card>
-  </b-row>
+    <template slot="submit">
+      Continue
+      <fa-sprite
+        slot="suffix"
+        use="fas-fa-arrow-right"
+      >
+      </fa-sprite>
+    </template>
+
+    <template slot="text">
+      {{ question.text }} <a :href="question.linkHref">{{ question.linkText }}</a>
+    </template>
+  </users-sessions-container>
 </template>
 
 <style lang="scss" scoped>
-@import '~@/assets/stylesheets/mixins';
-
-@include users_sessions_styles;
-
-.card {
-  margin: -225px 0 0 -175px;
-  top: 50%;
-  width: 350px;
-
-  .card-body {
-    padding-top: 10%;
-  }
-}
-
-#sessions_pin {
+#session_pin {
   text-align: center;
 }
 </style>

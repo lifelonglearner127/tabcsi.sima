@@ -6,38 +6,15 @@ html {
 
 @import '~@/assets/stylesheets/variables';
 @import '~bootstrap/scss/bootstrap';
-@import '~mdbvue/build/scss/mdb';
 @import '~@/assets/stylesheets/mixins';
 
 .card {
-  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
-  left: 50%;
-  overflow: hidden;
-  position: absolute;
-
-  .md-form {
-    .prefix {
-      font-weight: 900;
-      left: -25px;
-    }
-  }
-
   .btn {
     .fa-container {
       padding-left: 15px;
       transition: 300ms;
     }
   }
-}
-
-.md-form {
-  .fa-phone {
-    transform: rotate(90deg);
-  }
-}
-
-.card-img-top {
-  width: 300px;
 }
 
 .btn {
@@ -49,10 +26,6 @@ html {
 }
 
 /*
-.navbar-light .fa-chevron-down {
-  color: #fff !important;
-}
-
 .form-error {
   color: rgb(185, 74, 72);
   text-align: left !important;

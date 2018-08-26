@@ -75,7 +75,7 @@ export default class App {
 
           const sprites = h(Sprites)
 
-          return h('main', [page, sprites])
+          return h('main', { class: 'h-100' }, [page, sprites])
         },
 
         ...config

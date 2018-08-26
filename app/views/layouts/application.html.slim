@@ -1,5 +1,5 @@
 doctype html
-html lang="en"
+html class="h-100" lang="en"
   head
     meta charset="utf-8"
     meta name="ROBOTS" content="NOODP"
@@ -15,7 +15,7 @@ html lang="en"
     = csp_meta_tag
     = controller_stylesheet_pack_tags
 
-  body class=body_class
+  body class=['h-100', body_class]
     /[if lte IE 9]
       p.browser-upgrade
         | You are using an

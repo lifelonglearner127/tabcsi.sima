@@ -1,6 +1,6 @@
 import {
-  faArrowRight, faChevronDown, faEnvelope, faFileUpload, faIdCard, faIndustry, faInfoCircle, faMapMarkerAlt, faPhone,
-  faPlus, faSignOutAlt, faUser, faUserEdit, faUserTie, faUserTimes
+  faArrowRight, faChevronDown, faEnvelope, faFileUpload, faIdCard, faIndustry, faInfoCircle, faKey, faMapMarkerAlt,
+  faPhone, faPlus, faSignOutAlt, faUser, faUserEdit, faUserTie, faUserTimes
 } from '@fortawesome/free-solid-svg-icons'
 import forEach from 'lodash/forEach'
 import map from 'lodash/map'
@@ -13,6 +13,7 @@ const icons = [
   faIdCard,
   faIndustry,
   faInfoCircle,
+  faKey,
   faMapMarkerAlt,
   faPhone,
   faPlus,
