@@ -32,6 +32,10 @@ class License < ApplicationRecord
     find_by(**split_license_number(clp))
   end
 
+  def self.clp(license_type, license_number)
+    "#{license_type}#{license_number}"
+  end
+
   def permit_names
     name = license_type
     permit_names = subordinate_combinations.map { |c| "#{name}/#{c.join('/')}" }

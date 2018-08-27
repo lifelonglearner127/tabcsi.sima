@@ -25,7 +25,7 @@ module TabcSi
     }.freeze
 
     REQUIRED_COLUMNS = %i[
-      owner_name name address city postal_code clp status
+      owner_name clp name address city postal_code status
     ].freeze
 
     attr_reader :companies
@@ -105,33 +105,26 @@ module TabcSi
       owner_name = entry[:owner_name]
       company_info = { owner_name: owner_name }
 
+      clp = entry[:clp]
+      license_type, license_number = *License.split_license_number(clp).values
+      key = License.clp(license_type, license_number)
       street_number = entry[:street_number]
       address1 = entry[:address]
       address1 = "#{street_number} #{address1}" if street_number.present?
-      address2 = entry[:address2]
-      address3 = entry[:address3]
-      city = entry[:city]
-      state = entry[:state]
-      postal_code = entry[:postal_code]
-
-      key = [
-        owner_name, address1, address2, address3, city, state, postal_code
-      ].join(',')
 
       location_info = {
         key: key,
+        clp: key,
         name: entry[:name],
         address1: address1,
-        address2: address2,
-        address3: address3,
-        city: city,
-        state: state,
-        postal_code: postal_code,
+        address2: entry[:address2],
+        address3: entry[:address3],
+        city: entry[:city],
+        state: entry[:state],
+        postal_code: entry[:postal_code],
         phone_number: entry[:phone_number]
       }
 
-      clp = entry[:clp]
-      license_type, license_number = *License.split_license_number(clp).values
       license_info = {
         license_type: license_type,
         license_number: license_number,
@@ -159,8 +152,8 @@ module TabcSi
       key = location_info[:key]
       return locations[key] if locations.key?(key)
 
+      clp = location_info[:clp]
       location_data = {
-        company: company,
         address1: location_info[:address1],
         address2: location_info[:address2],
         address3: location_info[:address3],
@@ -170,13 +163,33 @@ module TabcSi
         postal_code: location_info[:postal_code]
       }
 
-      location = Location.find_by(**location_data)
+      # find by clp or address-info
+      location = Location.find_by(clp: clp)
       if location.blank?
-        location = Location.create!(
-          name: location_info[:name],
-          phone_number: location_info[:phone_number],
+        location = Location.find_by(
+          company: company,
           **location_data
         )
+      end
+
+      location_data = {
+        name: location_info[:name],
+        phone_number: location_info[:phone_number],
+        **location_data
+      }
+
+      if location.blank?
+        # location not found by clp or address-info
+        location = Location.create!(
+          company: company,
+          clp: clp,
+          **location_data
+        )
+      else
+        # add clp for update
+        location_data[:clp] = clp if location.clp.blank?
+
+        location.update!(location_data)
       end
 
       locations[key] = location
