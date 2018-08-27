@@ -35,7 +35,11 @@ class User < ApplicationRecord
     -> { order(:license_type, :license_number) }
   )
 
-  has_and_belongs_to_many :locations, -> { order(:id) }
+  has_and_belongs_to_many(
+    :locations,
+    -> { includes(:licenses).order(:name) }
+  )
+
   has_many :push_tokens, -> { order(:id) }, dependent: :destroy
 
   enum role: %i[user admin tabc]

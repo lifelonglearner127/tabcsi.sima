@@ -8,6 +8,10 @@ class DashboardsController < ApplicationController
 
   private
 
+  def locations
+    current_user.locations.as_json(include: :licenses)
+  end
+
   def set_page_options
     self.page_data_options = {
       html: {
@@ -15,8 +19,16 @@ class DashboardsController < ApplicationController
           path: log_out_path,
           method: :delete
         },
-        user: current_user.info
+        user: current_user.info,
+        users: users,
+        locations: locations
       }
     }
+  end
+
+  def users
+    return nil unless current_user.admin?
+
+    current_user.company.users
   end
 end

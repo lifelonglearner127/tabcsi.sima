@@ -9,7 +9,7 @@ html {
 @import '~@/assets/stylesheets/mixins';
 
 .btn {
-  .fa-container {
+  .fa-container:not(:first-child) {
     padding-left: 1rem;
   }
 }

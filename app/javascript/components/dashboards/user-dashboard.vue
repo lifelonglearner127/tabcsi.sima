@@ -1,8 +1,19 @@
 <script>
+import LocationsTable from './locations-table'
+
 export default {
   name: 'UserDashboard',
 
+  components: { LocationsTable },
+
   props: {
+    locations: {
+      type: Array,
+
+      default () {
+        return []
+      }
+    },
     user: {
       type: Object,
       required: true
@@ -12,7 +23,7 @@ export default {
 </script>
 
 <template>
-  <h1>User Dashboard</h1>
+  <locations-table :items="locations"></locations-table>
 </template>
 
 <style lang="scss" scoped>

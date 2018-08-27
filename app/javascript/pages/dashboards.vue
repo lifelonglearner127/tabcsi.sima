@@ -1,11 +1,5 @@
 <script>
 import { AdminDashboard, TabcDashboard, UserDashboard } from '~/components/dashboards'
-
-import {
-  mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbNavbar, mdbNavbarBrand, mdbNavbarNav,
-  mdbNavbarToggler, mdbNavItem
-} from 'mdbvue'
-
 import PageMixin from '~/mixins/page'
 
 export default {
@@ -13,15 +7,6 @@ export default {
 
   components: {
     AdminDashboard,
-    mdbDropdown,
-    mdbDropdownItem,
-    mdbDropdownMenu,
-    mdbDropdownToggle,
-    mdbNavbar,
-    mdbNavbarBrand,
-    mdbNavbarNav,
-    mdbNavbarToggler,
-    mdbNavItem,
     TabcDashboard,
     UserDashboard
   },
@@ -41,6 +26,10 @@ export default {
       return 'User Dashboard'
     },
 
+    locations () {
+      return this.pageOptions.locations || []
+    },
+
     user () {
       return this.pageOptions.user || {}
     },
@@ -51,6 +40,10 @@ export default {
 
     userIsTabcAdmin () {
       return this.user.role === 'tabc'
+    },
+
+    users () {
+      return this.pageOptions.users || []
     }
   }
 }
@@ -58,58 +51,73 @@ export default {
 
 <template>
   <div>
-    <mdb-navbar
-      class="bg-default justify-content-between"
-      expand="large"
+    <b-navbar
+      toggleable="md"
+      type="dark"
+      variant="info"
     >
-      <mdb-navbar-brand href="/">{{ dashboardTitle }}</mdb-navbar-brand>
-      <mdb-navbar-toggler>
-        <mdb-navbar-nav>
-          <mdb-dropdown
-            class="nav-item"
-            tag="li"
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-brand href="/">{{ dashboardTitle }}</b-navbar-brand>
+      <b-collapse
+        id="nav_collapse"
+        is-nav
+      >
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown
+            :text="user.fullName"
+            right
           >
-            <mdb-dropdown-toggle
-              slot="toggle"
-              nav-link
-              tag="a"
-              waves-fixed
-            >
-              {{ user.fullName }}
-            </mdb-dropdown-toggle>
-            <mdb-dropdown-menu>
-              <mdb-dropdown-item>
-                <fa-sprite use="fas-fa-user"></fa-sprite> Update Profile
-              </mdb-dropdown-item>
-              <mdb-dropdown-item
-                v-ujs-method="pageOptions.logOut.method"
-                :href="pageOptions.logOut.path"
-                rel="nofollow"
+            <b-dropdown-item>
+              <fa-sprite
+                fixed-width
+                use="fas-fa-user"
               >
-                <fa-sprite use="fas-fa-sign-out-alt"></fa-sprite> Logout
-              </mdb-dropdown-item>
-            </mdb-dropdown-menu>
-          </mdb-dropdown>
-        </mdb-navbar-nav>
-      </mdb-navbar-toggler>
-    </mdb-navbar>
+              </fa-sprite>
+              Update Profile
+            </b-dropdown-item>
+            <b-dropdown-item
+              v-ujs-method="pageOptions.logOut.method"
+              :href="pageOptions.logOut.path"
+              rel="nofollow"
+            >
+              <fa-sprite
+                fixed-width
+                use="fas-fa-sign-out-alt"
+              >
+              </fa-sprite>
+              Logout
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
 
-    <b-container fluid>
-      <tabc-dashboard
-        v-if="userIsTabcAdmin"
-        :user="user"
-      >
-      </tabc-dashboard>
-      <admin-dashboard
-        v-else-if="userIsAdmin"
-        :user="user"
-      >
-      </admin-dashboard>
-      <user-dashboard
-        v-else
-        :user="user"
-      >
-      </user-dashboard>
+    <b-container
+      class="my-5"
+      fluid
+    >
+      <b-row>
+        <b-col>
+          <tabc-dashboard
+            v-if="userIsTabcAdmin"
+            :user="user"
+          >
+          </tabc-dashboard>
+          <admin-dashboard
+            v-else-if="userIsAdmin"
+            :locations="locations"
+            :user="user"
+            :users="users"
+          >
+          </admin-dashboard>
+          <user-dashboard
+            v-else
+            :locations="locations"
+            :user="user"
+          >
+          </user-dashboard>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
