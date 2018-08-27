@@ -90,7 +90,10 @@ module TabcSi
             error_bad_request! 'user is no longer assigned to location'
           end
 
-          return if inspection.license.users.include?(current_user)
+          # Check for blank license to handle older inspections; this should not
+          # happen for new ones.
+          license = inspection.license
+          return if license.blank? || license.users.include?(current_user)
 
           error_bad_request! 'user is no longer assigned to license'
         end
