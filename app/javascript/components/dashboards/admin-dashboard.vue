@@ -11,17 +11,23 @@ export default {
   },
 
   props: {
-    locations: {
-      type: Array,
+    company: {
+      type: Object,
       required: true
     },
     user: {
       type: Object,
       required: true
+    }
+  },
+
+  computed: {
+    locations () {
+      return this.user.locations || []
     },
-    users: {
-      type: Array,
-      required: true
+
+    users () {
+      return this.company.users || []
     }
   }
 }

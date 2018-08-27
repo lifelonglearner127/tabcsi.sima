@@ -8,8 +8,21 @@ class DashboardsController < ApplicationController
 
   private
 
-  def locations
-    current_user.locations.as_json(include: :licenses)
+  def company
+    options = nil
+
+    if current_user.admin?
+      options = {
+        include: {
+          locations: { include: :licenses },
+          users: {
+            locations: { include: :licenses }
+          }
+        }
+      }
+    end
+
+    current_user.company.as_json(options)
   end
 
   def set_page_options
@@ -20,15 +33,8 @@ class DashboardsController < ApplicationController
           method: :delete
         },
         user: current_user.info,
-        users: users,
-        locations: locations
+        company: company
       }
     }
-  end
-
-  def users
-    return nil unless current_user.admin?
-
-    current_user.company.users
   end
 end

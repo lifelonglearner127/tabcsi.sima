@@ -7,16 +7,15 @@ export default {
   components: { LocationsTable },
 
   props: {
-    locations: {
-      type: Array,
-
-      default () {
-        return []
-      }
-    },
     user: {
       type: Object,
       required: true
+    }
+  },
+
+  computed: {
+    locations () {
+      return this.user.locations || []
     }
   }
 }

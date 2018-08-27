@@ -14,6 +14,10 @@ export default {
   mixins: [PageMixin],
 
   computed: {
+    company () {
+      return this.pageOptions.company || {}
+    },
+
     dashboardTitle () {
       if (this.userIsTabcAdmin) {
         return 'TABC Dashboard'
@@ -26,10 +30,6 @@ export default {
       return 'User Dashboard'
     },
 
-    locations () {
-      return this.pageOptions.locations || []
-    },
-
     user () {
       return this.pageOptions.user || {}
     },
@@ -40,10 +40,6 @@ export default {
 
     userIsTabcAdmin () {
       return this.user.role === 'tabc'
-    },
-
-    users () {
-      return this.pageOptions.users || []
     }
   }
 }
@@ -105,14 +101,12 @@ export default {
           </tabc-dashboard>
           <admin-dashboard
             v-else-if="userIsAdmin"
-            :locations="locations"
+            :company="company"
             :user="user"
-            :users="users"
           >
           </admin-dashboard>
           <user-dashboard
             v-else
-            :locations="locations"
             :user="user"
           >
           </user-dashboard>

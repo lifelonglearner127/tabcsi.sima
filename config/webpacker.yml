@@ -31,7 +31,7 @@ shared:
     - .gif
 
 development:
-  compile: false
+  compile: true
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:

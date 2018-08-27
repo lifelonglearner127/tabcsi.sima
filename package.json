@@ -9,7 +9,7 @@
     "env:prod": "cross-env RAILS_ENV=production RACK_ENV=production NODE_ENV=production",
     "install:clean": "rm -fr yarn.lock node_modules; yarn",
     "restart": "overmind r",
-    "start": "overmind s"
+    "start": "bin/rails s"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "~1.2",
