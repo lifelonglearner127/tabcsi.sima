@@ -11,14 +11,17 @@ module TabcSi
     def run
       Setting.deactivate_server!
 
-      map_answers
-      map_inspections
-      destroy_forms
-      build_forms
-      remap_inspections
-      remap_answers
+      # allow rollback in case of error
+      ApplicationRecord.transaction do
+        map_answers
+        map_inspections
+        destroy_forms
+        build_forms
+        remap_inspections
+        remap_answers
 
-      Setting.forms_build_date = build_date
+        Setting.forms_build_date = build_date
+      end
 
       Setting.activate_server!
     end
