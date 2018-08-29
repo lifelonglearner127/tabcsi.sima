@@ -8,8 +8,6 @@ class AuditFormQuestion < ApplicationRecord
   belongs_to :question
   has_many :choices, -> { order(:id) }, through: :question
 
-  validates :question, uniqueness: { scope: :audit_form }
-
   delegate(
     :max_characters, :multiline, :multiple, :other, :question_number,
     :question_text, :question_type, :source,

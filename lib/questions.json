@@ -1,5 +1,5 @@
 {
-  "build_date": "20180810",
+  "build_date": "20180823",
   "questions": {
     "1": {
       "question_text": "Name of person filling out survey (First & Last)",
@@ -122,7 +122,21 @@
       ]
     },
     "11C": {
-      "question_text": "Does your business run a \"Reverse Happy Hour\"?",
+      "question_text": "Does your business run drink specials past 11:00 PM?",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
+      ],
+      "conditions": [
+        {
+          "condition_value": "No",
+          "skip_question_group": true
+        }
+      ]
+    },
+    "11D": {
+      "question_text": "Does your business run these drink specials from open to close?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
@@ -137,13 +151,34 @@
       "multiple": true
     },
     "13": {
-      "question_text": "Choose the vendors that you purchase wine / distilled spirits from.",
+      "question_text": "Choose the vendors that you purchase wine from.",
       "question_type": "drop_down",
       "source": "/api/v1/distributors",
       "other": 50,
       "multiple": true
     },
-    "14A": {
+    "14": {
+      "question_text": "Choose the vendors that you purchase wine from.",
+      "question_type": "drop_down",
+      "source": "/api/v1/distributors",
+      "other": 50,
+      "multiple": true
+    },
+    "15": {
+      "question_text": "Choose the vendors that you purchase distilled spirits from.",
+      "question_type": "drop_down",
+      "source": "/api/v1/distributors",
+      "other": 50,
+      "multiple": true
+    },
+    "16": {
+      "question_text": "Choose the vendors that you purchase distilled spirits from.",
+      "question_type": "drop_down",
+      "source": "/api/v1/distributors",
+      "other": 50,
+      "multiple": true
+    },
+    "17A": {
       "question_text": "Are you holding any product that is damaged?",
       "question_type": "radio",
       "choices": [
@@ -157,13 +192,13 @@
         }
       ]
     },
-    "14B": {
+    "17B": {
       "question_text": "What product are you holding and why?",
       "question_type": "text_box",
       "max_characters": 100,
       "multiline": true
     },
-    "15A": {
+    "18A": {
       "question_text": "Is seller training required for all employees that sell/serve alcohol?",
       "question_type": "radio",
       "choices": [
@@ -177,7 +212,7 @@
         }
       ]
     },
-    "15B": {
+    "18B": {
       "question_text": "If seller training is required for employees, do you have alcohol service policies?",
       "question_type": "radio",
       "choices": [
@@ -188,7 +223,7 @@
         { "choice_text": "No" }
       ]
     },
-    "16": {
+    "19": {
       "question_text": "Do you conduct product tastings at the location?",
       "question_type": "radio",
       "choices": [
@@ -196,7 +231,7 @@
         { "choice_text": "No" }
       ]
     },
-    "17": {
+    "20": {
       "question_text": "Are TABC Stamps on ALL distilled spirit bottles?",
       "question_type": "radio",
       "choices": [
@@ -204,7 +239,7 @@
         { "choice_text": "No" }
       ]
     },
-    "18": {
+    "21": {
       "question_text": "Do you mutilate the TABC Stamp on the bottle when it's empty?",
       "question_type": "radio",
       "choices": [
@@ -212,7 +247,7 @@
         { "choice_text": "No" }
       ]
     },
-    "19": {
+    "22": {
       "question_text": "Do you maintain food service at the location?",
       "question_type": "radio",
       "choices": [
@@ -220,7 +255,7 @@
         { "choice_text": "No" }
       ]
     },
-    "20": {
+    "23": {
       "question_text": "Is there a permanent food service facility at the location?",
       "question_type": "radio",
       "choices": [
@@ -228,7 +263,7 @@
         { "choice_text": "No" }
       ]
     },
-    "21A": {
+    "24A": {
       "question_text": "Is the designated food service area at the location run by a separate business entity from the permit?",
       "question_type": "radio",
       "choices": [
@@ -242,7 +277,7 @@
         }
       ]
     },
-    "21B": {
+    "24B": {
       "question_text": "Does the separate business entity maintain food service records?",
       "question_type": "radio",
       "choices": [
@@ -250,7 +285,7 @@
         { "choice_text": "No" }
       ]
     },
-    "22": {
+    "25": {
       "question_text": "Do you have multiple entrees per meal period?",
       "question_type": "radio",
       "choices": [
@@ -258,7 +293,7 @@
         { "choice_text": "No" }
       ]
     },
-    "23": {
+    "26": {
       "question_text": "Are food items completely prepared or assembled on the premise?",
       "question_type": "radio",
       "choices": [
@@ -266,7 +301,7 @@
         { "choice_text": "No" }
       ]
     },
-    "24": {
+    "27": {
       "question_text": "Is prepared food to be consumed on the premise?",
       "question_type": "radio",
       "choices": [
@@ -274,7 +309,7 @@
         { "choice_text": "No" }
       ]
     },
-    "25A": {
+    "28A": {
       "question_text": "Are prepackaged food items sold?",
       "question_type": "radio",
       "choices": [
@@ -288,7 +323,7 @@
         }
       ]
     },
-    "25B": {
+    "28B": {
       "question_text": "Are prepackaged food items from a non-commercial source?",
       "question_type": "radio",
       "choices": [
@@ -296,7 +331,7 @@
         { "choice_text": "No" }
       ]
     },
-    "26A": {
+    "29A": {
       "question_text": "Are hours of operation for food and alcohol service the same?",
       "question_type": "radio",
       "choices": [
@@ -310,41 +345,18 @@
         }
       ]
     },
-    "26B": {
-      "question_text": "What are your hours of operations for both food and alcohol service?",
+    "29B": {
+      "question_text": "Which service operates the longer hours?",
       "question_type": "radio",
       "choices": [
-        {
-          "choice_text": "Monday - Friday",
-          "fields": [
-            {
-              "label": "Food",
-              "field_type": "time_range"
-            },
-            {
-              "label": "Alcohol",
-              "field_type": "time_range"
-            }
-          ]
-        },
-        {
-          "choice_text": "Sunday",
-          "fields": [
-            {
-              "label": "Food",
-              "field_type": "time_range"
-            },
-            {
-              "label": "Alcohol",
-              "field_type": "time_range"
-            }
-          ]
-        }
+        { "choice_text": "Kitchen" },
+        { "choice_text": "Bar" }
       ]
     },
-    "27": {
+    "30": {
       "question_text": "What are your hours of operation for alcohol service on the weekend?",
       "question_type": "radio",
+      "multiple": true,
       "choices": [
         {
           "choice_text": "Friday",
@@ -366,7 +378,7 @@
         }
       ]
     },
-    "28A": {
+    "31A": {
       "question_text": "Have you had a Breach of the Peace at your establishment in the last year?",
       "question_type": "radio",
       "choices": [
@@ -380,7 +392,7 @@
         }
       ]
     },
-    "28B": {
+    "31B": {
       "question_text": "Who did you report any of the Breaches of the Peace to?",
       "question_type": "drop_down",
       "choices": [
@@ -400,13 +412,13 @@
         }
       ]
     },
-    "28C": {
+    "31C": {
       "question_text": "What date did the Breach of Peace occur? Describe the incident.",
       "question_type": "text_box",
       "max_characters": 100,
       "multiline": true
     },
-    "29": {
+    "32": {
       "question_text": "Have there been changes since your original or renewal applications that have not been reported to TABC?",
       "question_type": "radio",
       "choices": [
@@ -414,7 +426,7 @@
         { "choice_text": "No" }
       ]
     },
-    "30": {
+    "33": {
       "question_text": "What is the minimum age that you employ a person to sell/serve alcohol at your location?",
       "question_type": "drop_down",
       "choices": [
@@ -427,115 +439,118 @@
   },
   "forms": {
     "BE": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "14A", "14B", "15A", "15B", "27", "28A", "28B",
-      "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "17A", "17B", "18A", "18B", "30", "31A",
+      "31B", "31C", "32", "33"
     ],
     "BE/BL": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "14A", "14B", "15A", "15B", "27", "28A", "28B",
-      "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "30", "31A",
+      "31B", "31C", "32", "33"
     ],
     "BE/BL/FB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "14A", "14B", "15A", "15B", "19", "20", "21A",
-      "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "22", "23", "24A",
+      "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C", "32", "33"
     ],
     "BE/FB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "14A", "14B", "15A", "15B", "19", "20", "21A",
-      "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "17A", "17B", "18A", "18B", "22", "23",
+      "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C", "32", "33"
     ],
     "BF": [
-      "1", "2", "3", "4", "5", "6", "7", "9", "11A", "12", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C", "29"
+      "1", "2", "3", "4", "5", "6", "7", "9", "11A", "12", "17A", "17B", "18A", "18B", "19", "31A", "31B", "31C", "32"
     ],
     "BG": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "27", "28A",
-      "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "14", "17A", "17B", "18A", "18B", "30",
+      "31A", "31B", "31C", "32", "33"
     ],
     "BG/BL": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "27", "28A",
-      "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "30", "31A",
+      "31B", "31C", "32", "33"
     ],
     "BG/BL/FB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "19", "20",
-      "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "22", "23", "24A",
+      "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C", "32", "33"
     ],
     "BG/FB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "19", "20",
-      "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "14", "17A", "17B", "18A", "18B", "22",
+      "23", "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C", "32", "33"
     ],
     "BQ": [
-      "1", "2", "3", "4", "5", "6", "7", "9", "11A", "12", "13", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C",
-      "29"
+      "1", "2", "3", "4", "5", "6", "7", "9", "11A", "12", "14", "17A", "17B", "18A", "18B", "19", "31A", "31B", "31C",
+      "32"
     ],
     "MB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "13", "15", "17A", "17B", "18A", "18B",
+      "20", "21", "30", "31A", "31B", "31C", "32", "33"
     ],
     "MB/FB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "13", "15", "17A", "17B", "18A", "18B",
+      "20", "21", "22", "23", "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C",
+      "32", "33"
     ],
     "MB/FB/LB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "20", "21", "22",
+      "23", "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C", "32", "33"
     ],
     "MB/LB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "20", "21", "30",
+      "31A", "31B", "31C", "32", "33"
     ],
     "N": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "14", "15", "17A", "17B", "18A", "18B",
+      "20", "21", "30", "31A", "31B", "31C", "32", "33"
     ],
     "N/FB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "14", "15", "17A", "17B", "18A", "18B",
+      "20", "21", "22", "23", "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C",
+      "32", "33"
     ],
     "N/FB/LB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "20", "21", "22",
+      "23", "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C", "32", "33"
     ],
     "N/NL": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "20", "21", "30",
+      "31A", "31B", "31C", "32", "33"
     ],
     "NB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "27", "28A",
-      "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "13", "17A", "17B", "18A", "18B", "30",
+      "31A", "31B", "31C", "32", "33"
     ],
     "NB/NL": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "27", "28A",
-      "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "30", "31A",
+      "31B", "31C", "32", "33"
     ],
     "NE": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "14", "15", "17A", "17B", "18A", "18B",
+      "20", "21", "30", "31A", "31B", "31C", "32", "33"
     ],
     "NE/NL": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "20", "21", "30",
+      "31A", "31B", "31C", "32", "33"
     ],
     "P": [
-      "1", "2", "3", "4", "5", "6", "7", "10", "11A", "12", "13", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C",
-      "29", "30"
+      "1", "2", "3", "4", "5", "6", "7", "10", "11A", "12", "14", "16", "17A", "17B", "18A", "18B", "19", "31A", "31B",
+      "31C", "32", "33"
     ],
     "Q": [
-      "1", "2", "3", "4", "5", "6", "7", "11A", "12", "13", "14A", "14B", "15A", "15B", "16", "28A", "28B", "28C", "29",
-      "30"
+      "1", "2", "3", "4", "5", "6", "7", "11A", "12", "14", "17A", "17B", "18A", "18B", "19", "31A", "31B", "31C", "32",
+      "33"
     ],
     "RM": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "12", "13", "15", "17A", "17B", "18A", "18B",
+      "20", "21", "22", "23", "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C",
+      "32", "33"
     ],
     "RM/LB": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "12", "13", "14A", "14B", "15A", "15B", "17", "18",
-      "19", "20", "21A", "21B", "22", "23", "24", "25A", "25B", "26A", "26B", "27", "28A", "28B", "28C", "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "11B", "11C", "11D", "17A", "17B", "18A", "18B", "20", "21", "22",
+      "23", "24A", "24B", "25", "26", "27", "28A", "28B", "29A", "29B", "30", "31A", "31B", "31C", "32", "33"
     ],
     "V": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "12", "13", "14A", "14B", "15A", "15B", "27", "28A", "28B", "28C",
-      "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "12", "13", "17A", "17B", "18A", "18B", "30", "31A", "31B", "31C", "32",
+      "33"
     ],
     "Y": [
-      "1", "2", "3", "4", "5", "7", "8", "9", "11A", "12", "13", "14A", "14B", "15A", "15B", "27", "28A", "28B", "28C",
-      "29", "30"
+      "1", "2", "3", "4", "5", "7", "8", "9", "12", "13", "17A", "17B", "18A", "18B", "30", "31A", "31B", "31C", "32",
+      "33"
     ]
   }
 }

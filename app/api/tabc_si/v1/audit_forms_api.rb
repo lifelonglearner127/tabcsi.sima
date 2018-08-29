@@ -33,6 +33,7 @@ module TabcSi
               ]
             )
             .where(permit_name: license.permit_names)
+            .order(created_at: :desc)
             .first
 
           if audit_form.blank?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_27_212256) do
+ActiveRecord::Schema.define(version: 2018_08_29_234715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2018_08_27_212256) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.bigint "inspection_id", null: false
-    t.bigint "question_id"
+    t.bigint "question_id", null: false
     t.index ["discarded_at"], name: "index_answers_on_discarded_at"
     t.index ["inspection_id", "question_id"], name: "index_answers_on_inspection_id_and_question_id", unique: true
     t.index ["inspection_id"], name: "index_answers_on_inspection_id"
@@ -55,9 +55,7 @@ ActiveRecord::Schema.define(version: 2018_08_27_212256) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
-    t.index ["audit_form_id", "question_id"], name: "index_audit_form_questions_on_audit_form_id_and_question_id", unique: true
     t.index ["discarded_at"], name: "index_audit_form_questions_on_discarded_at"
-    t.index ["question_id", "audit_form_id"], name: "index_audit_form_questions_on_question_id_and_audit_form_id", unique: true
   end
 
   create_table "audit_forms", force: :cascade do |t|
@@ -66,7 +64,6 @@ ActiveRecord::Schema.define(version: 2018_08_27_212256) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_audit_forms_on_discarded_at"
-    t.index ["permit_name"], name: "index_audit_forms_on_permit_name", unique: true
   end
 
   create_table "choices", force: :cascade do |t|
@@ -130,7 +127,7 @@ ActiveRecord::Schema.define(version: 2018_08_27_212256) do
 
   create_table "inspections", force: :cascade do |t|
     t.bigint "location_id", null: false
-    t.bigint "audit_form_id"
+    t.bigint "audit_form_id", null: false
     t.bigint "user_id", null: false
     t.datetime "started_at", null: false
     t.datetime "completed_at"
@@ -280,7 +277,6 @@ ActiveRecord::Schema.define(version: 2018_08_27_212256) do
     t.integer "other"
     t.boolean "multiple", default: false, null: false
     t.index ["discarded_at"], name: "index_questions_on_discarded_at"
-    t.index ["question_number"], name: "index_questions_on_question_number", unique: true
   end
 
   create_table "settings", force: :cascade do |t|
