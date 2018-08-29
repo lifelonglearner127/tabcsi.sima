@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_22_160729) do
+ActiveRecord::Schema.define(version: 2018_08_27_212256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,8 @@ ActiveRecord::Schema.define(version: 2018_08_22_160729) do
     t.bigint "locked_by_id"
     t.decimal "unpadded_diameter"
     t.decimal "padded_diameter"
+    t.string "clp"
+    t.index ["clp"], name: "index_locations_on_clp", unique: true
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
     t.index ["locked_by_id"], name: "index_locations_on_locked_by_id"
