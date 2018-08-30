@@ -119,8 +119,7 @@ module TabcSi
           requires(
             :started_at,
             type: DateTime,
-            desc: 'Date and time, in UTC, when the inspection was started.',
-            documentation: { type: 'string', format: 'date-time' }
+            desc: 'Date and time, in UTC, when the inspection was started.'
           )
         end
         post do
@@ -184,6 +183,34 @@ module TabcSi
         end
         segment ':inspection_id' do
           desc(
+            'Update Inspection',
+            detail: 'Updates the specified inspection.',
+            success: {
+              model: Entities::InspectionEntity,
+              message: 'An inspection object.'
+            }
+          )
+          params do
+            requires(
+              :submitted_at,
+              type: DateTime,
+              desc: <<~DESC
+                Date and time, in UTC, when the inspection was submitted.
+                Submission means that it was sent to NDE.
+              DESC
+            )
+          end
+          patch do
+            inspection = params[:inspection]
+            submitted_at = params[:submitted_at]
+            submitted_at = nil if submitted_at.blank?
+
+            inspection.update!(submitted_at: submitted_at)
+
+            respond inspection
+          end
+
+          desc(
             'Finish Inspection',
             detail: 'Finish the specified inspection.',
             success: {
@@ -195,8 +222,7 @@ module TabcSi
             requires(
               :finished_at,
               type: DateTime,
-              desc: 'Date and time, in UTC, when the inspection was finished.',
-              documentation: { type: 'string', format: 'date-time' }
+              desc: 'Date and time, in UTC, when the inspection was finished.'
             )
 
             requires(:answers, type: Hash) do
