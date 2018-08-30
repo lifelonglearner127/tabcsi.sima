@@ -15,8 +15,10 @@ module TabcSi
       expose :postal_code
       expose :phone_number
       expose :locked, documentation: { type: 'boolean' }
-      expose :inspected, documentation: { type: 'boolean' }
       expose :locked_by, using: UserEntity
+      expose :locked_at, documentation: { format: 'date-time' }
+      expose :inspected, documentation: { type: 'boolean' }
+      expose :inspected_at, documentation: { format: 'date-time' }
       expose :front_lat, documentation: { type: 'number', format: 'double' }
       expose :front_long, documentation: { type: 'number', format: 'double' }
       expose :back_lat, documentation: { type: 'number', format: 'double' }

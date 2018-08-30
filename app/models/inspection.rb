@@ -45,7 +45,8 @@ class Inspection < ApplicationRecord
   def lock_location
     location.update!(
       locked: true,
-      locked_by: user
+      locked_by: user,
+      locked_at: Time.zone.now
     )
   end
 
@@ -53,7 +54,9 @@ class Inspection < ApplicationRecord
     location.update!(
       locked: false,
       locked_by: nil,
-      inspected: inspected
+      locked_at: nil,
+      inspected: inspected,
+      inspected_at: inspected ? Time.zone.now : nil
     )
   end
 end
