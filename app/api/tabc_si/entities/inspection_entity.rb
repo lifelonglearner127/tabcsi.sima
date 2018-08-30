@@ -82,6 +82,13 @@ module TabcSi
           format: 'date-time'
         }
       )
+
+      expose(
+        :answers,
+        using: AnswerEntity,
+        documentation: { is_array: true },
+        if: { include_answers: true }
+      )
     end
   end
 end

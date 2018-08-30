@@ -170,7 +170,7 @@ module TabcSi
             .where(submitted_at: nil)
             .order(:completed_at)
 
-          respond inspections
+          respond inspections, include_answers: true
         end
 
         params do
