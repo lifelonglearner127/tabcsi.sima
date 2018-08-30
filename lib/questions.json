@@ -1,5 +1,5 @@
 {
-  "build_date": "20180823",
+  "build_date": "20180830",
   "questions": {
     "1": {
       "question_text": "Name of person filling out survey (First & Last)",
@@ -146,37 +146,82 @@
     "12": {
       "question_text": "Choose the vendors that you purchase beer from.",
       "question_type": "drop_down",
-      "source": "/api/v1/distributors",
-      "other": 50,
-      "multiple": true
+      "multiple": true,
+      "label": "License/Permit Type:",
+      "additional_label": "License/Permit Number:",
+      "additional_text": 9,
+      "additional_type": "number",
+      "choices": [
+        { "choice_text": "BB" },
+        { "choice_text": "BC" },
+        { "choice_text": "BF" },
+        { "choice_text": "BQ" },
+        { "choice_text": "Unknown" }
+      ]
     },
     "13": {
       "question_text": "Choose the vendors that you purchase wine from.",
       "question_type": "drop_down",
-      "source": "/api/v1/distributors",
-      "other": 50,
-      "multiple": true
+      "multiple": true,
+      "label": "Permit Type:",
+      "additional_label": "Permit Number:",
+      "additional_text": 9,
+      "additional_type": "number",
+      "choices": [
+        { "choice_text": "BQ" },
+        { "choice_text": "P" },
+        { "choice_text": "Q" },
+        { "choice_text": "W" },
+        { "choice_text": "X" },
+        { "choice_text": "Unknown" }
+      ]
     },
     "14": {
       "question_text": "Choose the vendors that you purchase wine from.",
       "question_type": "drop_down",
-      "source": "/api/v1/distributors",
-      "other": 50,
-      "multiple": true
+      "multiple": true,
+      "label": "Permit Type:",
+      "additional_label": "Permit Number:",
+      "additional_text": 9,
+      "additional_type": "number",
+      "choices": [
+        { "choice_text": "BQ" },
+        { "choice_text": "P" },
+        { "choice_text": "Q" },
+        { "choice_text": "W" },
+        { "choice_text": "X" },
+        { "choice_text": "Unknown" }
+      ]
     },
     "15": {
       "question_text": "Choose the vendors that you purchase distilled spirits from.",
       "question_type": "drop_down",
-      "source": "/api/v1/distributors",
-      "other": 50,
-      "multiple": true
+      "multiple": true,
+      "label": "Permit Type:",
+      "additional_label": "Permit Number:",
+      "additional_text": 9,
+      "additional_type": "number",
+      "choices": [
+        { "choice_text": "P" },
+        { "choice_text": "W" },
+        { "choice_text": "X" },
+        { "choice_text": "Unknown" }
+      ]
     },
     "16": {
       "question_text": "Choose the vendors that you purchase distilled spirits from.",
       "question_type": "drop_down",
-      "source": "/api/v1/distributors",
-      "other": 50,
-      "multiple": true
+      "multiple": true,
+      "label": "Permit Type:",
+      "additional_label": "Permit Number:",
+      "additional_text": 9,
+      "additional_type": "number",
+      "choices": [
+        { "choice_text": "P" },
+        { "choice_text": "W" },
+        { "choice_text": "X" },
+        { "choice_text": "Unknown" }
+      ]
     },
     "17A": {
       "question_text": "Are you holding any product that is damaged?",
