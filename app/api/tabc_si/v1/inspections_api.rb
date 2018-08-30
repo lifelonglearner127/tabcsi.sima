@@ -152,6 +152,28 @@ module TabcSi
           respond inspection
         end
 
+        desc(
+          'Get Unsubmitted Inspections',
+          detail: <<~DESC,
+            Retrieves all inspections where `completed_at` is not `NULL` and
+            `submitted_at` is `NULL`.
+          DESC
+          is_array: true,
+          success: {
+            model: Entities::InspectionEntity,
+            message: 'An inspection object.'
+          }
+        )
+        get :unsubmitted do
+          inspections =
+            Inspection
+            .where.not(completed_at: nil)
+            .where(submitted_at: nil)
+            .order(:completed_at)
+
+          respond inspections
+        end
+
         params do
           requires(
             :inspection_id,
