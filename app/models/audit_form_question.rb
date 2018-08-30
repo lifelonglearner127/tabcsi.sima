@@ -9,6 +9,7 @@ class AuditFormQuestion < ApplicationRecord
   has_many :choices, -> { order(:id) }, through: :question
 
   delegate(
+    :additional_label, :additional_text, :additional_type, :label,
     :max_characters, :multiline, :multiple, :other, :question_number,
     :question_text, :question_type, :source,
     to: :question

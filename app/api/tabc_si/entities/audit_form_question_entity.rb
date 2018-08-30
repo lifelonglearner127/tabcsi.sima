@@ -89,6 +89,56 @@ module TabcSi
       )
 
       expose(
+        :label,
+        documentation: {
+          desc: <<~DESC
+            Question types: `drop_down`
+
+            Optional label text for the drop-down menu.
+          DESC
+        }
+      )
+
+      expose(
+        :additional_label,
+        documentation: {
+          desc: <<~DESC
+            Question types: `drop_down`
+
+            Optional label text for the additional text box.
+          DESC
+        }
+      )
+
+      expose(
+        :additional_text,
+        documentation: {
+          desc: <<~DESC,
+            Question types: `drop_down`
+
+            The maximum number of characters allowed in the additional text box.
+          DESC
+          type: 'integer'
+        }
+      )
+
+      expose(
+        :additional_type,
+        documentation: {
+          desc: <<~DESC
+            Question types: `drop_down`
+
+            The input type of the additional text box. This can either be
+            interpreted as a constraint on the type of characters allowed to be
+            entered into the text box, or as the type of field to be displayed
+            next to the drop-down menu.
+
+            * `number` Only numeric values are allowed.
+          DESC
+        }
+      )
+
+      expose(
         :choices,
         using: ChoiceEntity,
         documentation: {

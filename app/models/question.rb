@@ -8,4 +8,5 @@ class Question < ApplicationRecord
   validates :question_number, :question_text, :question_type, presence: true
 
   enum question_type: %i[radio text_box drop_down]
+  enum additional_type: %i[number]
 end
