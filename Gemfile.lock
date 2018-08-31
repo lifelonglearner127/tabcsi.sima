@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/jpickwell/doorkeeper-jwt.git
-  revision: 6b126bf0ad1330da892dbb6bceb1d7696b22660d
-  branch: improvements
-  specs:
-    doorkeeper-jwt (0.2.1)
-      jwt (~> 2.1)
-
-GIT
   remote: https://github.com/jpickwell/webpacker.git
   revision: 34bbfe9b738830d6ee2084e5b1c1bcbc083f758d
   branch: compile-digest-fix
@@ -218,7 +210,6 @@ GEM
     jaro_winkler (1.5.1)
     jmespath (1.4.0)
     json (2.1.0)
-    jwt (2.1.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     listen (3.1.5)
@@ -453,7 +444,6 @@ DEPENDENCIES
   devise-doorkeeper (~> 1.1)
   discard (~> 1.0)
   doorkeeper (~> 5.0)
-  doorkeeper-jwt!
   dotenv-rails (~> 2.5)
   factory_bot_rails (~> 4.10)
   faker (~> 1.9)

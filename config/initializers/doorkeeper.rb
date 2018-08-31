@@ -32,7 +32,7 @@ Doorkeeper.configure do
 
   # Use a custom class for generating the access token.
   # https://github.com/doorkeeper-gem/doorkeeper#custom-access-token-generator
-  access_token_generator '::Doorkeeper::JWT'
+  # access_token_generator '::Doorkeeper::JWT'
 
   # The controller Doorkeeper::ApplicationController inherits from.
   # Defaults to `ActionController::Base`.
@@ -134,30 +134,4 @@ Doorkeeper.configure do
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
-end
-
-Doorkeeper::JWT.configure do
-  token_payload do |opts|
-    # Makes each token unique; required to pass Doorkeeper's validations.
-    payload = { nonce: SecureRandom.hex }
-
-    if opts[:resource_owner_id].present?
-      user = User.find(opts[:resource_owner_id])
-
-      payload[:user] = {
-        id: user.id,
-        email: user.email
-      }
-    end
-
-    payload
-  end
-
-  token_headers do |opts|
-    { kid: opts[:application][:uid] }
-  end
-
-  secret_key Nenv.instance.jwt_secret
-
-  encryption_method :hs512
 end
