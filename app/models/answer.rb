@@ -12,8 +12,8 @@ class Answer < ApplicationRecord
       blob = pic.blob
 
       {
-        url: Rails.application.routes.url_helpers.rails_blob_path(
-          pic, only_path: true
+        url: Rails.application.routes.url_helpers.rails_blob_url(
+          pic, host: Nenv.instance.application_host
         ),
         content_type: blob.content_type,
         checksum: blob.checksum
