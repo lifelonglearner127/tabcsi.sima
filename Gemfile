@@ -36,7 +36,7 @@ gem 'slim-rails', '~> 3.1'
 gem 'title', '~> 0.0.7'
 gem 'tzinfo-data', '~> 1.2018'
 gem 'uglifier', '~> 4.1'
-gem 'webpacker', github: 'jpickwell/webpacker', branch: 'compile-digest-fix'
+gem 'webpacker', '~> 3.5'
 
 group :development do
   gem 'capistrano', '~> 3.11', require: false
