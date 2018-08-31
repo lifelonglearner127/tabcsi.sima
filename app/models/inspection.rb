@@ -45,7 +45,7 @@ class Inspection < ApplicationRecord
   def lock_location
     location.update!(
       locked: true,
-      locked_by: user,
+      locked_by_id: user.id,
       locked_at: Time.zone.now
     )
   end
