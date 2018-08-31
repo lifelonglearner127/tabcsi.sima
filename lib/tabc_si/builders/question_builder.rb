@@ -29,7 +29,7 @@ module TabcSi
       def parse_config
         super(%i[
           question_text question_type max_characters multiline source other
-          multiple
+          multiple label additional_label additional_text additional_type
         ])
 
         @choices = wrap_choices(config[:choices] || [])
