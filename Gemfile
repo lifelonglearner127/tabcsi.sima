@@ -24,7 +24,7 @@ gem 'grape_logging', '~> 1.8'
 gem 'high_voltage', '~> 3.1'
 gem 'nenv', '~> 0.3.0'
 gem 'nokogiri', '~> 1.8'
-gem 'oj', '~> 3.6.6'
+gem 'oj', '~> 3.6'
 gem 'paper_trail', '~> 9.2'
 gem 'pg', '~> 1.1'
 gem 'premailer-rails', '~> 1.10'
@@ -37,7 +37,7 @@ gem 'slim-rails', '~> 3.1'
 gem 'title', '~> 0.0.7'
 gem 'tzinfo-data', '~> 1.2018'
 gem 'uglifier', '~> 4.1'
-gem 'webpacker', '~> 3.5'
+gem 'webpacker', github: 'jpickwell/webpacker', branch: 'compile-digest-fix'
 
 group :development do
   gem 'capistrano', '~> 3.11', require: false
@@ -81,7 +81,7 @@ end
 
 group :production do
   gem 'aws-sdk-rails', '~> 2.0'
-  gem 'aws-sdk-s3', '~> 1'
+  gem 'aws-sdk-s3', '~> 1.17'
   gem 'passenger', '~> 5.3'
   gem 'rack-timeout', '~> 0.5.1'
 end
