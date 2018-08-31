@@ -166,6 +166,7 @@ module TabcSi
         get :unsubmitted do
           inspections =
             Inspection
+            .includes(answers: %i[pictures_attachments question])
             .where.not(completed_at: nil)
             .where(submitted_at: nil)
             .order(:completed_at)
