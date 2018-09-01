@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-NUMBER_OF_RELEASES_TO_KEEP = 2
+NUMBER_OF_RELEASES_TO_KEEP = 5
 NUMBER_OF_BUNDLE_JOBS = 4
 # NUMBER_OF_BOX_SYNC_WORKERS = 1
 # NUMBER_OF_FOLDER_SYNC_WORKERS = 1
@@ -83,9 +83,5 @@ set :passenger_restart_options, nil
 # Other
 # set :webpack_assets_prefix, '/vbox-web'
 
-# Failure Hook
-after('deploy:failed', :remove_failed_release) do
-  on roles :app do
-    execute "rm -fr #{release_path}"
-  end
-end
+after 'deploy:set_current_revision', 'tabc_si:set_mtimes'
+after 'deploy:failed', 'tabc_si:remove_current_release'

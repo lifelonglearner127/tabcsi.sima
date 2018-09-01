@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+unless ENV['RAILS_ENV'] == 'production'
+  begin
+    require 'pry-byebug'
+  rescue StandardError # rubocop:disable Lint/HandleExceptions
+  end
+end
+
 %w[
   setup
   deploy
