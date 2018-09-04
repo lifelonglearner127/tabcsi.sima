@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class Inspection < ApplicationRecord
-  has_many :answers, -> { order(:id) }, dependent: :destroy
+  has_many(
+    :answers,
+    -> { includes(pictures_attachments: [:blob]).order(:question_id) },
+    dependent: :destroy
+  )
+
   belongs_to :audit_form
   belongs_to :license, optional: true
   belongs_to :location
