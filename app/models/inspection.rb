@@ -3,7 +3,7 @@
 class Inspection < ApplicationRecord
   has_many(
     :answers,
-    -> { includes(pictures_attachments: [:blob]).order(:question_id) },
+    -> { with_attached_pictures.order(:question_id) },
     dependent: :destroy
   )
 
