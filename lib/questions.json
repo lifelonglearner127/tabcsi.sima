@@ -1,5 +1,5 @@
 {
-  "build_date": "20180831",
+  "build_date": "20180904",
   "questions": {
     "1": {
       "question_text": "Name of person filling out survey (First & Last)",
@@ -9,7 +9,7 @@
     "2": {
       "question_text": "Position of person filling out survey",
       "question_type": "text_box",
-      "max_characters": 10
+      "max_characters": 50
     },
     "3": {
       "question_text": "Name/position of person(s) authorized to purchase alcohol for the business",
@@ -399,7 +399,7 @@
       ]
     },
     "30": {
-      "question_text": "What are your hours of operation for alcohol service on the weekend?",
+      "question_text": "What are your hours of operation for alcohol service on Friday and Saturday?",
       "question_type": "radio",
       "multiple": true,
       "choices": [
@@ -424,7 +424,7 @@
       ]
     },
     "31A": {
-      "question_text": "Have you had a Breach of the Peace at your establishment in the last year?",
+      "question_text": "Have you had a Breach of the Peace at your establishment in the last 12 month period?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
@@ -460,7 +460,7 @@
     "31C": {
       "question_text": "What date did the Breach of Peace occur? Describe the incident.",
       "question_type": "text_box",
-      "max_characters": 100,
+      "max_characters": 500,
       "multiline": true
     },
     "32": {
