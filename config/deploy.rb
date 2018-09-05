@@ -63,9 +63,9 @@ set :passenger_restart_command, -> { "#{release_path}/bin/restart" }
 set :passenger_restart_options, nil
 
 # HipChat
-# set :hipchat_token, 'LhzIHa85TlY8t5gtsMpO0wxB9KkLShgmCZT0GJc9'
-# set :hipchat_room_name, 'TABC SI'
-# set :hipchat_options, api_version: 'v2'
+set :hipchat_token, Nenv.instance.tabc_si_hipchat_token
+set :hipchat_room_name, 'TABC SI'
+set :hipchat_options, api_version: 'v2'
 
 # Resque
 # set :resque_environment_task, true

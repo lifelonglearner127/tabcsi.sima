@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'nenv'
+
 unless ENV['RAILS_ENV'] == 'production'
   begin
     require 'pry-byebug'
@@ -20,7 +22,7 @@ end
   require "capistrano/#{file}"
 end
 
-# require 'hipchat/capistrano'
+require 'hipchat/capistrano'
 # require 'capistrano-resque'
 
 install_plugin Capistrano::SCM::Git
