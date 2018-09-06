@@ -40,4 +40,8 @@ class Setting < ApplicationRecord
   def self.pin_length
     by_name(:pin_length).value.to_i
   end
+
+  def self.pin_expiration
+    by_name(:pin_expiration).value.to_i
+  end
 end

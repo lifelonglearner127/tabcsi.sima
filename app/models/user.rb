@@ -62,7 +62,9 @@ class User < ApplicationRecord
   def generate_pin
     pin = self.class.new_pin
 
-    return nil unless update(password: pin)
+    unless update(password: pin, pin_last_requested_at: Time.zone.now)
+      return nil
+    end
 
     pin
   end
@@ -106,6 +108,19 @@ class User < ApplicationRecord
 
   def valid_pin?(pin)
     valid_for_authentication? { valid_password?(pin) }
+  end
+
+  def valid_password?(password)
+    pin_current? && super
+  end
+
+  def pin_expired?
+    pin_last_requested_at.blank? ||
+      Time.zone.now >= pin_last_requested_at + Setting.pin_expiration
+  end
+
+  def pin_current?
+    !pin_expired?
   end
 
   private
