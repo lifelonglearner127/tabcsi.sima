@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
   def request_pin
     self.session_email = session_params[:email]
 
-    user = User.find_by(email: session_email)
+    user = User.find_for_database_authentication(email: session_email)
     if user.present? && user.request_pin
       self.session_email = nil
       session[:user_id] = user.id
