@@ -35,11 +35,7 @@ class User < ApplicationRecord
     -> { order(:license_type, :license_number) }
   )
 
-  has_and_belongs_to_many(
-    :locations,
-    -> { includes(:licenses).order(:name) }
-  )
-
+  has_and_belongs_to_many :locations, -> { order(:name) }
   has_many :push_tokens, -> { order(created_at: :desc) }, dependent: :destroy
 
   enum role: %i[user admin tabc]
@@ -59,7 +55,7 @@ class User < ApplicationRecord
     {
       full_name: full_name,
       role: role,
-      locations: locations.as_json(include: :licenses)
+      locations: locations.includes(:licenses).as_json(include: :licenses)
     }
   end
 
