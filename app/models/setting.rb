@@ -6,8 +6,7 @@ class Setting < ApplicationRecord
   def self.by_name(name)
     name = name.to_sym
 
-    @settings_cache ||= {}
-    @settings_cache[name] ||= find_by(name: name)
+    find_by(name: name)
   end
 
   def self.server_status=(value)
