@@ -17,11 +17,17 @@ class Inspection < ApplicationRecord
   after_create :lock_location
 
   def finish(finished_at, answers)
+    questions = Hash[
+      audit_form.audit_form_questions.includes(:question).map do |afq|
+        [afq.question_number, afq.question]
+      end
+    ]
+
     transaction do
       answers.each do |question_number, a|
         answer = Answer.create!(
           inspection: self,
-          question: Question.find_by(question_number: question_number),
+          question: questions[question_number],
           value: a[:value]
         )
 
@@ -60,7 +66,7 @@ class Inspection < ApplicationRecord
   def unlock_location(inspected: true)
     location.update!(
       locked: false,
-      locked_by: nil,
+      locked_by_id: nil,
       locked_at: nil,
       inspected: inspected,
       inspected_at: inspected ? Time.zone.now : nil
