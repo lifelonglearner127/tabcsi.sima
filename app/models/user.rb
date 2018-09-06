@@ -28,7 +28,7 @@ class User < ApplicationRecord
   )
 
   belongs_to :company, optional: true
-  has_many :inspections, -> { order(:id) }, dependent: :destroy
+  has_many :inspections, -> { order(:created_at) }, dependent: :destroy
 
   has_and_belongs_to_many(
     :licenses,
@@ -40,7 +40,7 @@ class User < ApplicationRecord
     -> { includes(:licenses).order(:name) }
   )
 
-  has_many :push_tokens, -> { order(:id) }, dependent: :destroy
+  has_many :push_tokens, -> { order(created_at: :desc) }, dependent: :destroy
 
   enum role: %i[user admin tabc]
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Question < ApplicationRecord
-  has_many :answers, -> { order(:id) }, dependent: :nullify
+  has_many :answers, -> { order(:inspection_id) }, dependent: :nullify
   has_many :audit_form_questions, -> { order(:id) }, dependent: :destroy
   has_many :choices, -> { order(:id) }, dependent: :destroy
 

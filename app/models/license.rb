@@ -5,7 +5,7 @@ class License < ApplicationRecord
 
   belongs_to :company
   belongs_to :location
-  has_and_belongs_to_many :users, -> { order(:id) }
+  has_and_belongs_to_many :users, -> { order(:full_name) }
 
   validates :license_type, :license_number, :status, presence: true
 
