@@ -1,0 +1,423 @@
+body{
+    background: #f5f5f5;
+}
+
+
+/*page navbar*/
+
+.navbar-light .navbar-brand, .navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
+    color: #fff !important;
+}
+.navbar-light .fa-chevron-down {
+    color: #fff !important;
+}
+/*card style*/
+.card{
+    position: absolute !important;
+    left: 50%;
+    overflow: hidden;
+    border-radius: 0 !important;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+}
+.login-card, .passcodeForm{
+    width: 350px;
+    top: 50%;
+    margin: -225px 0 0 -175px;
+}
+.passcodeForm input{
+    text-align: center;
+}
+.signup-card{
+    width: 600px;
+    top: 5%;
+    margin: 50px 0 50px -300px;
+}
+
+.login-card .card-body, .passcodeForm .card-body{
+    padding-top: 10%;
+}
+.card-body h3{
+    font-size: 1.2rem;
+}
+
+.card-header.card-bg{
+    background-color: #5cc5c8 !important;
+    border-bottom: 0;
+}
+.card-img-top {
+    width: 300px !important;
+}
+.card-header:first-child {
+    border-radius: 0 !important;
+}
+
+.card .fa{
+    left: -25px;
+    top: 14px;
+    font-weight: 900;
+    position: absolute;
+}
+.md-form .fa.fa-phone{
+    transform: rotate(90deg);
+}
+
+/*button animation*/
+.btn .fa{
+    padding-left:5px;
+    transition: 300ms;
+top:0 !important;
+left: 0 !important;
+    padding-top: 3px;
+}
+.card  .btn:hover .fa{
+    padding-left: 15px;
+    transition: 300ms;
+}
+
+/*error*/
+.form-error{
+    text-align: left !important;
+    color:rgb(185, 74, 72);
+}
+
+
+/*tabs design*/
+/* Tabs*/
+.header{
+    background-color: #5cc5c8;
+    padding: 1rem 15px;
+}
+.indig {
+    border-radius: 0 !important;
+    background-color: #ffffff !important;
+}
+.nav-tabs .nav-item .nav-link {
+    color: #2e2e2e !important;
+}
+.nav-tabs .nav-item {
+    background: #eee !important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background-color: #7674e1 !important;
+    border-color:#7674e1 !important;
+    color: #fff !important;
+    border-radius: 0 !important;
+}
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color: transparent !important;
+}
+.table {
+    border: none;
+}
+
+.table-definition thead th:first-child {
+    pointer-events: none;
+    background: white;
+    border: none;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.page-item > * {
+    border: none;
+}
+
+
+/* custom checkbox style */
+.custom-control.material-checkbox
+{--color: #7674e1; cursor: pointer;
+}
+.custom-control.material-checkbox .material-control-input{display:none}  .custom-control.material-checkbox .material-control-input:checked~.material-control-indicator{border-color:var(--color);-webkit-transform:rotateZ(45deg) translate(1px,-5px);transform:rotateZ(45deg) translate(1px,-5px);width:10px;border-top:0 solid #fff;border-left:0 solid #fff}  .custom-control.material-checkbox .material-control-indicator{display:inline-block;position:absolute;top:4px;left:0;width:16px;height:16px;border:2px solid #aaa;transition:.3s}
+
+/*dropdown*/
+.header-list-menu{
+    position: relative;
+}
+.header-list-menu > li > ul.ht-account, .action li.invite-user > ul.ht-dropdown{
+    left: auto;
+    right: 0;
+}
+.ht-dropdown > li{
+    list-style: none !important;
+}
+
+.header-list-menu.right-menu li > a:first-child {
+    padding-right: 0;
+}
+.header-list-menu > li > ul.ht-dropdown > li > a, .middle-menu-list > li > ul.ht-dropdown > li > a {
+    font-size: 13px;
+    padding: 5px 0;
+    line-height: 24px;
+    display: block;
+    text-transform: capitalize;
+    text-align: left;
+    color: #888;
+    font-weight: 400;
+}
+.ht-dropdown {
+    background: #fff;
+    left: 0;
+    opacity: 0;
+    padding: 10px 20px;
+    position: absolute;
+    top: 100%;
+    -webkiit-transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+    -webkit-transform-origin: 0 0 0;
+    transform-origin: 0 0 0;
+    width: 150px;
+    text-align: left;
+    visibility: hidden;
+    z-index: 99999999;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+}
+.header-list-menu li:hover > ul.ht-dropdown,.action > .user-invite:hover > ul.ht-dropdown{
+    opacity: 1;
+    transition: 0.5s;
+    visibility: visible;
+    transform: scaleY(1);
+    -webkiit-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+}
+
+/*action button in user tab*/
+.user-invite{
+    position: relative;
+}
+
+.action li{
+    padding:0 15px;
+}
+.user-invite li {
+    padding-left: 0 !important;
+}
+.user-invite ul{
+    margin-left: 15px;
+}
+.action li a{
+    font-size: 13px;
+    text-transform: capitalize;
+    text-align: left;
+    transition: .5s;
+    color: #333;
+    font-weight: 400;
+}
+.action a:hover, .action a:active{
+    color: #555;
+    transition: .5s;
+}
+/*data table */
+.mdl-grid {
+    padding: 8px;
+    width: 100% !important;
+}
+#users  table label {
+    margin-left: 20px;
+}
+.form-inline label {
+    display: block !important;
+}
+.view{
+    cursor: pointer !important;
+}
+.mdl-button{
+    min-width: auto !important;
+}
+.selected{
+    background-color: #eee;
+}
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2.25rem + 2px);
+    margin: -5px 10px !important;
+}
+.table-responsive{
+    overflow: hidden !important;
+}
+
+/*select option*/
+
+select {
+    font-family:
+            'Roboto','Helvetica','Arial',sans-serif;
+    position: relative;
+    width: 350px;
+    /*outline: none !important;*/
+}
+/*select:focus{ outline: none; }*/
+
+.select-text {
+    color: #495057;
+    position: relative;
+    margin-left: 2.5rem;
+    width: -webkit-calc(100% - 2.5rem);
+    width: calc(100% - 2.5rem);
+    background-color: transparent;
+    padding: 10px 10px 10px 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0, 0.12);
+}
+
+/* Remove focus */
+.select-text:focus {
+    outline: none;
+    border-bottom: 1px solid rgba(0,0,0, 0);
+}
+
+/* Use custom arrow */
+.select .select-text {
+    appearance: none;
+    -webkit-appearance:none
+}
+
+.select:after {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+    /* Styling the down arrow */
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+}
+
+
+/* LABEL ======================================= */
+.select-label {
+    color: rgba(0,0,0, 0.26);
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    top: 10px;
+    transition: 0.2s ease all;
+}
+
+/* active state */
+.select-text:focus ~ .select-label, .select-text:valid ~ .select-label {
+    top: -20px;
+    /* margin-left: 2.5rem; */
+    /* transition: 0.2s ease all; */
+    font-size: 10px;
+    font-weight:600 ;
+}
+
+/* BOTTOM BARS ================================= */
+.select-bar {
+    position: relative;
+    display: block;
+    margin-left: 2.5rem;
+    width: 92%;
+}
+
+.select-bar:before, .select-bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: #3f51b5;
+    transition: 0.2s ease all;
+}
+
+.select-bar:before {
+    left: 50%;
+}
+
+.select-bar:after {
+    right: 50%;
+}
+
+/* active state */
+.select-text:focus ~ .select-bar:before, .select-text:focus ~ .select-bar:after {
+    width: 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.select-highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+
+/*edit user location*/
+.location-item{
+    display: inline-block;
+    position: relative;
+    width:100%;
+}
+.location-item p{
+    line-height: 18px;
+    font-size: 12px;
+}
+.location-item .fa-edit ,.location-item .fa-times{
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    top: 3px;
+    margin: 0;
+    cursor: pointer;
+    opacity: 1;
+    transition: .5s;
+}
+.fa-times:hover{
+    color: red;
+    transition: .5s;
+}
+
+a[data-toggle="collapse"]{
+    position: absolute;
+    right: 20px;
+    font-size: 13px;
+    color: #7674e1;
+}
+a[aria-expanded="true"] .fa-chevron-down{
+    transform: rotate(180deg);
+    transition: .5s;
+}
+a[aria-expanded="false"] .fa-chevron-down{
+    transform: rotate(0deg);
+    transition: .5s;
+}
+.text-green {
+    color: #388e3c !important;
+}
+.address{
+    line-height: 1.2;
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+.address .fa-map-marker-alt{
+    position: absolute;
+    left: 0;
+    top: 1px;
+}
+#Locations ol{
+    padding-left: 15px !important;
+}
+#user-info .fa{
+    width: 20px;
+    text-align: center;
+}
+.Locations-column, .Locations-column li span{
+    font-size: 0.85rem !important;
+}
