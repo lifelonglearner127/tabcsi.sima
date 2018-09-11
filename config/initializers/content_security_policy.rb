@@ -14,11 +14,12 @@ Rails.application.config.content_security_policy do |policy|
   policy.script_src :self, :https, :blob, :unsafe_eval, :unsafe_inline
   policy.style_src :self, :https, :unsafe_inline
 
+  connect_src = [:self, :https, 'wss:']
   if Rails.env.development?
-    policy.connect_src(
-      :self, :https, 'http://localhost:3035', 'ws://localhost:3035'
-    )
+    connect_src += %w[http://localhost:3035 ws://localhost:3035]
   end
+
+  policy.connect_src(*connect_src)
 
   # Specify URI for violation reports.
   # policy.report_uri '/csp-violation-report-endpoint'
