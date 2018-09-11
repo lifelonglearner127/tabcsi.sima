@@ -11,7 +11,13 @@ module LastUpdatable
         end
       else
         define_method :last_updated_at_associations do
-          associations.map { |a| __send__(a) }
+          associations.map do |a|
+            if a.respond_to?(:call)
+              a.call
+            else
+              __send__(a)
+            end
+          end
         end
 
         define_method :last_updated_at do
