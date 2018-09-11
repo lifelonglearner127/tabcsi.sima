@@ -24,7 +24,8 @@ gem 'high_voltage', '~> 3.1'
 gem 'nenv', '~> 0.3.0'
 gem 'nokogiri', '~> 1.8'
 gem 'oj', '~> 3.6'
-gem 'paper_trail', '~> 9.2'
+gem 'paper_trail', '~> 10.0'
+gem 'paper_trail-association_tracking', '~> 1.0'
 gem 'pg', '~> 1.1'
 gem 'premailer-rails', '~> 1.10'
 gem 'puma', '~> 3.11'
@@ -48,20 +49,20 @@ group :development do
   gem 'capistrano-yarn', '~> 2.0', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
-  gem 'rubocop', '~> 0.58.0', require: false
+  gem 'rubocop', '~> 0.59.0', require: false
   gem 'rubocop-rspec', '~> 1.29'
   gem 'slackistrano', '~> 3.8'
   gem 'spring', '~> 2.0'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console', '~> 3.6'
+  gem 'web-console', '~> 3.7'
 end
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
   gem 'bullet', '~> 5.7'
   gem 'bundler-audit', '~> 0.6.0', require: false
-  gem 'factory_bot_rails', '~> 4.10'
+  gem 'factory_bot_rails', '~> 4.11'
   gem 'faker', '~> 1.9'
   gem 'pry-byebug', '~> 3.6'
   gem 'pry-rails', '~> 0.3.6'
@@ -80,7 +81,7 @@ end
 
 group :production do
   gem 'aws-sdk-rails', '~> 2.0'
-  gem 'aws-sdk-s3', '~> 1.17'
+  gem 'aws-sdk-s3', '~> 1.19'
   gem 'passenger', '~> 5.3'
   gem 'rack-timeout', '~> 0.5.1'
 end
