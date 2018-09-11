@@ -46,11 +46,11 @@ group :development do
   # gem 'capistrano-resque', '~> 0.2.3', require: false
   gem 'capistrano-rvm', '~> 0.1.2', require: false
   gem 'capistrano-yarn', '~> 2.0', require: false
-  gem 'hipchat', '~> 1.6', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
   gem 'rubocop', '~> 0.58.0', require: false
   gem 'rubocop-rspec', '~> 1.29'
+  gem 'slackistrano', '~> 3.8'
   gem 'spring', '~> 2.0'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'spring-watcher-listen', '~> 2.0.0'

@@ -23,7 +23,7 @@ end
   require "capistrano/#{file}"
 end
 
-require 'hipchat/capistrano'
+require 'slackistrano/capistrano'
 # require 'capistrano-resque'
 
 install_plugin Capistrano::SCM::Git

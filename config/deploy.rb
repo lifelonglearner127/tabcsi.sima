@@ -56,16 +56,16 @@ set :migration_role, :app
 
 # Passenger
 set :passenger_restart_with_touch, false
-# set :passenger_rvm_ruby_version, '2.5.1'
-# set :passenger_restart_with_sudo, true
 set :passenger_in_gemfile, true
 set :passenger_restart_command, -> { "#{release_path}/bin/restart" }
 set :passenger_restart_options, nil
 
-# HipChat
-set :hipchat_token, Nenv.instance.tabc_si_hipchat_token
-set :hipchat_room_name, 'TABC SI'
-set :hipchat_options, api_version: 'v2'
+# Slack
+set(
+  :slackistrano,
+  channel: '#tabc-si',
+  webhook: 'https://hooks.slack.com/services/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'
+)
 
 # Resque
 # set :resque_environment_task, true
