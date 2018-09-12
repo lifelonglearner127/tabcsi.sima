@@ -43,7 +43,8 @@ module TabcSi
           optional :location_id, type: Integer, id: true
         end
         post :validate do
-          user = User.find_by(email: params[:email])
+          email = params[:email]
+          user = User.find_for_database_authentication(email: email)
           valid_email = user.present?
           response = { valid_email: valid_email }
 
