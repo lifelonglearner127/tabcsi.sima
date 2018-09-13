@@ -235,7 +235,7 @@ module TabcSi
       attrs[:location_id] = location.id if license.location_id != location.id
 
       add_updated_attributes(
-        attrs, %i[status expires_on subordinate related_to], license, data
+        attrs, %i[clp status expires_on subordinate related_to], license, data
       )
 
       license.update!(attrs) unless attrs.empty?
