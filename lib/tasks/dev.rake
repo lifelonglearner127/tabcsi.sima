@@ -13,9 +13,4 @@ namespace :dev do
       # create(:user, email: 'user@example.com', password: 'password')
     end
   end
-
-  desc 'Sample vendor data.'
-  task vendors: :environment do
-    TabcSi::DataFeed.load(Rails.root.join('lib', 'sample_vendors.csv'))
-  end
 end

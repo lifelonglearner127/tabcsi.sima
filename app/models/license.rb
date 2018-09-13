@@ -5,6 +5,23 @@ class License < ApplicationRecord
 
   belongs_to :company
   belongs_to :location
+
+  belongs_to(
+    :unscoped_company,
+    -> { with_discarded },
+    class_name: 'Company',
+    foreign_key: 'company_id',
+    optional: true
+  )
+
+  belongs_to(
+    :unscoped_location,
+    -> { with_discarded },
+    class_name: 'Location',
+    foreign_key: 'location_id',
+    optional: true
+  )
+
   has_and_belongs_to_many :users, -> { order(:full_name) }
 
   validates :license_type, :license_number, :status, presence: true

@@ -15,6 +15,11 @@ module TabcSi
       print text
     end
 
+    def log_line(text)
+      log(text)
+      reset_line(true)
+    end
+
     def reset_line(new_line = false)
       if current_line_length < previous_line_length
         print(' ' * (previous_line_length - current_line_length))

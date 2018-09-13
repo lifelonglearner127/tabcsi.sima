@@ -7,210 +7,256 @@ module TabcSi
     include Singleton
     include Output
 
-    COLUMN_REMAP = {
-      relClp: :related_to,
-      tradename: :name,
-      owner: :owner_name,
-      ll_streetaddressnbr: :street_number,
-      ll_addressline1: :address,
-      ll_addressline2: :address2,
-      ll_addressline3: :address3,
-      ll_cityname: :city,
-      ll_statecode: :state,
-      ll_zip: :postal_code,
-      ll_phoneNbr: :phone_number,
-      licStatusDesc: :status,
-      expiryDate: :expires_on,
-      allSub: :subordinate
-    }.freeze
+    COLUMN_HEADERS = %i[
+      clp related_to name tabc_id owner_name street_number address address2
+      address3 city state postal_code phone_number county email1 email2 status
+      expires_on subordinate
+    ].freeze
 
     REQUIRED_COLUMNS = %i[
       owner_name clp name address city postal_code status
     ].freeze
 
-    attr_reader :companies
-    attr_reader :locations
-
-    def initialize
-      @companies = {}
-      @locations = {}
-      @previous_line_length = 0
-      @current_line_length = 0
-    end
+    attr_reader :seen_companies
 
     def self.load(path)
       instance.load(path)
     end
 
+    def initialize
+      @seen_companies = {}
+      @previous_line_length = 0
+      @current_line_length = 0
+    end
+
     def load(path)
-      load_csv(path) do |entry|
-        unless entry.fetch_values(*REQUIRED_COLUMNS).all?
-          log "Skipping line: #{$INPUT_LINE_NUMBER}"
-          reset_line(true)
-          next
-        end
+      ApplicationRecord.transaction do
+        log('Loading existing data...')
+        old_data = load_existing_data
+        log_line(' done.')
 
-        company_info, location_info, license_info = split_up_entry(entry)
+        log('Loading csv...')
+        new_data = load_csv(path)
+        log_line(' done.')
 
-        log(
-          "Owner Name: #{company_info[:owner_name]}, Location Name:" \
-          " #{location_info[:name]}, License: #{license_info[:license_type]}" \
-          " #{license_info[:license_number]}"
-        )
-
-        company = find_or_create_company(company_info)
-        location = find_or_create_location(location_info, company)
-
-        create_license(license_info, company, location)
-
-        reset_line
+        process_data(old_data, new_data)
+        log_line('Done.')
       end
-
-      puts ''
     end
 
     private
 
+    def add_updated_attributes(attributes, attribute_names, object, data)
+      attribute_names.each do |attr_name|
+        value = data[attr_name]
+        attributes[attr_name] = value if object.__send__(attr_name) != value
+      end
+    end
+
+    def insert_company(owner_name)
+      Company.find_or_create_by!(owner_name: owner_name)
+    end
+
+    def insert_license(company, clp, data)
+      location = insert_location(company, clp, data)
+
+      license_type = data[:license_type]
+      license_number = data[:license_number]
+
+      attrs = {
+        company_id: company.id,
+        location_id: location.id,
+        clp: clp,
+        license_type: license_type,
+        license_number: license_number,
+        status: data[:status],
+        expires_on: data[:expires_on],
+        subordinate: data[:subordinate],
+        related_to: data[:related_to]
+      }
+
+      License.create!(attrs)
+    end
+
+    def insert_location(company, clp, data)
+      attrs = {
+        company_id: company.id,
+        name: data[:name],
+        address1: data[:address1],
+        address2: data[:address2],
+        address3: data[:address3],
+        city: data[:city],
+        county: data[:county],
+        state: data[:state],
+        country: 'United States',
+        postal_code: data[:postal_code],
+        phone_number: data[:phone_number],
+        clp: clp
+      }
+
+      Location.create!(attrs)
+    end
+
     def load_csv(path)
-      CSV.foreach(
+      data = []
+
+      CSV.read(
         path,
-        headers: true,
+        col_sep: '|',
+        quote_char: "\0",
+        headers: COLUMN_HEADERS,
         return_headers: false,
         skip_blanks: true
-      ) do |row|
-        next if row.fields.compact.empty? # silently skip no-data rows
-        entry = remap_columns(row)
-        yield entry
+      ).each do |row|
+        # silently skip rows which are empty or missing required data
+        if row.fields.compact.empty? ||
+           !row.to_hash.fetch_values(*REQUIRED_COLUMNS).all?
+          next
+        end
+
+        hash = remap_columns(row)
+        data << hash if hash.present?
+      end
+
+      data
+    end
+
+    def load_existing_data
+      licenses =
+        License
+        .with_discarded
+        .includes(%i[unscoped_company unscoped_location])
+
+      Hash[
+        licenses.map do |license|
+          license_type = license.license_type
+          license_number = license.license_number
+          clp = license.clp || License.clp(license_type, license_number)
+
+          [clp, license]
+        end
+      ]
+    end
+
+    def process_data(old_data, new_data)
+      new_data.each do |row|
+        clp = row[:clp]
+        owner_name = row[:owner_name]
+        license = old_data.delete(clp)
+
+        log("Processing: #{clp}...")
+
+        company = seen_companies[owner_name]
+        company = license.company if company.blank? && license.present?
+        company = insert_company(owner_name) if company.blank?
+
+        company.undiscard if company.discarded?
+        update_company(company, owner_name) if company.owner_name != owner_name
+
+        seen_companies[owner_name] = company
+
+        if license.blank?
+          log(' inserting...')
+          insert_license(company, clp, row)
+        else
+          log(' updating...')
+          update_license(company, clp, license, row)
+        end
+
+        log(' processed.')
+        reset_line
+      end
+
+      # anything left over in old_data needs to be marked as discarded
+      old_data.each do |clp, license|
+        log("Discarding: #{clp}...")
+
+        company = license.company
+        if company.present? && !seen_companies.key?(company.owner_name)
+          company.discard
+        end
+
+        location = license.location
+        location.discard if location.present? && location.licenses.size <= 1
+
+        license.discard
+
+        log(' discarded.')
+        reset_line
       end
     end
 
     def remap_columns(row)
-      row_hash =
-        row.to_hash.transform_keys do |k|
-          remap_column(k.to_sym)
-        end
+      row_hash = row.to_hash
 
       # strip leading and trailing whitespace, and replace empty values with nil
-      row_hash.transform_values do |v|
+      row_hash.transform_values! do |v|
         value = v.present? ? v.strip : v
         value.blank? ? nil : value
       end
-    end
 
-    def remap_column(key)
-      COLUMN_REMAP[key] || key
-    end
-
-    def split_up_entry(entry)
-      owner_name = entry[:owner_name]
-      company_info = { owner_name: owner_name }
-
-      clp = entry[:clp]
+      clp = row_hash.delete(:clp)
       license_type, license_number = *License.split_license_number(clp).values
-      key = License.clp(license_type, license_number)
-      street_number = entry[:street_number]
-      address1 = entry[:address]
+
+      return nil if license_type.blank? || license_number.blank?
+
+      street_number = row_hash.delete(:street_number)
+      address1 = row_hash.delete(:address)
       address1 = "#{street_number} #{address1}" if street_number.present?
 
-      location_info = {
-        key: key,
-        clp: key,
-        name: entry[:name],
-        address1: address1,
-        address2: entry[:address2],
-        address3: entry[:address3],
-        city: entry[:city],
-        state: entry[:state],
-        postal_code: entry[:postal_code],
-        phone_number: entry[:phone_number]
-      }
+      row_hash[:clp] = License.clp(license_type, license_number)
+      row_hash[:license_type] = license_type
+      row_hash[:license_number] = license_number
+      row_hash[:address1] = address1
 
-      license_info = {
-        license_type: license_type,
-        license_number: license_number,
-        subordinate: entry[:subordinate],
-        related_to: entry[:related_to],
-        status: entry[:status],
-        expires_on: Date.strptime(entry[:expires_on], '%D')
-      }
+      # disable expires_on until data feed is fixed
+      # row_hash[:expires_on] = Date.strptime(row_hash[:expires_on], '%D')
+      row_hash[:expires_on] = nil
 
-      [company_info, location_info, license_info]
+      row_hash
     end
 
-    def find_or_create_company(company_info)
-      owner_name = company_info[:owner_name]
-
-      return companies[owner_name] if companies.key?(owner_name)
-
-      company = Company.find_or_create_by!(owner_name: owner_name)
-      companies[owner_name] = company
-
-      company
+    def update_company(company, owner_name)
+      company.update!(owner_name: owner_name)
     end
 
-    def find_or_create_location(location_info, company)
-      key = location_info[:key]
-      return locations[key] if locations.key?(key)
+    def update_license(company, clp, license, data)
+      license.undiscard if license.discarded?
 
-      clp = location_info[:clp]
-      location_data = {
-        address1: location_info[:address1],
-        address2: location_info[:address2],
-        address3: location_info[:address3],
-        city: location_info[:city],
-        state: location_info[:state],
-        country: 'United States',
-        postal_code: location_info[:postal_code]
-      }
-
-      # find by clp or address-info
-      location = Location.find_by(clp: clp)
-      if location.blank?
-        location = Location.find_by(
-          company: company,
-          **location_data
-        )
+      location = license.location
+      if location.clp.present? && location.clp != clp
+        # wrong location association
+        location = insert_location(company, clp, data)
       end
 
-      location_data = {
-        name: location_info[:name],
-        phone_number: location_info[:phone_number],
-        **location_data
-      }
+      update_location(location, data)
 
-      if location.blank?
-        # location not found by clp or address-info
-        location = Location.create!(
-          company: company,
-          clp: clp,
-          **location_data
-        )
-      else
-        # add clp for update
-        location_data[:clp] = clp if location.clp.blank?
+      attrs = {}
+      attrs[:location_id] = location.id if license.location_id != location.id
 
-        location.update!(location_data)
-      end
+      add_updated_attributes(
+        attrs, %i[status expires_on subordinate related_to], license, data
+      )
 
-      locations[key] = location
-
-      location
+      license.update!(attrs) unless attrs.empty?
     end
 
-    def create_license(license_info, company, location)
-      license_type = license_info[:license_type]
-      license_number = license_info[:license_number]
-      license = License.find_by(
-        license_type: license_type, license_number: license_number
+    def update_location(location, data)
+      location.undiscard if location.discarded?
+
+      attrs = {}
+
+      add_updated_attributes(
+        attrs,
+        %i[
+          name address1 address2 address3 city county state postal_code
+          phone_number clp
+        ],
+        location,
+        data
       )
 
-      return if license.present?
-
-      License.create!(
-        company: company,
-        location: location,
-        **license_info
-      )
+      location.update!(attrs) unless attrs.empty?
     end
   end
 end
