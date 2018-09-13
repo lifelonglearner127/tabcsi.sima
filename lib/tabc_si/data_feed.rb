@@ -177,7 +177,10 @@ module TabcSi
         end
 
         location = license.location
-        location.discard if location.present? && location.licenses.size <= 1
+        if location.present? &&
+           (company.discarded? || location.licenses.size <= 1)
+          location.discard
+        end
 
         license.discard
 
