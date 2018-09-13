@@ -6,44 +6,36 @@
 * Self Inspection (SI)
 * Audit
 
+## Dependencies
+
+### General
+
+* Ruby 2.5.1
+* Node 8 (LTS)
+* Yarn
+
+### Development
+
+* [Overmind](https://github.com/DarthSim/overmind)
+
 ## Deploying
 
     > bin/deploy sandbox
     > bin/deploy production
 
-## Data Feed
+## Development
 
-The data feed includes "vendor" info. This info is split into three groups:
+### Getting Set Up
 
-* owner-related
-* location-related
-* license-related
+    > bundle install
+    > yarn install
+    > bin/rails db:setup
+    > bin/rails admin:load_settings
+    > bin/rails admin:data_feed
+    > bin/rails admin:build_forms
 
-### Owner-Related
+### Developing
 
-The `companies` table contains all owner-related info. Current fields are:
+    > yarn start
 
-* `owner_id`
-
-### Location-Related
-
-The `locations` table contains all location-related info. Current fields are:
-
-* `name`
-* `address1`
-* `address2`
-* `address3`
-* `city`
-* `county`
-* `state`
-* `country`
-* `postal_code`
-
-### License-Related
-
-The `licenses` table contains all license-related info. Current fields are:
-
-* `license_type`
-* `license_number`
-* `subordinate`
-* `related_to`
+This will start the Rails and Webpack servers through Overmind.
