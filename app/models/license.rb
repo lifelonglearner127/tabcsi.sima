@@ -3,8 +3,8 @@
 class License < ApplicationRecord
   LICENSE_NUMBER_REGEXP = /^(?<license_type>[A-Z]+)\s*(?<license_number>[0-9]+)$/ # rubocop:disable Metrics/LineLength
 
-  belongs_to :company
-  belongs_to :location
+  belongs_to :company, -> { with_discarded }
+  belongs_to :location, -> { with_discarded }
 
   belongs_to(
     :unscoped_company,

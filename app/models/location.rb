@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Location < ApplicationRecord
-  belongs_to :company
+  belongs_to :company, -> { with_discarded }
   has_many :inspections, -> { order(:created_at) }
   has_many :licenses, -> { order(:license_type, :license_number) }
   belongs_to :locked_by, class_name: 'User', optional: true
