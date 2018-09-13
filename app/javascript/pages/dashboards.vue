@@ -53,7 +53,13 @@ export default {
       variant="info"
     >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand href="/">{{ dashboardTitle }}</b-navbar-brand>
+      <b-navbar-brand href="/">
+        <img
+          alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
+          src="~@/assets/images/logo.png"
+        >
+        {{ dashboardTitle }}
+      </b-navbar-brand>
       <b-collapse
         id="nav_collapse"
         is-nav
@@ -117,4 +123,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.navbar-brand {
+  img {
+    padding-right: 1rem;
+    width: 300px;
+  }
+}
 </style>
