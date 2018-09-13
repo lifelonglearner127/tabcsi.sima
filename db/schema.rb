@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_11_214132) do
+ActiveRecord::Schema.define(version: 2018_09_13_210414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_logs", force: :cascade do |t|
+    t.string "sequence_id", null: false
+    t.string "tag", null: false
+    t.text "message", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_action_logs_on_discarded_at"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.text "name", null: false
@@ -322,28 +332,6 @@ ActiveRecord::Schema.define(version: 2018_09_11_214132) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "version_associations", force: :cascade do |t|
-    t.bigint "version_id", null: false
-    t.string "foreign_key_name", null: false
-    t.bigint "foreign_key_id"
-    t.index ["foreign_key_id"], name: "index_version_associations_on_foreign_key_id"
-    t.index ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key"
-    t.index ["version_id"], name: "index_version_associations_on_version_id"
-  end
-
-  create_table "versions", force: :cascade do |t|
-    t.string "item_type", null: false
-    t.bigint "item_id", null: false
-    t.string "event", null: false
-    t.string "whodunnit"
-    t.text "object"
-    t.datetime "created_at", null: false
-    t.bigint "transaction_id"
-    t.string "item_subtype"
-    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
-    t.index ["transaction_id"], name: "index_versions_on_transaction_id"
-  end
-
   add_foreign_key "answers", "inspections"
   add_foreign_key "answers", "questions"
   add_foreign_key "audit_form_questions", "audit_forms"
@@ -364,5 +352,4 @@ ActiveRecord::Schema.define(version: 2018_09_11_214132) do
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "push_tokens", "users"
   add_foreign_key "users", "companies"
-  add_foreign_key "version_associations", "versions"
 end
