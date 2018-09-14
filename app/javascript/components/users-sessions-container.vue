@@ -1,5 +1,5 @@
 <script>
-import logo from '~/assets/images/logo.png'
+import logo from '~/assets/images/logo-white.png'
 import RailsForm from '~/components/rails-form'
 
 export default {
@@ -128,7 +128,7 @@ export default {
             <b-button
               class="my-4"
               type="submit"
-              variant="primary"
+              variant="tabc-primary"
             >
               <slot name="submit">
                 {{ submitText }}
@@ -158,8 +158,9 @@ export default {
 }
 
 .card-header {
-  background-color: $tabc-header-background-color;
+  background-color: $tabc-dark-blue;
   border-bottom-width: 0;
+  color: $white;
   text-align: center;
 }
 

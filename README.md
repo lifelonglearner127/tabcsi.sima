@@ -33,6 +33,9 @@
     > bin/rails admin:load_settings
     > bin/rails admin:data_feed
     > bin/rails admin:build_forms
+    > cp .env.example .env
+
+Edit `.env` file as necessary.
 
 ### Developing
 

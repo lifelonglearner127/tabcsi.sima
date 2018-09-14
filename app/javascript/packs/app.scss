@@ -14,6 +14,12 @@ html {
   }
 }
 
+.btn-tabc-primary {
+  @include button-variant($tabc-gold, $tabc-dark-blue);
+
+  color: $tabc-dark-blue;
+}
+
 /*
 .form-error {
   color: rgb(185, 74, 72);
