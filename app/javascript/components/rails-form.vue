@@ -23,6 +23,10 @@ export default {
       type: String,
       default: 'get'
     },
+    validationMethod: {
+      type: Function,
+      default: null
+    },
     tokenName: {
       type: String,
       default: 'authenticity_token'
@@ -40,6 +44,7 @@ export default {
     :accept-charset="acceptCharset"
     :action="action"
     :method="method"
+    @submit.prevent="validationMethod"
     class="needs-validation"
     novalidate
   >

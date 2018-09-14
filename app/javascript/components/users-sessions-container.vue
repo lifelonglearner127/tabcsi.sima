@@ -16,6 +16,10 @@ export default {
       type: String,
       required: true
     },
+    validationMethod: {
+      type: Function, 
+      default: null
+    },
     cols: {
       type: [String, Number],
       default: null
@@ -115,6 +119,7 @@ export default {
             :enforce-utf8="enforceUtf8"
             :hidden-method="hiddenMethod"
             :method="method"
+            :validation-method="validationMethod"
             :token-name="tokenName"
             :token-value="tokenValue"
           >
