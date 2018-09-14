@@ -55,7 +55,7 @@ export default {
       <b-navbar-brand href="/">
         <img
           alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
-          src="~@/assets/images/logo-white.svg"
+          src="~@/assets/images/logo-white.png"
         >
         {{ dashboardTitle }}
       </b-navbar-brand>
