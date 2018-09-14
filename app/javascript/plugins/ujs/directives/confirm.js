@@ -1,18 +1,46 @@
+import { fire, stopEverything } from '../event'
+
+const allowAction = (el) => {
+  let answer, callback
+
+  const message = el.dataset.confirm
+
+  if (!message) {
+    return true
+  }
+
+  answer = false
+  if (fire(el, 'confirm')) {
+    try {
+      answer = window.confirm(message) // eslint-disable-line no-alert
+    } catch (error) {
+      // do nothing
+    }
+
+    callback = fire(el, 'confirm:complete', [answer])
+  }
+
+  return answer && callback
+}
+
+const handleClick = function ujsConfirmHandleClick (e) {
+  if (!allowAction(e.target)) {
+    stopEverything(e)
+  }
+}
+
 export default {
   name: 'UjsConfirm',
 
-  bind (_el, _binding, _node, _oldNode, _isDestroy) {
+  bind (el, binding) {
+    el.dataset.confirm = binding.value
+
+    el.addEventListener('click', handleClick)
   },
 
-  inserted (_el, _binding, _node, _oldNode, _isDestroy) {
-  },
+  unbind (el) {
+    el.removeEventListener('click', handleClick)
 
-  update (_el, _binding, _node, _oldNode, _isDestroy) {
-  },
-
-  componentUpdated (_el, _binding, _node, _oldNode, _isDestroy) {
-  },
-
-  unbind (_el, _binding, _node, _oldNode, _isDestroy) {
+    delete el.dataset.confirm
   }
 }
