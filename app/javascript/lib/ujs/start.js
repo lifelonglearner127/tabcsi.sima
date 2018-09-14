@@ -9,37 +9,37 @@ const {
 } = Rails
 
 const delegateEvents = () => {
-  delegate(document, Rails.linkDisableSelector, 'ajax:complete', enableElement)
-  delegate(document, Rails.linkDisableSelector, 'ajax:stopped', enableElement)
-  delegate(document, Rails.buttonDisableSelector, 'ajax:complete', enableElement)
-  delegate(document, Rails.buttonDisableSelector, 'ajax:stopped', enableElement)
-  delegate(document, Rails.linkClickSelector, 'click', handleDisabledElement)
+  delegate(document, Rails.linkDisableSelector, 'ajax:complete', enableElement)   // enable
+  delegate(document, Rails.linkDisableSelector, 'ajax:stopped', enableElement)    // enable
+  delegate(document, Rails.buttonDisableSelector, 'ajax:complete', enableElement) // enable
+  delegate(document, Rails.buttonDisableSelector, 'ajax:stopped', enableElement)  // enable
+  delegate(document, Rails.linkClickSelector, 'click', handleDisabledElement)     // disabled
   delegate(document, Rails.linkClickSelector, 'click', handleConfirm)
-  delegate(document, Rails.linkClickSelector, 'click', handleMetaClick)
-  delegate(document, Rails.linkClickSelector, 'click', disableElement)
-  delegate(document, Rails.linkClickSelector, 'click', handleRemote)
+  delegate(document, Rails.linkClickSelector, 'click', handleMetaClick)           // meta
+  delegate(document, Rails.linkClickSelector, 'click', disableElement)            // disable
+  delegate(document, Rails.linkClickSelector, 'click', handleRemote)              // remote
   delegate(document, Rails.linkClickSelector, 'click', handleMethod)
-  delegate(document, Rails.buttonClickSelector, 'click', handleDisabledElement)
+  delegate(document, Rails.buttonClickSelector, 'click', handleDisabledElement)   // disabled
   delegate(document, Rails.buttonClickSelector, 'click', handleConfirm)
-  delegate(document, Rails.buttonClickSelector, 'click', disableElement)
-  delegate(document, Rails.buttonClickSelector, 'click', handleRemote)
-  delegate(document, Rails.inputChangeSelector, 'change', handleDisabledElement)
+  delegate(document, Rails.buttonClickSelector, 'click', disableElement)          // disable
+  delegate(document, Rails.buttonClickSelector, 'click', handleRemote)            // remote
+  delegate(document, Rails.inputChangeSelector, 'change', handleDisabledElement)  // disabled
   delegate(document, Rails.inputChangeSelector, 'change', handleConfirm)
-  delegate(document, Rails.inputChangeSelector, 'change', handleRemote)
-  delegate(document, Rails.formSubmitSelector, 'submit', handleDisabledElement)
+  delegate(document, Rails.inputChangeSelector, 'change', handleRemote)           // remote
+  delegate(document, Rails.formSubmitSelector, 'submit', handleDisabledElement)   // disabled
   delegate(document, Rails.formSubmitSelector, 'submit', handleConfirm)
-  delegate(document, Rails.formSubmitSelector, 'submit', handleRemote)
+  delegate(document, Rails.formSubmitSelector, 'submit', handleRemote)            // remote
 
   // Normal mode submit; slight timeout so that the submit button gets properly serialized
   delegate(
     document, Rails.formSubmitSelector, 'submit', (e) => setTimeout(() => disableElement(e), NORMAL_SUBMIT_TIMEOUT)
   )
 
-  delegate(document, Rails.formSubmitSelector, 'ajax:send', disableElement)
-  delegate(document, Rails.formSubmitSelector, 'ajax:complete', enableElement)
-  delegate(document, Rails.formInputClickSelector, 'click', handleDisabledElement)
+  delegate(document, Rails.formSubmitSelector, 'ajax:send', disableElement)        // disable
+  delegate(document, Rails.formSubmitSelector, 'ajax:complete', enableElement)     // enable
+  delegate(document, Rails.formInputClickSelector, 'click', handleDisabledElement) // disabled
   delegate(document, Rails.formInputClickSelector, 'click', handleConfirm)
-  delegate(document, Rails.formInputClickSelector, 'click', formSubmitButtonClick)
+  delegate(document, Rails.formInputClickSelector, 'click', formSubmitButtonClick) // submit
 }
 
 Rails.start = () => {

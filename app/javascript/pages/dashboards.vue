@@ -77,6 +77,7 @@ export default {
               Update Profile
             </b-dropdown-item>
             <b-dropdown-item
+              v-ujs-confirm="'Are you sure you want to log-out?'"
               v-ujs-method="pageOptions.logOut.method"
               :href="pageOptions.logOut.path"
               rel="nofollow"
