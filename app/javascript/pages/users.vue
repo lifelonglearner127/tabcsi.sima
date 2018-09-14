@@ -1,7 +1,16 @@
 <script>
+import { email, helpers, required } from 'vuelidate/lib/validators'
 import PageMixin from '~/mixins/page'
-import snakeCase from 'lodash/snakeCase'
 import UsersSessionsContainer from '~/components/users-sessions-container'
+
+const alpha = helpers.regex('alpha', (/^[a-zA-Z\s]+$/))
+const USPhone = (value) => {
+  if (value === null || value === '') {
+    return true
+  }
+
+  return (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/).test(value)
+}
 
 export default {
   name: 'Users',
@@ -19,61 +28,36 @@ export default {
         jobTitle: '',
         licenseNumber: '',
         phone: ''
-      },
-      form: {
-        fullName: {
-          autoComplete: 'name',
-          icon: 'fas-fa-user',
-          label: 'Full Name',
-          required: true
-        },
-        email: {
-          autoComplete: 'email',
-          icon: 'fas-fa-envelope',
-          label: 'E-mail',
-          required: true,
-          type: 'email'
-        },
-        phone: {
-          autoComplete: 'tel',
-          icon: 'fas-fa-phone',
-          label: 'Phone Number',
-          required: true,
-          type: 'tel'
-        },
-        companyName: {
-          autoComplete: 'organization',
-          icon: 'fas-fa-industry',
-          label: 'Company Name',
-          required: true
-        },
-        jobTitle: {
-          autoComplete: 'organization-title',
-          icon: 'fas-fa-user-tie',
-          label: 'Job Title',
-          required: true
-        },
-        licenseNumber: {
-          autoComplete: 'off',
-          icon: 'fas-fa-id-card',
-          label: 'License/Permit Number',
-          required: true
-        }
       }
     }
   },
 
+  validations: {
+    user: {
+      fullName: {
+        required,
+        alpha
+      },
+      email: {
+        required,
+        email
+      },
+      phone: {
+        required,
+        USPhone
+      },
+      companyName: { required },
+      jobTitle: { required },
+      licenseNumber: { required }
+    }
+  },
+
   methods: {
-    inputGroupId (key) {
-      return `${this.inputId(key)}_group`
-    },
-
-    inputId (key) {
-      return `user_${snakeCase(key)}`
-    },
-
-    inputName (key) {
-      return `user[${snakeCase(key)}]`
+    validateBeforeSubmit (e) {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        e.target.submit()
+      }
     }
   }
 }
@@ -86,6 +70,7 @@ export default {
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
+    :validation-method="validateBeforeSubmit"
     :token-name="tokenName"
     :token-value="tokenValue"
     cols="12"
@@ -94,31 +79,212 @@ export default {
     text-class="font-italic"
     title="Create a New Account"
   >
+    <!-- Full Name -->
     <b-form-group
-      v-for="(options, key) in form"
-      :id="inputGroupId(key)"
-      :key="key"
-      :label="options.label"
-      :label-for="inputId(key)"
+      id="user_full_name_group"
+      label="Full Name"
+      label-for="user_full_name"
+
     >
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            :use="options.icon"
+            use="fas-fa-user"
             fixed-width
           >
           </fa-sprite>
         </b-input-group-prepend>
         <b-form-input
-          v-model="user[key]"
-          :autocomplete="options.autoComplete"
-          :id="inputId(key)"
-          :name="inputName(key)"
-          :required="options.required"
-          :type="options.type || 'text'"
+          id="user_full_name"
+          v-model="$v.user.fullName.$model"
+          :class="{'is-invalid': $v.user.fullName.$error}"
+          autocomplete="name"
+          name="user[full_name]"
+          type="text"
+          placeholder="xyz abc"
         >
         </b-form-input>
       </b-input-group>
+      <b-form-feedback
+        v-if="$v.user.fullName.$error && !$v.user.fullName.required"
+        class="d-block" >
+        Full Name is required.
+      </b-form-feedback>
+      <b-form-feedback
+        v-if="$v.user.fullName.$error && !$v.user.fullName.alpha"
+        class="d-block" >
+        Please enter only characters.
+      </b-form-feedback>
+    </b-form-group>
+
+    <!-- Email -->
+    <b-form-group
+      id="user_email_group"
+      label="E-mail"
+      label-for="user_email"
+    >
+      <b-input-group>
+        <b-input-group-prepend is-text>
+          <fa-sprite
+            use="fas-fa-envelope"
+            fixed-width
+          >
+          </fa-sprite>
+        </b-input-group-prepend>
+        <b-form-input
+          id="user_email"
+          v-model="$v.user.email.$model"
+          :class="{'is-invalid': $v.user.email.$error}"
+          autocomplete="email"
+          name="user[email]"
+          type="email"
+          placeholder="tabc@neuone.com"
+        >
+        </b-form-input>
+      </b-input-group>
+      <b-form-feedback
+        v-if="$v.user.email.$error && !$v.user.email.required"
+        class="d-block" >
+        Email is required.
+      </b-form-feedback>
+      <b-form-feedback
+        v-if="$v.user.email.$error && !$v.user.email.email"
+        class="d-block" >
+        Please enter a valid email address.
+      </b-form-feedback>
+    </b-form-group>
+
+    <!-- Phone Number -->
+    <b-form-group
+      id="user_phone_group"
+      label="Phone Number"
+      label-for="user_phone"
+    >
+      <b-input-group>
+        <b-input-group-prepend is-text>
+          <fa-sprite
+            use="fas-fa-phone"
+            fixed-width
+          >
+          </fa-sprite>
+        </b-input-group-prepend>
+        <b-form-input
+          id="user_phone"
+          v-model="$v.user.phone.$model"
+          :class="{'is-invalid': $v.user.phone.$error}"
+          autocomplete="tel"
+          name="user[phone]"
+          type="text"
+          placeholder="(512) 099-2736"
+        >
+        </b-form-input>
+      </b-input-group>
+      <b-form-feedback
+        v-if="$v.user.phone.$error && !$v.user.phone.required"
+        class="d-block" >
+        Phone Number is required.
+      </b-form-feedback>
+      <b-form-feedback
+        v-if="$v.user.phone.$error && !$v.user.phone.USPhone"
+        class="d-block" >
+        Please enter a valid format phone number.
+      </b-form-feedback>
+    </b-form-group>
+
+    <!-- Company Name -->
+    <b-form-group
+      id="user_company_name_group"
+      label="Company Name"
+      label-for="user_company_name"
+    >
+      <b-input-group>
+        <b-input-group-prepend is-text>
+          <fa-sprite
+            use="fas-fa-industry"
+            fixed-width
+          >
+          </fa-sprite>
+        </b-input-group-prepend>
+        <b-form-input
+          id="user_company_name"
+          v-model="$v.user.companyName.$model"
+          :class="{'is-invalid': $v.user.companyName.$error}"
+          autocomplete="organization"
+          name="user[company_name]"
+          type="text"
+          placeholder="Neuone"
+        >
+        </b-form-input>
+      </b-input-group>
+      <b-form-feedback
+        v-if="$v.user.companyName.$error"
+        class="d-block" >
+        Company Name is required.
+      </b-form-feedback>
+    </b-form-group>
+
+    <!-- Job Title -->
+    <b-form-group
+      id="user_job_title_group"
+      label="Job Title"
+      label-for="user_job_title"
+    >
+      <b-input-group>
+        <b-input-group-prepend is-text>
+          <fa-sprite
+            use="fas-fa-user-tie"
+            fixed-width
+          >
+          </fa-sprite>
+        </b-input-group-prepend>
+        <b-form-input
+          id="user_job_title"
+          v-model="$v.user.jobTitle.$model"
+          :class="{'is-invalid': $v.user.jobTitle.$error}"
+          autocomplete="organization-title"
+          name="user[job_title]"
+          type="text"
+          placeholder="Owner"
+        >
+        </b-form-input>
+      </b-input-group>
+      <b-form-feedback
+        v-if="$v.user.jobTitle.$error"
+        class="d-block" >
+        Job Title is required.
+      </b-form-feedback>
+    </b-form-group>
+
+    <!-- License/Permit Number -->
+    <b-form-group
+      id="user_license_number_group"
+      label="License/Permit Number"
+      label-for="user_license_number"
+    >
+      <b-input-group>
+        <b-input-group-prepend is-text>
+          <fa-sprite
+            use="fas-fa-user-tie"
+            fixed-width
+          >
+          </fa-sprite>
+        </b-input-group-prepend>
+        <b-form-input
+          id="user_license_number"
+          v-model="$v.user.licenseNumber.$model"
+          :class="{'is-invalid': $v.user.licenseNumber.$error}"
+          autocomplete="off"
+          name="user[license_number]"
+          type="text"
+          placeholder="AB123456"
+        >
+        </b-form-input>
+      </b-input-group>
+      <b-form-feedback
+        v-if="$v.user.licenseNumber.$error"
+        class="d-block" >
+        License/Permit Number is required.
+      </b-form-feedback>
     </b-form-group>
 
     <b-form-text class="font-italic">

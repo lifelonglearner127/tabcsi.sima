@@ -23,6 +23,10 @@ export default {
       type: String,
       default: 'get'
     },
+    validationMethod: {
+      type: Function,
+      default: null
+    },
     tokenName: {
       type: String,
       default: 'authenticity_token'
@@ -42,6 +46,7 @@ export default {
     :method="method"
     class="needs-validation"
     novalidate
+    @submit.prevent="validationMethod"
   >
     <input
       v-if="enforceUtf8"
