@@ -70,9 +70,9 @@ export default {
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
-    :validation-method="validateBeforeSubmit"
     :token-name="tokenName"
     :token-value="tokenValue"
+    :validation-method="validateBeforeSubmit"
     cols="12"
     sm="6"
     submit-text="Sign Up"
@@ -97,22 +97,24 @@ export default {
         <b-form-input
           id="user_full_name"
           v-model="$v.user.fullName.$model"
-          :class="{'is-invalid': $v.user.fullName.$error}"
+          :class="{ 'is-invalid': $v.user.fullName.$error }"
           autocomplete="name"
           name="user[full_name]"
+          placeholder="John Smith"
           type="text"
-          placeholder="xyz abc"
         >
         </b-form-input>
       </b-input-group>
       <b-form-feedback
         v-if="$v.user.fullName.$error && !$v.user.fullName.required"
-        class="d-block" >
+        class="d-block"
+      >
         Full Name is required.
       </b-form-feedback>
       <b-form-feedback
         v-if="$v.user.fullName.$error && !$v.user.fullName.alpha"
-        class="d-block" >
+        class="d-block"
+      >
         Please enter only characters.
       </b-form-feedback>
     </b-form-group>
@@ -134,22 +136,24 @@ export default {
         <b-form-input
           id="user_email"
           v-model="$v.user.email.$model"
-          :class="{'is-invalid': $v.user.email.$error}"
+          :class="{ 'is-invalid': $v.user.email.$error }"
           autocomplete="email"
           name="user[email]"
+          placeholder="jsmith@example.com"
           type="email"
-          placeholder="tabc@neuone.com"
         >
         </b-form-input>
       </b-input-group>
       <b-form-feedback
         v-if="$v.user.email.$error && !$v.user.email.required"
-        class="d-block" >
+        class="d-block"
+      >
         Email is required.
       </b-form-feedback>
       <b-form-feedback
         v-if="$v.user.email.$error && !$v.user.email.email"
-        class="d-block" >
+        class="d-block"
+      >
         Please enter a valid email address.
       </b-form-feedback>
     </b-form-group>
@@ -171,22 +175,24 @@ export default {
         <b-form-input
           id="user_phone"
           v-model="$v.user.phone.$model"
-          :class="{'is-invalid': $v.user.phone.$error}"
+          :class="{ 'is-invalid': $v.user.phone.$error }"
           autocomplete="tel"
           name="user[phone]"
+          placeholder="(123) 456-7890"
           type="text"
-          placeholder="(512) 099-2736"
         >
         </b-form-input>
       </b-input-group>
       <b-form-feedback
         v-if="$v.user.phone.$error && !$v.user.phone.required"
-        class="d-block" >
+        class="d-block"
+      >
         Phone Number is required.
       </b-form-feedback>
       <b-form-feedback
         v-if="$v.user.phone.$error && !$v.user.phone.USPhone"
-        class="d-block" >
+        class="d-block"
+      >
         Please enter a valid format phone number.
       </b-form-feedback>
     </b-form-group>
@@ -208,17 +214,18 @@ export default {
         <b-form-input
           id="user_company_name"
           v-model="$v.user.companyName.$model"
-          :class="{'is-invalid': $v.user.companyName.$error}"
+          :class="{ 'is-invalid': $v.user.companyName.$error }"
           autocomplete="organization"
           name="user[company_name]"
+          placeholder="Awesome Food LLC"
           type="text"
-          placeholder="Neuone"
         >
         </b-form-input>
       </b-input-group>
       <b-form-feedback
         v-if="$v.user.companyName.$error"
-        class="d-block" >
+        class="d-block"
+      >
         Company Name is required.
       </b-form-feedback>
     </b-form-group>
@@ -240,17 +247,18 @@ export default {
         <b-form-input
           id="user_job_title"
           v-model="$v.user.jobTitle.$model"
-          :class="{'is-invalid': $v.user.jobTitle.$error}"
+          :class="{ 'is-invalid': $v.user.jobTitle.$error }"
           autocomplete="organization-title"
           name="user[job_title]"
-          type="text"
           placeholder="Owner"
+          type="text"
         >
         </b-form-input>
       </b-input-group>
       <b-form-feedback
         v-if="$v.user.jobTitle.$error"
-        class="d-block" >
+        class="d-block"
+      >
         Job Title is required.
       </b-form-feedback>
     </b-form-group>
@@ -272,17 +280,18 @@ export default {
         <b-form-input
           id="user_license_number"
           v-model="$v.user.licenseNumber.$model"
-          :class="{'is-invalid': $v.user.licenseNumber.$error}"
+          :class="{ 'is-invalid': $v.user.licenseNumber.$error }"
           autocomplete="off"
           name="user[license_number]"
-          type="text"
           placeholder="AB123456"
+          type="text"
         >
         </b-form-input>
       </b-input-group>
       <b-form-feedback
         v-if="$v.user.licenseNumber.$error"
-        class="d-block" >
+        class="d-block"
+      >
         License/Permit Number is required.
       </b-form-feedback>
     </b-form-group>
