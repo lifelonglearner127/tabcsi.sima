@@ -44,9 +44,9 @@ export default {
     :accept-charset="acceptCharset"
     :action="action"
     :method="method"
-    @submit.prevent="validationMethod"
     class="needs-validation"
     novalidate
+    @submit.prevent="validationMethod"
   >
     <input
       v-if="enforceUtf8"

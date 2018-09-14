@@ -17,7 +17,7 @@ export default {
       required: true
     },
     validationMethod: {
-      type: Function, 
+      type: Function,
       default: null
     },
     cols: {
