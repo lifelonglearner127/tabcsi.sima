@@ -50,13 +50,12 @@ export default {
     <b-navbar
       toggleable="md"
       type="dark"
-      variant="info"
     >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <b-navbar-brand href="/">
         <img
           alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
-          src="~@/assets/images/logo.png"
+          src="~@/assets/images/logo-white.svg"
         >
         {{ dashboardTitle }}
       </b-navbar-brand>
@@ -123,6 +122,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/variables';
+
+.navbar {
+  background-color: $tabc-dark-blue;
+}
+
 .navbar-brand {
   img {
     padding-right: 1rem;

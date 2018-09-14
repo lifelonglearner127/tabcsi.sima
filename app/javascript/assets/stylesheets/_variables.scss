@@ -5,7 +5,12 @@
 // Color system
 //
 
-$tabc-header-background-color: #5cc5c8;
+$tabc-dark-blue: #00205b;
+$tabc-gold: #ffbf3f;
+$tabc-red: #bf0d3e;
+$tabc-gray: #bbbcbc;
+$tabc-mustard: #9a7611;
+$tabc-light-blue: #147bd1;
 
 // Options
 //
@@ -19,3 +24,11 @@ $enable-gradients: true;
 // Settings for the `<body>` element.
 
 $body-bg: $gray-100;
+
+// Navbar
+
+//$navbar-dark-color:                rgba($white, .5);
+//$navbar-dark-hover-color:          rgba($white, .75);
+//$navbar-dark-active-color:         $white;
+//$navbar-dark-disabled-color:       rgba($white, .25);
+//$navbar-dark-toggler-border-color: rgba($white, .1);
