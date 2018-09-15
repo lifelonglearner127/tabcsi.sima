@@ -1,4 +1,5 @@
 <script>
+import isEmpty from 'lodash/isEmpty'
 import logo from '~/assets/images/logo-white.png'
 import RailsForm from '~/components/rails-form'
 
@@ -40,6 +41,10 @@ export default {
       type: String,
       required: true
     },
+    serverErrors: {
+      type: Object,
+      default: null
+    },
     sm: {
       type: [Boolean, String, Number],
       default: false
@@ -75,14 +80,14 @@ export default {
     xl: {
       type: [Boolean, String, Number],
       default: false
-    },
-    serverErrors: {
-      type: Object,
-      default: null
     }
   },
 
   computed: {
+    haveErrors () {
+      return !isEmpty(this.serverErrors)
+    },
+
     logoSrc () {
       return logo
     }
@@ -117,13 +122,16 @@ export default {
           >
           </b-card-img>
           <b-alert
-            v-if="Object.keys(serverErrors).length"
-            variant="danger"
+            v-if="haveErrors"
             show
+            variant="danger"
           >
             <span
               v-for="(error, key, index) in serverErrors"
-              :key="index">{{ error }}</span>
+              :key="index"
+            >
+              {{ error }}
+            </span>
           </b-alert>
           <rails-form
             :accept-charset="acceptCharset"
