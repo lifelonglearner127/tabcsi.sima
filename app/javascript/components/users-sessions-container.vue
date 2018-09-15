@@ -75,6 +75,10 @@ export default {
     xl: {
       type: [Boolean, String, Number],
       default: false
+    },
+    serverErrors: {
+      type: Object,
+      default: null
     }
   },
 
@@ -112,7 +116,15 @@ export default {
             top
           >
           </b-card-img>
-
+          <b-alert
+            v-if="Object.keys(serverErrors).length"
+            variant="danger"
+            show
+          >
+            <span
+              v-for="(error, key, index) in serverErrors"
+              :key="index">{{ error }}</span>
+          </b-alert>
           <rails-form
             :accept-charset="acceptCharset"
             :action="action"
