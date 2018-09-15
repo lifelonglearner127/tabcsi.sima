@@ -73,7 +73,10 @@ export default {
     :token-name="tokenName"
     :token-value="tokenValue"
     :validation-method="validateBeforeSubmit"
+    back-href="/"
     cols="12"
+    show-back-button
+    show-top-back-button
     sm="6"
     submit-text="Sign Up"
     text-class="font-italic"

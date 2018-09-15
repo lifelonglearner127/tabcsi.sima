@@ -51,6 +51,10 @@ export default {
   },
 
   methods: {
+    handleBack () {
+      // do something
+    },
+
     handlePinKeyUp (e) {
       // e.target.nextElementSibling.focus()
     }
@@ -66,9 +70,12 @@ export default {
     :hidden-method="hiddenMethod"
     :method="method"
     :server-errors="serverErrors"
+    :show-back-button="pinRequested"
     :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
+    back-href="/log_out"
+    back-method="delete"
     cols="12"
     sm="4"
   >

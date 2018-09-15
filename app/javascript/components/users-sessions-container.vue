@@ -17,6 +17,14 @@ export default {
       type: String,
       required: true
     },
+    backHref: {
+      type: String,
+      default: null
+    },
+    backMethod: {
+      type: String,
+      default: null
+    },
     cols: {
       type: [String, Number],
       default: null
@@ -44,6 +52,14 @@ export default {
     serverErrors: {
       type: Object,
       default: null
+    },
+    showBackButton: {
+      type: Boolean,
+      default: false
+    },
+    showTopBackButton: {
+      type: Boolean,
+      default: false
     },
     sm: {
       type: [Boolean, String, Number],
@@ -90,6 +106,14 @@ export default {
 
     logoSrc () {
       return logo
+    },
+
+    backButtonVisible () {
+      return this.showBackButton
+    },
+
+    topBackButtonVisible () {
+      return this.backButtonVisible && this.showTopBackButton
     }
   }
 }
@@ -147,7 +171,41 @@ export default {
             :token-name="tokenName"
             :token-value="tokenValue"
           >
+            <b-button
+              v-ujs-method="backMethod"
+              v-if="topBackButtonVisible"
+              :href="backHref"
+              class="mb-4"
+              variant="secondary"
+            >
+              <slot name="back">
+                <fa-sprite
+                  fixed-width
+                  use="fas-fa-arrow-left"
+                >
+                </fa-sprite>
+                Back
+              </slot>
+            </b-button>
+
             <slot />
+
+            <b-button
+              v-ujs-method="backMethod"
+              v-if="backButtonVisible"
+              :href="backHref"
+              class="my-4"
+              variant="secondary"
+            >
+              <slot name="back">
+                <fa-sprite
+                  fixed-width
+                  use="fas-fa-arrow-left"
+                >
+                </fa-sprite>
+                Back
+              </slot>
+            </b-button>
 
             <b-button
               class="my-4"
