@@ -46,7 +46,9 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       self.pin_requested = true
     else
-      page_data_options[:html][:errors] = {email: 'Login Error- Email is not registered'}
+      page_data_options[:html][:errors] = {
+        email: 'Login Error- Email is not registered'
+      }
     end
 
     render 'new'
