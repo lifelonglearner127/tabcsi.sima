@@ -14,7 +14,8 @@ export default {
       session: {
         email: this.pageOptions.email || '',
         pin: ''
-      }
+      },
+      serverErrors: this.pageOptions.errors || {}
     }
   },
 
@@ -69,6 +70,7 @@ export default {
     :hidden-method="hiddenMethod"
     :method="method"
     :validation-method="validateBeforeSubmit"
+    :server-errors="serverErrors"
     :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
