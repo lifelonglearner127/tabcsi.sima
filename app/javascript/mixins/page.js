@@ -58,6 +58,10 @@ export default {
       return 'multipart' in this.pageOptions && Boolean(this.pageOptions.multipart)
     },
 
+    serverErrors () {
+      return this.pageOptions.errors || {}
+    },
+
     tokenName () {
       return this.authenticityToken.name
     },

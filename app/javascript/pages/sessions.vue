@@ -14,8 +14,7 @@ export default {
       session: {
         email: this.pageOptions.email || '',
         pin: ''
-      },
-      serverErrors: this.pageOptions.errors || {}
+      }
     }
   },
 
