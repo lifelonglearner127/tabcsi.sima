@@ -23,10 +23,6 @@ export default {
       type: String,
       default: 'get'
     },
-    validationMethod: {
-      type: Function,
-      default: null
-    },
     tokenName: {
       type: String,
       default: 'authenticity_token'
@@ -34,6 +30,23 @@ export default {
     tokenValue: {
       type: String,
       default: null
+    },
+    validationMethod: {
+      type: Function,
+      default: null
+    }
+  },
+
+  methods: {
+    handleSubmit (e) {
+      if (this.validationMethod == null) {
+        // submit the form if we don't have a validation callback
+        e.target.submit()
+
+        return
+      }
+
+      this.validationMethod(e)
     }
   }
 }
@@ -46,7 +59,7 @@ export default {
     :method="method"
     class="needs-validation"
     novalidate
-    @submit.prevent="validationMethod"
+    @submit.prevent="handleSubmit"
   >
     <input
       v-if="enforceUtf8"

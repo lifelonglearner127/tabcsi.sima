@@ -53,10 +53,6 @@ export default {
   methods: {
     handlePinKeyUp (e) {
       // e.target.nextElementSibling.focus()
-    },
-
-    validateBeforeSubmit (e) {
-      e.target.submit()
     }
   }
 }
@@ -69,11 +65,11 @@ export default {
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
-    :validation-method="validateBeforeSubmit"
     :server-errors="serverErrors"
     :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
+    :validation-method="validateBeforeSubmit"
     cols="12"
     sm="4"
   >

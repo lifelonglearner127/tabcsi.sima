@@ -16,10 +16,6 @@ export default {
       type: String,
       required: true
     },
-    validationMethod: {
-      type: Function,
-      default: null
-    },
     cols: {
       type: [String, Number],
       default: null
@@ -71,6 +67,10 @@ export default {
     tokenValue: {
       type: String,
       required: true
+    },
+    validationMethod: {
+      type: Function,
+      default: null
     },
     xl: {
       type: [Boolean, String, Number],

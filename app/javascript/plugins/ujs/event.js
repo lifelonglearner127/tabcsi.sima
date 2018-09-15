@@ -1,4 +1,4 @@
-const fire = (obj, name, data) => {
+export const fire = (obj, name, data) => {
   const event = new CustomEvent(name, {
     bubbles: true,
     cancelable: true,
