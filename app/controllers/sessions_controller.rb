@@ -17,6 +17,12 @@ class SessionsController < ApplicationController
     end
   end
 
+  def resend_pin
+    current_user.request_pin if pin_requested?
+
+    redirect_to log_in_url
+  end
+
   def destroy
     log_out if pin_requested? || logged_in?
     redirect_to root_url
@@ -74,7 +80,8 @@ class SessionsController < ApplicationController
       local: true,
       html: {
         sign_up_path: sign_up_path,
-        resend_pin_path: '#',
+        resend_pin_path: resend_pin_path,
+        resend_pin_method: 'post',
         email: session_email,
         pin_requested: pin_requested?,
         pin_length: Setting.pin_length

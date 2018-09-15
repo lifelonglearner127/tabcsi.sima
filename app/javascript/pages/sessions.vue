@@ -32,6 +32,7 @@ export default {
       if (this.pinRequested) {
         return {
           linkHref: this.pageOptions.resendPinPath,
+          linkMethod: this.pageOptions.resendPinMethod,
           linkText: 'Resend',
           text: 'Email not received?'
         }
@@ -147,7 +148,13 @@ export default {
     </template>
 
     <template slot="text">
-      {{ question.text }} <a :href="question.linkHref">{{ question.linkText }}</a>
+      {{ question.text }}
+      <a
+        v-ujs-method="question.linkMethod"
+        :href="question.linkHref"
+      >
+        {{ question.linkText }}
+      </a>
     </template>
   </users-sessions-container>
 </template>

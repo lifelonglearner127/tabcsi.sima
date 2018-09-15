@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get :log_in, to: 'sessions#new'
   post :log_in, to: 'sessions#create'
+  post :resend_pin, to: 'sessions#resend_pin'
   delete :log_out, to: 'sessions#destroy'
 
   get :dashboard, to: 'dashboards#show'
