@@ -51,10 +51,6 @@ export default {
   },
 
   methods: {
-    handleBack () {
-      // do something
-    },
-
     handlePinKeyUp (e) {
       // e.target.nextElementSibling.focus()
     }
