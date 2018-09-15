@@ -3,21 +3,24 @@
 module TabcSi
   module Builders
     class QuestionBuilder < Builder
+      attr_reader :build_date
       attr_reader :choices
       attr_reader :conditions
       attr_reader :question
       attr_reader :question_number
 
-      def initialize(question_number, config)
+      def initialize(question_number, config, build_date)
         super(config)
 
         @question = nil
         @question_number = question_number
+        @build_date = build_date
       end
 
       def build
         @question = Question.create!(
           question_number: question_number,
+          built_on: build_date,
           **attributes
         )
 

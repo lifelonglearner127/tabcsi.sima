@@ -28,11 +28,12 @@ module TabcSi
     end
 
     def build_date
-      @build_date ||= json['build_date'].to_i
+      @build_date ||= Date.strptime(json['build_date'], '%F')
     end
 
     def questions
-      @questions ||= Builders::QuestionBuilderMap.new(json['questions'])
+      @questions ||=
+        Builders::QuestionBuilderMap.new(json['questions'], build_date)
     end
 
     def forms

@@ -71,13 +71,7 @@ module TabcSi
           # return {}
         end
 
-        @questions ||=
-          Question.where(
-            id: Question
-              .order(id: :desc)
-              .uniq(&:question_number)
-              .map(&:id)
-          )
+        @questions ||= Question.current_questions
         # @questions ||= Hash[collect_questions]
       end
 

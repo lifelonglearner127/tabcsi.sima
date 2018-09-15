@@ -26,7 +26,7 @@ class Setting < ApplicationRecord
   end
 
   def self.forms_build_date
-    by_name(:forms_build_date).value.to_i
+    Date.strptime(by_name(:forms_build_date).value, '%F')
   end
 
   def self.forms_build_date=(value)

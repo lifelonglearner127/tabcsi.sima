@@ -7,6 +7,19 @@ class Question < ApplicationRecord
 
   validates :question_number, :question_text, :question_type, presence: true
 
+  validates(
+    :question_number,
+    uniqueness: {
+      scope: :built_on,
+      case_sensitive: false
+    }
+  )
+
   enum question_type: %i[radio text_box drop_down]
   enum additional_type: %i[number]
+
+  scope(
+    :current_questions,
+    -> { where(built_on: Setting.forms_build_date).order(:id) }
+  )
 end

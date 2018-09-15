@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_13_210414) do
+ActiveRecord::Schema.define(version: 2018_09_15_212427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -293,6 +293,8 @@ ActiveRecord::Schema.define(version: 2018_09_13_210414) do
     t.string "additional_label"
     t.integer "additional_text"
     t.integer "additional_type"
+    t.date "built_on"
+    t.index ["built_on", "question_number"], name: "index_questions_on_built_on_and_question_number", unique: true
     t.index ["discarded_at"], name: "index_questions_on_discarded_at"
   end
 
