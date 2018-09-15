@@ -69,7 +69,6 @@ export default {
     :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
-    :validation-method="validateBeforeSubmit"
     cols="12"
     sm="4"
   >
