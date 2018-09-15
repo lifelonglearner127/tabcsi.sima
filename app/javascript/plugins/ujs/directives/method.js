@@ -1,5 +1,6 @@
 import { csrfParam, csrfToken } from '../csrf'
 import { isCrossDomain } from '../ajax'
+import isEmpty from 'lodash/isEmpty'
 import { stopEverything } from '../event'
 
 const handleClick = function ujsMethodHandleClick (e) {
@@ -40,12 +41,22 @@ export default {
   name: 'UjsMethod',
 
   bind (el, binding) {
-    el.dataset.method = binding.value
+    const method = binding.value
+
+    if (isEmpty(method)) {
+      return
+    }
+
+    el.dataset.method = method
 
     el.addEventListener('click', handleClick)
   },
 
-  unbind (el) {
+  unbind (el, binding) {
+    if (isEmpty(binding.value)) {
+      return
+    }
+
     el.removeEventListener('click', handleClick)
 
     delete el.dataset.method
