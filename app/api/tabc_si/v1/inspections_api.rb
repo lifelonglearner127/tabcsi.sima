@@ -6,32 +6,50 @@ module TabcSi
       DROP_DOWN_FORMAT ||= <<~DESC
         Value format (braced text should be replaced with actual values):
 
-            {vendor name};{vendor name};...
+            {drop-down value}; {drop-down value}; ...
 
-        Example:
+        If the `multiple` flag is not set, then there will only be one "drop-down value".
 
-            ATX WHOLESALE LIQUORS LLC;BEN E. KEITH BEVERAGES;CRAFT DISTRIBUTORS TEXAS LLC
+        If there's an additional text box, then the format becomes as follows:
+
+            {drop-down value} {additional value}; {drop-down value} {additional value}; ...
+
+        If drop-down value is `Unknown`, then do not provide the additional value.
+
+        Examples:
+
+            Unknown
+
+            BB123456
+
+            BQ123456; P123456
+
+            Local Law Enforcement
+
+            21 years old
+      DESC
+
+      RADIO_FORMAT ||= <<~DESC
+        Value format (braced text should be replaced with actual values):
+
+            {radio text}; {radio text}; ...
+
+        If the `multiple` flag is not set, then there will only be one "radio text" value.
+
+        If a radio choice contains fields, then that radio button's value format becomes as follows:
+
+            {radio text}: [{field label}: {start value, 24H}-{end value, 24H}, ...]
+
+        Examples:
+
+            Yes
+
+            Friday: [Alcohol: 10:00-22:00]
       DESC
 
       QUESTION_DESCRIPTIONS ||= {
-        '12': DROP_DOWN_FORMAT,
-        '13': DROP_DOWN_FORMAT,
-        '26B': <<~DESC,
-          Value format (braced text should be replaced with actual values):
-
-              {radio text}: [{field label}: {start value}-{end value}, ...]
-
-          Example:
-              Monday - Friday: [Food: 7:00AM-11:00PM, Alcohol: 10:00AM-10:00PM]
-        DESC
-        '27': <<~DESC
-          Value format (braced text should be replaced with actual values):
-
-              {radio text}: [{field label}: {start value}-{end value}, ...]
-
-          Example:
-              Friday: [Alcohol: 10:00AM-10:00PM]
-        DESC
+        drop_down: DROP_DOWN_FORMAT,
+        radio: RADIO_FORMAT
       }.freeze
 
       # def self.collect_questions
@@ -237,7 +255,7 @@ module TabcSi
                 optional(
                   q.question_number,
                   type: String,
-                  desc: QUESTION_DESCRIPTIONS[q.question_number.to_sym]
+                  desc: QUESTION_DESCRIPTIONS[q.question_type.to_sym]
                 )
               end
             end
