@@ -114,13 +114,17 @@ export default {
           header-class="py-4"
           title-tag="h5"
         >
-          <b-card-img
+          <a
             slot="header"
-            :src="logoSrc"
-            alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
-            top
+            href="/"
           >
-          </b-card-img>
+            <b-card-img
+              :src="logoSrc"
+              alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
+              top
+            >
+            </b-card-img>
+          </a>
           <b-alert
             v-if="haveErrors"
             show
