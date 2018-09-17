@@ -1,21 +1,30 @@
 {
-  "build_date": "2018-09-04",
+  "build_date": "2018-09-17",
   "questions": {
     "1": {
       "question_text": "Name of person filling out survey (First & Last)",
       "question_type": "text_box",
-      "max_characters": 50
+      "max_characters": 50,
+      "help": [
+        "In the space provided, indicate your first and last name."
+      ]
     },
     "2": {
       "question_text": "Position of person filling out survey",
       "question_type": "text_box",
-      "max_characters": 50
+      "max_characters": 50,
+      "help": [
+        "In the space provided, indicate your position at the licensed location; e.g., President, Manager, Member."
+      ]
     },
     "3": {
       "question_text": "Name/position of person(s) authorized to purchase alcohol for the business",
       "question_type": "text_box",
       "max_characters": 50,
-      "multiline": true
+      "multiline": true,
+      "help": [
+        "Please list the first and last name of all individuals who can purchase alcohol at this licensed location."
+      ]
     },
     "4": {
       "question_text": "Is your permit posted where it can be seen by the public?",
@@ -26,6 +35,10 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if anyone coming in to your establishment can see the TABC Permit/License from an area that customers have access to.",
+        "Answer \"No\" if anyone coming in to your establishment cannot see the TABC Permit/license."
       ]
     },
     "5": {
@@ -37,6 +50,10 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if you have the Public Information Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"No\" if you do not have the Public Information Sign posted."
       ]
     },
     "6": {
@@ -48,6 +65,10 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if you have the Consumption Warning Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"No\" if you do not have the Consumption Warning Sign posted."
       ]
     },
     "7": {
@@ -67,6 +88,10 @@
           "picture_attachment": true
         },
         { "choice_text": "None" }
+      ],
+      "help": [
+        "Answer \"Blue\", \"Red\", or \"Both\" if you have the Blue, Red, or both Blue and Red Weapons Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"None\" if you do not have any of the Weapons Signs posted."
       ]
     },
     "8": {
@@ -78,6 +103,10 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if you have the Fetal Alcohol Sign posted in the Men’s and Women’s restrooms, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"No\" if you do not have the Fetal Alcohol Sign posted."
       ]
     },
     "9": {
@@ -89,6 +118,10 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if you have the Human Trafficking Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"No\" if you do not have the Human Trafficking Sign posted."
       ]
     },
     "10": {
@@ -100,6 +133,10 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if you have the \"21\" To Enter Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"No\" if you do not have the \"21\" To Enter Sign posted."
       ]
     },
     "11A": {
@@ -111,6 +148,13 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        [
+          "Are there any prices or brands of alcohol that can be seen from outside the business?",
+          "  * Answer \"Yes\" if you can see any prices, brands, or alcohol advertisements from outside of the business.",
+          "  * Answer \"No\" if you cannot see any prices, brands, or alcohol advertisements from outside of the business."
+        ]
       ]
     },
     "11B": {
@@ -119,6 +163,13 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        [
+          "Does the location have \"Happy Hour\" specials? E.g., if the location has a drink special such as $3 well drinks from 2pm-5pm, then the answer would be \"Yes\".",
+          "  * Answer \"Yes\" if this location does have \"Happy Hour\" specials.",
+          "  * Answer \"No\" if this location does not have \"Happy Hour\" specials."
+        ]
       ]
     },
     "11C": {
@@ -133,6 +184,13 @@
           "condition_value": "No",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        [
+          "Does the location have any drink specials that go past 11pm? E.g., if the location has a drink special such as $3 well drinks from 7pm until 1am, then the answer would be \"Yes\".",
+          "  * Answer \"Yes\" if this location has a drink special past 11pm.",
+          "  * Answer \"No\" if this location does not have a drink special past 11pm."
+        ]
       ]
     },
     "11D": {
@@ -141,6 +199,13 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        [
+          "Answer \"Yes\" if the location has drink specials from open to close. E.g., drink specials from 10am to 2am, or drink specials all until close.",
+          "  * Answer \"Yes\" if this location has drink specials from open to close.",
+          "  * Answer \"No\" if this location does not have drink specials from open to close."
+        ]
       ]
     },
     "12": {
@@ -157,6 +222,10 @@
         { "choice_text": "BF" },
         { "choice_text": "BQ" },
         { "choice_text": "Unknown" }
+      ],
+      "help": [
+        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase beer.",
+        "If you do not know, select \"Unknown\"."
       ]
     },
     "13": {
@@ -174,6 +243,10 @@
         { "choice_text": "W" },
         { "choice_text": "X" },
         { "choice_text": "Unknown" }
+      ],
+      "help": [
+        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase wine.",
+        "If you do not know, select \"Unknown\"."
       ]
     },
     "14": {
@@ -191,6 +264,10 @@
         { "choice_text": "W" },
         { "choice_text": "X" },
         { "choice_text": "Unknown" }
+      ],
+      "help": [
+        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase wine.",
+        "If you do not know, select \"Unknown\"."
       ]
     },
     "15": {
@@ -206,6 +283,10 @@
         { "choice_text": "W" },
         { "choice_text": "X" },
         { "choice_text": "Unknown" }
+      ],
+      "help": [
+        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase distilled spirits.",
+        "If you do not know, select \"Unknown\"."
       ]
     },
     "16": {
@@ -221,6 +302,10 @@
         { "choice_text": "W" },
         { "choice_text": "X" },
         { "choice_text": "Unknown" }
+      ],
+      "help": [
+        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase distilled spirits.",
+        "If you do not know, select \"Unknown\"."
       ]
     },
     "17A": {
@@ -235,13 +320,20 @@
           "condition_value": "No",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        "Answer \"Yes\" if the location has any alcohol product that is damaged.",
+        "Answer \"No\" if the location does not have any damaged alcohol product."
       ]
     },
     "17B": {
       "question_text": "What product are you holding and why?",
       "question_type": "text_box",
       "max_characters": 100,
-      "multiline": true
+      "multiline": true,
+      "help": [
+        "Type in the text box the alcohol product that is damaged and why the location is holding on to it."
+      ]
     },
     "18A": {
       "question_text": "Is seller training required for all employees that sell/serve alcohol?",
@@ -255,6 +347,10 @@
           "condition_value": "No",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        "Answer \"Yes\" if the location requires all employees who sell/serve alcohol to obtain a certificate from a TABC-approved Seller Server Training School.",
+        "Answer \"No\" if Seller Server Training is not required."
       ]
     },
     "18B": {
@@ -266,6 +362,10 @@
           "picture_attachment": true
         },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if the location has written policies on alcohol service.",
+        "Answer \"No\" if there are not any written policies on alcohol service."
       ]
     },
     "19": {
@@ -274,6 +374,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if product tastings occur at the licensed location. An example of this would be allowing a specific alcohol company to come on to the premise and offer free tasting of their alcohol to your customers.",
+        "Answer \"No\" if product tastings do not occur at the location."
       ]
     },
     "20": {
@@ -282,6 +386,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if TABC Stamps are on all bottles of distilled spirits at the location.",
+        "Answer \"No\" if TABC Stamps are not on all bottles of distilled spirits."
       ]
     },
     "21": {
@@ -290,6 +398,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if the TABC Stamps on all bottles of distilled spirits are mutilated when the bottle is empty. E.g., you would answer \"Yes\" if a line was scratched through the tax stamps on all bottles of empty distilled spirits.",
+        "Answer \"No\" if the stamps are not mutilated."
       ]
     },
     "22": {
@@ -298,6 +410,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if there is service of food available at the location.",
+        "Answer \"No\" if there is no service of food available at the location."
       ]
     },
     "23": {
@@ -306,6 +422,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if the food service facility is permanent at the location.",
+        "Answer \"No\" if the food service facility is not permanent at the location. E.g., you would answer \"No\" if you call in pizza as your only option for food service."
       ]
     },
     "24A": {
@@ -320,6 +440,10 @@
           "condition_value": "No",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        "Answer \"Yes\" if you have food service at the location that is run and operated by a different business entity from what is on the permit. E.g., a concession stand that is owned by a different business than the one that owns the alcohol permit.",
+        "Answer \"No\" if the business entity that owns the alcohol permit also operates the food service."
       ]
     },
     "24B": {
@@ -328,14 +452,22 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if the separate business entity maintains records of the food service.",
+        "Answer \"No\" if the business that owns the alcohol permit also maintains the food service records."
       ]
     },
     "25": {
-      "question_text": "Do you have multiple entrees per meal period?",
+      "question_text": "Do you have multiple entrées per meal period?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if there are multiple entrées available during each meal serving period.",
+        "Answer \"No\" if there is only a single entrée available during each meal serving period."
       ]
     },
     "26": {
@@ -344,6 +476,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if the food items are completely prepared or assembled on the premise. This would mean the food was not prepackaged and involves being put together.",
+        "Answer \"No\" if the food is completely prepared or assembled before it is brought onto the premises."
       ]
     },
     "27": {
@@ -352,6 +488,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if the prepared food is to be consumed on the premise.",
+        "Answer \"No\" if the prepared food is not consumed on the premise. E.g., pizza taken to go."
       ]
     },
     "28A": {
@@ -366,6 +506,10 @@
           "condition_value": "No",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        "Answer \"Yes\" if the location sells prepackaged food items.",
+        "Answer \"No\" if the location does not sell prepackaged food items."
       ]
     },
     "28B": {
@@ -374,6 +518,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if the prepackaged food items come from a non-commercial source.",
+        "Answer \"No\" if the prepackaged food items do not come from a non-commercial source."
       ]
     },
     "29A": {
@@ -388,6 +536,10 @@
           "condition_value": "Yes",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        "Answer \"Yes\" if the location sells food and alcohol at the same time and does not sell one of them for a longer period of time than the other.",
+        "Answer \"No\" if food is sold at different times than alcohol."
       ]
     },
     "29B": {
@@ -396,6 +548,10 @@
       "choices": [
         { "choice_text": "Kitchen" },
         { "choice_text": "Bar" }
+      ],
+      "help": [
+        "Answer \"Kitchen\" if the kitchen is open for food service longer than the bar is open for drink service.",
+        "Answer \"Bar\" if the bar is open longer for drink service than the kitchen is open for food service."
       ]
     },
     "30": {
@@ -421,6 +577,10 @@
             }
           ]
         }
+      ],
+      "help": [
+        "For each day enter the beginning time when the location starts alcohol service and enter the end time when alcohol service is no longer available.",
+        "Enter \"am\" or \"pm\" depending if it is morning or night. E.g., 2pm - 1am."
       ]
     },
     "31A": {
@@ -435,6 +595,21 @@
           "condition_value": "No",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        [
+          "A Breach of the Peace is defined as:",
+          "  1. Law enforcement or emergency medical services personnel respond to the premises of a permit or license; or",
+          "  2. A disturbance is created on the premises by a person who does **any of the following:**",
+          "     * Causes bodily injury to another person;",
+          "     * Threatens another person with a weapon;",
+          "     * Discharges a firearm on the premises of the permit or license; or",
+          "     * Destroys the permittee's or licensee's property, if the incident is reported by the permittee or licensee to a law enforcement agency.",
+          "",
+          "     **An incident described in paragraphs (1) and (2) in this section only has to be reported if it:** occurs at a time when the permittee or licensee or any person allowed by the permittee or licensee is on the premises and interferes with, interrupts, or intrudes upon the operation or management of the licensed premises."
+        ],
+        "Answer \"Yes\" if there was an incident at the location in the last 12-month period that meets any of the above requirements.",
+        "Answer \"No\" if no incident has occurred in the last 12-month period."
       ]
     },
     "31B": {
@@ -455,13 +630,22 @@
           "condition_value": "Both",
           "skip_question_group": true
         }
+      ],
+      "help": [
+        "Answer \"Local Law Enforcement\" if only the Local Police Department or Sheriff’s Office were notified of any breach of the peace incidents that occurred over the last 12 months.",
+        "Answer \"TABC\" if only TABC was notified of any breach of the peace incidents that occurred over the last 12 months.",
+        "Answer \"Neither\" if no one notified TABC or Local Law Enforcement of the breach of the peace that occurred over the last 12 months.",
+        "Answer \"Both\" if both TABC and Local Law Enforcement were notified of any breach of the peace incidents that occurred over the last 12 months."
       ]
     },
     "31C": {
       "question_text": "What date did the Breach of Peace occur? Describe the incident.",
       "question_type": "text_box",
       "max_characters": 500,
-      "multiline": true
+      "multiline": true,
+      "help": [
+        "In 500 characters or less, list the date each breach of the peace incident occurred and a brief description."
+      ]
     },
     "32": {
       "question_text": "Have there been changes since your original or renewal applications that have not been reported to TABC?",
@@ -469,6 +653,10 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
+      ],
+      "help": [
+        "Answer \"Yes\" if you have changed ownership or persons who are in control of the license and did not notify TABC.",
+        "Answer \"No\" if you have notified TABC of any changes or have not had any changes to your ownership."
       ]
     },
     "33": {
@@ -476,9 +664,15 @@
       "question_type": "drop_down",
       "choices": [
         { "choice_text": "16 years old" },
-        { "choice_text": "Younger than 16 years of age" },
+        { "choice_text": "Younger than 16 years old" },
         { "choice_text": "18 years old" },
         { "choice_text": "21 years old" }
+      ],
+      "help": [
+        "Answer \"16 years old\" if the minimum age that you have a person employed to sell/serve alcohol is 16 years old.",
+        "Answer \"Younger than 16 years old\" if the minimum age that you have a person employed to sell/serve alcohol is younger than 16 years old.",
+        "Answer \"18 years old\" if the minimum age that you have a person employed to sell/serve alcohol is 18 years old.",
+        "Answer \"21 years old\" if the minimum age that you have a person employed to sell/serve alcohol is 21 years old."
       ]
     }
   },

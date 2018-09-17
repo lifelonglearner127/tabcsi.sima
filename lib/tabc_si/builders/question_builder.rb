@@ -6,6 +6,7 @@ module TabcSi
       attr_reader :build_date
       attr_reader :choices
       attr_reader :conditions
+      attr_reader :help
       attr_reader :question
       attr_reader :question_number
 
@@ -25,6 +26,7 @@ module TabcSi
         )
 
         choices.each(&:build)
+        help.each(&:build)
       end
 
       protected
@@ -37,6 +39,7 @@ module TabcSi
 
         @choices = wrap_choices(config[:choices] || [])
         @conditions = wrap_conditions(config[:conditions] || [])
+        @help = wrap_help(config[:help] || [])
       end
 
       private
@@ -50,6 +53,19 @@ module TabcSi
       def wrap_conditions(condition_configs)
         condition_configs.map do |condition_config|
           ConditionBuilder.new(condition_config)
+        end
+      end
+
+      def wrap_help(help)
+        sort_order = 0
+        help.map do |item|
+          sort_order += 1
+
+          HelpBuilder.new(
+            self,
+            value: item,
+            sort_order: sort_order
+          )
         end
       end
     end
