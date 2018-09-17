@@ -60,7 +60,7 @@ class Inspection < ApplicationRecord
     time = Time.zone.now
     random_sequence = SecureRandom.hex(1).upcase
     sum = time.month + time.day + time.hour + time.min + time.sec
-    sequence = sum.to_s(16).rjust(3, '0').upcase
+    sequence = sum.to_s(16).rjust(2, '0').upcase
 
     "RCR#{fiscal_year}-#{location_id}-#{random_sequence}#{sequence}"
   end
