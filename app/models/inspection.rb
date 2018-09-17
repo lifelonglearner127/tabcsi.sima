@@ -37,7 +37,7 @@ class Inspection < ApplicationRecord
       update!(
         finished_at: finished_at,
         completed_at: Time.zone.now,
-        report_number: "RCR#{Setting.fiscal_year}-#{location.id}"
+        report_number: generate_report_number
       )
 
       unlock_location
@@ -54,6 +54,20 @@ class Inspection < ApplicationRecord
   end
 
   private
+
+  def self.generate_report_number(location_id)
+    fiscal_year = Setting.fiscal_year
+    time = Time.zone.now
+    random_sequence = SecureRandom.hex(1).upcase
+    sum = time.month + time.day + time.hour + time.min + time.sec
+    sequence = sum.to_s(16).rjust(3, '0').upcase
+
+    "RCR#{fiscal_year}-#{location_id}-#{random_sequence}#{sequence}"
+  end
+
+  def generate_report_number
+    self.class.generate_report_number(location.id)
+  end
 
   def lock_location
     location.update!(
