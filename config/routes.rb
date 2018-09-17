@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   get :dashboard, to: 'dashboards#show'
 
+  resources :faqs, only: %i[index]
+
   resources :questions, only: %i[] do
     collection do
       get :help
