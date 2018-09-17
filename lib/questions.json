@@ -152,8 +152,9 @@
       "help": [
         [
           "Are there any prices or brands of alcohol that can be seen from outside the business?",
-          "  * Answer \"Yes\" if you can see any prices, brands, or alcohol advertisements from outside of the business.",
-          "  * Answer \"No\" if you cannot see any prices, brands, or alcohol advertisements from outside of the business."
+          "",
+          "* Answer \"Yes\" if you can see any prices, brands, or alcohol advertisements from outside of the business.",
+          "* Answer \"No\" if you cannot see any prices, brands, or alcohol advertisements from outside of the business."
         ]
       ]
     },
@@ -167,8 +168,9 @@
       "help": [
         [
           "Does the location have \"Happy Hour\" specials? E.g., if the location has a drink special such as $3 well drinks from 2pm-5pm, then the answer would be \"Yes\".",
-          "  * Answer \"Yes\" if this location does have \"Happy Hour\" specials.",
-          "  * Answer \"No\" if this location does not have \"Happy Hour\" specials."
+          "",
+          "* Answer \"Yes\" if this location does have \"Happy Hour\" specials.",
+          "* Answer \"No\" if this location does not have \"Happy Hour\" specials."
         ]
       ]
     },
@@ -188,8 +190,9 @@
       "help": [
         [
           "Does the location have any drink specials that go past 11pm? E.g., if the location has a drink special such as $3 well drinks from 7pm until 1am, then the answer would be \"Yes\".",
-          "  * Answer \"Yes\" if this location has a drink special past 11pm.",
-          "  * Answer \"No\" if this location does not have a drink special past 11pm."
+          "",
+          "* Answer \"Yes\" if this location has a drink special past 11pm.",
+          "* Answer \"No\" if this location does not have a drink special past 11pm."
         ]
       ]
     },
@@ -203,8 +206,9 @@
       "help": [
         [
           "Answer \"Yes\" if the location has drink specials from open to close. E.g., drink specials from 10am to 2am, or drink specials all until close.",
-          "  * Answer \"Yes\" if this location has drink specials from open to close.",
-          "  * Answer \"No\" if this location does not have drink specials from open to close."
+          "",
+          "* Answer \"Yes\" if this location has drink specials from open to close.",
+          "* Answer \"No\" if this location does not have drink specials from open to close."
         ]
       ]
     },
@@ -584,7 +588,7 @@
       ]
     },
     "31A": {
-      "question_text": "Have you had a Breach of the Peace at your establishment in the last 12 month period?",
+      "question_text": "Have you had a Breach of the Peace at your establishment in the last 12-month period?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
@@ -599,14 +603,15 @@
       "help": [
         [
           "A Breach of the Peace is defined as:",
-          "  1. Law enforcement or emergency medical services personnel respond to the premises of a permit or license; or",
-          "  2. A disturbance is created on the premises by a person who does **any of the following:**",
-          "     * Causes bodily injury to another person;",
-          "     * Threatens another person with a weapon;",
-          "     * Discharges a firearm on the premises of the permit or license; or",
-          "     * Destroys the permittee's or licensee's property, if the incident is reported by the permittee or licensee to a law enforcement agency.",
           "",
-          "     **An incident described in paragraphs (1) and (2) in this section only has to be reported if it:** occurs at a time when the permittee or licensee or any person allowed by the permittee or licensee is on the premises and interferes with, interrupts, or intrudes upon the operation or management of the licensed premises."
+          "1. Law enforcement or emergency medical services personnel respond to the premises of a permit or license; or",
+          "2. A disturbance is created on the premises by a person who does **any of the following:**",
+          "   * Causes bodily injury to another person;",
+          "   * Threatens another person with a weapon;",
+          "   * Discharges a firearm on the premises of the permit or license; or",
+          "   * Destroys the permittee's or licensee's property, if the incident is reported by the permittee or licensee to a law enforcement agency.",
+          "",
+          "   **An incident described in paragraphs (1) and (2) in this section only has to be reported if it:** occurs at a time when the permittee or licensee or any person allowed by the permittee or licensee is on the premises and interferes with, interrupts, or intrudes upon the operation or management of the licensed premises."
         ],
         "Answer \"Yes\" if there was an incident at the location in the last 12-month period that meets any of the above requirements.",
         "Answer \"No\" if no incident has occurred in the last 12-month period."
