@@ -29,7 +29,7 @@ class Setting < ApplicationRecord
     value = by_name(:forms_build_date)&.value
 
     begin
-      Date.strptime(value, '%F')
+      value.present? ? Date.strptime(value, '%F') : value
     rescue ArgumentError
       value
     end
