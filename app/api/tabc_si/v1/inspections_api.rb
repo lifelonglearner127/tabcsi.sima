@@ -218,13 +218,16 @@ module TabcSi
                 Submission means that it was sent to NDE.
               DESC
             )
+
+            optional :invalid, type: Boolean, default: false
           end
           patch do
             inspection = params[:inspection]
             submitted_at = params[:submitted_at]
             submitted_at = nil if submitted_at.blank?
+            invalid = params[:invalid]
 
-            inspection.update!(submitted_at: submitted_at)
+            inspection.update!(submitted_at: submitted_at, invalid: invalid)
 
             respond inspection
           end
