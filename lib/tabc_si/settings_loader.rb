@@ -6,7 +6,7 @@ module TabcSi
       {
         business_point_radius: 100, # feet
         server_status: :active,
-        forms_build_date: Time.new(2018),
+        forms_build_date: Time.new(2018).strftime('%F'),
         fiscal_year: 2018,
         pin_length: 8,
         pin_expiration: 30.minutes
