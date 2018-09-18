@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_18_162128) do
+ActiveRecord::Schema.define(version: 2018_09_18_174756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,12 +150,12 @@ ActiveRecord::Schema.define(version: 2018_09_18_162128) do
     t.text "cancellation_reason"
     t.datetime "cancelled_at"
     t.bigint "license_id"
-    t.boolean "invalid", default: false, null: false
+    t.boolean "erroneous", default: false, null: false
     t.index ["audit_form_id"], name: "index_inspections_on_audit_form_id"
-    t.index ["completed_at", "submitted_at", "invalid"], name: "index_inspections_on_completed_at_and_submitted_at_and_invalid"
+    t.index ["completed_at", "submitted_at", "erroneous"], name: "index_inspections_on_unsubmitted"
     t.index ["completed_at"], name: "index_inspections_on_completed_at"
     t.index ["discarded_at"], name: "index_inspections_on_discarded_at"
-    t.index ["invalid"], name: "index_inspections_on_invalid"
+    t.index ["erroneous"], name: "index_inspections_on_erroneous"
     t.index ["license_id"], name: "index_inspections_on_license_id"
     t.index ["location_id"], name: "index_inspections_on_location_id"
     t.index ["submitted_at"], name: "index_inspections_on_submitted_at"

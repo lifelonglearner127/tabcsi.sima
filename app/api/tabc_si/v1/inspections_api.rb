@@ -219,15 +219,15 @@ module TabcSi
               DESC
             )
 
-            optional :invalid, type: Boolean, default: false
+            optional :erroneous, type: Boolean, default: false
           end
           patch do
             inspection = params[:inspection]
             submitted_at = params[:submitted_at]
             submitted_at = nil if submitted_at.blank?
-            invalid = params[:invalid]
+            erroneous = params[:erroneous]
 
-            inspection.update!(submitted_at: submitted_at, invalid: invalid)
+            inspection.update!(submitted_at: submitted_at, erroneous: erroneous)
 
             respond inspection
           end
