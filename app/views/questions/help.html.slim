@@ -1,8 +1,4 @@
 .container
   .row
     .col-12
-      h4 = "#{@question.question_number}. #{@question.question_text}"
-
-      ul
-        - @question.question_help_items.each do |item|
-          li == parse_item(item)
+      = render 'questions/question_help', question: @question

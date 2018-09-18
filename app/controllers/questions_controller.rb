@@ -8,11 +8,7 @@ class QuestionsController < ApplicationController
       .includes(:question_help_items)
       .where(question_number: params.require(:number))
       .first
-  end
 
-  def parse_item(item)
-    Kramdown::Document.new(item.value).to_html
+    Rails.logger.debug(@question)
   end
-
-  helper_method :parse_item
 end
