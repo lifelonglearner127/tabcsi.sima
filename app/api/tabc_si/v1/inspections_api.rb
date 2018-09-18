@@ -186,7 +186,7 @@ module TabcSi
             Inspection
             .includes(answers: %i[pictures_attachments question])
             .where.not(completed_at: nil)
-            .where(submitted_at: nil)
+            .where(submitted_at: nil, invalid: false)
             .order(:completed_at)
 
           respond inspections, include_answers: true
