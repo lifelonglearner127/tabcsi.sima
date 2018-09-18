@@ -26,7 +26,13 @@ class Setting < ApplicationRecord
   end
 
   def self.forms_build_date
-    Date.strptime(by_name(:forms_build_date).value, '%F')
+    value = by_name(:forms_build_date)&.value
+
+    begin
+      Date.strptime(value, '%F')
+    rescue ArgumentError
+      value
+    end
   end
 
   def self.forms_build_date=(value)
