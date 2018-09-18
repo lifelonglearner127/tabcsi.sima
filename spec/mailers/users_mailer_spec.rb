@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe UsersMailer do
+  let(:sender_email) { Nenv.instance.mailer_sender }
+
   describe 'request_pin' do
     let(:email_subject) { t('users_mailer.request_pin.subject') }
     let(:recipient_email) { Faker::Internet.safe_email }
@@ -24,7 +26,7 @@ RSpec.describe UsersMailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['support@neubus.com'])
+      expect(mail.from).to eq([sender_email])
     end
 
     it 'assigns @pin' do

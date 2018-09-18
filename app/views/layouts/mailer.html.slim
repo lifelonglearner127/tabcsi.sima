@@ -30,7 +30,8 @@ html
       table.body,
       td,
       th {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
       }
 
       code,
@@ -50,7 +51,7 @@ html
         line-height: 32px;
       }
 
-    = content_for :css
+    = yield :css
 
   body
     table.body[data-made-with-foundation]
@@ -60,4 +61,4 @@ html
           valign="top"
         ]
           center[data-parsed]
-            = yield
+            = content_for?(:content) ? yield(:content) : yield
