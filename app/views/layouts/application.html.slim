@@ -24,12 +24,6 @@ html class="h-100" lang="en"
         a<> href="https://browsehappy.com" upgrade your browser
         | to improve your experience and security.
 
-    /- if flash.any?
-      .flashes
-        - user_facing_flashes.each do |key, value|
-          div class="flash-#{key}"
-            = value
-
     main data-page=page_data(**page_data_options).to_json
       = yield
 
