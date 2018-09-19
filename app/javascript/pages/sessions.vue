@@ -52,8 +52,9 @@ export default {
 
   methods: {
     handlePinKeyUp (e) {
-      // e.target.nextElementSibling.focus()
-      if (e.keyCode === 32) e.preventDefault()
+      if (e.code === 'Space') {
+        e.preventDefault()
+      }
     }
   }
 }
