@@ -11,6 +11,13 @@ const USPhone = (value) => {
 
   return (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/).test(value)
 }
+const LicensePermitNumber = (value) => {
+  if (value === null || value === '') {
+    return true
+  }
+
+  return (/^[a-zA-Z]\w\d{4,10}$/).test(value)
+}
 
 export default {
   name: 'Users',
@@ -48,7 +55,10 @@ export default {
       },
       companyName: { required },
       jobTitle: { required },
-      licenseNumber: { required }
+      licenseNumber: {
+        required,
+        LicensePermitNumber
+      }
     }
   },
 
@@ -292,10 +302,16 @@ export default {
         </b-form-input>
       </b-input-group>
       <b-form-feedback
-        v-if="$v.user.licenseNumber.$error"
+        v-if="$v.user.licenseNumber.$error && !$v.user.licenseNumber.required"
         class="d-block"
       >
         License/Permit Number is required.
+      </b-form-feedback>
+      <b-form-feedback
+        v-if="$v.user.licenseNumber.$error && !$v.user.licenseNumber.LicensePermitNumber"
+        class="d-block"
+      >
+        Please enter a valid Lincense/Permit number.
       </b-form-feedback>
     </b-form-group>
 
