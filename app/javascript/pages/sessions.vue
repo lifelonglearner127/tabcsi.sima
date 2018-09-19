@@ -51,7 +51,13 @@ export default {
   },
 
   methods: {
-    handlePinKeyUp (e) {
+    handlePinKeyPress (e) {
+      if (e.code === 'Space') {
+        e.preventDefault()
+      }
+    },
+
+    handleEmailKeyPress (e) {
       if (e.code === 'Space') {
         e.preventDefault()
       }
@@ -96,7 +102,7 @@ export default {
           v-model.trim="session.pin"
           :maxlength="pageOptions.pinLength"
           name="session[pin]"
-          @keypress.native="handlePinKeyUp"
+          @keypress.native="handlePinKeyPress"
         >
         </b-form-input>
       </b-input-group>
@@ -132,10 +138,11 @@ export default {
         </b-input-group-prepend>
         <b-form-input
           id="session_email"
-          v-model="session.email"
+          v-model.trim="session.email"
           autocomplete="email"
           name="session[email]"
           type="email"
+          @keypress.native="handleEmailKeyPress"
         >
         </b-form-input>
       </b-input-group>
