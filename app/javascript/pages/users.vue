@@ -100,13 +100,12 @@ export default {
       id="user_full_name_group"
       label="Full Name"
       label-for="user_full_name"
-
     >
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            use="fas-fa-user"
             fixed-width
+            use="fas-fa-user"
           >
           </fa-sprite>
         </b-input-group-prepend>
@@ -144,8 +143,8 @@ export default {
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            use="fas-fa-envelope"
             fixed-width
+            use="fas-fa-envelope"
           >
           </fa-sprite>
         </b-input-group-prepend>
@@ -183,8 +182,8 @@ export default {
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            use="fas-fa-phone"
             fixed-width
+            use="fas-fa-phone"
           >
           </fa-sprite>
         </b-input-group-prepend>
@@ -222,8 +221,8 @@ export default {
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            use="fas-fa-industry"
             fixed-width
+            use="fas-fa-industry"
           >
           </fa-sprite>
         </b-input-group-prepend>
@@ -255,8 +254,8 @@ export default {
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            use="fas-fa-user-tie"
             fixed-width
+            use="fas-fa-user-tie"
           >
           </fa-sprite>
         </b-input-group-prepend>
@@ -288,8 +287,8 @@ export default {
       <b-input-group>
         <b-input-group-prepend is-text>
           <fa-sprite
-            use="fas-fa-user-tie"
             fixed-width
+            use="fas-fa-id-card"
           >
           </fa-sprite>
         </b-input-group-prepend>

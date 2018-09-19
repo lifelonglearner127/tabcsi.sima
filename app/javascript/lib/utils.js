@@ -3,7 +3,6 @@ import isPlainObject from 'lodash/isPlainObject'
 import map from 'lodash/map'
 import mapKeys from 'lodash/mapKeys'
 import mapValues from 'lodash/mapValues'
-import toUpper from 'lodash/toUpper'
 import Vue from 'vue'
 
 export const debugLog = (...args) => {
@@ -15,9 +14,9 @@ export const debugLog = (...args) => {
 export const hasOwnProperty = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key)
 
 export const genEnumValidator = (values) => {
-  const upcaseValues = map(values, (value) => toUpper(value.toString()))
+  const upcaseValues = map(values, (value) => value.toString().toUpperCase())
 
-  return (value) => includes(upcaseValues, toUpper(value))
+  return (value) => includes(upcaseValues, value.toUpperCase())
 }
 
 export const NO_PROMISE_RETURNED = null

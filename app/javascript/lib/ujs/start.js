@@ -9,6 +9,7 @@ const {
 } = Rails
 
 const delegateEvents = () => {
+  /* eslint-disable no-multi-spaces */
   delegate(document, Rails.linkDisableSelector, 'ajax:complete', enableElement)   // enable
   delegate(document, Rails.linkDisableSelector, 'ajax:stopped', enableElement)    // enable
   delegate(document, Rails.buttonDisableSelector, 'ajax:complete', enableElement) // enable
@@ -40,6 +41,7 @@ const delegateEvents = () => {
   delegate(document, Rails.formInputClickSelector, 'click', handleDisabledElement) // disabled
   delegate(document, Rails.formInputClickSelector, 'click', handleConfirm)
   delegate(document, Rails.formInputClickSelector, 'click', formSubmitButtonClick) // submit
+  /* eslint-enable no-multi-spaces */
 }
 
 Rails.start = () => {
