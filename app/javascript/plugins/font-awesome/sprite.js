@@ -1,6 +1,6 @@
 import FontAwesomeContainer from './container'
 import FontAwesomeIcon from './icon'
-import { iconMap } from './icons'
+import iconMap from './icon-map'
 import iconProps from './props'
 
 export default {

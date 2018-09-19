@@ -1,8 +1,8 @@
 <script>
-import { iconMap } from '~/plugins/font-awesome'
+import iconMap from './icon-map'
 
 export default {
-  name: 'Sprites',
+  name: 'FaSprites',
 
   data () {
     return { icons: iconMap }
