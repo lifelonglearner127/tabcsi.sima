@@ -1,5 +1,6 @@
 import '~/vendor'
 import BootstrapVue from 'bootstrap-vue'
+import BootstrapVueUtils from '~/plugins/bootstrap-vue-utils'
 import camelCase from 'lodash/camelCase'
 import { deepMapKeys } from '~/lib/utils'
 import FontAwesome from '~/plugins/font-awesome'
@@ -17,8 +18,9 @@ Vue.config.performance = isDevelopment
 
 Vue.use(FontAwesome)
 Vue.use(BootstrapVue)
+Vue.use(BootstrapVueUtils)
 Vue.use(Ujs)
-Vue.use(Vuelidate);
+Vue.use(Vuelidate)
 
 const onReady = (handler) => {
   if (document.readyState === 'loading') {
