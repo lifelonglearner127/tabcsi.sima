@@ -7,8 +7,6 @@ NUMBER_OF_BUNDLE_JOBS = 2
 # NUMBER_OF_UPLOAD_WORKERS = 1
 # NUMBER_OF_FORM_WORKERS = 1
 
-YARN_FLAGS = %w[--production --silent --no-progress].freeze
-
 # config valid only for current version of Capistrano
 lock '~> 3.11.0'
 
@@ -35,20 +33,10 @@ set(
   %w[bundle gem passenger passenger-config passenger-status rails rake ruby]
 )
 
-# NVM
-# set :nvm_type, :system
-# set :nvm_node, "v#{File.read('.node-version').chomp}"
-# set :nvm_map_bins, %w[node npm rails yarn]
-
 # Bundler
 set :bundle_bins, %w[gem rails rake]
 set :bundle_path, -> { shared_path.join('vendor', 'bundle') }
 set :bundle_jobs, NUMBER_OF_BUNDLE_JOBS
-
-after 'deploy:published', 'bundler:clean'
-
-# Yarn
-set(:yarn_flags, YARN_FLAGS)
 
 # Rails
 set :rails_env, 'production'
@@ -78,10 +66,7 @@ set(
 #   'f4885l-jobs': NUMBER_OF_FORM_WORKERS
 # )
 
-# after 'deploy:restart', 'resque:restart'
-
-# Other
-# set :webpack_assets_prefix, '/vbox-web'
-
 after 'deploy:set_current_revision', 'tabc_si:set_mtimes'
+# after 'deploy:restart', 'resque:restart'
+after 'deploy:published', 'bundler:clean'
 after 'deploy:failed', 'tabc_si:remove_current_release'

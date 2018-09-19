@@ -18,7 +18,6 @@ end
   rails
   rvm
   scm/git
-  yarn
 ].each do |file|
   require "capistrano/#{file}"
 end
