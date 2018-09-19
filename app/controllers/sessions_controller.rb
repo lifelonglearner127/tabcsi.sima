@@ -92,24 +92,18 @@ class SessionsController < ApplicationController
   def validate_pin
     pin = session_params[:pin]
 
-    if pin.present?
-      if current_user.valid_pin?(pin)
-        self.pin_requested = false
-        session[:logged_in] = true
+    if pin.present? && current_user.valid_pin?(pin)
+      self.pin_requested = false
+      session[:logged_in] = true
 
-        redirect_to dashboard_url
+      redirect_to dashboard_url
 
-        return
-      else
-        page_data_options[:html][:errors] = {
-          pin: 'Login Error - Incorrect login code.'
-        }
-      end
-    else
-      page_data_options[:html][:errors] = {
-        pin: 'Login Error - Incorrect login code.'
-      }
+      return
     end
+    
+    page_data_options[:html][:errors] = {
+      pin: 'Login Error: Incorrect PIN.'
+    }
 
     render 'new'
   end
