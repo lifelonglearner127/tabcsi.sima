@@ -1,15 +1,25 @@
 <script>
 import { email, helpers, required } from 'vuelidate/lib/validators'
+import isEmpty from 'lodash/isEmpty'
 import PageMixin from '~/mixins/page'
 import UsersSessionsContainer from '~/components/users-sessions-container'
 
 const alpha = helpers.regex('alpha', (/^[a-zA-Z\s]+$/))
-const USPhone = (value) => {
-  if (value === null || value === '') {
+
+const usPhone = (value) => {
+  if (isEmpty(value)) {
     return true
   }
 
   return (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/).test(value)
+}
+
+const licensePermitNumber = (value) => {
+  if (isEmpty(value)) {
+    return true
+  }
+
+  return (/^[A-Z]{1,2}\d{4,10}$/i).test(value)
 }
 
 export default {
@@ -44,11 +54,14 @@ export default {
       },
       phone: {
         required,
-        USPhone
+        usPhone
       },
       companyName: { required },
       jobTitle: { required },
-      licenseNumber: { required }
+      licenseNumber: {
+        required,
+        licensePermitNumber
+      }
     }
   },
 
@@ -193,7 +206,7 @@ export default {
         Phone Number is required.
       </b-form-feedback>
       <b-form-feedback
-        v-if="$v.user.phone.$error && !$v.user.phone.USPhone"
+        v-if="$v.user.phone.$error && !$v.user.phone.usPhone"
         class="d-block"
       >
         Please enter a valid format phone number.
@@ -292,10 +305,16 @@ export default {
         </b-form-input>
       </b-input-group>
       <b-form-feedback
-        v-if="$v.user.licenseNumber.$error"
+        v-if="$v.user.licenseNumber.$error && !$v.user.licenseNumber.required"
         class="d-block"
       >
         License/Permit Number is required.
+      </b-form-feedback>
+      <b-form-feedback
+        v-if="$v.user.licenseNumber.$error && !$v.user.licenseNumber.licensePermitNumber"
+        class="d-block"
+      >
+        Please enter a valid Lincense/Permit number.
       </b-form-feedback>
     </b-form-group>
 

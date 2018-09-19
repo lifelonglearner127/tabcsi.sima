@@ -100,6 +100,10 @@ class SessionsController < ApplicationController
 
       return
     end
+    
+    page_data_options[:html][:errors] = {
+      pin: 'Login Error: Incorrect PIN.'
+    }
 
     render 'new'
   end

@@ -52,7 +52,9 @@ export default {
 
   methods: {
     handlePinKeyUp (e) {
-      // e.target.nextElementSibling.focus()
+      if (e.code === 'Space') {
+        e.preventDefault()
+      }
     }
   }
 }
@@ -91,9 +93,10 @@ export default {
         </b-input-group-prepend>
         <b-form-input
           id="session_pin"
-          v-model="session.pin"
+          v-model.trim="session.pin"
           :maxlength="pageOptions.pinLength"
           name="session[pin]"
+          @keypress.native="handlePinKeyUp"
         >
         </b-form-input>
       </b-input-group>
