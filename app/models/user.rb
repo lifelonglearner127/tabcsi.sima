@@ -88,6 +88,11 @@ class User < ApplicationRecord
       licenses << company.licenses
     end
 
+    UsersMailer.with(
+      recipient: email,
+      full_name: full_name
+    ).welcome.deliver_now
+
     result
   rescue ActiveRecord::RecordInvalid
     false

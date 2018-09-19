@@ -1,0 +1,18 @@
+p #{@full_name},
+
+p
+  ' Welcome to the
+  strong> TABC: Compliance Reporting
+  | application.
+
+- if @company_name.present?
+  p
+    ' You were invited to
+    strong = @company_name
+    ' .
+- else
+  p
+    ' Your new account allows you to conduct license/permit reports for your establishment on your own time and
+    | automatically send them to TABC for review.
+
+p Your user name: #{@recipient}

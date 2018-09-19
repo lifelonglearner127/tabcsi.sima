@@ -33,4 +33,40 @@ RSpec.describe UsersMailer do
       expect(mail.body.encoded).to match(pin)
     end
   end
+
+  describe 'welcome' do
+    let(:email_subject) { t('users_mailer.welcome.subject') }
+    let(:recipient_email) { Faker::Internet.safe_email }
+    let(:full_name) { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
+
+    let(:mail) do
+      described_class.with(
+        recipient: recipient_email,
+        full_name: full_name,
+        company_name:
+      ).welcome
+    end
+
+    it 'renders the subject' do
+      expect(mail.subject).to eq(email_subject)
+    end
+
+    it 'renders the recipient email' do
+      expect(mail.to).to eq([recipient_email])
+    end
+
+    it 'renders the sender email' do
+      expect(mail.from).to eq([sender_email])
+    end
+
+    it 'assigns @recipient' do
+      expect(mail.body.encoded).to match(recipient_email)
+    end
+
+    it 'assigns @full_name' do
+      expect(mail.body.encoded).to match(full_name)
+    end
+
+    # TODO: test conditional @company_name
+  end
 end

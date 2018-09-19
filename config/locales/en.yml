@@ -25,6 +25,8 @@ en:
   users_mailer:
     request_pin:
       subject: "TABC: CR — Pin Request"
+    welcome:
+      subject: "TABC: CR — Welcome"
 
   grape:
     errors:
