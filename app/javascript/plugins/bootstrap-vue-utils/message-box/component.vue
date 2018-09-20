@@ -9,8 +9,6 @@ import IdMixin from 'bootstrap-vue/es/mixins/id'
 import includes from 'lodash/includes'
 import isFunction from 'lodash/isFunction'
 import isString from 'lodash/isString'
-import toLower from 'lodash/toLower'
-import trim from 'lodash/trim'
 
 const DEFAULT_ERROR_MESSAGE = 'Illegal input'
 const INPUT_STATE_NONE = null
@@ -74,7 +72,7 @@ export default {
       default: DEFAULTS.buttons,
 
       validator (value) {
-        return includes(BUTTON_VALUES, toLower(value))
+        return includes(BUTTON_VALUES, value.toLowerCase())
       }
     },
 
@@ -120,7 +118,7 @@ export default {
       },
 
       validator (value) {
-        return !value || includes(BUTTON_NAMES, toLower(trim(value)))
+        return !value || includes(BUTTON_NAMES, value.trim().toLowerCase())
       }
     },
 
@@ -219,7 +217,7 @@ export default {
       default: DEFAULTS.variant,
 
       validator (value) {
-        return !value || includes(TYPES, toLower(value))
+        return !value || includes(TYPES, value.toLowerCase())
       }
     },
 

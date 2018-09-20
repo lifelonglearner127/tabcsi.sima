@@ -46,7 +46,7 @@ module.exports = {
     'lodash/prefer-lodash-method': [
       ERROR,
       {
-        ignoreMethods: ['isArray', 'replace', 'toLower', 'toUpper']
+        ignoreMethods: ['isArray', 'replace', 'toLower', 'toUpper', 'trim']
       }
     ],
     'max-len': [ERROR, {
