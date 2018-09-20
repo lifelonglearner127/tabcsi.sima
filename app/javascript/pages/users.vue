@@ -1,27 +1,7 @@
 <script>
-import { email, helpers, required } from 'vuelidate/lib/validators'
-import isEmpty from 'lodash/isEmpty'
 import NewUser from '~/components/new-user'
 import PageMixin from '~/mixins/page'
 import UsersSessionsContainer from '~/components/users-sessions-container'
-
-const alpha = helpers.regex('alpha', (/^[a-zA-Z\s]+$/))
-
-const usPhone = (value) => {
-  if (isEmpty(value)) {
-    return true
-  }
-
-  return (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/).test(value)
-}
-
-const licensePermitNumber = (value) => {
-  if (isEmpty(value)) {
-    return true
-  }
-
-  return (/^[A-Z]{1,2}\d{4,10}$/i).test(value)
-}
 
 export default {
   name: 'Users',
@@ -32,42 +12,6 @@ export default {
   },
 
   mixins: [PageMixin],
-
-  data () {
-    return {
-      user: {
-        companyName: '',
-        email: '',
-        fullName: '',
-        jobTitle: '',
-        licenseNumber: '',
-        phone: ''
-      }
-    }
-  },
-
-  validations: {
-    user: {
-      fullName: {
-        required,
-        alpha
-      },
-      email: {
-        required,
-        email
-      },
-      phone: {
-        required,
-        usPhone
-      },
-      companyName: { required },
-      jobTitle: { required },
-      licenseNumber: {
-        required,
-        licensePermitNumber
-      }
-    }
-  },
 
   methods: {
     validateBeforeSubmit (e) {
