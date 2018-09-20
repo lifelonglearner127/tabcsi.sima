@@ -44,19 +44,12 @@ class User < ApplicationRecord
   after_initialize :set_default_role, if: :new_record?
 
   attr_accessor :company_name
+  attr_accessor :is_invite
   attr_accessor :license_number
 
   def self.new_pin
     # based on SecureRandom.alphanumeric
     SecureRandom.__send__(:choose, PIN_CHARS, Setting.pin_length)
-  end
-
-  def info
-    {
-      full_name: full_name,
-      role: role,
-      locations: locations.includes(:licenses).as_json(include: :licenses)
-    }
   end
 
   def generate_pin
@@ -69,33 +62,25 @@ class User < ApplicationRecord
     pin
   end
 
-  def save_admin
-    license = License.find_by_clp(license_number)
+  def info
+    {
+      full_name: full_name,
+      role: role,
+      locations: locations.includes(:licenses).as_json(include: :licenses)
+    }
+  end
 
-    return false if license.blank? || license.company.owned?
+  def invite?
+    is_invite
+  end
 
-    self.company = license.company
+  def pin_current?
+    !pin_expired?
+  end
 
-    result = false
-    transaction do
-      license.company.update!(name: company_name, owned: true)
-
-      result = save!
-    end
-
-    if result
-      locations << company.locations
-      licenses << company.licenses
-    end
-
-    UsersMailer.with(
-      recipient: email,
-      full_name: full_name
-    ).welcome.deliver_now
-
-    result
-  rescue ActiveRecord::RecordInvalid
-    false
+  def pin_expired?
+    pin_last_requested_at.blank? ||
+      Time.zone.now >= pin_last_requested_at + Setting.pin_expiration
   end
 
   def request_pin
@@ -111,21 +96,52 @@ class User < ApplicationRecord
     true
   end
 
-  def valid_pin?(pin)
-    valid_for_authentication? { valid_password?(pin) }
+  def save_user
+    license = nil
+
+    if invite?
+      company = Company.find_by(name: company_name)
+
+      return false if company.blank?
+
+      self.company = company
+      self.role = :user
+    else
+      license = License.find_by_clp(license_number)
+
+      return false if license.blank? || license.company.owned?
+
+      self.company = license.company
+    end
+
+    result = false
+    transaction do
+      license.company.update!(name: company_name, owned: true) unless invite?
+
+      result = save!
+    end
+
+    if result && !invite?
+      locations << self.company.locations
+      licenses << self.company.licenses
+    end
+
+    UsersMailer.with(
+      recipient: email,
+      full_name: full_name
+    ).welcome.deliver_now
+
+    result
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   def valid_password?(password)
     pin_current? && super
   end
 
-  def pin_expired?
-    pin_last_requested_at.blank? ||
-      Time.zone.now >= pin_last_requested_at + Setting.pin_expiration
-  end
-
-  def pin_current?
-    !pin_expired?
+  def valid_pin?(pin)
+    valid_for_authentication? { valid_password?(pin) }
   end
 
   private

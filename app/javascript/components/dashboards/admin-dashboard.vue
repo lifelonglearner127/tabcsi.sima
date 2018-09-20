@@ -50,6 +50,39 @@ export default {
           class="mb-1 mt-4"
           key-nav
         >
+          <b-dropdown
+            class="mx-1"
+            size="sm"
+            variant="outline-secondary"
+          >
+            <template slot="button-content">
+              <fa-sprite
+                fixed-width
+                use="fas-fa-user-plus"
+              >
+              </fa-sprite>
+              Invite User
+            </template>
+            <b-dropdown-item
+              class="px-3"
+              href="/invite"
+            >
+              <fa-sprite
+                fixed-width
+                use="fas-fa-plus"
+              >
+              </fa-sprite>
+              Manual Add
+            </b-dropdown-item>
+            <b-dropdown-item class="px-3">
+              <fa-sprite
+                fixed-width
+                use="fas-fa-file-upload"
+              >
+              </fa-sprite>
+              Upload CSV (Coming Soon)
+            </b-dropdown-item>
+          </b-dropdown>
           <b-button
             class="mx-1"
             disabled
@@ -76,36 +109,6 @@ export default {
             </fa-sprite>
             Delete
           </b-button>
-          <b-dropdown
-            class="mx-1"
-            size="sm"
-            variant="outline-secondary"
-          >
-            <template slot="button-content">
-              <fa-sprite
-                fixed-width
-                use="fas-fa-user-plus"
-              >
-              </fa-sprite>
-              Invite User
-            </template>
-            <b-dropdown-item class="px-3">
-              <fa-sprite
-                fixed-width
-                use="fas-fa-plus"
-              >
-              </fa-sprite>
-              Manual Add
-            </b-dropdown-item>
-            <b-dropdown-item class="px-3">
-              <fa-sprite
-                fixed-width
-                use="fas-fa-file-upload"
-              >
-              </fa-sprite>
-              Upload CSV (Coming Soon)
-            </b-dropdown-item>
-          </b-dropdown>
         </b-button-toolbar>
 
         <users-table :items="users"></users-table>

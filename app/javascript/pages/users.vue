@@ -13,9 +13,29 @@ export default {
 
   mixins: [PageMixin],
 
+  computed: {
+    cardTitle () {
+      return this.isInvite ? 'Invite a New User' : 'Create a New Account'
+    },
+
+    companyName () {
+      return this.pageOptions.companyName
+    },
+
+    isInvite () {
+      return 'isInvite' in this.pageOptions && Boolean(this.pageOptions.isInvite)
+    },
+
+    submitText () {
+      return this.isInvite ? 'Invite' : 'Sign Up'
+    }
+  },
+
   methods: {
-    validateBeforeSubmit (e) {
-      this.$refs.newUser.validateBeforeSubmit(e)
+    validate (e) {
+      if (this.$refs.newUser.validateBeforeSubmit()) {
+        e.target.submit()
+      }
     }
   }
 }
@@ -28,21 +48,35 @@ export default {
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
+    :submit-text="submitText"
+    :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
-    :validation-method="validateBeforeSubmit"
+    :validation-method="validate"
     back-href="/"
     cols="12"
     show-back-button
     show-top-back-button
     sm="6"
-    submit-text="Sign Up"
     text-class="font-italic"
-    title="Create a New Account"
   >
+    <template v-if="isInvite">
+      <input
+        id="user_is_invite"
+        name="user[is_invite]"
+        type="hidden"
+        value="true"
+      >
+      <input
+        id="user_company_name"
+        :value="companyName"
+        name="user[company_name]"
+        type="hidden"
+      >
+    </template>
     <new-user
       ref="newUser"
-      is-sign-up
+      :is-sign-up="!isInvite"
     >
     </new-user>
   </users-sessions-container>

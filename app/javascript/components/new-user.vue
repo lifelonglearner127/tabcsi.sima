@@ -54,7 +54,7 @@ export default {
           maxLength: 14,
           parse: this.parsePhone,
           placeholder: '(123) 456-7890',
-          required: true,
+          required: this.isSignUp,
           type: 'tel'
         },
         companyName: {
@@ -99,16 +99,17 @@ export default {
           required,
           phone
         },
-        companyName: { required },
-        jobTitle: { required },
-        licenseNumber: {
-          required,
-          licenseNumber
-        }
+        jobTitle: { required }
       }
     }
 
     if (this.isSignUp) {
+      schema.user.companyName = { required }
+      schema.user.licenseNumber = {
+        required,
+        licenseNumber
+      }
+    } else {
       delete schema.user.phone.required
     }
 
@@ -168,12 +169,10 @@ export default {
       func(e)
     },
 
-    validateBeforeSubmit (e) {
+    validateBeforeSubmit () {
       this.$v.$touch()
 
-      if (this.submittable) {
-        e.target.submit()
-      }
+      return this.submittable
     },
 
     validateDebounced (event) {
