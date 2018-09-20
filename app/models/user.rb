@@ -46,6 +46,7 @@ class User < ApplicationRecord
   attr_accessor :company_name
   attr_accessor :is_invite
   attr_accessor :license_number
+  attr_accessor :owner_name
 
   def self.new_pin
     # based on SecureRandom.alphanumeric
@@ -100,7 +101,7 @@ class User < ApplicationRecord
     license = nil
 
     if invite?
-      company = Company.find_by(name: company_name)
+      company = Company.find_by(owner_name: owner_name)
 
       return false if company.blank?
 
@@ -126,10 +127,17 @@ class User < ApplicationRecord
       licenses << self.company.licenses
     end
 
-    UsersMailer.with(
+    welcome_params = {
       recipient: email,
       full_name: full_name
-    ).welcome.deliver_now
+    }
+
+    if invite?
+      welcome_params[:company_name] =
+        self.company.name || self.company.owner_name
+    end
+
+    UsersMailer.with(**welcome_params).welcome.deliver_now
 
     result
   rescue ActiveRecord::RecordInvalid

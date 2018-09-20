@@ -18,8 +18,8 @@ export default {
       return this.isInvite ? 'Invite a New User' : 'Create a New Account'
     },
 
-    companyName () {
-      return this.pageOptions.companyName
+    ownerName () {
+      return this.pageOptions.ownerName
     },
 
     isInvite () {
@@ -68,9 +68,9 @@ export default {
         value="true"
       >
       <input
-        id="user_company_name"
-        :value="companyName"
-        name="user[company_name]"
+        id="user_owner_name"
+        :value="ownerName"
+        name="user[owner_name]"
         type="hidden"
       >
     </template>

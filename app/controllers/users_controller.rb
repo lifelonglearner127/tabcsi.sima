@@ -33,7 +33,7 @@ class UsersController < ApplicationController
           local: true,
           html: {
             is_invite: true,
-            company_name: current_user.company.name
+            owner_name: current_user.company.owner_name
           }
         }
       else
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :company_name, :email, :full_name, :is_invite, :job_title,
-      :license_number, :phone
+      :license_number, :owner_name, :phone
     )
   end
 end
