@@ -124,7 +124,7 @@ export default {
     <b-row
       align-h="center"
       align-v="center"
-      class="h-100"
+      class="row-fluid"
     >
       <b-col
         :cols="cols"
@@ -234,6 +234,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/variables';
+
+.row-fluid {
+  min-height: 100%;
+}
 
 .card {
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
