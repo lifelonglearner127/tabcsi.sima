@@ -84,7 +84,8 @@ class SessionsController < ApplicationController
         resend_pin_method: 'post',
         email: session_email,
         pin_requested: pin_requested?,
-        pin_length: Setting.pin_length
+        pin_length: Setting.pin_length,
+        flash_message: flash[:notice]
       }
     }
   end
@@ -100,7 +101,7 @@ class SessionsController < ApplicationController
 
       return
     end
-    
+
     page_data_options[:html][:errors] = {
       pin: 'Login Error: Incorrect PIN.'
     }
