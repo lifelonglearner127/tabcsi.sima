@@ -62,6 +62,10 @@ export default {
       return this.pageOptions.errors || {}
     },
 
+    flashMessage () {
+      return this.pageOptions.flashMessage || ''
+    },
+
     tokenName () {
       return this.authenticityToken.name
     },

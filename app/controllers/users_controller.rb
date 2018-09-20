@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     )
 
     if user.save_admin
+      flash[:notice] = 'Registration success!'
       redirect_to log_in_url
     else
       render 'new'
