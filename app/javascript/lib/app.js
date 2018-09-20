@@ -1,14 +1,15 @@
 import '~/vendor'
+import FontAwesome, { FaSprites } from '~/plugins/font-awesome'
 import BootstrapVue from 'bootstrap-vue'
 import BootstrapVueUtils from '~/plugins/bootstrap-vue-utils'
 import camelCase from 'lodash/camelCase'
 import { deepMapKeys } from '~/lib/utils'
-import FontAwesome from '~/plugins/font-awesome'
+import icons from '~/lib/icons'
 import isFunction from 'lodash/isFunction'
 import map from 'lodash/map'
-import Sprites from '~/components/sprites'
 import Ujs from '~/plugins/ujs'
 import Vue from 'vue'
+import VueInput from '~/plugins/vue-input'
 import Vuelidate from 'vuelidate'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -16,10 +17,13 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 Vue.config.devtools = isDevelopment
 Vue.config.performance = isDevelopment
 
+FontAwesome.icons(icons)
+
 Vue.use(FontAwesome)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueUtils)
 Vue.use(Ujs)
+Vue.use(VueInput)
 Vue.use(Vuelidate)
 
 const onReady = (handler) => {
@@ -77,7 +81,7 @@ export default class App {
             }
           )
 
-          const sprites = h(Sprites)
+          const sprites = h(FaSprites)
 
           return h('main', { class: 'h-100' }, [page, sprites])
         },

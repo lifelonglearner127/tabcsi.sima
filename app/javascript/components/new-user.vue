@@ -1,0 +1,269 @@
+<script>
+import { email, fullName, getMessage, licenseNumber, phone } from '~/validators'
+import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
+import { AsYouType } from '~/lib/phone-number'
+import get from 'lodash/get'
+import { required } from 'vuelidate/lib/validators'
+import snakeCase from 'lodash/snakeCase'
+
+const DEBOUNCE_DELAY = 250 // milliseconds
+
+export default {
+  name: 'NewUser',
+
+  props: {
+    isSignUp: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data () {
+    return {
+      user: {
+        companyName: '',
+        email: '',
+        fullName: '',
+        jobTitle: '',
+        licenseNumber: '',
+        phone: ''
+      },
+      form: {
+        fullName: {
+          autoComplete: 'name',
+          icon: 'fas-fa-user',
+          label: 'Full Name',
+          placeholder: 'John Smith',
+          required: true
+        },
+        email: {
+          autoComplete: 'email',
+          icon: 'fas-fa-envelope',
+          label: 'E-mail',
+          maxLength: 192,
+          placeholder: 'jsmith@example.com',
+          required: true,
+          type: 'email'
+        },
+        phone: {
+          autoComplete: 'tel',
+          component: 'vue-input',
+          format: this.formatPhone,
+          icon: 'fas-fa-phone',
+          label: 'Phone Number',
+          maxLength: 14,
+          parse: this.parsePhone,
+          placeholder: '(123) 456-7890',
+          required: true,
+          type: 'tel'
+        },
+        companyName: {
+          autoComplete: 'organization',
+          icon: 'fas-fa-industry',
+          label: 'Company Name',
+          placeholder: 'Awesome Food LLC',
+          required: true,
+          show: this.isSignUp
+        },
+        jobTitle: {
+          autoComplete: 'organization-title',
+          icon: 'fas-fa-user-tie',
+          label: 'Job Title',
+          placeholder: 'Owner',
+          required: true
+        },
+        licenseNumber: {
+          autoComplete: 'off',
+          icon: 'fas-fa-id-card',
+          label: 'License/Permit Number',
+          placeholder: 'AB123456',
+          required: true,
+          show: this.isSignUp
+        }
+      }
+    }
+  },
+
+  validations () {
+    const schema = {
+      user: {
+        fullName: {
+          required,
+          fullName
+        },
+        email: {
+          required,
+          email
+        },
+        phone: {
+          required,
+          phone
+        },
+        companyName: { required },
+        jobTitle: { required },
+        licenseNumber: {
+          required,
+          licenseNumber
+        }
+      }
+    }
+
+    if (this.isSignUp) {
+      delete schema.user.phone.required
+    }
+
+    return schema
+  },
+
+  computed: {
+    submittable () {
+      return !this.$v.$invalid
+    }
+  },
+
+  methods: {
+    formatPhone (value) {
+      const asYouType = new AsYouType()
+      const text = asYouType.input(value)
+      const template = asYouType.template
+
+      return {
+        text, template
+      }
+    },
+
+    getValidationField (path) {
+      return get(this.$v.user, path)
+    },
+
+    inputGroupId (key) {
+      return `${this.inputId(key)}_group`
+    },
+
+    inputId (key) {
+      return `user_${snakeCase(key)}`
+    },
+
+    inputName (key) {
+      return `user[${snakeCase(key)}]`
+    },
+
+    invalidFeedback (path) {
+      return getMessage(this.getValidationField(path), this.state(path))
+    },
+
+    parsePhone (ch) {
+      return parseDigit(ch)
+    },
+
+    state (path) {
+      const field = this.getValidationField(path)
+
+      return field ? !field.$error : true
+    },
+
+    validate (e) {
+      const func = ensureDebounceFunc('validateDebounceFunc', this, this.validateDebounced, DEBOUNCE_DELAY)
+
+      func(e)
+    },
+
+    validateBeforeSubmit (e) {
+      this.$v.$touch()
+
+      if (this.submittable) {
+        e.target.submit()
+      }
+    },
+
+    validateDebounced (event) {
+      const path = event.target.dataset.path
+      const field = this.getValidationField(path)
+
+      field.$touch()
+    }
+  }
+}
+</script>
+
+<template>
+  <div>
+    <template v-for="(options, key) in form">
+      <b-form-group
+        v-if="options.show == null ? true : options.show"
+        :data-required="options.required"
+        :id="inputGroupId(key)"
+        :invalid-feedback="invalidFeedback(key)"
+        :key="key"
+        :label="options.label"
+        :label-for="inputId(key)"
+        :state="state(key)"
+      >
+        <b-input-group>
+          <b-input-group-prepend is-text>
+            <fa-sprite
+              :use="options.icon"
+              fixed-width
+            >
+            </fa-sprite>
+          </b-input-group-prepend>
+          <component
+            v-model="$v.user[key].$model"
+            :autocomplete="options.autoComplete"
+            :data-path="key"
+            :format="options.format"
+            :id="inputId(key)"
+            :is="options.component || 'b-form-input'"
+            :maxlength="options.maxLength"
+            :name="inputName(key)"
+            :parse="options.parse"
+            :placeholder="options.placeholder"
+            :required="options.required"
+            :type="options.type || 'text'"
+            class="form-control"
+            @blur.native="validate"
+            @input.native="validate"
+          >
+          </component>
+        </b-input-group>
+      </b-form-group>
+    </template>
+
+    <b-form-text
+      v-if="isSignUp"
+      class="font-italic"
+    >
+      <fa-sprite
+        fixed-width
+        use="fas-fa-info-circle"
+      >
+      </fa-sprite>
+      Enter one of the license/permit numbers you are managing. For
+      example: <strong>MB1234567</strong>. You will be assigned licenses/permits that are associated with this once you
+      log in into the system.
+    </b-form-text>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+@import '~@/assets/stylesheets/variables';
+
+.fa-phone {
+  filter: fliph;
+  transform: scaleX(-1);
+}
+
+.form-text {
+  text-align: left;
+}
+
+.form-group {
+  &[data-required] {
+    /deep/ .col-form-label::after {
+      color: $danger;
+      content: '*';
+      margin-left: 0.25rem;
+    }
+  }
+}
+</style>

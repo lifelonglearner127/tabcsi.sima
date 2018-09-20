@@ -218,6 +218,7 @@ module.exports = {
     'vue/this-in-template': ERROR,
     'vue/v-bind-style': ERROR,
     'vue/v-on-style': ERROR,
-    'wrap-regex': ERROR
+    'wrap-regex': ERROR,
+    'you-dont-need-lodash-underscore/assign': OFF
   }
 }

@@ -8,6 +8,7 @@
     "clean": "bin/rails webpacker:clobber",
     "env:prod": "cross-env RAILS_ENV=production RACK_ENV=production NODE_ENV=production",
     "install:clean": "rm -fr yarn.lock node_modules; yarn",
+    "metadata:generate": "libphonenumber-generate-metadata app/javascript/assets/files/metadata.json --countries US --extended",
     "restart": "overmind r",
     "start": "overmind s"
   },
@@ -29,11 +30,13 @@
     "classnames": "^2.2.6",
     "css-loader": "< 1",
     "dotenv": "^6",
+    "libphonenumber-js": "^1.4.6",
     "lodash": "^4.17.11",
     "popper.js": "^1.14.4",
     "vue": "^2.5.17",
     "vue-loader": "^15.4.2",
     "vue-template-compiler": "^2.5.17",
+    "vue-the-mask": "^0.11.1",
     "vuelidate": "^0.7.4",
     "webpack": "^3.12"
   },
