@@ -9,6 +9,7 @@ import isFunction from 'lodash/isFunction'
 import map from 'lodash/map'
 import Ujs from '~/plugins/ujs'
 import Vue from 'vue'
+import VueInput from '~/plugins/vue-input'
 import Vuelidate from 'vuelidate'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -22,6 +23,7 @@ Vue.use(FontAwesome)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueUtils)
 Vue.use(Ujs)
+Vue.use(VueInput)
 Vue.use(Vuelidate)
 
 const onReady = (handler) => {
