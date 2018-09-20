@@ -8,6 +8,44 @@ html {
 @import '~bootstrap/scss/bootstrap';
 @import '~@/assets/stylesheets/mixins';
 
+body {
+  min-width: 320px;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  $infix: breakpoint-infix($breakpoint);
+
+  @include media-breakpoint-up($breakpoint) {
+    .col#{$infix}-auto {
+      @include col-auto;
+    }
+
+    .col#{$infix}-shrink {
+      @include col-shrink;
+    }
+
+    .col#{$infix}-grow {
+      @include col-grow;
+    }
+
+    .col#{$infix}-container {
+      @include col-container;
+    }
+
+    .row#{$infix}-auto {
+      @include row-auto;
+    }
+
+    .row#{$infix}-shrink {
+      @include row-shrink;
+    }
+
+    .row#{$infix}-grow {
+      @include row-grow;
+    }
+  }
+}
+
 .btn {
   .fa-container:not(:first-child) {
     padding-left: 1rem;

@@ -5,3 +5,65 @@
     @content;
   }
 }
+
+@mixin auto-dimension ($dir) {
+  $dim: if($dir == col, width, height);
+
+  #{$dim}: auto;
+}
+
+@mixin flex-auto ($dir) {
+  // The flex-basis value must have a unit because IE is stupid.
+  flex: 1 1 0px;
+
+  @include auto-dimension($dir);
+}
+
+@mixin flex-shrink ($dir) {
+  flex: 0 0 auto;
+
+  @include auto-dimension($dir);
+}
+
+@mixin flex-grow ($dir) {
+  flex: 1 0 auto;
+
+  @include auto-dimension($dir);
+}
+
+@mixin col-auto {
+  @include flex-auto(col);
+}
+
+@mixin col-shrink {
+  @include flex-shrink(col);
+}
+
+@mixin col-grow {
+  @include flex-grow(col);
+}
+
+@mixin overflow-auto {
+  overflow: auto;
+  -ms-overflow-style: auto;
+}
+
+@mixin col-container {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+
+  @include overflow-auto;
+}
+
+@mixin row-auto {
+  @include flex-auto(row);
+}
+
+@mixin row-shrink {
+  @include flex-shrink(row);
+}
+
+@mixin row-grow {
+  @include flex-grow(row);
+}
