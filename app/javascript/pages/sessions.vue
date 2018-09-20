@@ -50,15 +50,6 @@ export default {
     }
   },
 
-  mounted () {
-    if (this.flashMessage !== '') {
-      this.$message({
-        message: this.flashMessage,
-        type: 'success'
-      })
-    }
-  },
-
   methods: {
     handlePinKeyPress (e) {
       if (e.code === 'Space') {

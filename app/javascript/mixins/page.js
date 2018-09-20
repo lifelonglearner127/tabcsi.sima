@@ -1,3 +1,5 @@
+import isEmpty from 'lodash/isEmpty'
+
 export default {
   props: {
     pageOptions: {
@@ -42,6 +44,10 @@ export default {
       return 'enforceUtf8' in this.pageOptions && Boolean(this.pageOptions.enforceUtf8)
     },
 
+    flashMessage () {
+      return this.pageOptions.flashMessage
+    },
+
     hiddenMethod () {
       return this.pageOptions.hiddenMethod
     },
@@ -62,16 +68,21 @@ export default {
       return this.pageOptions.errors || {}
     },
 
-    flashMessage () {
-      return this.pageOptions.flashMessage || ''
-    },
-
     tokenName () {
       return this.authenticityToken.name
     },
 
     tokenValue () {
       return this.authenticityToken.value
+    }
+  },
+
+  mounted () {
+    if (!isEmpty(this.flashMessage)) {
+      this.$message({
+        message: this.flashMessage,
+        type: 'success'
+      })
     }
   }
 }
