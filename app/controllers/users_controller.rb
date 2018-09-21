@@ -56,7 +56,7 @@ class UsersController < ApplicationController
       when 'profile'
         {
           url: profile_path,
-          method: 'post',
+          method: 'patch',
           local: true,
           html: {
             page_name: 'profile',
