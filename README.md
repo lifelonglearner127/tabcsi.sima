@@ -26,8 +26,8 @@
     > yarn install
     > bin/rails db:setup
     > bin/rails admin:load_settings
-    > bin/rails admin:data_feed
     > bin/rails admin:build_forms
+    > bin/rails admin:data_feed
     > cp .env.example .env
 
 Edit `.env` file as necessary.

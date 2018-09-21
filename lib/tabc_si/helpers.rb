@@ -5,16 +5,30 @@ module TabcSi
     def self.companies_with_max_coverage
       Company
         .includes(:licenses)
-        .where(id: rm_company_ids)
+        .where(id: company_ids)
         .order(:owner_name)
         .select { |c| c.licenses.size > 1 }
         .map { |c| map_company(c) }
         .select { |o| select_object(o) }
     end
 
-    def self.rm_company_ids
+    def self.company_ids
       License
-        .where(license_type: %w[MB N RM])
+        .where(license_type: 'MB')
+        .where('"licenses"."subordinate" NOT LIKE ?', '%LB%')
+        .where('"licenses"."subordinate" LIKE ?', '%FB%')
+        .or(
+          License
+            .where(license_type: 'N')
+            .where('"licenses"."subordinate" NOT LIKE ?', '%LB%')
+            .where('"licenses"."subordinate" LIKE ?', '%FB%')
+            .where('"licenses"."subordinate" NOT LIKE ?', '%NL%')
+        )
+        .or(
+          License
+            .where(license_type: 'RM')
+            .where('"licenses"."subordinate" NOT LIKE ?', '%LB%')
+        )
         .group(:company_id)
         .pluck(:company_id)
     end

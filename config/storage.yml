@@ -9,7 +9,7 @@ test:
 
 production:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:s3, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret_access_key) %>
+  access_key_id: <%= Rails.configuration.aws.dig(:s3, :access_key_id) %>
+  secret_access_key: <%= Rails.configuration.aws.dig(:s3, :secret_access_key) %>
   region: <%= Nenv.instance.s3_region %>
   bucket: <%= Nenv.instance.s3_bucket %>
