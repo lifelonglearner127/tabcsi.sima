@@ -20,6 +20,11 @@ export default {
     isInvite: {
       type: Boolean,
       default: false
+    },
+
+    ownerName: {
+      type: String,
+      default: ''
     }
   },
 

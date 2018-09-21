@@ -65,11 +65,8 @@ export default {
 
   methods: {
     validate (e) {
-      if (this.$refs.newUser && this.$refs.newUser.validateBeforeSubmit()) {
-        e.target.submit()
-      }
-
-      if (this.$refs.editUser && this.$refs.editUser.validateBeforeSubmit()) {
+      if ((this.$refs.newUser && this.$refs.newUser.validateBeforeSubmit()) ||
+        (this.$refs.editUser && this.$refs.editUser.validateBeforeSubmit())) {
         e.target.submit()
       }
     }
@@ -101,6 +98,7 @@ export default {
       ref="newUser"
       :is-sign-up="isSignUp"
       :is-invite="isInvite"
+      :owner-name="ownerName"
     >
     </new-user>
     <edit-user
