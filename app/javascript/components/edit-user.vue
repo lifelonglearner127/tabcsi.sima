@@ -1,5 +1,5 @@
 <script>
-import { email, fullName, getMessage, licenseNumber, phone } from '~/validators'
+import { email, fullName, getMessage, phone } from '~/validators'
 import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
 import { AsYouType } from '~/lib/phone-number'
 import get from 'lodash/get'
@@ -9,15 +9,15 @@ import snakeCase from 'lodash/snakeCase'
 const DEBOUNCE_DELAY = 250 // milliseconds
 
 export default {
-  name: 'NewUser',
+  name: 'EditUser',
 
   props: {
-    isSignUp: {
-      type: Boolean,
-      default: true
+    user: {
+      type: Object,
+      required: true
     },
 
-    isInvite: {
+    isProfile: {
       type: Boolean,
       default: false
     }
@@ -25,20 +25,11 @@ export default {
 
   data () {
     return {
-      user: {
-        companyName: '',
-        email: '',
-        fullName: '',
-        jobTitle: '',
-        licenseNumber: '',
-        phone: ''
-      },
       form: {
         fullName: {
           autoComplete: 'name',
           icon: 'fas-fa-user',
           label: 'Full Name',
-          placeholder: 'John Smith',
           required: true
         },
         email: {
@@ -46,7 +37,6 @@ export default {
           icon: 'fas-fa-envelope',
           label: 'E-mail',
           maxLength: 192,
-          placeholder: 'jsmith@example.com',
           required: true,
           type: 'email'
         },
@@ -58,32 +48,27 @@ export default {
           label: 'Phone Number',
           maxLength: 14,
           parse: this.parsePhone,
-          placeholder: '(123) 456-7890',
-          required: this.isSignUp,
           type: 'tel'
         },
         companyName: {
           autoComplete: 'organization',
           icon: 'fas-fa-industry',
           label: 'Company Name',
-          placeholder: 'Awesome Food LLC',
           required: true,
-          show: this.isSignUp
+          show: !this.isProfile
         },
         jobTitle: {
           autoComplete: 'organization-title',
           icon: 'fas-fa-user-tie',
           label: 'Job Title',
-          placeholder: 'Owner',
           required: true
         },
         licenseNumber: {
           autoComplete: 'off',
           icon: 'fas-fa-id-card',
           label: 'License/Permit Number',
-          placeholder: 'AB123456',
           required: true,
-          show: this.isSignUp
+          show: !this.isProfile
         }
       }
     }
@@ -100,22 +85,9 @@ export default {
           required,
           email
         },
-        phone: {
-          required,
-          phone
-        },
+        phone: { phone },
         jobTitle: { required }
       }
-    }
-
-    if (this.isSignUp) {
-      schema.user.companyName = { required }
-      schema.user.licenseNumber = {
-        required,
-        licenseNumber
-      }
-    } else {
-      delete schema.user.phone.required
     }
 
     return schema
@@ -192,21 +164,14 @@ export default {
 
 <template>
   <div>
-    <template v-if="isInvite">
+    <template v-if="isProfile">
       <input
-        id="user_is_invite"
-        name="user[is_invite]"
+        id="user_is_profile"
+        name="user[is_profile]"
         type="hidden"
         value="true"
       >
-      <input
-        id="user_owner_name"
-        :value="ownerName"
-        name="user[owner_name]"
-        type="hidden"
-      >
     </template>
-
     <template v-for="(options, key) in form">
       <b-form-group
         v-if="options.show == null ? true : options.show"
@@ -247,20 +212,6 @@ export default {
         </b-input-group>
       </b-form-group>
     </template>
-
-    <b-form-text
-      v-if="isSignUp"
-      class="font-italic"
-    >
-      <fa-sprite
-        fixed-width
-        use="fas-fa-info-circle"
-      >
-      </fa-sprite>
-      Enter one of the license/permit numbers you are managing. For
-      example: <strong>MB1234567</strong>. You will be assigned licenses/permits that are associated with this once you
-      log in into the system.
-    </b-form-text>
   </div>
 </template>
 

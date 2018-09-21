@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post :sign_up, to: 'users#create'
   get :invite, to: 'users#invite'
   post :invite, to: 'users#create'
+  get :profile, to: 'users#profile'
+  post :profile, to: 'users#update'
 
   get :log_in, to: 'sessions#new'
   post :log_in, to: 'sessions#create'

@@ -68,7 +68,7 @@ export default {
             :text="user.fullName"
             right
           >
-            <b-dropdown-item>
+            <b-dropdown-item href="/profile">
               <fa-sprite
                 fixed-width
                 use="fas-fa-user"

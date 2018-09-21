@@ -1,4 +1,5 @@
 <script>
+import EditUser from '~/components/edit-user'
 import NewUser from '~/components/new-user'
 import PageMixin from '~/mixins/page'
 import UsersSessionsContainer from '~/components/users-sessions-container'
@@ -7,6 +8,7 @@ export default {
   name: 'Users',
 
   components: {
+    EditUser,
     NewUser,
     UsersSessionsContainer
   },
@@ -15,25 +17,59 @@ export default {
 
   computed: {
     cardTitle () {
-      return this.isInvite ? 'Invite a New User' : 'Create a New Account'
+      switch (this.pageName) {
+        case 'invite':
+          return 'Invite a New User'
+
+        case 'profile':
+          return 'Update Profile'
+
+        default:
+          return 'Create a New Account'
+      }
     },
 
     ownerName () {
       return this.pageOptions.ownerName
     },
 
+    user () {
+      return this.pageOptions.user || {}
+    },
+
     isInvite () {
-      return 'isInvite' in this.pageOptions && Boolean(this.pageOptions.isInvite)
+      return this.pageName === 'invite'
+    },
+
+    isProfile () {
+      return this.pageName === 'profile'
+    },
+
+    isSignUp () {
+      return this.pageName === 'signup'
     },
 
     submitText () {
-      return this.isInvite ? 'Invite' : 'Sign Up'
+      switch (this.pageName) {
+        case 'invite':
+          return 'Invite'
+
+        case 'profile':
+          return 'Update Profile'
+
+        default:
+          return 'Sign Up'
+      }
     }
   },
 
   methods: {
     validate (e) {
-      if (this.$refs.newUser.validateBeforeSubmit()) {
+      if (this.$refs.newUser && this.$refs.newUser.validateBeforeSubmit()) {
+        e.target.submit()
+      }
+
+      if (this.$refs.editUser && this.$refs.editUser.validateBeforeSubmit()) {
         e.target.submit()
       }
     }
@@ -60,25 +96,20 @@ export default {
     sm="6"
     text-class="font-italic"
   >
-    <template v-if="isInvite">
-      <input
-        id="user_is_invite"
-        name="user[is_invite]"
-        type="hidden"
-        value="true"
-      >
-      <input
-        id="user_owner_name"
-        :value="ownerName"
-        name="user[owner_name]"
-        type="hidden"
-      >
-    </template>
     <new-user
+      v-if="isSignUp || isInvite"
       ref="newUser"
-      :is-sign-up="!isInvite"
+      :is-sign-up="isSignUp"
+      :is-invite="isInvite"
     >
     </new-user>
+    <edit-user
+      v-if="isProfile"
+      ref="editUser"
+      :is-profile="isProfile"
+      :user="user"
+    >
+    </edit-user>
   </users-sessions-container>
 </template>
 

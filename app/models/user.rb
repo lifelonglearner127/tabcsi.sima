@@ -47,6 +47,7 @@ class User < ApplicationRecord
   attr_accessor :is_invite
   attr_accessor :license_number
   attr_accessor :owner_name
+  attr_accessor :is_profile
 
   def self.new_pin
     # based on SecureRandom.alphanumeric
@@ -73,6 +74,10 @@ class User < ApplicationRecord
 
   def invite?
     is_invite
+  end
+
+  def profile?
+    is_profile
   end
 
   def pin_current?
