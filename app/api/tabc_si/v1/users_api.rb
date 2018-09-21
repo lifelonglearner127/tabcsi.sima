@@ -56,6 +56,51 @@ module TabcSi
 
           respond response
         end
+
+        segment ':user_id' do
+          desc(
+            'Update User',
+            detail: <<~DESC,
+              Allows updating a user's profile. All params are optional,
+              but at least one is required
+            DESC
+            success: {
+              model: Entities::UserEntity,
+              message: 'A user object.'
+            }
+          )
+          params do
+            optional(
+              :full_name, type: String
+            )
+
+            optional(
+              :email, type: String, email: true
+            )
+            optional(
+              :phone, type: String
+            )
+
+            optional(
+              :job_title, type: String
+            )
+
+            at_least_one_of :full_name, :email, :phone, :job_title
+          end
+
+          patch do
+            user = params[:user]
+
+            user.update!(
+              full_name: params[:full_name],
+              email: params[:email],
+              phone: params[:phone],
+              job_title: params[:job_title]
+            )
+
+            respond user
+          end
+        end
       end
     end
   end
