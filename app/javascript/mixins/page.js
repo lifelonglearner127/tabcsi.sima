@@ -12,6 +12,10 @@ export default {
   },
 
   computed: {
+    pageName () {
+      return this.pageOptions.pageName
+    },
+
     acceptCharset () {
       return this.pageOptions.acceptCharset
     },

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_logged_in_user, only: %i[invite]
+  before_action :require_logged_in_user, only: %i[invite profile]
   before_action :set_page_options
+  before_action :set_user, only: %i[show edit update]
 
   def new
     redirect_to(dashboard_url) if logged_in?
@@ -19,9 +20,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit; end
+
+  def update
+    if @user.update!(user_params)
+      redirect_to dashboard_url
+    else
+      unsuccessful_update_action(@user)
+    end
+  end
+
+  def profile; end
+
   def invite; end
 
   private
+
+  def set_user
+    @user = User.find_for_database_authentication(id: params[:id]) || current_user
+  end
 
   def set_page_options
     self.page_data_options =
@@ -32,15 +49,28 @@ class UsersController < ApplicationController
           method: 'post',
           local: true,
           html: {
-            is_invite: true,
+            page_name: 'invite',
             owner_name: current_user.company.owner_name
+          }
+        }
+      when 'profile'
+        {
+          url: profile_path,
+          method: 'patch',
+          local: true,
+          html: {
+            page_name: 'profile',
+            user: current_user
           }
         }
       else
         {
           url: sign_up_path,
           method: 'post',
-          local: true
+          local: true,
+          html: {
+            page_name: 'signup'
+          }
         }
       end
   end
@@ -53,9 +83,13 @@ class UsersController < ApplicationController
     user.invite? ? 'invite' : 'new'
   end
 
+  def unsuccessful_update_action(user)
+    user.profile? ? 'profile' : 'edit'
+  end
+
   def user_params
     params.require(:user).permit(
-      :company_name, :email, :full_name, :is_invite, :job_title,
+      :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
       :license_number, :owner_name, :phone
     )
   end
