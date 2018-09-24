@@ -11,6 +11,7 @@ module TabcSi
           success: { message: 'A collection of distributors names.' }
         )
         get do
+          # rubocop:disable Metrics/LineLength
           {
             items: %w[
               1820\ IMPORTS\ INC.
@@ -566,6 +567,7 @@ module TabcSi
               ZERBINA\ IMPORTS
             ]
           }
+          # rubocop:enable Metrics/LineLength
         end
       end
     end

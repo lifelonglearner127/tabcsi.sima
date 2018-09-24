@@ -25,9 +25,9 @@ module TabcSi
       def parse_config
         super(%i[value sort_order])
 
-        if attributes[:value].is_a?(Array)
-          attributes[:value] = attributes[:value].join("\n")
-        end
+        return unless attributes[:value].is_a?(Array)
+
+        attributes[:value] = attributes[:value].join("\n")
       end
     end
   end

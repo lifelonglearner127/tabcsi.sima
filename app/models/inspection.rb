@@ -16,6 +16,16 @@ class Inspection < ApplicationRecord
 
   after_create :lock_location
 
+  def self.generate_report_number(location_id)
+    fiscal_year = Setting.fiscal_year
+    time = Time.zone.now
+    random_sequence = SecureRandom.hex(1).upcase
+    sum = time.month + time.day + time.hour + time.min + time.sec
+    sequence = sum.to_s(16).rjust(2, '0').upcase
+
+    "RCR#{fiscal_year}-#{location_id}-#{random_sequence}#{sequence}"
+  end
+
   def finish(finished_at, answers)
     questions = Hash[
       audit_form.audit_form_questions.includes(:question).map do |afq|
@@ -54,16 +64,6 @@ class Inspection < ApplicationRecord
   end
 
   private
-
-  def self.generate_report_number(location_id)
-    fiscal_year = Setting.fiscal_year
-    time = Time.zone.now
-    random_sequence = SecureRandom.hex(1).upcase
-    sum = time.month + time.day + time.hour + time.min + time.sec
-    sequence = sum.to_s(16).rjust(2, '0').upcase
-
-    "RCR#{fiscal_year}-#{location_id}-#{random_sequence}#{sequence}"
-  end
 
   def generate_report_number
     self.class.generate_report_number(location.id)

@@ -75,6 +75,7 @@ module ApplicationHelper
         "#{controller_path}/#{action_name}"
       ].map do |name|
         next unless Webpacker.manifest.lookup(name_with_extension(name, type))
+
         name
       end
 

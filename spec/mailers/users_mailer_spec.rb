@@ -42,8 +42,7 @@ RSpec.describe UsersMailer do
     let(:mail) do
       described_class.with(
         recipient: recipient_email,
-        full_name: full_name,
-        company_name:
+        full_name: full_name
       ).welcome
     end
 

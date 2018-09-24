@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find_for_database_authentication(id: params[:id]) || current_user
+    @user = User.find_by(id: params[:id]) || current_user
   end
 
   def set_page_options

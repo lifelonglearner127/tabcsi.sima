@@ -27,7 +27,7 @@
 
 require 'spec_helper'
 
-describe 'server_base::default' do
+describe 'server_base::default' do # rubocop:disable RSpec/DescribeClass
   context 'when all attributes are default, on Ubuntu 16.04' do
     let(:chef_run) do
       # for a complete list of available platforms and versions see:
