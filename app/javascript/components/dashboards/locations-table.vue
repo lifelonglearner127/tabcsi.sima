@@ -24,6 +24,7 @@ export default {
         'phoneNumber',
         {
           key: 'locked',
+          label: 'Inspection Started',
           tdClass: 'text-center'
         },
         {
