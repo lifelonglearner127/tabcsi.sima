@@ -102,6 +102,12 @@ class User < ApplicationRecord
     true
   end
 
+  def revoke_access_tokens(application_id = nil)
+    conditions = { revoked_at: nil }
+    conditions[:application_id] = application_id if application_id.present?
+    access_tokens.where(conditions).each(&:revoke)
+  end
+
   def save_user
     license = nil
 
