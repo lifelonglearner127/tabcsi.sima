@@ -1,0 +1,9 @@
+---
+log_level: debug
+region: us
+tunnels:
+  rails:
+    proto: http
+    addr: 5000
+    # uncomment if you have a paid-version of ngrok
+    # subdomain: tabc-si-web

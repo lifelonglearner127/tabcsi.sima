@@ -248,3 +248,4 @@ bower.json
 # End of https://www.gitignore.io/api/vim,node,rails,linux,macos,windows,jetbrains,chefcookbook,visualstudiocode
 
 !.keep
+ngrok.yml

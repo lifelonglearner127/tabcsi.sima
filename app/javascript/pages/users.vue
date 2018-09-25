@@ -46,7 +46,7 @@ export default {
     },
 
     isSignUp () {
-      return this.pageName === 'signup'
+      return this.pageName === 'sign-up'
     },
 
     submitText () {
@@ -65,8 +65,10 @@ export default {
 
   methods: {
     validate (e) {
-      if ((this.$refs.newUser && this.$refs.newUser.validateBeforeSubmit()) ||
-        (this.$refs.editUser && this.$refs.editUser.validateBeforeSubmit())) {
+      if (
+        (this.$refs.newUser && this.$refs.newUser.validateBeforeSubmit()) ||
+        (this.$refs.editUser && this.$refs.editUser.validateBeforeSubmit())
+      ) {
         e.target.submit()
       }
     }
@@ -98,14 +100,12 @@ export default {
       v-if="isSignUp || isInvite"
       ref="newUser"
       :is-sign-up="isSignUp"
-      :is-invite="isInvite"
       :owner-name="ownerName"
     >
     </new-user>
     <edit-user
       v-if="isProfile"
       ref="editUser"
-      :is-profile="isProfile"
       :user="user"
     >
     </edit-user>

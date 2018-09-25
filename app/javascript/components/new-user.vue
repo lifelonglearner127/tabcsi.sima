@@ -17,11 +17,6 @@ export default {
       default: true
     },
 
-    isInvite: {
-      type: Boolean,
-      default: false
-    },
-
     ownerName: {
       type: String,
       default: ''
@@ -97,19 +92,19 @@ export default {
   validations () {
     const schema = {
       user: {
-        fullName: {
-          required,
-          fullName
-        },
         email: {
           required,
           email
         },
+        fullName: {
+          required,
+          fullName
+        },
+        jobTitle: { required },
         phone: {
           required,
           phone
-        },
-        jobTitle: { required }
+        }
       }
     }
 
@@ -197,7 +192,7 @@ export default {
 
 <template>
   <div>
-    <template v-if="isInvite">
+    <template v-if="!isSignUp">
       <input
         id="user_is_invite"
         name="user[is_invite]"

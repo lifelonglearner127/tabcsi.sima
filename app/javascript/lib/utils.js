@@ -1,6 +1,8 @@
+import _isArrayLike from 'lodash/isArrayLike'
 import debounce from 'lodash/debounce'
 import includes from 'lodash/includes'
 import isPlainObject from 'lodash/isPlainObject'
+import isString from 'lodash/isString'
 import map from 'lodash/map'
 import mapKeys from 'lodash/mapKeys'
 import mapValues from 'lodash/mapValues'
@@ -13,6 +15,8 @@ export const debugLog = (...args) => {
 }
 
 export const hasOwnProperty = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key)
+
+export const isArrayLike = (value) => _isArrayLike(value) && !isString(value)
 
 export const genEnumValidator = (values) => {
   const upcaseValues = map(values, (value) => value.toString().toUpperCase())

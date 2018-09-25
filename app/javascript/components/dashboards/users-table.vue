@@ -40,6 +40,17 @@ export default {
     striped
   >
     <template
+      slot="fullName"
+      slot-scope="data"
+    >
+      <b-form-checkbox
+        :id="`user_${data.index}_selected`"
+        v-model="data.item.selected"
+      >
+        {{ data.value }}
+      </b-form-checkbox>
+    </template>
+    <template
       slot="type"
       slot-scope="data"
     >

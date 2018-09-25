@@ -15,11 +15,6 @@ export default {
     user: {
       type: Object,
       required: true
-    },
-
-    isProfile: {
-      type: Boolean,
-      default: false
     }
   },
 
@@ -50,47 +45,31 @@ export default {
           parse: this.parsePhone,
           type: 'tel'
         },
-        companyName: {
-          autoComplete: 'organization',
-          icon: 'fas-fa-industry',
-          label: 'Company Name',
-          required: true,
-          show: !this.isProfile
-        },
         jobTitle: {
           autoComplete: 'organization-title',
           icon: 'fas-fa-user-tie',
           label: 'Job Title',
           required: true
-        },
-        licenseNumber: {
-          autoComplete: 'off',
-          icon: 'fas-fa-id-card',
-          label: 'License/Permit Number',
-          required: true,
-          show: !this.isProfile
         }
       }
     }
   },
 
   validations () {
-    const schema = {
+    return {
       user: {
-        fullName: {
-          required,
-          fullName
-        },
         email: {
           required,
           email
         },
-        phone: { phone },
-        jobTitle: { required }
+        fullName: {
+          required,
+          fullName
+        },
+        jobTitle: { required },
+        phone: { phone }
       }
     }
-
-    return schema
   },
 
   computed: {
@@ -164,14 +143,12 @@ export default {
 
 <template>
   <div>
-    <template v-if="isProfile">
-      <input
-        id="user_is_profile"
-        name="user[is_profile]"
-        type="hidden"
-        value="true"
-      >
-    </template>
+    <input
+      id="user_is_profile"
+      name="user[is_profile]"
+      type="hidden"
+      value="true"
+    >
     <template v-for="(options, key) in form">
       <b-form-group
         v-if="options.show == null ? true : options.show"

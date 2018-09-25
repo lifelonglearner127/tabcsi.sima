@@ -11,13 +11,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get :sign_up, to: 'users#new'
-  post :sign_up, to: 'users#create'
-  get :invite, to: 'users#invite'
-  post :invite, to: 'users#create'
-  get :profile, to: 'users#profile'
-  patch :profile, to: 'users#update'
-
   get :log_in, to: 'sessions#new'
   post :log_in, to: 'sessions#create'
   post :resend_pin, to: 'sessions#resend_pin'
@@ -32,6 +25,14 @@ Rails.application.routes.draw do
       get :help
     end
   end
+
+  resources :users, only: %i[destroy]
+  get :sign_up, to: 'users#new'
+  post :sign_up, to: 'users#create'
+  get :invite, to: 'users#invite'
+  post :invite, to: 'users#create'
+  get :profile, to: 'users#profile'
+  patch :profile, to: 'users#update'
 
   namespace :api do
     get(
