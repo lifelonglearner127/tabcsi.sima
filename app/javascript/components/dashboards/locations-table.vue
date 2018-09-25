@@ -24,11 +24,12 @@ export default {
         'phoneNumber',
         {
           key: 'locked',
-          label: 'Inspection Started',
+          label: 'Started',
           tdClass: 'text-center'
         },
         {
           key: 'inspected',
+          label: 'Completed',
           tdClass: 'text-center'
         }
       ]
@@ -53,8 +54,8 @@ export default {
 
     licenses (location) {
       return map(location.licenses, (license) => [
-          license.licenseType,
-          license.licenseNumber
+        license.licenseType,
+        license.licenseNumber
       ].join('')).join('<br>')
     }
   }

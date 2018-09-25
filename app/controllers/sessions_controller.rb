@@ -91,7 +91,7 @@ class SessionsController < ApplicationController
   end
 
   def validate_pin
-    pin = session_params[:pin]
+    pin = session_params[:pin]&.strip
 
     if pin.present? && current_user.valid_pin?(pin)
       self.pin_requested = false
