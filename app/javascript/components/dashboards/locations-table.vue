@@ -24,11 +24,12 @@ export default {
         'phoneNumber',
         {
           key: 'locked',
-          label: 'Reporting Started',
+          label: 'Started',
           tdClass: 'text-center'
         },
         {
           key: 'inspected',
+          label: 'Completed',
           tdClass: 'text-center'
         }
       ]
