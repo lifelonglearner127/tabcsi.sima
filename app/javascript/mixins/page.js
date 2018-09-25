@@ -12,10 +12,6 @@ export default {
   },
 
   computed: {
-    pageName () {
-      return this.pageOptions.pageName
-    },
-
     acceptCharset () {
       return this.pageOptions.acceptCharset
     },
@@ -66,6 +62,10 @@ export default {
 
     multiPart () {
       return 'multipart' in this.pageOptions && Boolean(this.pageOptions.multipart)
+    },
+
+    pageName () {
+      return this.pageOptions.pageName
     },
 
     serverErrors () {

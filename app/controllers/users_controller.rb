@@ -76,7 +76,7 @@ class UsersController < ApplicationController
           method: 'post',
           local: true,
           html: {
-            page_name: 'signup'
+            page_name: 'sign-up'
           }
         }
       end

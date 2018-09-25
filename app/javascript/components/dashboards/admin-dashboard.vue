@@ -1,6 +1,5 @@
 <script>
 import filter from 'lodash/filter'
-import forEach from 'lodash/forEach'
 import http from '~/lib/http'
 import isEmpty from 'lodash/isEmpty'
 import LocationsTable from './locations-table'
