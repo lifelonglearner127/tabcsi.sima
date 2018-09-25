@@ -32,10 +32,10 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many(
     :licenses,
-    -> { order(:license_type, :license_number) }
+    -> { order(:clp) }
   )
 
-  has_and_belongs_to_many :locations, -> { order(:name) }
+  has_and_belongs_to_many :locations, -> { order(:name, :clp) }
   has_many :push_tokens, -> { order(created_at: :desc) }, dependent: :destroy
 
   enum role: %i[user admin tabc]
@@ -45,9 +45,10 @@ class User < ApplicationRecord
 
   attr_accessor :company_name
   attr_accessor :is_invite
-  attr_accessor :license_number
-  attr_accessor :owner_name
   attr_accessor :is_profile
+  attr_accessor :license_number
+  attr_accessor :location_clps
+  attr_accessor :owner_name
 
   def self.new_pin
     # based on SecureRandom.alphanumeric
@@ -137,9 +138,14 @@ class User < ApplicationRecord
       result = save!
     end
 
-    if result && !invite?
-      locations << self.company.locations
-      licenses << self.company.licenses
+    if result
+      if invite?
+        locations << Location.where(clp: location_clps)
+        licenses << License.where(clp: location_clps)
+      else
+        locations << self.company.locations
+        licenses << self.company.licenses
+      end
     end
 
     welcome_params = {

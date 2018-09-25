@@ -60,7 +60,8 @@ class UsersController < ApplicationController
           local: true,
           html: {
             page_name: 'invite',
-            owner_name: current_user.company.owner_name
+            owner_name: current_user.company.owner_name,
+            locations: current_user.company.locations
           }
         }
       when 'profile'
@@ -98,9 +99,11 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(
-      :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
-      :license_number, :owner_name, :phone
-    )
+    params
+      .require(:user)
+      .permit(
+        :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
+        :license_number, { location_clps: [] }, :owner_name, :phone
+      )
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_18_174756) do
+ActiveRecord::Schema.define(version: 2018_09_25_174235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 2018_09_18_174756) do
     t.string "status", null: false
     t.date "expires_on"
     t.string "clp"
+    t.index ["clp"], name: "index_licenses_on_clp", unique: true
     t.index ["company_id"], name: "index_licenses_on_company_id"
     t.index ["discarded_at"], name: "index_licenses_on_discarded_at"
     t.index ["license_type", "license_number"], name: "index_licenses_on_license_type_and_license_number", unique: true
