@@ -1,0 +1,7 @@
+log_level: debug
+region: us
+tunnels:
+  rails:
+    proto: http
+    addr: 5000
+    subdomain: tabc-si-web
