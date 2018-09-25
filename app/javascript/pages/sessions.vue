@@ -99,7 +99,7 @@ export default {
         </b-input-group-prepend>
         <b-form-input
           id="session_pin"
-          v-model.trim="session.pin"
+          v-model="session.pin"
           :maxlength="pageOptions.pinLength"
           name="session[pin]"
           @keypress.native="handlePinKeyPress"
@@ -138,7 +138,7 @@ export default {
         </b-input-group-prepend>
         <b-form-input
           id="session_email"
-          v-model.trim="session.email"
+          v-model="session.email"
           autocomplete="email"
           name="session[email]"
           type="email"
