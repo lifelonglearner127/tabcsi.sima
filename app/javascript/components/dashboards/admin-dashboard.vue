@@ -1,5 +1,10 @@
 <script>
+import filter from 'lodash/filter'
+import forEach from 'lodash/forEach'
+import http from '~/lib/http'
+import isEmpty from 'lodash/isEmpty'
 import LocationsTable from './locations-table'
+import map from 'lodash/map'
 import UsersTable from './users-table'
 
 export default {
@@ -22,12 +27,45 @@ export default {
   },
 
   computed: {
+    deleteDisabled () {
+      return isEmpty(this.selectedUsers)
+    },
+
     locations () {
       return this.user.locations || []
     },
 
+    selectedUsers () {
+      return filter(this.users, 'selected')
+    },
+
     users () {
       return this.company.users || []
+    }
+  },
+
+  methods: {
+    deleteUsers () {
+      this.$confirm(
+        'Are you sure you want to delete the selected user(s)?',
+        'Delete User(s)',
+        { variant: 'error' }
+      ).yes(() => {
+        Promise
+          .all(
+            map(
+              this.selectedUsers,
+              (user) => http
+                .delete(`/users/${user.id}`)
+                .then(() => {
+                  this.$message.success(`User "${user.fullName}" deleted.`)
+                })
+            )
+          )
+          .then(() => {
+            window.location.reload(true)
+          })
+      })
     }
   }
 }
@@ -97,10 +135,11 @@ export default {
             Edit
           </b-button>
           <b-button
+            :disabled="deleteDisabled"
             class="mx-1"
-            disabled
             size="sm"
             variant="outline-secondary"
+            @click.prevent="deleteUsers"
           >
             <fa-sprite
               fixed-width
@@ -120,7 +159,7 @@ export default {
             use="fas-fa-map-marker-alt"
           >
           </fa-sprite>
-          Locations
+          My Locations
         </template>
 
         <locations-table :items="locations"></locations-table>

@@ -48,7 +48,7 @@ group :development do
   # gem 'capistrano-yarn', '~> 2.0', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
-  gem 'rubocop', '~> 0.59.0', require: false
+  gem 'rubocop', '~> 0.59.2', require: false
   gem 'rubocop-rspec', '~> 1.29'
   gem 'slackistrano', '~> 3.8'
   gem 'spring', '~> 2.0'
@@ -80,7 +80,7 @@ end
 
 group :production do
   gem 'aws-sdk-rails', '~> 2.0'
-  gem 'aws-sdk-s3', '~> 1.19'
+  gem 'aws-sdk-s3', '~> 1.20'
   gem 'passenger', '~> 5.3'
   gem 'rack-timeout', '~> 0.5.1'
 end

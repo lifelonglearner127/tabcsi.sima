@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_logged_in_user, only: %i[invite profile]
+  before_action :require_logged_in_user, only: %i[destroy invite profile]
   before_action :set_page_options
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[edit show update]
 
   def new
     redirect_to(dashboard_url) if logged_in?
@@ -20,6 +20,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def invite; end
+
+  def profile; end
+
   def edit; end
 
   def update
@@ -30,9 +34,12 @@ class UsersController < ApplicationController
     end
   end
 
-  def profile; end
+  def destroy
+    user = User.find(params[:id])
+    user.discard
 
-  def invite; end
+    head :no_content
+  end
 
   private
 
