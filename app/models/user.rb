@@ -115,7 +115,10 @@ class User < ApplicationRecord
     else
       license = License.find_by_clp(license_number)
 
-      return false if license.blank? || license.company.owned?
+      if license.blank? || license.company.owned?
+        errors.add(:base, 'Company owned issue.')
+        return false
+      end
 
       self.company = license.company
     end

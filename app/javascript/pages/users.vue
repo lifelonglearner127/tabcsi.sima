@@ -81,6 +81,7 @@ export default {
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
+    :server-errors="serverErrors"
     :submit-text="submitText"
     :title="cardTitle"
     :token-name="tokenName"

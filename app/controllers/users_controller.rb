@@ -16,6 +16,9 @@ class UsersController < ApplicationController
       flash[:notice] = 'Registration success!'
       redirect_to successful_create_url(user)
     else
+      page_data_options[:html][:errors] = {
+        base: user.errors.full_messages.join(', ')
+      }
       render unsuccessful_create_action(user)
     end
   end
