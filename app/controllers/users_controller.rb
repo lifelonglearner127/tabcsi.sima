@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
+    user = User.new(sanitized_user_params)
 
     if user.save_user
       flash[:notice] = 'Registration success!'
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    if @user.update!(user_params)
+    if @user.update!(sanitized_user_params)
       redirect_to dashboard_url
     else
       unsuccessful_update_action(@user)
@@ -105,5 +105,19 @@ class UsersController < ApplicationController
         :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
         :license_number, { location_clps: [] }, :owner_name, :phone
       )
+  end
+
+  def sanitized_user_params
+    sanitized_params = user_params
+
+    if sanitized_params[:full_name].present?
+      sanitized_params[:full_name] = sanitized_params[:full_name].strip
+    end
+
+    if sanitized_params[:license_number].present?
+      sanitized_params[:license_number] = sanitized_params[:license_number].strip
+    end
+
+    sanitized_params
   end
 end
