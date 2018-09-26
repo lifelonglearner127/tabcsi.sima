@@ -1,23 +1,24 @@
 <script>
-import { email, fullName, getMessage, licenseNumber, phone } from '~/validators'
+import { email, fullName, licenseNumber, phone } from '~/validators'
 import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
 import { AsYouType } from '~/lib/phone-number'
-import get from 'lodash/get'
 import map from 'lodash/map'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
+import ValidationMixin from '~/mixins/validation'
 
 const DEBOUNCE_DELAY = 250 // milliseconds
 
 export default {
   name: 'NewUser',
 
+  mixins: [ValidationMixin('user')],
+
   props: {
     isSignUp: {
       type: Boolean,
       default: true
     },
-
     locations: {
       type: Array,
 
@@ -25,7 +26,6 @@ export default {
         return []
       }
     },
-
     ownerName: {
       type: String,
       default: ''
@@ -57,8 +57,7 @@ export default {
           label: 'E-mail',
           maxLength: 192,
           placeholder: 'jsmith@example.com',
-          required: true,
-          type: 'email'
+          required: true
         },
         phone: {
           autoComplete: 'tel',
@@ -142,10 +141,6 @@ export default {
           value: location.clp
         })
       )
-    },
-
-    submittable () {
-      return !this.$v.$invalid
     }
   },
 
@@ -160,10 +155,6 @@ export default {
       }
     },
 
-    getValidationField (path) {
-      return get(this.$v.user, path)
-    },
-
     inputGroupId (key) {
       return `${this.inputId(key)}_group`
     },
@@ -176,24 +167,8 @@ export default {
       return `user[${snakeCase(key)}]`
     },
 
-    invalidFeedback (path) {
-      return getMessage(this.getValidationField(path), this.state(path))
-    },
-
     parsePhone (ch) {
       return parseDigit(ch)
-    },
-
-    state (path) {
-      const field = this.getValidationField(path)
-
-      return field ? !field.$error : true
-    },
-
-    validate (e) {
-      const func = ensureDebounceFunc('validateDebounceFunc', this, this.validateDebounced, DEBOUNCE_DELAY)
-
-      func(e)
     },
 
     validateLocationClps () {
@@ -202,19 +177,6 @@ export default {
       )
 
       func()
-    },
-
-    validateBeforeSubmit () {
-      this.$v.$touch()
-
-      return this.submittable
-    },
-
-    validateDebounced (event) {
-      const path = event.target.dataset.path
-      const field = this.getValidationField(path)
-
-      field.$touch()
     },
 
     validateLocationClpsDebounced () {
@@ -263,6 +225,7 @@ export default {
           <component
             v-model="$v.user[key].$model"
             :autocomplete="options.autoComplete"
+            :class="{ 'form-control': options.component }"
             :data-path="key"
             :format="options.format"
             :id="inputId(key)"
@@ -273,7 +236,6 @@ export default {
             :placeholder="options.placeholder"
             :required="options.required"
             :type="options.type || 'text'"
-            class="form-control"
             @blur.native="validate"
             @input.native="validate"
           >

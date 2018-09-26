@@ -1,15 +1,15 @@
 <script>
-import { email, fullName, getMessage, phone } from '~/validators'
-import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
+import { email, fullName, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
-import get from 'lodash/get'
+import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
-
-const DEBOUNCE_DELAY = 250 // milliseconds
+import ValidationMixin from '~/mixins/validation'
 
 export default {
   name: 'EditUser',
+
+  mixins: [ValidationMixin('user')],
 
   props: {
     user: {
@@ -72,12 +72,6 @@ export default {
     }
   },
 
-  computed: {
-    submittable () {
-      return !this.$v.$invalid
-    }
-  },
-
   methods: {
     formatPhone (value) {
       const asYouType = new AsYouType()
@@ -87,10 +81,6 @@ export default {
       return {
         text, template
       }
-    },
-
-    getValidationField (path) {
-      return get(this.$v.user, path)
     },
 
     inputGroupId (key) {
@@ -105,37 +95,8 @@ export default {
       return `user[${snakeCase(key)}]`
     },
 
-    invalidFeedback (path) {
-      return getMessage(this.getValidationField(path), this.state(path))
-    },
-
     parsePhone (ch) {
       return parseDigit(ch)
-    },
-
-    state (path) {
-      const field = this.getValidationField(path)
-
-      return field ? !field.$error : true
-    },
-
-    validate (e) {
-      const func = ensureDebounceFunc('validateDebounceFunc', this, this.validateDebounced, DEBOUNCE_DELAY)
-
-      func(e)
-    },
-
-    validateBeforeSubmit () {
-      this.$v.$touch()
-
-      return this.submittable
-    },
-
-    validateDebounced (event) {
-      const path = event.target.dataset.path
-      const field = this.getValidationField(path)
-
-      field.$touch()
     }
   }
 }
@@ -202,15 +163,5 @@ export default {
 
 .form-text {
   text-align: left;
-}
-
-.form-group {
-  &[data-required] {
-    /deep/ .col-form-label::after {
-      color: $danger;
-      content: '*';
-      margin-left: 0.25rem;
-    }
-  }
 }
 </style>

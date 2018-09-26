@@ -46,6 +46,20 @@ class UsersController < ApplicationController
 
   private
 
+  def sanitized_user_params
+    sanitized_params = user_params
+
+    if sanitized_params[:full_name].present?
+      sanitized_params[:full_name] = sanitized_params[:full_name].strip
+    end
+
+    if sanitized_params[:license_number].present?
+      sanitized_params[:license_number] = sanitized_params[:license_number].strip
+    end
+
+    sanitized_params
+  end
+
   def set_user
     @user = User.find_by(id: params[:id]) || current_user
   end
@@ -105,19 +119,5 @@ class UsersController < ApplicationController
         :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
         :license_number, { location_clps: [] }, :owner_name, :phone
       )
-  end
-
-  def sanitized_user_params
-    sanitized_params = user_params
-
-    if sanitized_params[:full_name].present?
-      sanitized_params[:full_name] = sanitized_params[:full_name].strip
-    end
-
-    if sanitized_params[:license_number].present?
-      sanitized_params[:license_number] = sanitized_params[:license_number].strip
-    end
-
-    sanitized_params
   end
 end

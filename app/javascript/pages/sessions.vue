@@ -1,13 +1,19 @@
 <script>
+import { email, exactLength } from '~/validators'
 import PageMixin from '~/mixins/page'
+import { required } from 'vuelidate/lib/validators'
 import UsersSessionsContainer from '~/components/users-sessions-container'
+import ValidationMixin from '~/mixins/validation'
 
 export default {
   name: 'Sessions',
 
   components: { UsersSessionsContainer },
 
-  mixins: [PageMixin],
+  mixins: [
+    PageMixin,
+    ValidationMixin('session')
+  ],
 
   data () {
     return {
@@ -18,14 +24,40 @@ export default {
     }
   },
 
+  validations () {
+    const schema = { session: {} }
+
+    if (this.pinRequested) {
+      schema.session.pin = {
+        required,
+        exactLength: exactLength(this.pinLength)
+      }
+    } else {
+      schema.session.email = {
+        required,
+        email
+      }
+    }
+
+    return schema
+  },
+
   computed: {
     cardTitle () {
       if (this.pinRequested) {
-        return `Check your email for an "${this.pageOptions.pinLength} digit` +
+        return `Check your email for an "${this.pinLength} digit` +
           ' pin" and enter it here.'
       }
 
       return 'Enter your email address to get started.'
+    },
+
+    pinLength () {
+      return this.pageOptions.pinLength || 1
+    },
+
+    pinRequested () {
+      return Boolean(this.pageOptions.pinRequested)
     },
 
     question () {
@@ -42,24 +74,6 @@ export default {
         linkHref: this.pageOptions.signUpPath,
         linkText: 'Register',
         text: 'Not a member?'
-      }
-    },
-
-    pinRequested () {
-      return Boolean(this.pageOptions.pinRequested)
-    }
-  },
-
-  methods: {
-    handlePinKeyPress (e) {
-      if (e.code === 'Space') {
-        e.preventDefault()
-      }
-    },
-
-    handleEmailKeyPress (e) {
-      if (e.code === 'Space') {
-        e.preventDefault()
       }
     }
   }
@@ -86,6 +100,9 @@ export default {
     <b-form-group
       v-if="pinRequested"
       id="session_pin_group"
+      :invalid-feedback="invalidFeedback('pin')"
+      :state="state('pin')"
+      data-required
       label="PIN"
       label-for="session_pin"
     >
@@ -101,8 +118,11 @@ export default {
           id="session_pin"
           v-model="session.pin"
           :maxlength="pageOptions.pinLength"
+          data-path="pin"
           name="session[pin]"
-          @keypress.native="handlePinKeyPress"
+          placeholder="12345678"
+          @blur.native="validate"
+          @input.native="validate"
         >
         </b-form-input>
       </b-input-group>
@@ -125,6 +145,9 @@ export default {
     <b-form-group
       v-else
       id="session_email_group"
+      :invalid-feedback="invalidFeedback('email')"
+      :state="state('email')"
+      data-required
       description="You'll need access to this email address to verify your account."
       label="E-mail"
       label-for="session_email"
@@ -141,9 +164,12 @@ export default {
           id="session_email"
           v-model="session.email"
           autocomplete="email"
+          data-path="email"
+          maxlength="192"
           name="session[email]"
-          type="email"
-          @keypress.native="handleEmailKeyPress"
+          placeholder="jsmith@example.com"
+          @blur.native="validate"
+          @input.native="validate"
         >
         </b-form-input>
       </b-input-group>
