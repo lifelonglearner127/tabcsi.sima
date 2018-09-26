@@ -14,6 +14,10 @@ export default {
   mixins: [PageMixin],
 
   computed: {
+    adminCount () {
+      return this.pageOptions.adminCount || 0
+    },
+
     company () {
       return this.pageOptions.company || {}
     },
@@ -116,6 +120,7 @@ export default {
           </tabc-dashboard>
           <admin-dashboard
             v-else-if="userIsAdmin"
+            :admin-count="adminCount"
             :company="company"
             :user="user"
           >

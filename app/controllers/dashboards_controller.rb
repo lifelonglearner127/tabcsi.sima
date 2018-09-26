@@ -36,12 +36,13 @@ class DashboardsController < ApplicationController
   def set_page_options
     self.page_data_options = {
       html: {
+        admin_count: current_user.company.admin_count,
+        company: company,
         log_out: {
           path: log_out_path,
           method: :delete
         },
-        user: current_user.info,
-        company: company
+        user: current_user.info
       }
     }
   end
