@@ -61,7 +61,7 @@ class UsersController < ApplicationController
           html: {
             page_name: 'invite',
             owner_name: current_user.company.owner_name,
-            locations: current_user.company.locations.where(completed_at: nil)
+            locations: current_user.company.locations.where(inspected: false)
           }
         }
       when 'profile'
