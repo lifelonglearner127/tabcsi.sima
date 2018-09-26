@@ -76,6 +76,15 @@ export default {
               </fa-sprite>
               Update Profile
             </b-dropdown-item>
+            <b-dropdown-item href="https://www.tabc.texas.gov/mobile/">
+              <fa-sprite
+                fixed-width
+                use="fas-fa-phone"
+              >
+              </fa-sprite>
+              Contact TABC
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item
               v-ujs-confirm="'Are you sure you want to log-out?'"
               v-ujs-method="pageOptions.logOut.method"
