@@ -3,6 +3,7 @@ import { email, fullName, getMessage, licenseNumber, phone } from '~/validators'
 import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
 import { AsYouType } from '~/lib/phone-number'
 import get from 'lodash/get'
+import map from 'lodash/map'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
 
@@ -15,6 +16,14 @@ export default {
     isSignUp: {
       type: Boolean,
       default: true
+    },
+
+    locations: {
+      type: Array,
+
+      default () {
+        return []
+      }
     },
 
     ownerName: {
@@ -31,6 +40,7 @@ export default {
         fullName: '',
         jobTitle: '',
         licenseNumber: '',
+        locationClps: [],
         phone: ''
       },
       form: {
@@ -116,12 +126,24 @@ export default {
       }
     } else {
       delete schema.user.phone.required
+
+      schema.user.locationClps = { required }
     }
 
     return schema
   },
 
   computed: {
+    locationClps () {
+      return map(
+        this.locations,
+        (location) => ({
+          text: `${location.name} (${location.clp})`,
+          value: location.clp
+        })
+      )
+    },
+
     submittable () {
       return !this.$v.$invalid
     }
@@ -174,6 +196,14 @@ export default {
       func(e)
     },
 
+    validateLocationClps () {
+      const func = ensureDebounceFunc(
+        'validateLocationClpsDebounceFunc', this, this.validateLocationClpsDebounced, DEBOUNCE_DELAY
+      )
+
+      func()
+    },
+
     validateBeforeSubmit () {
       this.$v.$touch()
 
@@ -185,6 +215,10 @@ export default {
       const field = this.getValidationField(path)
 
       field.$touch()
+    },
+
+    validateLocationClpsDebounced () {
+      this.$v.user.locationClps.$touch()
     }
   }
 }
@@ -261,6 +295,27 @@ export default {
       example: <strong>MB1234567</strong>. You will be assigned licenses/permits that are associated with this once you
       log in into the system.
     </b-form-text>
+
+    <b-form-group
+      v-if="!isSignUp"
+      id="user_location_clps_group"
+      :invalid-feedback="invalidFeedback('locationClps')"
+      :state="state('locationClps')"
+      data-required
+      label="Locations"
+      label-for="user_location_clps"
+    >
+      <b-form-checkbox-group
+        id="user_location_clps"
+        v-model="$v.user.locationClps.$model"
+        :options="locationClps"
+        name="user[location_clps][]"
+        required
+        stacked
+        @change="validateLocationClps"
+      >
+      </b-form-checkbox-group>
+    </b-form-group>
   </div>
 </template>
 
@@ -284,5 +339,13 @@ export default {
       margin-left: 0.25rem;
     }
   }
+}
+
+.custom-controls-stacked {
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+  height: 9.1rem;
+  overflow: auto;
+  padding: 0 0.25rem;
 }
 </style>

@@ -22,7 +22,15 @@ class DashboardsController < ApplicationController
       }
     end
 
-    current_user.company.as_json(options)
+    User
+      .includes(
+        company: {
+          locations: :licenses
+        }
+      )
+      .find(current_user.id)
+      .company
+      .as_json(options)
   end
 
   def set_page_options

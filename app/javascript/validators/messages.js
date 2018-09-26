@@ -19,7 +19,7 @@ const MESSAGES = {
   minLength (params) {
     const min = params.min
 
-    return `Cannot have fewer than ${min} ${min === 1 ? 'item' : 'items'}.`
+    return `Must have at least ${min} ${min === 1 ? 'item' : 'items'}.`
   },
 
   phone: constant('Must be a valid US telephone number.'),

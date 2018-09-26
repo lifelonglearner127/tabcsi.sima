@@ -29,14 +29,6 @@ export default {
       }
     },
 
-    ownerName () {
-      return this.pageOptions.ownerName
-    },
-
-    user () {
-      return this.pageOptions.user || {}
-    },
-
     isInvite () {
       return this.pageName === 'invite'
     },
@@ -47,6 +39,14 @@ export default {
 
     isSignUp () {
       return this.pageName === 'sign-up'
+    },
+
+    locations () {
+      return this.pageOptions.locations || []
+    },
+
+    ownerName () {
+      return this.pageOptions.ownerName
     },
 
     submitText () {
@@ -60,6 +60,10 @@ export default {
         default:
           return 'Sign Up'
       }
+    },
+
+    user () {
+      return this.pageOptions.user || {}
     }
   },
 
@@ -100,6 +104,7 @@ export default {
       v-if="isSignUp || isInvite"
       ref="newUser"
       :is-sign-up="isSignUp"
+      :locations="locations"
       :owner-name="ownerName"
     >
     </new-user>
