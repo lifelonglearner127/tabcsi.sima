@@ -36,15 +36,18 @@ export default (field, state) => {
   let message
 
   message = undefined
-  forEach(field, (flag, key) => {
-    const params = field.$params[key]
 
-    if (message || flag || !params) {
-      return
-    }
+  if (field) {
+    forEach(field, (flag, key) => {
+      const params = field.$params[key]
 
-    message = _getMessage(key, params)
-  })
+      if (message || flag || !params) {
+        return
+      }
+
+      message = _getMessage(key, params)
+    })
+  }
 
   return state ? '' : message
 }

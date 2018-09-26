@@ -1,13 +1,11 @@
 <script>
 import { email, fullName, licenseNumber, phone } from '~/validators'
-import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
 import { AsYouType } from '~/lib/phone-number'
 import map from 'lodash/map'
+import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
 import ValidationMixin from '~/mixins/validation'
-
-const DEBOUNCE_DELAY = 250 // milliseconds
 
 export default {
   name: 'NewUser',
@@ -41,7 +39,8 @@ export default {
         jobTitle: '',
         licenseNumber: '',
         locationClps: [],
-        phone: ''
+        phone: '',
+        role: 'user'
       },
       form: {
         fullName: {
@@ -126,13 +125,22 @@ export default {
     } else {
       delete schema.user.phone.required
 
-      schema.user.locationClps = { required }
+      schema.user.role = { required }
+
+      schema.user.locationClps = {}
+      if (this.isUser) {
+        schema.user.locationClps.required = required
+      }
     }
 
     return schema
   },
 
   computed: {
+    isUser () {
+      return this.user.role === 'user'
+    },
+
     locationClps () {
       return map(
         this.locations,
@@ -141,6 +149,19 @@ export default {
           value: location.clp
         })
       )
+    },
+
+    roles () {
+      return [
+        {
+          text: 'User',
+          value: 'user'
+        },
+        {
+          text: 'Admin',
+          value: 'admin'
+        }
+      ]
     }
   },
 
@@ -169,18 +190,6 @@ export default {
 
     parsePhone (ch) {
       return parseDigit(ch)
-    },
-
-    validateLocationClps () {
-      const func = ensureDebounceFunc(
-        'validateLocationClpsDebounceFunc', this, this.validateLocationClpsDebounced, DEBOUNCE_DELAY
-      )
-
-      func()
-    },
-
-    validateLocationClpsDebounced () {
-      this.$v.user.locationClps.$touch()
     }
   }
 }
@@ -258,26 +267,49 @@ export default {
       log in into the system.
     </b-form-text>
 
-    <b-form-group
-      v-if="!isSignUp"
-      id="user_location_clps_group"
-      :invalid-feedback="invalidFeedback('locationClps')"
-      :state="state('locationClps')"
-      data-required
-      label="Locations"
-      label-for="user_location_clps"
-    >
-      <b-form-checkbox-group
-        id="user_location_clps"
-        v-model="$v.user.locationClps.$model"
-        :options="locationClps"
-        name="user[location_clps][]"
-        required
-        stacked
-        @change="validateLocationClps"
+    <template v-if="!isSignUp">
+      <b-form-group
+        id="user_role_group"
+        :invalid-feedback="invalidFeedback('role')"
+        :state="state('role')"
+        data-required
+        label="Role"
+        label-for="user_role"
       >
-      </b-form-checkbox-group>
-    </b-form-group>
+        <b-form-radio-group
+          id="user_role"
+          v-model="$v.user.role.$model"
+          :options="roles"
+          data-path="role"
+          name="user[role]"
+          required
+          @change="validate"
+        >
+        </b-form-radio-group>
+      </b-form-group>
+
+      <b-form-group
+        v-show="isUser"
+        id="user_location_clps_group"
+        :data-required="isUser"
+        :invalid-feedback="invalidFeedback('locationClps')"
+        :state="state('locationClps')"
+        label="Locations"
+        label-for="user_location_clps"
+      >
+        <b-form-checkbox-group
+          id="user_location_clps"
+          v-model="$v.user.locationClps.$model"
+          :options="locationClps"
+          :required="isUser"
+          data-path="locationClps"
+          name="user[location_clps][]"
+          stacked
+          @change="validate"
+        >
+        </b-form-checkbox-group>
+      </b-form-group>
+    </template>
   </div>
 </template>
 
@@ -291,16 +323,6 @@ export default {
 
 .form-text {
   text-align: left;
-}
-
-.form-group {
-  &[data-required] {
-    /deep/ .col-form-label::after {
-      color: $danger;
-      content: '*';
-      margin-left: 0.25rem;
-    }
-  }
 }
 
 .custom-controls-stacked {

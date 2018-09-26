@@ -117,7 +117,7 @@ class UsersController < ApplicationController
       .require(:user)
       .permit(
         :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
-        :license_number, { location_clps: [] }, :owner_name, :phone
+        :license_number, { location_clps: [] }, :owner_name, :phone, :role
       )
   end
 end

@@ -120,7 +120,7 @@ class User < ApplicationRecord
       return false if company.blank?
 
       self.company = company
-      self.role = :user
+      self.role = :user if role.blank?
     else
       license = License.find_by_clp(license_number)
 
@@ -141,7 +141,7 @@ class User < ApplicationRecord
     end
 
     if result
-      if invite?
+      if invite? && user?
         locations << Location.where(clp: location_clps)
         licenses << License.where(clp: location_clps)
       else

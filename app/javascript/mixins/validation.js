@@ -43,8 +43,18 @@ export default (validationKey) => ({
     },
 
     validateDebounced (event) {
-      const path = event.target.dataset.path
+      const target = event.target
+
+      if (!target) {
+        return
+      }
+
+      const path = target.dataset.path
       const field = this.getValidationField(path)
+
+      if (!field) {
+        return
+      }
 
       field.$touch()
     }

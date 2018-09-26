@@ -121,6 +121,7 @@ export default {
           data-path="pin"
           name="session[pin]"
           placeholder="12345678"
+          required
           @blur.native="validate"
           @input.native="validate"
         >
@@ -168,6 +169,7 @@ export default {
           maxlength="192"
           name="session[email]"
           placeholder="jsmith@example.com"
+          required
           @blur.native="validate"
           @input.native="validate"
         >
