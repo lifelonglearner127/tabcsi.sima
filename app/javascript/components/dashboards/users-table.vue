@@ -5,6 +5,10 @@ export default {
   name: 'UsersTable',
 
   props: {
+    currentUserId: {
+      type: Number,
+      required: true
+    },
     items: {
       type: Array,
       required: true
@@ -39,17 +43,15 @@ export default {
     responsive
     striped
   >
-    <template
+    <b-form-checkbox
       slot="fullName"
       slot-scope="data"
+      :disabled="data.item.id === currentUserId"
+      :id="`user_${data.index}_selected`"
+      v-model="data.item.selected"
     >
-      <b-form-checkbox
-        :id="`user_${data.index}_selected`"
-        v-model="data.item.selected"
-      >
-        {{ data.value }}
-      </b-form-checkbox>
-    </template>
+      {{ data.value }}
+    </b-form-checkbox>
     <template
       slot="type"
       slot-scope="data"

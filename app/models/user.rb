@@ -68,6 +68,7 @@ class User < ApplicationRecord
 
   def info
     {
+      id: id,
       full_name: full_name,
       role: role,
       locations: locations.includes(:licenses).as_json(include: :licenses)

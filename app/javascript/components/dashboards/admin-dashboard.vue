@@ -26,12 +26,12 @@ export default {
   },
 
   computed: {
-    deleteDisabled () {
-      return isEmpty(this.selectedUsers)
-    },
-
     locations () {
       return this.user.locations || []
+    },
+
+    noUsersSelected () {
+      return isEmpty(this.selectedUsers)
     },
 
     selectedUsers () {
@@ -111,7 +111,10 @@ export default {
               </fa-sprite>
               Manual Add
             </b-dropdown-item>
-            <b-dropdown-item class="px-3">
+            <b-dropdown-item
+              class="px-3"
+              disabled
+            >
               <fa-sprite
                 fixed-width
                 use="fas-fa-file-upload"
@@ -121,20 +124,7 @@ export default {
             </b-dropdown-item>
           </b-dropdown>
           <b-button
-            class="mx-1"
-            disabled
-            size="sm"
-            variant="outline-secondary"
-          >
-            <fa-sprite
-              fixed-width
-              use="fas-fa-user-edit"
-            >
-            </fa-sprite>
-            Edit
-          </b-button>
-          <b-button
-            :disabled="deleteDisabled"
+            :disabled="noUsersSelected"
             class="mx-1"
             size="sm"
             variant="outline-secondary"
@@ -149,7 +139,11 @@ export default {
           </b-button>
         </b-button-toolbar>
 
-        <users-table :items="users"></users-table>
+        <users-table
+          :current-user-id="user.id"
+          :items="users"
+        >
+        </users-table>
       </b-tab>
       <b-tab>
         <template slot="title">
