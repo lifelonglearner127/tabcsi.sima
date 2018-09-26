@@ -125,6 +125,7 @@ export default {
     <b-form-group
       v-else
       id="session_email_group"
+      description="You'll need access to this email address to verify your account."
       label="E-mail"
       label-for="session_email"
     >
