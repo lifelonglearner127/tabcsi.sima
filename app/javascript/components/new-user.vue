@@ -1,23 +1,22 @@
 <script>
-import { email, fullName, getMessage, licenseNumber, phone } from '~/validators'
-import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
+import { email, fullName, licenseNumber, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
-import get from 'lodash/get'
 import map from 'lodash/map'
+import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
-
-const DEBOUNCE_DELAY = 250 // milliseconds
+import ValidationMixin from '~/mixins/validation'
 
 export default {
   name: 'NewUser',
+
+  mixins: [ValidationMixin('user')],
 
   props: {
     isSignUp: {
       type: Boolean,
       default: true
     },
-
     locations: {
       type: Array,
 
@@ -25,7 +24,6 @@ export default {
         return []
       }
     },
-
     ownerName: {
       type: String,
       default: ''
@@ -41,7 +39,8 @@ export default {
         jobTitle: '',
         licenseNumber: '',
         locationClps: [],
-        phone: ''
+        phone: '',
+        role: 'user'
       },
       form: {
         fullName: {
@@ -57,8 +56,7 @@ export default {
           label: 'E-mail',
           maxLength: 192,
           placeholder: 'jsmith@example.com',
-          required: true,
-          type: 'email'
+          required: true
         },
         phone: {
           autoComplete: 'tel',
@@ -127,13 +125,22 @@ export default {
     } else {
       delete schema.user.phone.required
 
-      schema.user.locationClps = { required }
+      schema.user.role = { required }
+
+      schema.user.locationClps = {}
+      if (this.isUser) {
+        schema.user.locationClps.required = required
+      }
     }
 
     return schema
   },
 
   computed: {
+    isUser () {
+      return this.user.role === 'user'
+    },
+
     locationClps () {
       return map(
         this.locations,
@@ -144,8 +151,17 @@ export default {
       )
     },
 
-    submittable () {
-      return !this.$v.$invalid
+    roles () {
+      return [
+        {
+          text: 'User',
+          value: 'user'
+        },
+        {
+          text: 'Admin',
+          value: 'admin'
+        }
+      ]
     }
   },
 
@@ -160,10 +176,6 @@ export default {
       }
     },
 
-    getValidationField (path) {
-      return get(this.$v.user, path)
-    },
-
     inputGroupId (key) {
       return `${this.inputId(key)}_group`
     },
@@ -176,49 +188,8 @@ export default {
       return `user[${snakeCase(key)}]`
     },
 
-    invalidFeedback (path) {
-      return getMessage(this.getValidationField(path), this.state(path))
-    },
-
     parsePhone (ch) {
       return parseDigit(ch)
-    },
-
-    state (path) {
-      const field = this.getValidationField(path)
-
-      return field ? !field.$error : true
-    },
-
-    validate (e) {
-      const func = ensureDebounceFunc('validateDebounceFunc', this, this.validateDebounced, DEBOUNCE_DELAY)
-
-      func(e)
-    },
-
-    validateLocationClps () {
-      const func = ensureDebounceFunc(
-        'validateLocationClpsDebounceFunc', this, this.validateLocationClpsDebounced, DEBOUNCE_DELAY
-      )
-
-      func()
-    },
-
-    validateBeforeSubmit () {
-      this.$v.$touch()
-
-      return this.submittable
-    },
-
-    validateDebounced (event) {
-      const path = event.target.dataset.path
-      const field = this.getValidationField(path)
-
-      field.$touch()
-    },
-
-    validateLocationClpsDebounced () {
-      this.$v.user.locationClps.$touch()
     }
   }
 }
@@ -263,6 +234,7 @@ export default {
           <component
             v-model="$v.user[key].$model"
             :autocomplete="options.autoComplete"
+            :class="{ 'form-control': options.component }"
             :data-path="key"
             :format="options.format"
             :id="inputId(key)"
@@ -273,7 +245,6 @@ export default {
             :placeholder="options.placeholder"
             :required="options.required"
             :type="options.type || 'text'"
-            class="form-control"
             @blur.native="validate"
             @input.native="validate"
           >
@@ -296,26 +267,49 @@ export default {
       log in into the system.
     </b-form-text>
 
-    <b-form-group
-      v-if="!isSignUp"
-      id="user_location_clps_group"
-      :invalid-feedback="invalidFeedback('locationClps')"
-      :state="state('locationClps')"
-      data-required
-      label="Locations"
-      label-for="user_location_clps"
-    >
-      <b-form-checkbox-group
-        id="user_location_clps"
-        v-model="$v.user.locationClps.$model"
-        :options="locationClps"
-        name="user[location_clps][]"
-        required
-        stacked
-        @change="validateLocationClps"
+    <template v-if="!isSignUp">
+      <b-form-group
+        id="user_role_group"
+        :invalid-feedback="invalidFeedback('role')"
+        :state="state('role')"
+        data-required
+        label="Role"
+        label-for="user_role"
       >
-      </b-form-checkbox-group>
-    </b-form-group>
+        <b-form-radio-group
+          id="user_role"
+          v-model="$v.user.role.$model"
+          :options="roles"
+          data-path="role"
+          name="user[role]"
+          required
+          @change="validate"
+        >
+        </b-form-radio-group>
+      </b-form-group>
+
+      <b-form-group
+        v-show="isUser"
+        id="user_location_clps_group"
+        :data-required="isUser"
+        :invalid-feedback="invalidFeedback('locationClps')"
+        :state="state('locationClps')"
+        label="Locations"
+        label-for="user_location_clps"
+      >
+        <b-form-checkbox-group
+          id="user_location_clps"
+          v-model="$v.user.locationClps.$model"
+          :options="locationClps"
+          :required="isUser"
+          data-path="locationClps"
+          name="user[location_clps][]"
+          stacked
+          @change="validate"
+        >
+        </b-form-checkbox-group>
+      </b-form-group>
+    </template>
   </div>
 </template>
 
@@ -329,16 +323,6 @@ export default {
 
 .form-text {
   text-align: left;
-}
-
-.form-group {
-  &[data-required] {
-    /deep/ .col-form-label::after {
-      color: $danger;
-      content: '*';
-      margin-left: 0.25rem;
-    }
-  }
 }
 
 .custom-controls-stacked {

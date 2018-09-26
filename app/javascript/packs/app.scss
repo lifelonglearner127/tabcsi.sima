@@ -58,6 +58,16 @@ body {
   color: $tabc-dark-blue;
 }
 
+.form-group {
+   &[data-required] {
+     .col-form-label::after {
+       color: $danger;
+       content: '*';
+       margin-left: 0.25rem;
+     }
+   }
+ }
+
 /*
 .form-error {
   color: rgb(185, 74, 72);

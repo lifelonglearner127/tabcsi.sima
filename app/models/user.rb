@@ -68,6 +68,7 @@ class User < ApplicationRecord
 
   def info
     {
+      id: id,
       full_name: full_name,
       role: role,
       locations: locations.includes(:licenses).as_json(include: :licenses)
@@ -138,7 +139,7 @@ class User < ApplicationRecord
       end
 
       self.company = company
-      self.role = :user
+      self.role = :user if role.blank?
     else
       license = License.find_by_clp(license_number)
 
@@ -159,7 +160,7 @@ class User < ApplicationRecord
     end
 
     if result
-      if invite?
+      if invite? && user?
         locations << Location.where(clp: location_clps)
         licenses << License.where(clp: location_clps)
       else

@@ -15,6 +15,10 @@ export default {
   },
 
   props: {
+    adminCount: {
+      type: Number,
+      required: true
+    },
     company: {
       type: Object,
       required: true
@@ -26,12 +30,12 @@ export default {
   },
 
   computed: {
-    deleteDisabled () {
-      return isEmpty(this.selectedUsers)
-    },
-
     locations () {
       return this.user.locations || []
+    },
+
+    noUsersSelected () {
+      return isEmpty(this.selectedUsers)
     },
 
     selectedUsers () {
@@ -71,100 +75,121 @@ export default {
 </script>
 
 <template>
-  <b-card no-body>
-    <b-tabs card>
-      <b-tab active>
-        <template slot="title">
-          <fa-sprite
-            fixed-width
-            use="fas-fa-users"
-          >
-          </fa-sprite>
-          Users
-        </template>
-
-        <b-button-toolbar
-          class="mb-1 mt-4"
-          key-nav
+  <b-container>
+    <b-row>
+      <b-col>
+        <b-alert
+          :show="adminCount <= 1"
+          variant="info"
         >
-          <b-dropdown
-            class="mx-1"
-            size="sm"
-            variant="outline-secondary"
-          >
-            <template slot="button-content">
-              <fa-sprite
-                fixed-width
-                use="fas-fa-user-plus"
-              >
-              </fa-sprite>
-              Invite User
-            </template>
-            <b-dropdown-item
-              class="px-3"
-              href="/invite"
-            >
-              <fa-sprite
-                fixed-width
-                use="fas-fa-plus"
-              >
-              </fa-sprite>
-              Manual Add
-            </b-dropdown-item>
-            <b-dropdown-item class="px-3">
-              <fa-sprite
-                fixed-width
-                use="fas-fa-file-upload"
-              >
-              </fa-sprite>
-              Upload CSV (Coming Soon)
-            </b-dropdown-item>
-          </b-dropdown>
-          <b-button
-            class="mx-1"
-            disabled
-            size="sm"
-            variant="outline-secondary"
-          >
+          <h4 class="alert-heading">
             <fa-sprite
               fixed-width
-              use="fas-fa-user-edit"
+              use="fas-fa-info-circle"
             >
             </fa-sprite>
-            Edit
-          </b-button>
-          <b-button
-            :disabled="deleteDisabled"
-            class="mx-1"
-            size="sm"
-            variant="outline-secondary"
-            @click.prevent="deleteUsers"
-          >
-            <fa-sprite
-              fixed-width
-              use="fas-fa-user-times"
-            >
-            </fa-sprite>
-            Delete
-          </b-button>
-        </b-button-toolbar>
+            Add an Account Admin
+          </h4>
+          <p>
+            For the benefit of your organization, we highly recommend adding more than one admin so you always have a
+            safe backup for accessing the business account.
+          </p>
+        </b-alert>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="12">
+        <b-card no-body>
+          <b-tabs card>
+            <b-tab active>
+              <template slot="title">
+                <fa-sprite
+                  fixed-width
+                  use="fas-fa-users"
+                >
+                </fa-sprite>
+                Users
+              </template>
 
-        <users-table :items="users"></users-table>
-      </b-tab>
-      <b-tab>
-        <template slot="title">
-          <fa-sprite
-            fixed-width
-            use="fas-fa-map-marker-alt"
-          >
-          </fa-sprite>
-          My Locations
-        </template>
+              <b-button-toolbar
+                class="mb-1 mt-4"
+                key-nav
+              >
+                <b-dropdown
+                  class="mx-1"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  <template slot="button-content">
+                    <fa-sprite
+                      fixed-width
+                      use="fas-fa-user-plus"
+                    >
+                    </fa-sprite>
+                    Invite User
+                  </template>
+                  <b-dropdown-item
+                    class="px-3"
+                    href="/invite"
+                  >
+                    <fa-sprite
+                      fixed-width
+                      use="fas-fa-plus"
+                    >
+                    </fa-sprite>
+                    Manual Add
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    class="px-3"
+                    disabled
+                  >
+                    <fa-sprite
+                      fixed-width
+                      use="fas-fa-file-upload"
+                    >
+                    </fa-sprite>
+                    Upload CSV (Coming Soon)
+                  </b-dropdown-item>
+                </b-dropdown>
+                <b-button
+                  :disabled="noUsersSelected"
+                  class="mx-1"
+                  size="sm"
+                  variant="outline-secondary"
+                  @click.prevent="deleteUsers"
+                >
+                  <fa-sprite
+                    fixed-width
+                    use="fas-fa-user-times"
+                  >
+                  </fa-sprite>
+                  Delete
+                </b-button>
+              </b-button-toolbar>
 
-        <locations-table :items="locations"></locations-table>
-      </b-tab>
-    </b-tabs>
-  </b-card>
+              <users-table
+                :current-user-id="user.id"
+                :items="users"
+              >
+              </users-table>
+            </b-tab>
+            <b-tab>
+              <template slot="title">
+                <fa-sprite
+                  fixed-width
+                  use="fas-fa-map-marker-alt"
+                >
+                </fa-sprite>
+                My Locations
+              </template>
+
+              <locations-table :items="locations"></locations-table>
+            </b-tab>
+          </b-tabs>
+        </b-card>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <style lang="scss" scoped>
