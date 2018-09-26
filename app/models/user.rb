@@ -36,6 +36,7 @@ class User < ApplicationRecord
   )
 
   has_and_belongs_to_many :locations, -> { order(:name, :clp) }
+  has_many :news, -> { order(created_at: :desc) }, dependent: :destroy
   has_many :push_tokens, -> { order(created_at: :desc) }, dependent: :destroy
 
   enum role: %i[user admin tabc]

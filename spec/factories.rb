@@ -34,6 +34,9 @@ FactoryBot.define do
   factory :location do
   end
 
+  factory :news do
+  end
+
   factory :push_token do
   end
 
