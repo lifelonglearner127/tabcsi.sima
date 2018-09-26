@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_25_174235) do
+ActiveRecord::Schema.define(version: 2018_09_26_152442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,6 +231,19 @@ ActiveRecord::Schema.define(version: 2018_09_25_174235) do
     t.index ["user_id", "location_id"], name: "index_locations_users_on_user_id_and_location_id"
   end
 
+  create_table "news", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "news_type", default: 0, null: false
+    t.string "subject", null: false
+    t.text "content", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_news_on_discarded_at"
+    t.index ["news_type"], name: "index_news_on_news_type"
+    t.index ["user_id"], name: "index_news_on_user_id"
+  end
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer "resource_owner_id", null: false
     t.bigint "application_id", null: false
@@ -365,6 +378,7 @@ ActiveRecord::Schema.define(version: 2018_09_25_174235) do
   add_foreign_key "licenses", "companies"
   add_foreign_key "licenses", "locations"
   add_foreign_key "locations", "companies"
+  add_foreign_key "news", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
