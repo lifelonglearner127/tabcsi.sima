@@ -5,10 +5,6 @@ class UsersController < ApplicationController
   before_action :set_page_options
   before_action :set_user, only: %i[edit show update]
 
-  def new
-    redirect_to(dashboard_url) if logged_in?
-  end
-
   def create
     user = User.new(sanitized_user_params)
 
@@ -20,11 +16,22 @@ class UsersController < ApplicationController
     end
   end
 
-  def invite; end
+  def destroy
+    user = User.find(params[:id])
+    user.discard
 
-  def profile; end
+    head :no_content
+  end
 
   def edit; end
+
+  def invite; end
+
+  def new
+    redirect_to(dashboard_url) if logged_in?
+  end
+
+  def profile; end
 
   def update
     if @user.update!(sanitized_user_params)
@@ -34,36 +41,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    user = User.find(params[:id])
-    user.discard
-
-    head :no_content
-  end
-
   private
-
-  def sanitized_user_params
-    sanitized_params = user_params
-
-    if sanitized_params[:full_name].present?
-      sanitized_params[:full_name] = sanitized_params[:full_name].strip
-    end
-
-    if sanitized_params[:license_number].present?
-      sanitized_params[:license_number] = sanitized_params[:license_number].strip
-    end
-
-    sanitized_params
-  end
-
-  def set_user
-    @user = User.find_by(id: params[:id]) || current_user
-  end
-
-  def set_page_options
-    build_page_options(action_name)
-  end
 
   def build_page_options(page_name)
     self.page_data_options =
@@ -99,6 +77,28 @@ class UsersController < ApplicationController
           }
         }
       end
+  end
+
+  def sanitized_user_params
+    sanitized_params = user_params
+
+    if sanitized_params[:full_name].present?
+      sanitized_params[:full_name] = sanitized_params[:full_name].strip
+    end
+
+    if sanitized_params[:license_number].present?
+      sanitized_params[:license_number] = sanitized_params[:license_number].strip
+    end
+
+    sanitized_params
+  end
+
+  def set_page_options
+    build_page_options(action_name)
+  end
+
+  def set_user
+    @user = User.find_by(id: params[:id]) || current_user
   end
 
   def successful_create_url(user)
