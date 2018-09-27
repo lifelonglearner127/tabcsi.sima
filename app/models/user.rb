@@ -134,7 +134,7 @@ class User < ApplicationRecord
       company = Company.find_by(owner_name: owner_name)
 
       if company.blank?
-        errors.add(:base, 'Company doesn\'t exist.')
+        errors.add(:base, "Company doesn't exist.")
         return false
       end
 
