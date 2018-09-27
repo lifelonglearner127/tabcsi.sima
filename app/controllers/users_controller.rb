@@ -16,10 +16,7 @@ class UsersController < ApplicationController
       flash[:notice] = 'Registration success!'
       redirect_to successful_create_url(user)
     else
-      page_data_options[:html][:errors] = {
-        base: user.errors.full_messages.join(', ')
-      }
-      render unsuccessful_create_action(user)
+      unsuccessful_create_action(user)
     end
   end
 
@@ -65,8 +62,12 @@ class UsersController < ApplicationController
   end
 
   def set_page_options
+    build_page_options(action_name)
+  end
+
+  def build_page_options(page_name)
     self.page_data_options =
-      case action_name
+      case page_name
       when 'invite'
         {
           url: invite_path,
@@ -105,11 +106,29 @@ class UsersController < ApplicationController
   end
 
   def unsuccessful_create_action(user)
-    user.invite? ? 'invite' : 'new'
+    if user.invite?
+      build_page_options('invite')
+      page_data_options[:html][:errors] = {
+        base: user.errors.full_messages.join(', ')
+      }
+
+      render 'invite'
+    else
+      page_data_options[:html][:errors] = {
+        base: user.errors.full_messages.join(', ')
+      }
+
+      render 'new'
+    end
   end
 
   def unsuccessful_update_action(user)
-    user.profile? ? 'profile' : 'edit'
+    if user.profile?
+      build_page_options('profile')
+      render 'profile'
+    else
+      render 'edit'
+    end
   end
 
   def user_params

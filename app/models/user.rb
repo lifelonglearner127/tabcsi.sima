@@ -76,11 +76,11 @@ class User < ApplicationRecord
   end
 
   def invite?
-    is_invite
+    [true, 'true'].include? is_invite
   end
 
   def profile?
-    is_profile
+    [true, 'true'].include? is_invite
   end
 
   def pin_current?
@@ -115,9 +115,28 @@ class User < ApplicationRecord
     license = nil
 
     if invite?
+      invitee = User.with_discarded.find_by_email(email)
+      if invitee.present?
+        if invitee.discarded_at.nil?
+          errors.add(
+            :base,
+            'User already exists. Please try another email address.'
+          )
+        else
+          errors.add(
+            :base,
+            'User was deleted. Please contact TABC to undelete the user.'
+          )
+        end
+        return false
+      end
+
       company = Company.find_by(owner_name: owner_name)
 
-      return false if company.blank?
+      if company.blank?
+        errors.add(:base, "Company doesn't exist.")
+        return false
+      end
 
       self.company = company
       self.role = :user if role.blank?
