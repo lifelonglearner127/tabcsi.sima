@@ -24,8 +24,8 @@ export default {
         'phoneNumber',
         {
           key: 'status',
-          label: '',
-          tdClass: 'text-center'
+          tdClass: 'text-center',
+          thClass: 'text-center'
         }
       ]
     }
