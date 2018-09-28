@@ -13,9 +13,9 @@ export default {
   mixins: [ValidationMixin('user')],
 
   props: {
-    isSignUp: {
+    isInvite: {
       type: Boolean,
-      default: true
+      default: false
     },
     locations: {
       type: Array,
@@ -67,7 +67,7 @@ export default {
           maxLength: 14,
           parse: this.parsePhone,
           placeholder: '(123) 456-7890',
-          required: this.isSignUp,
+          required: !this.isInvite,
           type: 'tel'
         },
         companyName: {
@@ -76,7 +76,7 @@ export default {
           label: 'Company Name',
           placeholder: 'Awesome Food LLC',
           required: true,
-          show: this.isSignUp
+          show: !this.isInvite
         },
         jobTitle: {
           autoComplete: 'organization-title',
@@ -91,7 +91,7 @@ export default {
           label: 'License/Permit Number',
           placeholder: 'AB123456',
           required: true,
-          show: this.isSignUp
+          show: !this.isInvite
         }
       }
     }
@@ -116,13 +116,7 @@ export default {
       }
     }
 
-    if (this.isSignUp) {
-      schema.user.companyName = { required }
-      schema.user.licenseNumber = {
-        required,
-        licenseNumber
-      }
-    } else {
+    if (this.isInvite) {
       delete schema.user.phone.required
 
       schema.user.role = { required }
@@ -130,6 +124,12 @@ export default {
       schema.user.locationClps = {}
       if (this.isUser) {
         schema.user.locationClps.required = required
+      }
+    } else {
+      schema.user.companyName = { required }
+      schema.user.licenseNumber = {
+        required,
+        licenseNumber
       }
     }
 
@@ -197,7 +197,7 @@ export default {
 
 <template>
   <div>
-    <template v-if="!isSignUp">
+    <template v-if="isInvite">
       <input
         id="user_is_invite"
         name="user[is_invite]"
@@ -254,7 +254,7 @@ export default {
     </template>
 
     <b-form-text
-      v-if="isSignUp"
+      v-if="!isInvite"
       class="font-italic"
     >
       <fa-sprite
@@ -267,7 +267,7 @@ export default {
       log in into the system.
     </b-form-text>
 
-    <template v-if="!isSignUp">
+    <template v-if="isInvite">
       <b-form-group
         id="user_role_group"
         :invalid-feedback="invalidFeedback('role')"

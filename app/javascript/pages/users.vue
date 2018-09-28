@@ -37,10 +37,6 @@ export default {
       return this.pageName === 'profile'
     },
 
-    isSignUp () {
-      return this.pageName === 'sign-up'
-    },
-
     locations () {
       return this.pageOptions.locations || []
     },
@@ -100,20 +96,20 @@ export default {
     sm="6"
     text-class="font-italic"
   >
-    <new-user
-      v-if="isSignUp || isInvite"
-      ref="newUser"
-      :is-sign-up="isSignUp"
-      :locations="locations"
-      :owner-name="ownerName"
-    >
-    </new-user>
     <edit-user
       v-if="isProfile"
       ref="editUser"
       :user="user"
     >
     </edit-user>
+    <new-user
+      v-else
+      ref="newUser"
+      :is-invite="isInvite"
+      :locations="locations"
+      :owner-name="ownerName"
+    >
+    </new-user>
   </users-sessions-container>
 </template>
 
