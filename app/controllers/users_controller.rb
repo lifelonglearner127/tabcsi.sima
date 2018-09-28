@@ -6,11 +6,13 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[edit show update]
 
   def create
-    user = User.new(sanitized_user_params)
+    user = User.new(normalized_user_params)
 
     if user.save_user
-      flash[:notice] = 'Registration success!'
-      redirect_to successful_create_url(user)
+      redirect_to(
+        successful_create_url(user),
+        notice: successful_create_notice(@user)
+      )
     else
       unsuccessful_create_action(user)
     end
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
   def profile; end
 
   def update
-    if @user.update!(sanitized_user_params)
+    if @user.update!(normalized_user_params)
       redirect_to dashboard_url
     else
       unsuccessful_update_action(@user)
@@ -79,18 +81,18 @@ class UsersController < ApplicationController
       end
   end
 
-  def sanitized_user_params
-    sanitized_params = user_params
+  def normalized_user_params
+    normalized_params = user_params
 
-    if sanitized_params[:full_name].present?
-      sanitized_params[:full_name] = sanitized_params[:full_name].strip
+    if normalized_params[:full_name].present?
+      normalized_params[:full_name].strip!
     end
 
-    if sanitized_params[:license_number].present?
-      sanitized_params[:license_number] = sanitized_params[:license_number].strip
+    if normalized_params[:license_number].present?
+      normalized_params[:license_number].strip!
     end
 
-    sanitized_params
+    normalized_params
   end
 
   def set_page_options
@@ -99,6 +101,14 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:id]) || current_user
+  end
+
+  def successful_create_notice(user)
+    if user.invited?
+      t('notices.users.create.invite')
+    else
+      t('notices.users.create.new')
+    end
   end
 
   def successful_create_url(user)

@@ -35,3 +35,9 @@ en:
         id: is not a valid id
         entity: does not exist
         email: is not a valid email address
+
+  notices:
+    users:
+      create:
+        new: User registered successfully.
+        invite: User successfully invited.
