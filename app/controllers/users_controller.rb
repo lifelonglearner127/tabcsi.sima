@@ -1,26 +1,31 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_logged_in_user, only: %i[destroy invite profile]
+  before_action :require_logged_in_user, only: %i[destroy edit invite update]
+  before_action :set_user, only: %i[destroy edit show update]
   before_action :set_page_options
-  before_action :set_user, only: %i[edit show update]
 
   def create
-    user = User.new(normalized_user_params)
+    @user = User.create(normalized_user_params)
 
-    if user.save_user
+    if @user.valid?
       redirect_to(
-        successful_create_url(user),
+        @user.invited? ? dashboard_url : log_in_url,
         notice: successful_create_notice(@user)
       )
-    else
-      unsuccessful_create_action(user)
+
+      return
     end
+
+    page_name, action = @user.invited? ? %w[invite invite] : [nil, 'new']
+
+    build_page_options(page_name)
+
+    render action
   end
 
   def destroy
-    user = User.find(params[:id])
-    user.discard
+    @user.discard
 
     head :no_content
   end
@@ -33,40 +38,43 @@ class UsersController < ApplicationController
     redirect_to(dashboard_url) if logged_in?
   end
 
-  def profile; end
-
   def update
-    if @user.update!(normalized_user_params)
+    if @user.update(normalized_user_params)
       redirect_to dashboard_url
-    else
-      unsuccessful_update_action(@user)
+
+      return
     end
+
+    build_page_options('edit')
+
+    render 'edit'
   end
 
   private
 
-  def build_page_options(page_name)
+  def build_page_options(page_name = nil)
     self.page_data_options =
       case page_name
-      when 'invite'
+      when 'edit'
         {
-          url: invite_path,
-          method: 'post',
-          local: true,
-          html: {
-            page_name: 'invite',
-            owner_name: current_user.company.owner_name,
-            locations: current_user.company.locations.where(inspected: false)
-          }
-        }
-      when 'profile'
-        {
-          url: profile_path,
+          url: edit_user_path,
           method: 'patch',
           local: true,
           html: {
-            page_name: 'profile',
-            user: current_user
+            is_profile: @user.id == current_user.id,
+            locations: company_locations,
+            page_name: 'edit'
+          }
+        }
+      when 'invite'
+        {
+          url: invite_users_path,
+          method: 'post',
+          local: true,
+          html: {
+            locations: company_locations,
+            owner_name: current_user.company.owner_name,
+            page_name: 'invite'
           }
         }
       else
@@ -74,11 +82,21 @@ class UsersController < ApplicationController
           url: sign_up_path,
           method: 'post',
           local: true,
-          html: {
-            page_name: 'sign-up'
-          }
+          html: { page_name: 'sign-up' }
         }
       end
+
+    page_data_options[:html][:user] = @user&.info || {}
+
+    return if @user&.errors.blank?
+
+    page_data_options[:html][:errors] = {
+      base: @user.errors.full_messages.join(', ')
+    }
+  end
+
+  def company_locations
+    current_user.company.locations
   end
 
   def normalized_user_params
@@ -100,7 +118,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find_by(id: params[:id]) || current_user
+    @user = User.find(params[:id])
   end
 
   def successful_create_notice(user)
@@ -111,41 +129,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def successful_create_url(user)
-    user.invite? ? dashboard_url : log_in_url
-  end
-
-  def unsuccessful_create_action(user)
-    if user.invite?
-      build_page_options('invite')
-      page_data_options[:html][:errors] = {
-        base: user.errors.full_messages.join(', ')
-      }
-
-      render 'invite'
-    else
-      page_data_options[:html][:errors] = {
-        base: user.errors.full_messages.join(', ')
-      }
-
-      render 'new'
-    end
-  end
-
-  def unsuccessful_update_action(user)
-    if user.profile?
-      build_page_options('profile')
-      render 'profile'
-    else
-      render 'edit'
-    end
-  end
-
   def user_params
     params
       .require(:user)
       .permit(
-        :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
+        :company_name, :edited, :email, :full_name, :invited, :job_title,
         :license_number, { location_clps: [] }, :owner_name, :phone, :role
       )
   end

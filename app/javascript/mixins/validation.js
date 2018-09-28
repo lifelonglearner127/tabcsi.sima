@@ -17,7 +17,9 @@ export default (validationKey) => ({
 
   methods: {
     getValidationField (path) {
-      return get(this.$v[this.validationKey], path)
+      const object = this.$v[this.validationKey]
+
+      return get(object, path)
     },
 
     invalidFeedback (path) {

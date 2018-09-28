@@ -11,11 +11,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get :log_in, to: 'sessions#new'
-  post :log_in, to: 'sessions#create'
-  post :resend_pin, to: 'sessions#resend_pin'
-  delete :log_out, to: 'sessions#destroy'
-
   get :dashboard, to: 'dashboards#show'
 
   resources :faqs, only: %i[index]
@@ -26,13 +21,23 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: %i[destroy]
+  get :log_in, to: 'sessions#new'
+  post :log_in, to: 'sessions#create'
+  post :resend_pin, to: 'sessions#resend_pin'
+  delete :log_out, to: 'sessions#destroy'
+
+  resources :users, only: %i[destroy edit] do
+    collection do
+      get :invite
+      post :invite, action: :create
+    end
+
+    member do
+      patch :edit, action: :update
+    end
+  end
   get :sign_up, to: 'users#new'
   post :sign_up, to: 'users#create'
-  get :invite, to: 'users#invite'
-  post :invite, to: 'users#create'
-  get :profile, to: 'users#profile'
-  patch :profile, to: 'users#update'
 
   namespace :api do
     get(

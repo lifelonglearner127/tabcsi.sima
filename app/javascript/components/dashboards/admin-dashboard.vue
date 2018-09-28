@@ -130,7 +130,7 @@ export default {
                   </template>
                   <b-dropdown-item
                     class="px-3"
-                    href="/invite"
+                    href="/users/invite"
                   >
                     <fa-sprite
                       fixed-width

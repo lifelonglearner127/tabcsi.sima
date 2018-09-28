@@ -1,6 +1,7 @@
 <script>
 import { email, fullName, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
+import map from 'lodash/map'
 import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
@@ -12,6 +13,17 @@ export default {
   mixins: [ValidationMixin('user')],
 
   props: {
+    isProfile: {
+      type: Boolean,
+      default: false
+    },
+    locations: {
+      type: Array,
+
+      default () {
+        return []
+      }
+    },
     user: {
       type: Object,
       required: true
@@ -56,7 +68,7 @@ export default {
   },
 
   validations () {
-    return {
+    const schema = {
       user: {
         email: {
           required,
@@ -69,6 +81,46 @@ export default {
         jobTitle: { required },
         phone: { phone }
       }
+    }
+
+    if (!this.isProfile) {
+      schema.user.role = { required }
+
+      schema.user.locationClps = {}
+      if (this.isUser) {
+        schema.user.locationClps.required = required
+      }
+    }
+
+    return schema
+  },
+
+  computed: {
+    isUser () {
+      return this.user.role === 'user'
+    },
+
+    locationClps () {
+      return map(
+        this.locations,
+        (location) => ({
+          text: `${location.name} (${location.clp})`,
+          value: location.clp
+        })
+      )
+    },
+
+    roles () {
+      return [
+        {
+          text: 'User',
+          value: 'user'
+        },
+        {
+          text: 'Admin',
+          value: 'admin'
+        }
+      ]
     }
   },
 
@@ -105,8 +157,8 @@ export default {
 <template>
   <div>
     <input
-      id="user_is_profile"
-      name="user[is_profile]"
+      id="user_edited"
+      name="user[edited]"
       type="hidden"
       value="true"
     >
@@ -150,6 +202,50 @@ export default {
         </b-input-group>
       </b-form-group>
     </template>
+
+    <template v-if="!isProfile">
+      <b-form-group
+        id="user_role_group"
+        :invalid-feedback="invalidFeedback('role')"
+        :state="state('role')"
+        data-required
+        label="Role"
+        label-for="user_role"
+      >
+        <b-form-radio-group
+          id="user_role"
+          v-model="$v.user.role.$model"
+          :options="roles"
+          data-path="role"
+          name="user[role]"
+          required
+          @change="validate"
+        >
+        </b-form-radio-group>
+      </b-form-group>
+
+      <b-form-group
+        v-show="isUser"
+        id="user_location_clps_group"
+        :data-required="isUser"
+        :invalid-feedback="invalidFeedback('locationClps')"
+        :state="state('locationClps')"
+        label="Locations"
+        label-for="user_location_clps"
+      >
+        <b-form-checkbox-group
+          id="user_location_clps"
+          v-model="$v.user.locationClps.$model"
+          :options="locationClps"
+          :required="isUser"
+          data-path="locationClps"
+          name="user[location_clps][]"
+          stacked
+          @change="validate"
+        >
+        </b-form-checkbox-group>
+      </b-form-group>
+    </template>
   </div>
 </template>
 
@@ -163,5 +259,13 @@ export default {
 
 .form-text {
   text-align: left;
+}
+
+.custom-controls-stacked {
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+  height: 9.1rem;
+  overflow: auto;
+  padding: 0 0.25rem;
 }
 </style>

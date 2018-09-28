@@ -22,7 +22,12 @@ export default {
         'email',
         'jobTitle',
         'phone',
-        'type'
+        'type',
+        {
+          key: 'edit',
+          label: '',
+          tdClass: 'text-center'
+        }
       ]
     }
   },
@@ -49,6 +54,7 @@ export default {
       <col class="job-title-col">
       <col class="phone-col">
       <col class="type-col">
+      <col class="edit-col">
     </template>
     <b-form-checkbox
       slot="fullName"
@@ -65,6 +71,18 @@ export default {
     >
       {{ userType(data.item) }}
     </template>
+    <a
+      slot="edit"
+      slot-scope="data"
+      :href="`/users/${data.item.id}/edit`"
+      title="Edit"
+    >
+      <fa-sprite
+        fixed-width
+        use="fas-fa-user-edit"
+      >
+      </fa-sprite>
+    </a>
   </b-table>
 </template>
 
@@ -89,5 +107,9 @@ export default {
 
 .type-col {
   @include fixed-width(5rem);
+}
+
+.edit-col {
+  @include fixed-width(3rem);
 }
 </style>

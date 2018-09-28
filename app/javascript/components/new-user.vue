@@ -27,21 +27,27 @@ export default {
     ownerName: {
       type: String,
       default: ''
+    },
+    user: {
+      type: Object,
+
+      default () {
+        return {
+          companyName: '',
+          email: '',
+          fullName: '',
+          jobTitle: '',
+          licenseNumber: '',
+          locationClps: [],
+          phone: '',
+          role: 'user'
+        }
+      }
     }
   },
 
   data () {
     return {
-      user: {
-        companyName: '',
-        email: '',
-        fullName: '',
-        jobTitle: '',
-        licenseNumber: '',
-        locationClps: [],
-        phone: '',
-        role: 'user'
-      },
       form: {
         fullName: {
           autoComplete: 'name',
@@ -199,8 +205,8 @@ export default {
   <div>
     <template v-if="isInvite">
       <input
-        id="user_is_invite"
-        name="user[is_invite]"
+        id="user_invited"
+        name="user[invited]"
         type="hidden"
         value="true"
       >
