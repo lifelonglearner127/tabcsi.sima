@@ -45,8 +45,8 @@ class User < ApplicationRecord
   after_initialize :set_default_role, if: :new_record?
   before_create :before_create_user
   after_create :after_create_user
-  before_update :before_update_user
-  after_update :after_update_user
+  before_update :before_update_user, unless: :requested_pin?
+  after_update :after_update_user, unless: :requested_pin?
 
   attr_accessor :company_name
   attr_accessor :edited
@@ -58,16 +58,6 @@ class User < ApplicationRecord
   def self.new_pin
     # based on SecureRandom.alphanumeric
     SecureRandom.__send__(:choose, PIN_CHARS, Setting.pin_length)
-  end
-
-  def generate_pin
-    pin = self.class.new_pin
-
-    unless update(password: pin, pin_last_requested_at: Time.zone.now)
-      return nil
-    end
-
-    pin
   end
 
   def info
@@ -103,6 +93,8 @@ class User < ApplicationRecord
   end
 
   def request_pin
+    @requested_pin = true
+
     pin = generate_pin
 
     return false if pin.blank?
@@ -241,8 +233,22 @@ class User < ApplicationRecord
     !persisted? && password.blank?
   end
 
+  def generate_pin
+    pin = self.class.new_pin
+
+    unless update(password: pin, pin_last_requested_at: Time.zone.now)
+      return nil
+    end
+
+    pin
+  end
+
   def generate_random_password
     self.password = SecureRandom.hex
+  end
+
+  def requested_pin?
+    @requested_pin
   end
 
   def set_default_role
