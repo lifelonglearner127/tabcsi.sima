@@ -56,18 +56,6 @@ export default {
 
     status (location) {
       if (location.inspected) {
-        return 'C'
-      }
-
-      if (location.locked) {
-        return 'S'
-      }
-
-      return ''
-    },
-
-    statusTitle (location) {
-      if (location.inspected) {
         return 'Completed'
       }
 
@@ -106,12 +94,12 @@ export default {
       slot-scope="data"
       v-html="address(data.item)"
     />
-    <h3
+    <h6
       slot="status"
       slot-scope="data"
     >
-      <abbr :title="statusTitle(data.item)">{{ status(data.item) }}</abbr>
-    </h3>
+      {{ status(data.item) }}
+    </h6>
   </b-table>
 </template>
 
@@ -135,7 +123,7 @@ export default {
 }
 
 .status-col {
-  @include fixed-width(3rem);
+  @include fixed-width(7rem);
 }
 
 /deep/ td {
