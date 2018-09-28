@@ -64,7 +64,7 @@ export default {
     },
 
     user () {
-      return this.pageOptions.user || {}
+      return this.pageOptions.user || undefined
     }
   },
 
@@ -115,6 +115,7 @@ export default {
       :is-invite="isInvite"
       :locations="locations"
       :owner-name="ownerName"
+      :user="user"
     >
     </new-user>
   </users-sessions-container>

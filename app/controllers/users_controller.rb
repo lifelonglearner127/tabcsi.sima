@@ -3,12 +3,12 @@
 class UsersController < ApplicationController
   before_action :require_logged_in_user, only: %i[destroy edit invite update]
   before_action :set_user, only: %i[destroy edit show update]
-  before_action :set_page_options
+  before_action :set_page_options, only: %i[edit invite new]
 
   def create
     @user = User.create(normalized_user_params)
 
-    if @user.valid?
+    if @user.persisted?
       redirect_to(
         @user.invited? ? dashboard_url : log_in_url,
         notice: successful_create_notice(@user)
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
         }
       end
 
-    page_data_options[:html][:user] = @user&.info || {}
+    page_data_options[:html][:user] = @user&.info
 
     return if @user&.errors.blank?
 
