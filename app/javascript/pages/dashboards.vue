@@ -94,8 +94,8 @@ export default {
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item
               v-ujs-confirm="'Are you sure you want to log-out?'"
-              v-ujs-method="pageOptions.logOut.method"
-              :href="pageOptions.logOut.path"
+              v-ujs-method="'delete'"
+              href="/log_out"
               rel="nofollow"
             >
               <fa-sprite
@@ -103,7 +103,7 @@ export default {
                 use="fas-fa-sign-out-alt"
               >
               </fa-sprite>
-              Logout
+              Log Out
             </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

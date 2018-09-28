@@ -64,15 +64,15 @@ export default {
     question () {
       if (this.pinRequested) {
         return {
-          linkHref: this.pageOptions.resendPinPath,
-          linkMethod: this.pageOptions.resendPinMethod,
+          linkHref: '/resend_pin',
+          linkMethod: 'post',
           linkText: 'Resend',
           text: 'Email not received?'
         }
       }
 
       return {
-        linkHref: this.pageOptions.signUpPath,
+        linkHref: '/sign_up',
         linkText: 'Register',
         text: 'Not a member?'
       }

@@ -79,9 +79,6 @@ class SessionsController < ApplicationController
       method: 'post',
       local: true,
       html: {
-        sign_up_path: sign_up_path,
-        resend_pin_path: resend_pin_path,
-        resend_pin_method: 'post',
         email: session_email,
         pin_requested: pin_requested?,
         pin_length: Setting.pin_length,
