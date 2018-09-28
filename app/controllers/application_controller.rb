@@ -7,8 +7,6 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
-  helper_method :current_user
-
   def logged_in?
     session[:logged_in] && current_user.present?
   end
@@ -17,11 +15,12 @@ class ApplicationController < ActionController::Base
     @page_data_options || {}
   end
 
-  helper_method :page_data_options
-
   def require_logged_in_user
     return if logged_in?
 
     redirect_to log_in_url
   end
+
+  helper_method :current_user
+  helper_method :page_data_options
 end
