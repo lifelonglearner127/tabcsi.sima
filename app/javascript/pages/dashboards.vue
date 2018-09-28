@@ -72,6 +72,7 @@ export default {
             :text="user.fullName"
             right
           >
+            <!-- BROKEN!!!
             <b-dropdown-item :href="`/users/${user.id}/edit`">
               <fa-sprite
                 fixed-width
@@ -80,6 +81,7 @@ export default {
               </fa-sprite>
               Update Profile
             </b-dropdown-item>
+            -->
             <b-dropdown-item
               href="https://www.tabc.texas.gov/mobile/"
               target="_blank"
