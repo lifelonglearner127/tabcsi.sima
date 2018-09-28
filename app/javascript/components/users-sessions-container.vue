@@ -154,12 +154,14 @@ export default {
             show
             variant="danger"
           >
-            <span
-              v-for="(error, key, index) in serverErrors"
-              :key="index"
-            >
-              {{ error }}
-            </span>
+            <ul>
+              <li
+                v-for="(error, key, index) in serverErrors"
+                :key="index"
+              >
+                {{ error }}
+              </li>
+            </ul>
           </b-alert>
           <rails-form
             :accept-charset="acceptCharset"
@@ -256,6 +258,12 @@ export default {
 
 .card-title {
   text-align: center;
+}
+
+.alert {
+  ul {
+    margin-bottom: 0;
+  }
 }
 
 form {
