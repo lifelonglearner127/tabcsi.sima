@@ -4,4 +4,5 @@ require_relative 'railties/application'
 require_relative 'webpacker/configuration'
 require_relative 'devise-doorkeeper/devise/strategies/doorkeeper'
 require_relative 'grape/request'
-require_relative 'faker/name'
+
+require_relative 'faker/name' unless Rails.env.production?
