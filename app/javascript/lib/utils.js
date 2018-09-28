@@ -97,3 +97,5 @@ const DIGITS = {
 }
 
 export const parseDigit = (ch) => DIGITS[ch]
+
+export const getBoolean = (object, key) => key in object && Boolean(object[key])

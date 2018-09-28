@@ -1,5 +1,6 @@
 <script>
 import { email, exactLength } from '~/validators'
+import { getBoolean } from '~/lib/utils'
 import PageMixin from '~/mixins/page'
 import { required } from 'vuelidate/lib/validators'
 import UsersSessionsContainer from '~/components/users-sessions-container'
@@ -57,7 +58,7 @@ export default {
     },
 
     pinRequested () {
-      return Boolean(this.pageOptions.pinRequested)
+      return getBoolean(this.pageOptions, 'pinRequested')
     },
 
     question () {
