@@ -80,7 +80,10 @@ export default {
               </fa-sprite>
               Update Profile
             </b-dropdown-item>
-            <b-dropdown-item href="https://www.tabc.texas.gov/mobile/">
+            <b-dropdown-item
+              href="https://www.tabc.texas.gov/mobile/"
+              target="_blank"
+            >
               <fa-sprite
                 fixed-width
                 use="fas-fa-phone"
