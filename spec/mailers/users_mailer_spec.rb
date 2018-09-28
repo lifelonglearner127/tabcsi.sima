@@ -71,7 +71,5 @@ RSpec.describe UsersMailer do
     it 'assigns @full_name' do
       expect(mail.body.encoded).to match(full_name)
     end
-
-    # TODO: test conditional @company_name
   end
 end

@@ -145,16 +145,10 @@ class User < ApplicationRecord
       licenses << company.licenses
     end
 
-    welcome_params = {
+    UsersMailer.with(
       recipient: email,
       full_name: full_name
-    }
-
-    if invited?
-      welcome_params[:company_name] = company.name || company.owner_name
-    end
-
-    UsersMailer.with(**welcome_params).welcome.deliver_now
+    ).welcome.deliver_now
   end
 
   def after_update_user

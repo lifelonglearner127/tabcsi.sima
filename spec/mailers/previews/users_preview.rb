@@ -11,20 +11,11 @@ class UsersPreview < ActionMailer::Preview
     ).request_pin
   end
 
-  # Preview this email at /rails/mailers/users/welcome_admin
-  def welcome_admin
+  # Preview this email at /rails/mailers/users/welcome
+  def welcome
     UsersMailer.with(
       recipient: Faker::Internet.safe_email,
       full_name: Faker::Name.full_name
-    ).welcome
-  end
-
-  # Preview this email at /rails/mailers/users/welcome_user
-  def welcome_user
-    UsersMailer.with(
-      recipient: Faker::Internet.safe_email,
-      full_name: Faker::Name.full_name,
-      company_name: Faker::Company.name
     ).welcome
   end
 end

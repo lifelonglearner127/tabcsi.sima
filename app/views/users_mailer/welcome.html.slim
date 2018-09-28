@@ -1,18 +1,14 @@
-p #{@full_name},
-
-p
-  ' Welcome to the
-  strong> TABC: Compliance Reporting
-  | application.
-
-- if @company_name.present?
-  p
-    ' You were invited to
-    strong = @company_name
-    ' .
-- else
-  p
-    ' Your new account allows you to conduct license/permit reports for your establishment on your own time and
-    | automatically send them to TABC for review.
-
-p Your user name: #{@recipient}
+p Hi #{@full_name},
+P You have been assigned to complete automated compliance reports for your business entity.
+P
+  ' To view the permit(s) you have been assigned, download TABC: Compliance Reporting from the Apple App Store or Google
+  ' Play Store and enter your email address. You will receive an #{Setting.pin_length}-digit registration code for
+  ' security purposes. Enter the registration code in the app to complete your registration and view your assigned
+  | permit(s).
+P
+  ' The app is compatible with iOS version 8.0+ devices, as well as Android version 4.4+ compatible devices. The app
+  | requires 30 megabytes of system memory as well as access to GPS and local Wi-Fi (recommended).
+P
+  ' For more information visit
+  a href="https://www.tabc.texas.gov/mobile" https://www.tabc.texas.gov/mobile
+  | .
