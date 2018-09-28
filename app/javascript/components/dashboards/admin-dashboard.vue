@@ -112,7 +112,7 @@ export default {
               </template>
 
               <b-button-toolbar
-                class="mb-1 mt-4"
+                class="mb-3 ml-3"
                 key-nav
               >
                 <b-dropdown
@@ -193,4 +193,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.card-body {
+  padding: 1.25rem 0 0;
+}
+
+/deep/ .table {
+  margin-bottom: 0;
+}
 </style>

@@ -67,3 +67,15 @@
 @mixin row-grow {
   @include flex-grow(row);
 }
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin fixed-width($width) {
+  max-width: $width;
+  min-width: $width;
+  width: $width;
+}

@@ -43,6 +43,10 @@ body {
     .row#{$infix}-grow {
       @include row-grow;
     }
+
+    .text#{$infix}-ellipsis {
+      @include text-ellipsis;
+    }
   }
 }
 

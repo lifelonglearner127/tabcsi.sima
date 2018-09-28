@@ -18,18 +18,13 @@ export default {
         'name',
         {
           key: 'clp',
-          label: 'CLP Numbers'
+          label: 'CLP Number'
         },
         'address',
         'phoneNumber',
         {
-          key: 'locked',
-          label: 'Started',
-          tdClass: 'text-center'
-        },
-        {
-          key: 'inspected',
-          label: 'Completed',
+          key: 'status',
+          label: '',
           tdClass: 'text-center'
         }
       ]
@@ -57,6 +52,30 @@ export default {
         license.licenseType,
         license.licenseNumber
       ].join('')).join('<br>')
+    },
+
+    status (location) {
+      if (location.inspected) {
+        return 'C'
+      }
+
+      if (location.locked) {
+        return 'S'
+      }
+
+      return ''
+    },
+
+    statusTitle (location) {
+      if (location.inspected) {
+        return 'Completed'
+      }
+
+      if (location.locked) {
+        return 'Started'
+      }
+
+      return ''
     }
   }
 }
@@ -70,6 +89,13 @@ export default {
     responsive
     striped
   >
+    <template slot="table-colgroup">
+      <col class="name-col">
+      <col class="clp-col">
+      <col class="address-col">
+      <col class="phone-col">
+      <col class="status-col">
+    </template>
     <div
       slot="clp"
       slot-scope="data"
@@ -80,30 +106,47 @@ export default {
       slot-scope="data"
       v-html="address(data.item)"
     />
-    <template
-      slot="locked"
+    <h3
+      slot="status"
       slot-scope="data"
     >
-      <fa-sprite
-        v-if="data.value"
-        fixed-width
-        use="fas-fa-check"
-      >
-      </fa-sprite>
-    </template>
-    <template
-      slot="inspected"
-      slot-scope="data"
-    >
-      <fa-sprite
-        v-if="data.value"
-        fixed-width
-        use="fas-fa-check"
-      >
-      </fa-sprite>
-    </template>
+      <abbr :title="statusTitle(data.item)">{{ status(data.item) }}</abbr>
+    </h3>
   </b-table>
 </template>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixins';
+
+.name-col {
+  width: auto;
+}
+
+.clp-col {
+  @include fixed-width(8rem);
+}
+
+.address-col {
+  width: auto;
+}
+
+.phone-col {
+  @include fixed-width(10rem);
+}
+
+.status-col {
+  @include fixed-width(3rem);
+}
+
+/deep/ td {
+  vertical-align: middle;
+}
+
+/deep/ .status-cell {
+  text-align: center;
+
+  h3 {
+    margin-bottom: 0;
+  }
+}
 </style>

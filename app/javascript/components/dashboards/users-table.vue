@@ -43,6 +43,13 @@ export default {
     responsive
     striped
   >
+    <template slot="table-colgroup">
+      <col class="full-name-col">
+      <col class="email-col">
+      <col class="job-title-col">
+      <col class="phone-col">
+      <col class="type-col">
+    </template>
     <b-form-checkbox
       slot="fullName"
       slot-scope="data"
@@ -62,4 +69,25 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixins';
+
+.full-name-col {
+  width: auto;
+}
+
+.email-col {
+  width: auto;
+}
+
+.job-title-col {
+  width: auto;
+}
+
+.phone-col {
+  @include fixed-width(10rem);
+}
+
+.type-col {
+  @include fixed-width(5rem);
+}
 </style>
