@@ -6,7 +6,8 @@ class UsersPreview < ActionMailer::Preview
   def request_pin
     UsersMailer.with(
       recipient: Faker::Internet.safe_email,
-      pin: Faker::Number.number(8)
+      full_name: Faker::Name.full_name,
+      pin: Faker::Number.number(Setting.pin_length)
     ).request_pin
   end
 

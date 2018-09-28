@@ -4,6 +4,7 @@ class UsersMailer < ApplicationMailer
   layout 'users_mailer'
 
   def request_pin
+    @full_name = params[:full_name]
     @pin = params[:pin]
 
     mail to: params[:recipient]

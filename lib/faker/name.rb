@@ -4,7 +4,7 @@ module Faker
   class Name < Base
     class << self
       def full_name
-        "#{first_name} #{last_name}"
+        parse('name.full_name')
       end
     end
   end

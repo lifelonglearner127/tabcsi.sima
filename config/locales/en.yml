@@ -5,6 +5,28 @@ en:
       default: "%m/%d/%Y"
       with_weekday: "%a %m/%d/%y"
 
+  faker:
+    name:
+      full_name:
+        - "#{first_name} #{last_name}"
+        - "#{first_name} #{last_name}"
+        - "#{first_name} #{last_name}"
+        - "#{first_name} #{last_name}"
+
+  grape:
+    errors:
+      messages:
+        presence: is required
+        id: is not a valid id
+        entity: does not exist
+        email: is not a valid email address
+
+  notices:
+    users:
+      create:
+        new: User registered successfully.
+        invite: User successfully invited.
+
   time:
     formats:
       default: "%a, %b %-d, %Y at %r"
@@ -24,20 +46,6 @@ en:
 
   users_mailer:
     request_pin:
-      subject: "TABC: CR — Pin Request"
+      subject: "Registration Code - TABC: Compliance Reporting"
     welcome:
       subject: "TABC: CR — Welcome"
-
-  grape:
-    errors:
-      messages:
-        presence: is required
-        id: is not a valid id
-        entity: does not exist
-        email: is not a valid email address
-
-  notices:
-    users:
-      create:
-        new: User registered successfully.
-        invite: User successfully invited.

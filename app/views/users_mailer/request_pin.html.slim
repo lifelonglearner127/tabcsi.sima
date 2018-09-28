@@ -1,6 +1,7 @@
-h4
-  ' Here is your one-time PIN:
-  strong = @pin
-p To log-in, enter the PIN on the web or mobile app where you requested it.
+p Hi #{@full_name},
 p
-  em NOTE: This one-time PIN expires 30 minutes after it was requested.
+  ' Here is your one-time registration code:
+  strong = @pin
+p Please enter the #{Setting.pin_length}-digit code to gain access to the TABC: Compliance Reporting application.
+p
+  em NOTE: This one-time registration code expires 30-minutes after it was requested.

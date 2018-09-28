@@ -109,6 +109,7 @@ class User < ApplicationRecord
 
     UsersMailer.with(
       recipient: email,
+      full_name: full_name,
       pin: pin
     ).request_pin.deliver_now
 
