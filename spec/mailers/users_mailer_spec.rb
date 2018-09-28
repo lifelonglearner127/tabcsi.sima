@@ -8,7 +8,7 @@ RSpec.describe UsersMailer do
   describe 'request_pin' do
     let(:email_subject) { t('users_mailer.request_pin.subject') }
     let(:recipient_email) { Faker::Internet.safe_email }
-    let(:pin) { Faker::Number.number(8) }
+    let(:pin) { Faker::Number.number(Setting.pin_length) }
 
     let(:mail) do
       described_class.with(
@@ -37,7 +37,7 @@ RSpec.describe UsersMailer do
   describe 'welcome' do
     let(:email_subject) { t('users_mailer.welcome.subject') }
     let(:recipient_email) { Faker::Internet.safe_email }
-    let(:full_name) { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
+    let(:full_name) { Faker::Name.full_name }
 
     let(:mail) do
       described_class.with(

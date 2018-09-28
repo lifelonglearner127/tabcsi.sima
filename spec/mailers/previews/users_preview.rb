@@ -14,7 +14,7 @@ class UsersPreview < ActionMailer::Preview
   def welcome_admin
     UsersMailer.with(
       recipient: Faker::Internet.safe_email,
-      full_name: "#{Faker::Name.first_name} #{Faker::Name.last_name}"
+      full_name: Faker::Name.full_name
     ).welcome
   end
 
@@ -22,7 +22,7 @@ class UsersPreview < ActionMailer::Preview
   def welcome_user
     UsersMailer.with(
       recipient: Faker::Internet.safe_email,
-      full_name: "#{Faker::Name.first_name} #{Faker::Name.last_name}",
+      full_name: Faker::Name.full_name,
       company_name: Faker::Company.name
     ).welcome
   end
