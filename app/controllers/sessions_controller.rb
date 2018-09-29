@@ -3,12 +3,6 @@
 class SessionsController < ApplicationController
   before_action :set_page_options, only: %i[create new]
 
-  def new
-    redirect_to(dashboard_url) && return if logged_in?
-
-    log_out unless pin_requested?
-  end
-
   def create
     if pin_requested?
       validate_pin
@@ -17,15 +11,21 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    log_out if pin_requested? || logged_in?
+    redirect_to root_url
+  end
+
+  def new
+    redirect_to(dashboard_url) && return if logged_in?
+
+    log_out unless pin_requested?
+  end
+
   def resend_pin
     current_user.request_pin if pin_requested?
 
     redirect_to log_in_url
-  end
-
-  def destroy
-    log_out if pin_requested? || logged_in?
-    redirect_to root_url
   end
 
   private
@@ -34,13 +34,13 @@ class SessionsController < ApplicationController
     reset_session
   end
 
-  def pin_requested?
-    current_user.present? && session[:pin_requested]
-  end
-
   def pin_requested=(value)
     session[:pin_requested] = value
     page_data_options[:html][:pin_requested] = value
+  end
+
+  def pin_requested?
+    current_user.present? && session[:pin_requested]
   end
 
   def request_pin
