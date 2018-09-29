@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module TabcSi
+  VERSION = '1.1.2'
+
   def self.create_logger(
     path_or_logger,
     formatter = Rails.application.config.log_formatter || Formatter.new

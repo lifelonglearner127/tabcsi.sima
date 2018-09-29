@@ -45,4 +45,14 @@ class ApplicationController < ActionController::Base
       reset_page_options
     end
   end
+
+  def site_version
+    version = "v#{TabcSi::VERSION}"
+
+    version += ' (dev)' if Rails.env.development?
+    version += ' (test)' if Rails.env.test?
+    version += ' (sandbox)' if Rails.env.production? && Nenv.instance.app_debug?
+
+    version
+  end
 end
