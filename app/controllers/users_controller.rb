@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_logged_in_user, only: %i[destroy edit invite update]
-  before_action :set_user, only: %i[destroy edit show update]
-  before_action :set_page_options, only: %i[edit invite new]
+  skip_before_action(
+    :require_logged_in_user, except: %i[destroy edit invite update]
+  )
+  prepend_before_action :set_user, only: %i[destroy edit show update]
+  skip_before_action :set_page_options, except: %i[edit invite new]
 
   def create
     @user = User.create(normalized_user_params)
@@ -52,8 +54,16 @@ class UsersController < ApplicationController
 
   private
 
-  def build_page_options(page_name = nil)
-    self.page_data_options =
+  def build_page_options(page_name)
+    reset_page_options(provided_page_options(page_name))
+  end
+
+  def company_locations
+    current_user.company.locations
+  end
+
+  def controller_page_options(page_name = action_name)
+    page_options =
       case page_name
       when 'edit'
         {
@@ -86,17 +96,15 @@ class UsersController < ApplicationController
         }
       end
 
-    page_data_options[:html][:user] = @user&.info
+    page_options[:html][:user] = @user&.info
 
-    return if @user&.errors.blank?
+    unless @user&.errors.blank?
+      page_options[:html][:errors] = {
+        base: @user.errors.full_messages.join(', ')
+      }
+    end
 
-    page_data_options[:html][:errors] = {
-      base: @user.errors.full_messages.join(', ')
-    }
-  end
-
-  def company_locations
-    current_user.company.locations
+    page_options
   end
 
   def normalized_user_params
@@ -111,10 +119,6 @@ class UsersController < ApplicationController
     end
 
     normalized_params
-  end
-
-  def set_page_options
-    build_page_options(action_name)
   end
 
   def set_user

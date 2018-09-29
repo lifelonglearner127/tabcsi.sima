@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  before_action :set_page_options, only: %i[create new]
+  skip_before_action :require_logged_in_user
+  skip_before_action :set_page_options, except: %i[create new]
 
   def create
     if pin_requested?
@@ -29,6 +30,20 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def controller_page_options
+    {
+      url: log_in_path,
+      method: 'post',
+      local: true,
+      html: {
+        email: session_email,
+        pin_requested: pin_requested?,
+        pin_length: Setting.pin_length,
+        flash_message: flash[:notice]
+      }
+    }
+  end
 
   def log_out
     reset_session
@@ -71,20 +86,6 @@ class SessionsController < ApplicationController
 
   def session_params
     @session_params ||= params.require(:session).permit(:email, :pin)
-  end
-
-  def set_page_options
-    self.page_data_options = {
-      url: log_in_path,
-      method: 'post',
-      local: true,
-      html: {
-        email: session_email,
-        pin_requested: pin_requested?,
-        pin_length: Setting.pin_length,
-        flash_message: flash[:notice]
-      }
-    }
   end
 
   def validate_pin

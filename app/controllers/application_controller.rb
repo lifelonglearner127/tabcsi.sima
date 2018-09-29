@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :require_logged_in_user
+  before_action :set_page_options
+
+  helper_method :current_user, :page_data_options, :site_version
+
+  protected
+
   attr_writer :page_data_options
 
   def current_user
@@ -21,6 +28,21 @@ class ApplicationController < ActionController::Base
     redirect_to log_in_url
   end
 
-  helper_method :current_user
-  helper_method :page_data_options
+  def reset_page_options(page_options = {})
+    self.page_data_options = default_page_options.deep_merge(page_options)
+  end
+
+  private
+
+  def default_page_options
+    {}
+  end
+
+  def set_page_options
+    if respond_to?(:controller_page_options, true)
+      reset_page_options(controller_page_options)
+    else
+      reset_page_options
+    end
+  end
 end
