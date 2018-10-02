@@ -1,12 +1,13 @@
 @charset "utf-8";
 
-html {
-  font-size: 100%;
-}
-
 @import '~@/assets/stylesheets/variables';
 @import '~bootstrap/scss/bootstrap';
 @import '~@/assets/stylesheets/mixins';
+
+html {
+  font-size: 100%;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
 
 body {
   min-width: 320px;
