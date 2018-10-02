@@ -9,4 +9,34 @@ class Location < ApplicationRecord
   has_and_belongs_to_many :users, -> { order(:full_name) }
 
   validates :name, :address1, :city, :country, :postal_code, presence: true
+
+  def reset(location: true, lock: false, inspection: false)
+    attrs = {}
+
+    if location
+      attrs.merge!(
+        front_lat: nil,
+        front_long: nil,
+        back_lat: nil,
+        back_long: nil,
+        unpadded_diameter: nil,
+        padded_diameter: nil
+      )
+    end
+
+    if lock
+      attrs.merge!(
+        locked: false,
+        locked_by_id: nil,
+        locked_at: nil
+      )
+    end
+
+    if inspection
+      attrs[:inspected] = false
+      attrs[:inspected_at] = nil
+    end
+
+    update!(attrs) unless attrs.empty?
+  end
 end
