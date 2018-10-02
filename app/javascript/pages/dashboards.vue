@@ -52,6 +52,7 @@ export default {
 <template>
   <div>
     <b-navbar
+      class="mb-3"
       toggleable="md"
       type="dark"
     >
@@ -112,32 +113,23 @@ export default {
       </b-collapse>
     </b-navbar>
 
-    <b-container
-      class="my-5"
-      fluid
+    <tabc-dashboard
+      v-if="userIsTabcAdmin"
+      :user="user"
     >
-      <b-row>
-        <b-col>
-          <tabc-dashboard
-            v-if="userIsTabcAdmin"
-            :user="user"
-          >
-          </tabc-dashboard>
-          <admin-dashboard
-            v-else-if="userIsAdmin"
-            :admin-count="adminCount"
-            :company="company"
-            :user="user"
-          >
-          </admin-dashboard>
-          <user-dashboard
-            v-else
-            :user="user"
-          >
-          </user-dashboard>
-        </b-col>
-      </b-row>
-    </b-container>
+    </tabc-dashboard>
+    <admin-dashboard
+      v-else-if="userIsAdmin"
+      :admin-count="adminCount"
+      :company="company"
+      :user="user"
+    >
+    </admin-dashboard>
+    <user-dashboard
+      v-else
+      :user="user"
+    >
+    </user-dashboard>
   </div>
 </template>
 

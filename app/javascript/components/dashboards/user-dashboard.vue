@@ -22,7 +22,13 @@ export default {
 </script>
 
 <template>
-  <locations-table :items="locations"></locations-table>
+  <b-container>
+    <b-row>
+      <b-col>
+        <locations-table :items="locations"></locations-table>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <style lang="scss" scoped>
