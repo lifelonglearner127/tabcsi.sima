@@ -32,4 +32,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/variables';
+
+.table-responsive {
+  border: $card-border-width solid $card-border-color;
+  border-top-width: 0;
+
+  /deep/ .table {
+    margin-bottom: 0;
+  }
+}
 </style>
