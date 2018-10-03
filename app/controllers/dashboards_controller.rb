@@ -6,9 +6,17 @@ class DashboardsController < ApplicationController
   private
 
   def company
+    relation = User.all
     options = nil
 
     if current_user.admin?
+      relation = relation.includes(
+        company: {
+          locations: :licenses,
+          users: :licenses
+        }
+      )
+
       options = {
         include: {
           locations: { include: :licenses },
@@ -17,13 +25,7 @@ class DashboardsController < ApplicationController
       }
     end
 
-    User
-      .includes(
-        company: {
-          locations: :licenses,
-          users: :licenses
-        }
-      )
+    relation
       .find(current_user.id)
       .company
       .as_json(options)
