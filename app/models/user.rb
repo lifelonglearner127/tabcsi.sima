@@ -46,14 +46,14 @@ class User < ApplicationRecord
   before_create :before_create_user
   after_create :after_create_user
   before_update :before_update_user, unless: :requested_pin?
-  after_update :after_update_user, unless: :requested_pin?
+  after_update :after_update_user, unless: :perform_after_update_user?
 
   attr_accessor :company_name
-  attr_accessor :edited
   attr_accessor :invited
   attr_accessor :license_number
   attr_writer :location_clps
   attr_accessor :owner_name
+  attr_accessor :profile
 
   def self.new_pin
     # based on SecureRandom.alphanumeric
@@ -225,10 +225,6 @@ class User < ApplicationRecord
     @became_admin = role_changed?(from: 'user', to: 'admin')
   end
 
-  def edited?
-    [true, 'true'].include?(edited)
-  end
-
   def generate_password?
     !persisted? && password.blank?
   end
@@ -245,6 +241,14 @@ class User < ApplicationRecord
 
   def generate_random_password
     self.password = SecureRandom.hex
+  end
+
+  def perform_after_update_user?
+    requested_pin? || profile?
+  end
+
+  def profile?
+    [true, 'true'].include?(profile)
   end
 
   def requested_pin?

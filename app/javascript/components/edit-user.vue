@@ -157,10 +157,10 @@ export default {
 <template>
   <div>
     <input
-      id="user_edited"
-      name="user[edited]"
+      id="user_profile"
+      name="user[profile]"
       type="hidden"
-      value="true"
+      :value="isProfile"
     >
     <template v-for="(options, key) in form">
       <b-form-group

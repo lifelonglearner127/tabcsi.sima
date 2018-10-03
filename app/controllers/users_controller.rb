@@ -137,8 +137,9 @@ class UsersController < ApplicationController
     params
       .require(:user)
       .permit(
-        :company_name, :edited, :email, :full_name, :invited, :job_title,
-        :license_number, { location_clps: [] }, :owner_name, :phone, :role
+        :company_name, :email, :full_name, :invited, :job_title,
+        :license_number, { location_clps: [] }, :owner_name, :phone, :profile,
+        :role
       )
   end
 end
