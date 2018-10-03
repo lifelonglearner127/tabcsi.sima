@@ -57,11 +57,11 @@ export default {
       <col class="edit-col">
     </template>
     <b-form-checkbox
+      :id="`user_${data.index}_selected`"
       slot="fullName"
+      v-model="data.item.selected"
       slot-scope="data"
       :disabled="data.item.id === currentUserId"
-      :id="`user_${data.index}_selected`"
-      v-model="data.item.selected"
     >
       {{ data.value }}
     </b-form-checkbox>
@@ -80,8 +80,7 @@ export default {
       <fa-sprite
         fixed-width
         use="fas-fa-user-edit"
-      >
-      </fa-sprite>
+      />
     </a>
   </b-table>
 </template>

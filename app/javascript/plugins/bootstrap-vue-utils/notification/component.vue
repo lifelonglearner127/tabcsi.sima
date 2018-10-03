@@ -106,8 +106,7 @@ export default {
       :use="icon"
       fixed-width
       size="2x"
-    >
-    </fa-sprite>
+    />
     <div class="notification__group">
       <h5
         v-if="title"

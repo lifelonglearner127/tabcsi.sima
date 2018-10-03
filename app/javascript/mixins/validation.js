@@ -4,6 +4,7 @@ import { getMessage } from '~/validators'
 
 const DEBOUNCE_DELAY = 250 // milliseconds
 
+// @vue/component
 export default (validationKey) => ({
   data () {
     return { validationKey }

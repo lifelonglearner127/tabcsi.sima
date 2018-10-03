@@ -86,8 +86,7 @@ export default {
             <fa-sprite
               fixed-width
               use="fas-fa-info-circle"
-            >
-            </fa-sprite>
+            />
             Add an Account Admin
           </h4>
           <p>
@@ -106,8 +105,7 @@ export default {
                 <fa-sprite
                   fixed-width
                   use="fas-fa-users"
-                >
-                </fa-sprite>
+                />
                 Users
               </template>
 
@@ -124,8 +122,7 @@ export default {
                     <fa-sprite
                       fixed-width
                       use="fas-fa-user-plus"
-                    >
-                    </fa-sprite>
+                    />
                     Invite User
                   </template>
                   <b-dropdown-item
@@ -135,8 +132,7 @@ export default {
                     <fa-sprite
                       fixed-width
                       use="fas-fa-plus"
-                    >
-                    </fa-sprite>
+                    />
                     Manual Add
                   </b-dropdown-item>
                   <b-dropdown-item
@@ -146,8 +142,7 @@ export default {
                     <fa-sprite
                       fixed-width
                       use="fas-fa-file-upload"
-                    >
-                    </fa-sprite>
+                    />
                     Upload CSV (Coming Soon)
                   </b-dropdown-item>
                 </b-dropdown>
@@ -161,8 +156,7 @@ export default {
                   <fa-sprite
                     fixed-width
                     use="fas-fa-user-times"
-                  >
-                  </fa-sprite>
+                  />
                   Delete
                 </b-button>
               </b-button-toolbar>
@@ -170,20 +164,18 @@ export default {
               <users-table
                 :current-user-id="user.id"
                 :items="users"
-              >
-              </users-table>
+              />
             </b-tab>
             <b-tab>
               <template slot="title">
                 <fa-sprite
                   fixed-width
                   use="fas-fa-map-marker-alt"
-                >
-                </fa-sprite>
+                />
                 My Locations
               </template>
 
-              <locations-table :items="locations"></locations-table>
+              <locations-table :items="locations" />
             </b-tab>
           </b-tabs>
         </b-card>

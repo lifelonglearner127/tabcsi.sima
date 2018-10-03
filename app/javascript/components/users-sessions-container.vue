@@ -146,8 +146,7 @@ export default {
               :src="logoSrc"
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
               top
-            >
-            </b-card-img>
+            />
           </a>
           <b-alert
             v-if="haveErrors"
@@ -174,8 +173,8 @@ export default {
             :token-value="tokenValue"
           >
             <b-button
-              v-ujs-method="backMethod"
               v-if="topBackButtonVisible"
+              v-ujs-method="backMethod"
               :href="backHref"
               class="mb-4"
               variant="secondary"
@@ -184,8 +183,7 @@ export default {
                 <fa-sprite
                   fixed-width
                   use="fas-fa-arrow-left"
-                >
-                </fa-sprite>
+                />
                 Back
               </slot>
             </b-button>
@@ -193,8 +191,8 @@ export default {
             <slot />
 
             <b-button
-              v-ujs-method="backMethod"
               v-if="backButtonVisible"
+              v-ujs-method="backMethod"
               :href="backHref"
               class="my-4"
               variant="secondary"
@@ -203,8 +201,7 @@ export default {
                 <fa-sprite
                   fixed-width
                   use="fas-fa-arrow-left"
-                >
-                </fa-sprite>
+                />
                 Back
               </slot>
             </b-button>

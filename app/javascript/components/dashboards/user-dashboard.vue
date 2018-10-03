@@ -25,7 +25,7 @@ export default {
   <b-container>
     <b-row>
       <b-col>
-        <locations-table :items="locations"></locations-table>
+        <locations-table :items="locations" />
       </b-col>
     </b-row>
   </b-container>

@@ -165,10 +165,10 @@ export default {
     <template v-for="(options, key) in form">
       <b-form-group
         v-if="options.show == null ? true : options.show"
-        :data-required="options.required"
         :id="inputGroupId(key)"
-        :invalid-feedback="invalidFeedback(key)"
         :key="key"
+        :data-required="options.required"
+        :invalid-feedback="invalidFeedback(key)"
         :label="options.label"
         :label-for="inputId(key)"
         :state="state(key)"
@@ -178,16 +178,15 @@ export default {
             <fa-sprite
               :use="options.icon"
               fixed-width
-            >
-            </fa-sprite>
+            />
           </b-input-group-prepend>
           <component
+            :is="options.component || 'b-form-input'"
+            :id="inputId(key)"
             v-model="$v.user[key].$model"
             :autocomplete="options.autoComplete"
             :data-path="key"
             :format="options.format"
-            :id="inputId(key)"
-            :is="options.component || 'b-form-input'"
             :maxlength="options.maxLength"
             :name="inputName(key)"
             :parse="options.parse"
@@ -197,8 +196,7 @@ export default {
             class="form-control"
             @blur.native="validate"
             @input.native="validate"
-          >
-          </component>
+          />
         </b-input-group>
       </b-form-group>
     </template>
@@ -220,8 +218,7 @@ export default {
           name="user[role]"
           required
           @change="validate"
-        >
-        </b-form-radio-group>
+        />
       </b-form-group>
 
       <b-form-group
@@ -242,8 +239,7 @@ export default {
           name="user[location_clps][]"
           stacked
           @change="validate"
-        >
-        </b-form-checkbox-group>
+        />
       </b-form-group>
     </template>
   </div>

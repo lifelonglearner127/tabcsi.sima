@@ -107,8 +107,7 @@ export default {
       :is-profile="isProfile"
       :locations="locations"
       :user="user"
-    >
-    </edit-user>
+    />
     <new-user
       v-else
       ref="newUser"
@@ -116,8 +115,7 @@ export default {
       :locations="locations"
       :owner-name="ownerName"
       :user="user"
-    >
-    </new-user>
+    />
   </users-sessions-container>
 </template>
 

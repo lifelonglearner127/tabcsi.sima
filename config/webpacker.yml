@@ -7,6 +7,7 @@ shared:
   source_entry_path: packs
   public_output_path: packs
   cache_path: tmp/cache/webpacker
+  check_yarn_integrity: false
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
@@ -18,20 +19,23 @@ shared:
   extensions:
     - .vue
     - .js
-    - .scss
     - .sass
+    - .scss
     - .css
-    - .module.scss
     - .module.sass
+    - .module.scss
     - .module.css
-    - .svg
     - .png
-    - .jpg
-    - .jpeg
+    - .svg
     - .gif
+    - .jpeg
+    - .jpg
 
 development:
   compile: false
+
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  check_yarn_integrity: true
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:

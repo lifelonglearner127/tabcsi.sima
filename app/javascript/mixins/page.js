@@ -1,6 +1,7 @@
 import { getBoolean } from '~/lib/utils'
 import isEmpty from 'lodash/isEmpty'
 
+// @vue/component
 export default {
   props: {
     pageOptions: {

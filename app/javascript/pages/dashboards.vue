@@ -56,7 +56,7 @@ export default {
       toggleable="md"
       type="dark"
     >
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav_collapse" />
       <b-navbar-brand href="/">
         <img
           alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
@@ -90,11 +90,10 @@ export default {
               <fa-sprite
                 fixed-width
                 use="fas-fa-phone"
-              >
-              </fa-sprite>
+              />
               Contact TABC
             </b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-divider />
             <b-dropdown-item
               v-ujs-confirm="'Are you sure you want to log-out?'"
               v-ujs-method="'delete'"
@@ -104,8 +103,7 @@ export default {
               <fa-sprite
                 fixed-width
                 use="fas-fa-sign-out-alt"
-              >
-              </fa-sprite>
+              />
               Log Out
             </b-dropdown-item>
           </b-nav-item-dropdown>
@@ -116,20 +114,17 @@ export default {
     <tabc-dashboard
       v-if="userIsTabcAdmin"
       :user="user"
-    >
-    </tabc-dashboard>
+    />
     <admin-dashboard
       v-else-if="userIsAdmin"
       :admin-count="adminCount"
       :company="company"
       :user="user"
-    >
-    </admin-dashboard>
+    />
     <user-dashboard
       v-else
       :user="user"
-    >
-    </user-dashboard>
+    />
   </div>
 </template>
 

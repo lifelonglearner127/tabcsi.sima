@@ -54,8 +54,7 @@ export default {
       v-if="icon"
       :use="icon"
       fixed-width
-    >
-    </fa-sprite>
+    />
     <slot>
       <p
         v-if="dangerouslyUseHTMLString"

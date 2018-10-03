@@ -1,21 +1,42 @@
 {
   "presets": [
-    "flow",
-    ["vue-app", {
-      "targets": {
-        "browsers": [
-          "> 0.25%",
-          "safari 9"
-        ],
-        "uglify": true
-      },
-      "useBuiltIns": true
-    }],
-    "stage-0"
+    "vue",
+    "@babel/flow",
+    ["@babel/env", {
+      "modules": false,
+      "forceAllTransforms": true,
+      "useBuiltIns": "entry"
+    }]
   ],
 
   "plugins": [
-    ["transform-class-properties", { "spec": true }],
+    "@babel/transform-destructuring",
+    "@babel/syntax-dynamic-import",
+    [
+      "@babel/proposal-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ],
+    [
+      "@babel/transform-runtime",
+      {
+        "helpers": false,
+        "regenerator": true
+      }
+    ],
+    [
+      "@babel/transform-regenerator",
+      {
+        "async": false
+      }
+    ],
+    [
+      "@babel/proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
     "lodash"
   ]
 }

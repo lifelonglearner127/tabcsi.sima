@@ -112,8 +112,7 @@ export default {
           <fa-sprite
             fixed-width
             use="fas-fa-key"
-          >
-          </fa-sprite>
+          />
         </b-input-group-prepend>
         <b-form-input
           id="session_pin"
@@ -125,8 +124,7 @@ export default {
           required
           @blur.native="validate"
           @input.native="validate"
-        >
-        </b-form-input>
+        />
       </b-input-group>
       <!--<b-form-row>
         <b-col
@@ -159,8 +157,7 @@ export default {
           <fa-sprite
             fixed-width
             use="fas-fa-envelope"
-          >
-          </fa-sprite>
+          />
         </b-input-group-prepend>
         <b-form-input
           id="session_email"
@@ -173,8 +170,7 @@ export default {
           required
           @blur.native="validate"
           @input.native="validate"
-        >
-        </b-form-input>
+        />
       </b-input-group>
     </b-form-group>
 
@@ -183,8 +179,7 @@ export default {
       <fa-sprite
         fixed-width
         use="fas-fa-arrow-right"
-      >
-      </fa-sprite>
+      />
     </template>
 
     <template slot="text">

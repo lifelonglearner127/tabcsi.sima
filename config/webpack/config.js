@@ -38,8 +38,6 @@ if (isArray(app.extensions) && app.extensions.length) {
 
 merge(config, app)
 
-const devServer = config.dev_server
-
 config.outputPath = resolve('public', config.public_output_path)
 publicPath = `/${config.public_output_path}/`
 
@@ -50,6 +48,8 @@ if (process.env.RAILS_RELATIVE_URL_ROOT) {
 
 // Remove extra slashes.
 config.publicPath = replace(publicPath, /(^\/|[^:]\/)\/+/g, '$1')
+
+const devServer = config.dev_server
 
 config.isProduction = process.env.NODE_ENV === 'production'
 config.inDevServer = Boolean(find(process.argv, (v) => includes(v, 'webpack-dev-server')))
