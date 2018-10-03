@@ -1,4 +1,6 @@
 <script>
+import map from 'lodash/map'
+import sortBy from 'lodash/sortBy'
 import startCase from 'lodash/startCase'
 
 export default {
@@ -33,6 +35,13 @@ export default {
   },
 
   methods: {
+    userLicenses (user) {
+      return map(
+        sortBy(user.licenses, ['licenseType', 'licenseNumber']),
+        'clp'
+      ).join(', ')
+    },
+
     userType (user) {
       return startCase(user.role)
     }
@@ -56,25 +65,37 @@ export default {
       <col class="type-col">
       <col class="edit-col">
     </template>
-    <b-form-checkbox
-      :id="`user_${data.index}_selected`"
+    <template
       slot="fullName"
-      v-model="data.item.selected"
-      slot-scope="data"
-      :disabled="data.item.id === currentUserId"
+      slot-scope="row"
     >
-      {{ data.value }}
-    </b-form-checkbox>
+      <a
+        href="#"
+        @click.prevent.stop="row.toggleDetails"
+      >
+        <fa-sprite
+          :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
+          fixed-width
+        />
+      </a>
+      <b-form-checkbox
+        :id="`user_${row.index}_selected`"
+        v-model="row.item.selected"
+        :disabled="row.item.id === currentUserId"
+      >
+        {{ row.value }}
+      </b-form-checkbox>
+    </template>
     <template
       slot="type"
-      slot-scope="data"
+      slot-scope="row"
     >
-      {{ userType(data.item) }}
+      {{ userType(row.item) }}
     </template>
     <a
       slot="edit"
-      slot-scope="data"
-      :href="`/users/${data.item.id}/edit`"
+      slot-scope="row"
+      :href="`/users/${row.item.id}/edit`"
       title="Edit"
     >
       <fa-sprite
@@ -82,6 +103,19 @@ export default {
         use="fas-fa-user-edit"
       />
     </a>
+    <b-container
+      slot="row-details"
+      slot-scope="row"
+      fluid
+    >
+      <b-row>
+        <b-col class="col-shrink">
+          <b-card header="Licenses/Permits">
+            {{ userLicenses(row.item) }}
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-container>
   </b-table>
 </template>
 

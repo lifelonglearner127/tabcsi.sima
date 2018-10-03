@@ -86,19 +86,19 @@ export default {
     </template>
     <div
       slot="clp"
-      slot-scope="data"
-      v-html="licenses(data.item)"
+      slot-scope="row"
+      v-html="licenses(row.item)"
     />
     <address
       slot="address"
-      slot-scope="data"
-      v-html="address(data.item)"
+      slot-scope="row"
+      v-html="address(row.item)"
     />
     <h6
       slot="status"
-      slot-scope="data"
+      slot-scope="row"
     >
-      {{ status(data.item) }}
+      {{ status(row.item) }}
     </h6>
   </b-table>
 </template>

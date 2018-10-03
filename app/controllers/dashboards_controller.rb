@@ -12,9 +12,7 @@ class DashboardsController < ApplicationController
       options = {
         include: {
           locations: { include: :licenses },
-          users: {
-            locations: { include: :licenses }
-          }
+          users: { include: :licenses }
         }
       }
     end
@@ -22,7 +20,8 @@ class DashboardsController < ApplicationController
     User
       .includes(
         company: {
-          locations: :licenses
+          locations: :licenses,
+          users: :licenses
         }
       )
       .find(current_user.id)
