@@ -56,8 +56,8 @@ export default {
   <b-form
     :accept-charset="acceptCharset"
     :action="action"
-    :method="method"
     class="needs-validation"
+    :method="method"
     novalidate
     @submit.prevent="handleSubmit"
   >

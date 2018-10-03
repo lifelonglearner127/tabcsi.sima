@@ -85,21 +85,21 @@ export default {
   <users-sessions-container
     :accept-charset="acceptCharset"
     :action="action"
+    back-href="/"
+    cols="12"
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
     :server-errors="serverErrors"
+    show-back-button
+    show-top-back-button
+    sm="6"
     :submit-text="submitText"
+    text-class="font-italic"
     :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
     :validation-method="validate"
-    back-href="/"
-    cols="12"
-    show-back-button
-    show-top-back-button
-    sm="6"
-    text-class="font-italic"
   >
     <edit-user
       v-if="isEdit"

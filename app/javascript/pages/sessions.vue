@@ -85,27 +85,27 @@ export default {
   <users-sessions-container
     :accept-charset="acceptCharset"
     :action="action"
+    back-href="/log_out"
+    back-method="delete"
+    cols="12"
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
     :server-errors="serverErrors"
     :show-back-button="pinRequested"
+    sm="4"
     :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
-    back-href="/log_out"
-    back-method="delete"
-    cols="12"
-    sm="4"
   >
     <b-form-group
       v-if="pinRequested"
       id="session_pin_group"
-      :invalid-feedback="invalidFeedback('pin')"
-      :state="state('pin')"
       data-required
+      :invalid-feedback="invalidFeedback('pin')"
       label="PIN"
       label-for="session_pin"
+      :state="state('pin')"
     >
       <b-input-group>
         <b-input-group-prepend is-text>
@@ -117,8 +117,8 @@ export default {
         <b-form-input
           id="session_pin"
           v-model="session.pin"
-          :maxlength="pageOptions.pinLength"
           data-path="pin"
+          :maxlength="pageOptions.pinLength"
           name="session[pin]"
           placeholder="12345678"
           required
@@ -145,12 +145,12 @@ export default {
     <b-form-group
       v-else
       id="session_email_group"
-      :invalid-feedback="invalidFeedback('email')"
-      :state="state('email')"
       data-required
       description="You'll need access to this email address to verify your account."
+      :invalid-feedback="invalidFeedback('email')"
       label="E-mail"
       label-for="session_email"
+      :state="state('email')"
     >
       <b-input-group>
         <b-input-group-prepend is-text>

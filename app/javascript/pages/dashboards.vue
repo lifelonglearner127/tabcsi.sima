@@ -70,16 +70,15 @@ export default {
       >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-            :text="user.fullName"
             right
+            :text="user.fullName"
           >
             <!-- BROKEN!!!
             <b-dropdown-item :href="`/users/${user.id}/edit`">
               <fa-sprite
                 fixed-width
                 use="fas-fa-user"
-              >
-              </fa-sprite>
+              />
               Update Profile
             </b-dropdown-item>
             -->

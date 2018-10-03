@@ -147,8 +147,8 @@ export default {
                   </b-dropdown-item>
                 </b-dropdown>
                 <b-button
-                  :disabled="noUsersSelected"
                   class="mx-1"
+                  :disabled="noUsersSelected"
                   size="sm"
                   variant="outline-secondary"
                   @click.prevent="deleteUsers"

@@ -52,8 +52,8 @@ export default {
   >
     <fa-sprite
       v-if="icon"
-      :use="icon"
       fixed-width
+      :use="icon"
     />
     <slot>
       <p

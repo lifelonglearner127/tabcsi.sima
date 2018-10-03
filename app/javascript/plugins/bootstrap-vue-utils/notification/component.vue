@@ -103,9 +103,9 @@ export default {
   >
     <fa-sprite
       v-if="icon"
-      :use="icon"
       fixed-width
       size="2x"
+      :use="icon"
     />
     <div class="notification__group">
       <h5

@@ -72,8 +72,8 @@ export default {
 <template>
   <b-table
     :fields="fields"
-    :items="items"
     hover
+    :items="items"
     responsive
     striped
   >

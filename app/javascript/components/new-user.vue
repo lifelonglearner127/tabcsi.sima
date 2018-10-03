@@ -212,9 +212,9 @@ export default {
       >
       <input
         id="user_owner_name"
-        :value="ownerName"
         name="user[owner_name]"
         type="hidden"
+        :value="ownerName"
       >
     </template>
 
@@ -232,8 +232,8 @@ export default {
         <b-input-group>
           <b-input-group-prepend is-text>
             <fa-sprite
-              :use="options.icon"
               fixed-width
+              :use="options.icon"
             />
           </b-input-group-prepend>
           <component
@@ -273,18 +273,18 @@ export default {
     <template v-if="isInvite">
       <b-form-group
         id="user_role_group"
-        :invalid-feedback="invalidFeedback('role')"
-        :state="state('role')"
         data-required
+        :invalid-feedback="invalidFeedback('role')"
         label="Role"
         label-for="user_role"
+        :state="state('role')"
       >
         <b-form-radio-group
           id="user_role"
           v-model="$v.user.role.$model"
-          :options="roles"
           data-path="role"
           name="user[role]"
+          :options="roles"
           required
           @change="validate"
         />
@@ -295,17 +295,17 @@ export default {
         id="user_location_clps_group"
         :data-required="isUser"
         :invalid-feedback="invalidFeedback('locationClps')"
-        :state="state('locationClps')"
         label="Locations"
         label-for="user_location_clps"
+        :state="state('locationClps')"
       >
         <b-form-checkbox-group
           id="user_location_clps"
           v-model="$v.user.locationClps.$model"
-          :options="locationClps"
-          :required="isUser"
           data-path="locationClps"
           name="user[location_clps][]"
+          :options="locationClps"
+          :required="isUser"
           stacked
           @change="validate"
         />

@@ -133,9 +133,9 @@ export default {
         :xl="xl"
       >
         <b-card
-          :title="title"
           class="my-3"
           header-class="py-4"
+          :title="title"
           title-tag="h5"
         >
           <a
@@ -143,8 +143,8 @@ export default {
             href="/"
           >
             <b-card-img
-              :src="logoSrc"
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
+              :src="logoSrc"
               top
             />
           </a>
@@ -175,8 +175,8 @@ export default {
             <b-button
               v-if="topBackButtonVisible"
               v-ujs-method="backMethod"
-              :href="backHref"
               class="mb-4"
+              :href="backHref"
               variant="secondary"
             >
               <slot name="back">
@@ -193,8 +193,8 @@ export default {
             <b-button
               v-if="backButtonVisible"
               v-ujs-method="backMethod"
-              :href="backHref"
               class="my-4"
+              :href="backHref"
               variant="secondary"
             >
               <slot name="back">

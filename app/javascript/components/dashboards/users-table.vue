@@ -52,8 +52,8 @@ export default {
 <template>
   <b-table
     :fields="fields"
-    :items="items"
     hover
+    :items="items"
     responsive
     striped
   >
@@ -74,8 +74,8 @@ export default {
         @click.prevent.stop="row.toggleDetails"
       >
         <fa-sprite
-          :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
           fixed-width
+          :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
         />
       </a>
       <b-form-checkbox

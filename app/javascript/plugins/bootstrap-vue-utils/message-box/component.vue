@@ -402,9 +402,9 @@ export default {
       :id="safeId()"
       ref="modal"
       v-model="visible"
+      centered
       :class="containerClasses"
       :hide-header="title == null"
-      centered
       @hidden="handleHidden"
       @hide="handleHide"
       @shown="handleShown"
@@ -412,10 +412,10 @@ export default {
       <template slot="modal-title">
         <fa-sprite
           v-if="icon && centerContent"
-          :use="icon"
           class="message-box__icon"
           fixed-width
           size="lg"
+          :use="icon"
         />
         {{ title }}
       </template>
@@ -433,10 +433,10 @@ export default {
           class="col-shrink"
         >
           <fa-sprite
-            :use="icon"
             class="message-box__icon"
             fixed-width
             size="2x"
+            :use="icon"
           />
         </b-col>
         <b-col class="col-auto">
@@ -468,8 +468,8 @@ export default {
                 ref="input"
                 v-model="inputValue"
                 :placeholder="inputPlaceholder"
-                :state="inputState"
                 rows="2"
+                :state="inputState"
               />
               <b-form-input
                 v-else
