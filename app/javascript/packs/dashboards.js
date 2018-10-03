@@ -1,4 +1,4 @@
-import App from '~/lib/app'
+import App from '~/components/app'
 import Dashboards from '~/pages/dashboards'
 
 App.build(Dashboards)
