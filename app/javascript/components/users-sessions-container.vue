@@ -123,8 +123,7 @@ export default {
   <b-container class="h-100">
     <b-row
       align-h="center"
-      align-v="center"
-      class="row-fluid"
+      class="container-row"
     >
       <b-col
         :cols="cols"
@@ -135,6 +134,7 @@ export default {
       >
         <b-card
           :title="title"
+          class="my-3"
           header-class="py-4"
           title-tag="h5"
         >
@@ -234,8 +234,8 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/variables';
 
-.row-fluid {
-  min-height: 100%;
+.container-row {
+  height: 100% !important;
 }
 
 .card {

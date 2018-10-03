@@ -195,6 +195,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@media only screen and (min-height: 512px) {
+  /deep/ .container-row {
+    align-items: center;
+  }
+}
+
 #session_pin {
   text-align: center;
 }

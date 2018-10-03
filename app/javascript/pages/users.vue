@@ -120,6 +120,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@media only screen and (min-height: 968px) {
+  /deep/ .container-row {
+    align-items: center;
+  }
+}
+
 .fa-phone {
   filter: fliph;
   transform: scaleX(-1);
