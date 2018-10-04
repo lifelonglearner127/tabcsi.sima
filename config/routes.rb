@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :news
+
   get :log_in, to: 'sessions#new'
   post :log_in, to: 'sessions#create'
   post :resend_pin, to: 'sessions#resend_pin'

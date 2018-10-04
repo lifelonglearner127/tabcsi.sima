@@ -71,7 +71,8 @@ class User < ApplicationRecord
       locations: locations.includes(:licenses).as_json(include: :licenses),
       location_clps: location_clps,
       phone: phone,
-      role: role
+      role: role,
+      news: news
     }
   end
 
