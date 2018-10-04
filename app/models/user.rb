@@ -70,7 +70,8 @@ class User < ApplicationRecord
     {
       full_name: full_name,
       role: role,
-      locations: locations.includes(:licenses).as_json(include: :licenses)
+      locations: locations.includes(:licenses).as_json(include: :licenses),
+      news: news
     }
   end
 

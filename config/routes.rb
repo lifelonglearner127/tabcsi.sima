@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :news do
+  end
+
   resources :users, only: %i[destroy]
   get :sign_up, to: 'users#new'
   post :sign_up, to: 'users#create'
