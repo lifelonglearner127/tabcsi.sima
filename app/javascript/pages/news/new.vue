@@ -18,11 +18,7 @@ export default {
       },
       newsTypes: this.pageOptions.newsTypes
     }
-  },
-
-  computed: {},
-
-  methods: {}
+  }
 }
 </script>
 
@@ -50,5 +46,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
+@media only screen and (min-height: 968px) {
+  /deep/ .container-row {
+    align-items: center;
+  }
+}
 </style>

@@ -21,8 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :news do
-  end
+  resources :news
 
   get :log_in, to: 'sessions#new'
   post :log_in, to: 'sessions#create'

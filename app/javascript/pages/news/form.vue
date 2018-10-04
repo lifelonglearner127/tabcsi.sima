@@ -1,19 +1,17 @@
 <script>
-import { ensureDebounceFunc } from '~/lib/utils'
-import get from 'lodash/get'
-import { getMessage } from '~/validators'
 import isEmpty from 'lodash/isEmpty'
 import logo from '~/assets/images/logo-white.png'
 import RailsForm from '~/components/rails-form'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
-
-const DEBOUNCE_DELAY = 250 // milliseconds
+import ValidationMixin from '~/mixins/validation'
 
 export default {
   name: 'NewsForm',
 
   components: { RailsForm },
+
+  mixins: [ValidationMixin('news')],
 
   props: {
     news: {
@@ -163,10 +161,6 @@ export default {
   },
 
   methods: {
-    getValidationField (path) {
-      return get(this.$v.news, path)
-    },
-
     inputGroupId (key) {
       return `${this.inputId(key)}_group`
     },
@@ -179,35 +173,10 @@ export default {
       return `news[${snakeCase(key)}]`
     },
 
-    invalidFeedback (path) {
-      return getMessage(this.getValidationField(path), this.state(path))
-    },
-
-    state (path) {
-      const field = this.getValidationField(path)
-
-      return field ? !field.$error : true
-    },
-
-    validate (e) {
-      const func = ensureDebounceFunc('validateDebounceFunc', this, this.validateDebounced, DEBOUNCE_DELAY)
-
-      func(e)
-    },
-
-    validateBeforeSubmit (e) {
-      this.$v.$touch()
-
-      if (!this.$v.$invalid) {
+    validateForm (e) {
+      if (this.validateBeforeSubmit()) {
         e.target.submit()
       }
-    },
-
-    validateDebounced (event) {
-      const path = event.target.dataset.path
-      const field = this.getValidationField(path)
-
-      field.$touch()
     }
   }
 }
@@ -217,8 +186,7 @@ export default {
   <b-container class="h-100">
     <b-row
       align-h="center"
-      align-v="center"
-      class="row-fluid"
+      class="container-row"
     >
       <b-col
         :cols="cols"
@@ -260,7 +228,7 @@ export default {
             :enforce-utf8="enforceUtf8"
             :hidden-method="hiddenMethod"
             :method="method"
-            :validation-method="validateBeforeSubmit"
+            :validation-method="validateForm"
             :token-name="tokenName"
             :token-value="tokenValue"
           >
@@ -373,9 +341,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/variables';
-
-.row-fluid {
-  min-height: 100%;
+.container-row {
+  height: 100% !important;
 }
 
 .card {

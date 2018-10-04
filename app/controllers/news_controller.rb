@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class NewsController < ApplicationController
-  before_action :require_logged_in_user
-  before_action :set_page_options
-  before_action :set_news, only: %i[edit show update]
+  skip_before_action :set_page_options, only: %i[create update]
+  before_action :set_news, only: %i[edit show update destroy]
 
   def index; end
 
@@ -61,9 +60,13 @@ class NewsController < ApplicationController
     formated_types
   end
 
-  def set_page_options
-    self.page_data_options =
-      case action_name
+  def build_page_options(page_name)
+    reset_page_options(provided_page_options(page_name))
+  end
+
+  def controller_page_options(page_name = action_name)
+    page_options =
+      case page_name
       when 'new'
         {
           url: news_index_path,
@@ -74,7 +77,7 @@ class NewsController < ApplicationController
           }
         }
       when 'edit'
-        self.page_data_options = {
+        {
           url: news_path,
           method: 'PUT',
           local: true,
@@ -83,7 +86,9 @@ class NewsController < ApplicationController
           }
         }
       else
-        self.page_data_options = {}
+        {}
       end
+
+    page_options
   end
 end

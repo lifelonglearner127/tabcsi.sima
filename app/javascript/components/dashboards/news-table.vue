@@ -17,9 +17,7 @@ export default {
         'content'
       ]
     }
-  },
-
-  methods: {}
+  }
 }
 </script>
 

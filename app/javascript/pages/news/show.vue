@@ -26,8 +26,7 @@ export default {
   <b-container class="h-100">
     <b-row
       align-h="center"
-      align-v="center"
-      class="row-fluid"
+      class="container-row"
     >
       <b-col
         :cols="12"
@@ -69,28 +68,34 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-  @import '~@/assets/stylesheets/variables';
+@import '~@/assets/stylesheets/variables';
 
-  .row-fluid {
-    min-height: 100%;
+@media only screen and (min-height: 968px) {
+  .container-row {
+    align-items: center;
   }
+}
 
-  .card {
-    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
-  }
+.container-row {
+  height: 100% !important;
+}
 
-  .card-header {
-    background-color: $tabc-dark-blue;
-    border-bottom-width: 0;
-    color: $white;
-    text-align: center;
-  }
+.card {
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+}
 
-  .card-img-top {
-    width: 300px;
-  }
+.card-header {
+  background-color: $tabc-dark-blue;
+  border-bottom-width: 0;
+  color: $white;
+  text-align: center;
+}
 
-  .card-title {
-    text-align: center;
-  }
+.card-img-top {
+  width: 300px;
+}
+
+.card-title {
+  text-align: center;
+}
 </style>
