@@ -44,11 +44,10 @@ export default {
               :src="logoSrc"
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
               top
-            >
-            </b-card-img>
+            />
           </a>
           <h5>{{ news.subject }}</h5>
-          <div v-html="news.content"/>
+          <div v-html="news.content" />
           <b-button
             href="/"
             class="my-4"

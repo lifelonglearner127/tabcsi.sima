@@ -103,11 +103,10 @@ export default {
   >
     <fa-sprite
       v-if="icon"
-      :use="icon"
       fixed-width
       size="2x"
-    >
-    </fa-sprite>
+      :use="icon"
+    />
     <div class="notification__group">
       <h5
         v-if="title"

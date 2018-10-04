@@ -34,8 +34,14 @@ export const deepMapKeys = (object, iteratee) => mapKeys(
       return deepMapKeys(v, iteratee)
     }
 
-    if (Array.isArray(v)) {
-      return map(v, (item) => deepMapKeys(item, iteratee))
+    if (isArrayLike(v)) {
+      return map(v, (item) => {
+        if (isPlainObject(item) || isArrayLike(item)) {
+          return deepMapKeys(item, iteratee)
+        }
+
+        return item
+      })
     }
 
     return v
@@ -97,3 +103,5 @@ const DIGITS = {
 }
 
 export const parseDigit = (ch) => DIGITS[ch]
+
+export const getBoolean = (object, key) => key in object && Boolean(object[key])

@@ -6,4 +6,8 @@ class Company < ApplicationRecord
   has_many :users, -> { order(:full_name) }
 
   validates :owner_name, presence: true, uniqueness: { case_sensitive: false }
+
+  def admin_count
+    users.where(role: :admin).size
+  end
 end

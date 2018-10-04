@@ -1,5 +1,6 @@
 <script>
 import EditUser from '~/components/edit-user'
+import { getBoolean } from '~/lib/utils'
 import NewUser from '~/components/new-user'
 import PageMixin from '~/mixins/page'
 import UsersSessionsContainer from '~/components/users-sessions-container'
@@ -21,12 +22,16 @@ export default {
         case 'invite':
           return 'Invite a New User'
 
-        case 'profile':
-          return 'Update Profile'
+        case 'edit':
+          return 'Update User'
 
         default:
           return 'Create a New Account'
       }
+    },
+
+    isEdit () {
+      return this.pageName === 'edit'
     },
 
     isInvite () {
@@ -34,11 +39,7 @@ export default {
     },
 
     isProfile () {
-      return this.pageName === 'profile'
-    },
-
-    isSignUp () {
-      return this.pageName === 'sign-up'
+      return getBoolean(this.pageOptions, 'isProfile')
     },
 
     locations () {
@@ -54,8 +55,8 @@ export default {
         case 'invite':
           return 'Invite'
 
-        case 'profile':
-          return 'Update Profile'
+        case 'edit':
+          return 'Save'
 
         default:
           return 'Sign Up'
@@ -63,7 +64,7 @@ export default {
     },
 
     user () {
-      return this.pageOptions.user || {}
+      return this.pageOptions.user || undefined
     }
   },
 
@@ -84,40 +85,47 @@ export default {
   <users-sessions-container
     :accept-charset="acceptCharset"
     :action="action"
+    back-href="/"
+    cols="12"
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
     :server-errors="serverErrors"
+    show-back-button
+    show-top-back-button
+    sm="6"
     :submit-text="submitText"
+    text-class="font-italic"
     :title="cardTitle"
     :token-name="tokenName"
     :token-value="tokenValue"
     :validation-method="validate"
-    back-href="/"
-    cols="12"
-    show-back-button
-    show-top-back-button
-    sm="6"
-    text-class="font-italic"
   >
+    <edit-user
+      v-if="isEdit"
+      ref="editUser"
+      :is-profile="isProfile"
+      :locations="locations"
+      :user="user"
+    />
     <new-user
-      v-if="isSignUp || isInvite"
+      v-else
       ref="newUser"
-      :is-sign-up="isSignUp"
+      :is-invite="isInvite"
       :locations="locations"
       :owner-name="ownerName"
-    >
-    </new-user>
-    <edit-user
-      v-if="isProfile"
-      ref="editUser"
       :user="user"
-    >
-    </edit-user>
+    />
   </users-sessions-container>
 </template>
 
 <style lang="scss" scoped>
+@media only screen and (min-height: 968px) {
+  /deep/ .container-row {
+    align-items: center;
+  }
+}
+
 .fa-phone {
   filter: fliph;
   transform: scaleX(-1);

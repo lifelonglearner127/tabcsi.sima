@@ -22,8 +22,24 @@ export default {
 </script>
 
 <template>
-  <locations-table :items="locations"></locations-table>
+  <b-container>
+    <b-row>
+      <b-col>
+        <locations-table :items="locations" />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/variables';
+
+.table-responsive {
+  border: $card-border-width solid $card-border-color;
+  border-top-width: 0;
+
+  /deep/ .table {
+    margin-bottom: 0;
+  }
+}
 </style>

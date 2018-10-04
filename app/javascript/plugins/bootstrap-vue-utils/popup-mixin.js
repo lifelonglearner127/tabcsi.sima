@@ -3,6 +3,7 @@ import Popup from './popup-component'
 
 const DEFAULT_DURATION = 3000
 
+// @vue/component
 export default {
   components: { Popup },
 

@@ -1,77 +1,90 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_logged_in_user, only: %i[destroy invite profile]
-  before_action :set_page_options
-  before_action :set_user, only: %i[edit show update]
+  skip_before_action(
+    :require_logged_in_user, except: %i[destroy edit invite update]
+  )
+  prepend_before_action :set_user, only: %i[destroy edit show update]
+  skip_before_action :set_page_options, except: %i[edit invite new]
+
+  def create
+    @user = User.create(normalized_user_params)
+
+    if @user.persisted?
+      redirect_to(
+        @user.invited? ? dashboard_url : log_in_url,
+        notice: successful_create_notice(@user)
+      )
+
+      return
+    end
+
+    page_name, action = @user.invited? ? %w[invite invite] : [nil, 'new']
+
+    build_page_options(page_name)
+
+    render action
+  end
+
+  def destroy
+    @user.discard
+
+    head :no_content
+  end
+
+  def edit; end
+
+  def invite; end
 
   def new
     redirect_to(dashboard_url) if logged_in?
   end
 
-  def create
-    user = User.new(sanitized_user_params)
-
-    if user.save_user
-      flash[:notice] = 'Registration success!'
-      redirect_to successful_create_url(user)
-    else
-      page_data_options[:html][:errors] = {
-        base: user.errors.full_messages.join(', ')
-      }
-      render unsuccessful_create_action(user)
-    end
-  end
-
-  def invite; end
-
-  def profile; end
-
-  def edit; end
-
   def update
-    if @user.update!(sanitized_user_params)
+    if @user.update(normalized_user_params)
       redirect_to dashboard_url
-    else
-      unsuccessful_update_action(@user)
+
+      return
     end
-  end
 
-  def destroy
-    user = User.find(params[:id])
-    user.discard
+    build_page_options('edit')
 
-    head :no_content
+    render 'edit'
   end
 
   private
 
-  def set_user
-    @user = User.find_by(id: params[:id]) || current_user
+  def build_page_options(page_name)
+    reset_page_options(provided_page_options(page_name))
   end
 
-  def set_page_options
-    self.page_data_options =
-      case action_name
-      when 'invite'
+  def company_locations
+    current_user.company.locations
+  end
+
+  def controller_page_options(page_name = action_name)
+    page_options =
+      case page_name
+      when 'edit'
         {
-          url: invite_path,
-          method: 'post',
-          local: true,
-          html: {
-            page_name: 'invite',
-            owner_name: current_user.company.owner_name,
-            locations: current_user.company.locations.where(inspected: false)
-          }
-        }
-      when 'profile'
-        {
-          url: profile_path,
+          url: edit_user_path,
           method: 'patch',
           local: true,
           html: {
-            page_name: 'profile',
-            user: current_user
+            is_profile: @user.id == current_user.id,
+            locations: company_locations,
+            page_name: 'edit'
+          }
+        }
+      when 'invite'
+        {
+          url: invite_users_path,
+          method: 'post',
+          local: true,
+          html: {
+            locations: company_locations,
+            owner_name: current_user.company.owner_name,
+            page_name: 'invite'
           }
         }
       else
@@ -79,45 +92,54 @@ class UsersController < ApplicationController
           url: sign_up_path,
           method: 'post',
           local: true,
-          html: {
-            page_name: 'sign-up'
-          }
+          html: { page_name: 'sign-up' }
         }
       end
+
+    page_options[:html][:user] = @user&.info
+
+    unless @user&.errors.blank?
+      page_options[:html][:errors] = {
+        base: @user.errors.full_messages.join(', ')
+      }
+    end
+
+    page_options
   end
 
-  def successful_create_url(user)
-    user.invite? ? dashboard_url : log_in_url
+  def normalized_user_params
+    normalized_params = user_params
+
+    if normalized_params[:full_name].present?
+      normalized_params[:full_name].strip!
+    end
+
+    if normalized_params[:license_number].present?
+      normalized_params[:license_number].strip!
+    end
+
+    normalized_params
   end
 
-  def unsuccessful_create_action(user)
-    user.invite? ? 'invite' : 'new'
+  def set_user
+    @user = User.find(params[:id])
   end
 
-  def unsuccessful_update_action(user)
-    user.profile? ? 'profile' : 'edit'
+  def successful_create_notice(user)
+    if user.invited?
+      t('notices.users.create.invite')
+    else
+      t('notices.users.create.new')
+    end
   end
 
   def user_params
     params
       .require(:user)
       .permit(
-        :company_name, :email, :full_name, :is_invite, :is_profile, :job_title,
-        :license_number, { location_clps: [] }, :owner_name, :phone
+        :company_name, :email, :full_name, :invited, :job_title,
+        :license_number, { location_clps: [] }, :owner_name, :phone, :profile,
+        :role
       )
-  end
-
-  def sanitized_user_params
-    sanitized_params = user_params
-
-    if sanitized_params[:full_name].present?
-      sanitized_params[:full_name] = sanitized_params[:full_name].strip
-    end
-
-    if sanitized_params[:license_number].present?
-      sanitized_params[:license_number] = sanitized_params[:license_number].strip
-    end
-
-    sanitized_params
   end
 end

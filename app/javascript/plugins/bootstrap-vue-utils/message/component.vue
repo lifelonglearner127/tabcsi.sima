@@ -52,10 +52,9 @@ export default {
   >
     <fa-sprite
       v-if="icon"
-      :use="icon"
       fixed-width
-    >
-    </fa-sprite>
+      :use="icon"
+    />
     <slot>
       <p
         v-if="dangerouslyUseHTMLString"

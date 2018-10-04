@@ -3,6 +3,7 @@ import FontAwesomeIcon from './icon'
 import iconMap from './icon-map'
 import iconProps from './props'
 
+// @vue/component
 export default {
   name: 'FaSprite',
 

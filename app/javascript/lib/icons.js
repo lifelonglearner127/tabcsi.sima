@@ -4,6 +4,8 @@ import {
   faUser, faUserEdit, faUserPlus, faUsers, faUserTie, faUserTimes
 } from '@fortawesome/free-solid-svg-icons'
 
+import { faMinusSquare, faPlusSquare } from '@fortawesome/free-regular-svg-icons'
+
 export default [
   faArrowLeft,
   faArrowRight,
@@ -18,8 +20,10 @@ export default [
   faInfoCircle,
   faKey,
   faMapMarkerAlt,
+  faMinusSquare,
   faPhone,
   faPlus,
+  faPlusSquare,
   faSignOutAlt,
   faTimes,
   faTimesCircle,

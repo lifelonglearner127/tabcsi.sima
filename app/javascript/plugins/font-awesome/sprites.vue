@@ -14,11 +14,10 @@ export default {
   <div class="d-none">
     <fa-icon
       v-for="(icon, name) in icons"
-      :icon="icon"
       :key="name"
+      :icon="icon"
       :symbol="name"
-    >
-    </fa-icon>
+    />
   </div>
 </template>
 

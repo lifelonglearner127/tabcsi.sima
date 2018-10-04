@@ -1,4 +1,5 @@
 export { default as email } from './email'
+export { default as exactLength } from './exact-length'
 export { default as fullName } from './full-name'
 export { default as licenseNumber } from './license-number'
 export { default as getMessage } from './messages'

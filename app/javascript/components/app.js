@@ -50,6 +50,7 @@ export default class App {
     }
 
     onReady(() => {
+      // @vue/component
       new Vue({ // eslint-disable-line no-new
         el: 'main',
 

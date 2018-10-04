@@ -115,9 +115,9 @@ export default {
   <transition name="popup-fade">
     <div
       v-show="visible"
-      :class="classObject"
       aria-atomic="true"
       aria-live="polite"
+      :class="classObject"
       role="alert"
       @click="handleClick"
       @mouseenter="clearTimer"

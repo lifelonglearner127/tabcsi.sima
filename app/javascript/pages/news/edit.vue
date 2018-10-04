@@ -42,8 +42,7 @@ export default {
     show-top-back-button
     sm="6"
     text-class="font-italic"
-  >
-  </news-form>
+  />
 </template>
 
 <style lang="scss" scoped>

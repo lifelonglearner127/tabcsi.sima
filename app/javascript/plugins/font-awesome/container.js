@@ -35,12 +35,13 @@ const iconSize = (size) => {
   return height
 }
 
+// @vue/component
 export default {
   name: 'FaContainer',
 
   functional: true,
 
-  props: { size: iconSizeProp },
+  props: { size: iconSizeProp }, // eslint-disable-line vue/require-default-prop
 
   render (h, { children, props }) {
     return h(

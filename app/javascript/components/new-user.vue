@@ -1,23 +1,22 @@
 <script>
-import { email, fullName, getMessage, licenseNumber, phone } from '~/validators'
-import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
+import { email, fullName, licenseNumber, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
-import get from 'lodash/get'
 import map from 'lodash/map'
+import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
-
-const DEBOUNCE_DELAY = 250 // milliseconds
+import ValidationMixin from '~/mixins/validation'
 
 export default {
   name: 'NewUser',
 
-  props: {
-    isSignUp: {
-      type: Boolean,
-      default: true
-    },
+  mixins: [ValidationMixin('user')],
 
+  props: {
+    isInvite: {
+      type: Boolean,
+      default: false
+    },
     locations: {
       type: Array,
 
@@ -25,24 +24,30 @@ export default {
         return []
       }
     },
-
     ownerName: {
       type: String,
       default: ''
+    },
+    user: {
+      type: Object,
+
+      default () {
+        return {
+          companyName: '',
+          email: '',
+          fullName: '',
+          jobTitle: '',
+          licenseNumber: '',
+          locationClps: [],
+          phone: '',
+          role: 'user'
+        }
+      }
     }
   },
 
   data () {
     return {
-      user: {
-        companyName: '',
-        email: '',
-        fullName: '',
-        jobTitle: '',
-        licenseNumber: '',
-        locationClps: [],
-        phone: ''
-      },
       form: {
         fullName: {
           autoComplete: 'name',
@@ -57,8 +62,7 @@ export default {
           label: 'E-mail',
           maxLength: 192,
           placeholder: 'jsmith@example.com',
-          required: true,
-          type: 'email'
+          required: true
         },
         phone: {
           autoComplete: 'tel',
@@ -69,7 +73,7 @@ export default {
           maxLength: 14,
           parse: this.parsePhone,
           placeholder: '(123) 456-7890',
-          required: this.isSignUp,
+          required: !this.isInvite,
           type: 'tel'
         },
         companyName: {
@@ -78,7 +82,7 @@ export default {
           label: 'Company Name',
           placeholder: 'Awesome Food LLC',
           required: true,
-          show: this.isSignUp
+          show: !this.isInvite
         },
         jobTitle: {
           autoComplete: 'organization-title',
@@ -93,7 +97,7 @@ export default {
           label: 'License/Permit Number',
           placeholder: 'AB123456',
           required: true,
-          show: this.isSignUp
+          show: !this.isInvite
         }
       }
     }
@@ -118,22 +122,31 @@ export default {
       }
     }
 
-    if (this.isSignUp) {
+    if (this.isInvite) {
+      delete schema.user.phone.required
+
+      schema.user.role = { required }
+
+      schema.user.locationClps = {}
+      if (this.isUser) {
+        schema.user.locationClps.required = required
+      }
+    } else {
       schema.user.companyName = { required }
       schema.user.licenseNumber = {
         required,
         licenseNumber
       }
-    } else {
-      delete schema.user.phone.required
-
-      schema.user.locationClps = { required }
     }
 
     return schema
   },
 
   computed: {
+    isUser () {
+      return this.user.role === 'user'
+    },
+
     locationClps () {
       return map(
         this.locations,
@@ -144,8 +157,17 @@ export default {
       )
     },
 
-    submittable () {
-      return !this.$v.$invalid
+    roles () {
+      return [
+        {
+          text: 'User',
+          value: 'user'
+        },
+        {
+          text: 'Admin',
+          value: 'admin'
+        }
+      ]
     }
   },
 
@@ -160,10 +182,6 @@ export default {
       }
     },
 
-    getValidationField (path) {
-      return get(this.$v.user, path)
-    },
-
     inputGroupId (key) {
       return `${this.inputId(key)}_group`
     },
@@ -176,49 +194,8 @@ export default {
       return `user[${snakeCase(key)}]`
     },
 
-    invalidFeedback (path) {
-      return getMessage(this.getValidationField(path), this.state(path))
-    },
-
     parsePhone (ch) {
       return parseDigit(ch)
-    },
-
-    state (path) {
-      const field = this.getValidationField(path)
-
-      return field ? !field.$error : true
-    },
-
-    validate (e) {
-      const func = ensureDebounceFunc('validateDebounceFunc', this, this.validateDebounced, DEBOUNCE_DELAY)
-
-      func(e)
-    },
-
-    validateLocationClps () {
-      const func = ensureDebounceFunc(
-        'validateLocationClpsDebounceFunc', this, this.validateLocationClpsDebounced, DEBOUNCE_DELAY
-      )
-
-      func()
-    },
-
-    validateBeforeSubmit () {
-      this.$v.$touch()
-
-      return this.submittable
-    },
-
-    validateDebounced (event) {
-      const path = event.target.dataset.path
-      const field = this.getValidationField(path)
-
-      field.$touch()
-    },
-
-    validateLocationClpsDebounced () {
-      this.$v.user.locationClps.$touch()
     }
   }
 }
@@ -226,28 +203,28 @@ export default {
 
 <template>
   <div>
-    <template v-if="!isSignUp">
+    <template v-if="isInvite">
       <input
-        id="user_is_invite"
-        name="user[is_invite]"
+        id="user_invited"
+        name="user[invited]"
         type="hidden"
         value="true"
       >
       <input
         id="user_owner_name"
-        :value="ownerName"
         name="user[owner_name]"
         type="hidden"
+        :value="ownerName"
       >
     </template>
 
     <template v-for="(options, key) in form">
       <b-form-group
         v-if="options.show == null ? true : options.show"
-        :data-required="options.required"
         :id="inputGroupId(key)"
-        :invalid-feedback="invalidFeedback(key)"
         :key="key"
+        :data-required="options.required"
+        :invalid-feedback="invalidFeedback(key)"
         :label="options.label"
         :label-for="inputId(key)"
         :state="state(key)"
@@ -255,67 +232,85 @@ export default {
         <b-input-group>
           <b-input-group-prepend is-text>
             <fa-sprite
-              :use="options.icon"
               fixed-width
-            >
-            </fa-sprite>
+              :use="options.icon"
+            />
           </b-input-group-prepend>
           <component
+            :is="options.component || 'b-form-input'"
+            :id="inputId(key)"
             v-model="$v.user[key].$model"
             :autocomplete="options.autoComplete"
+            :class="{ 'form-control': options.component }"
             :data-path="key"
             :format="options.format"
-            :id="inputId(key)"
-            :is="options.component || 'b-form-input'"
             :maxlength="options.maxLength"
             :name="inputName(key)"
             :parse="options.parse"
             :placeholder="options.placeholder"
             :required="options.required"
             :type="options.type || 'text'"
-            class="form-control"
             @blur.native="validate"
             @input.native="validate"
-          >
-          </component>
+          />
         </b-input-group>
       </b-form-group>
     </template>
 
     <b-form-text
-      v-if="isSignUp"
+      v-if="!isInvite"
       class="font-italic"
     >
       <fa-sprite
         fixed-width
         use="fas-fa-info-circle"
-      >
-      </fa-sprite>
+      />
       Enter one of the license/permit numbers you are managing. For
       example: <strong>MB1234567</strong>. You will be assigned licenses/permits that are associated with this once you
       log in into the system.
     </b-form-text>
 
-    <b-form-group
-      v-if="!isSignUp"
-      id="user_location_clps_group"
-      :invalid-feedback="invalidFeedback('locationClps')"
-      :state="state('locationClps')"
-      data-required
-      label="Locations"
-      label-for="user_location_clps"
-    >
-      <b-form-checkbox-group
-        id="user_location_clps"
-        v-model="$v.user.locationClps.$model"
-        :options="locationClps"
-        name="user[location_clps][]"
-        required
-        stacked
-        @change="validateLocationClps"
+    <template v-if="isInvite">
+      <b-form-group
+        id="user_role_group"
+        data-required
+        :invalid-feedback="invalidFeedback('role')"
+        label="Role"
+        label-for="user_role"
+        :state="state('role')"
       >
-      </b-form-checkbox-group>
-    </b-form-group>
+        <b-form-radio-group
+          id="user_role"
+          v-model="$v.user.role.$model"
+          data-path="role"
+          name="user[role]"
+          :options="roles"
+          required
+          @change="validate"
+        />
+      </b-form-group>
+
+      <b-form-group
+        v-show="isUser"
+        id="user_location_clps_group"
+        :data-required="isUser"
+        :invalid-feedback="invalidFeedback('locationClps')"
+        label="Locations"
+        label-for="user_location_clps"
+        :state="state('locationClps')"
+      >
+        <b-form-checkbox-group
+          id="user_location_clps"
+          v-model="$v.user.locationClps.$model"
+          data-path="locationClps"
+          name="user[location_clps][]"
+          :options="locationClps"
+          :required="isUser"
+          stacked
+          @change="validate"
+        />
+      </b-form-group>
+    </template>
   </div>
 </template>
 
@@ -329,16 +324,6 @@ export default {
 
 .form-text {
   text-align: left;
-}
-
-.form-group {
-  &[data-required] {
-    /deep/ .col-form-label::after {
-      color: $danger;
-      content: '*';
-      margin-left: 0.25rem;
-    }
-  }
 }
 
 .custom-controls-stacked {

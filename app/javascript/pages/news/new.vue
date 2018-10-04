@@ -12,7 +12,7 @@ export default {
   data () {
     return {
       news: {
-        newsType: 0,
+        newsType: null,
         subject: '',
         content: ''
       },
@@ -46,8 +46,7 @@ export default {
     show-top-back-button
     sm="6"
     text-class="font-italic"
-  >
-  </news-form>
+  />
 </template>
 
 <style lang="scss" scoped>

@@ -2,6 +2,7 @@ import FontAwesomeContainer from './container'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import iconProps from './props'
 
+// @vue/component
 export default {
   name: 'FaIcon',
 

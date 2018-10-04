@@ -14,6 +14,10 @@ export default {
   mixins: [PageMixin],
 
   computed: {
+    adminCount () {
+      return this.pageOptions.adminCount || 0
+    },
+
     company () {
       return this.pageOptions.company || {}
     },
@@ -48,10 +52,11 @@ export default {
 <template>
   <div>
     <b-navbar
+      class="mb-3"
       toggleable="md"
       type="dark"
     >
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav_collapse" />
       <b-navbar-brand href="/">
         <img
           alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
@@ -65,69 +70,58 @@ export default {
       >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-            :text="user.fullName"
             right
+            :text="user.fullName"
           >
-            <b-dropdown-item href="/profile">
+            <b-dropdown-item :href="`/users/${user.id}/edit`">
               <fa-sprite
                 fixed-width
                 use="fas-fa-user"
-              >
-              </fa-sprite>
+              />
               Update Profile
             </b-dropdown-item>
-            <b-dropdown-item href="https://www.tabc.texas.gov/mobile/">
+            <b-dropdown-item
+              href="https://www.tabc.texas.gov/mobile/"
+              target="_blank"
+            >
               <fa-sprite
                 fixed-width
                 use="fas-fa-phone"
-              >
-              </fa-sprite>
+              />
               Contact TABC
             </b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-divider />
             <b-dropdown-item
               v-ujs-confirm="'Are you sure you want to log-out?'"
-              v-ujs-method="pageOptions.logOut.method"
-              :href="pageOptions.logOut.path"
+              v-ujs-method="'delete'"
+              href="/log_out"
               rel="nofollow"
             >
               <fa-sprite
                 fixed-width
                 use="fas-fa-sign-out-alt"
-              >
-              </fa-sprite>
-              Logout
+              />
+              Log Out
             </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
 
-    <b-container
-      class="my-5"
-      fluid
-    >
-      <b-row>
-        <b-col>
-          <tabc-dashboard
-            v-if="userIsTabcAdmin"
-            :user="user"
-          >
-          </tabc-dashboard>
-          <admin-dashboard
-            v-else-if="userIsAdmin"
-            :company="company"
-            :user="user"
-          >
-          </admin-dashboard>
-          <user-dashboard
-            v-else
-            :user="user"
-          >
-          </user-dashboard>
-        </b-col>
-      </b-row>
-    </b-container>
+    <tabc-dashboard
+      v-if="userIsTabcAdmin"
+      :user="user"
+    />
+    <admin-dashboard
+      v-else-if="userIsAdmin"
+      :admin-count="adminCount"
+      :company="company"
+      :user="user"
+    />
+    <user-dashboard
+      v-else
+      :user="user"
+    />
   </div>
 </template>
 

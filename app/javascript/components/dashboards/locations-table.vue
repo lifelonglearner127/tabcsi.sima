@@ -18,19 +18,14 @@ export default {
         'name',
         {
           key: 'clp',
-          label: 'CLP Numbers'
+          label: 'CLP Number'
         },
         'address',
         'phoneNumber',
         {
-          key: 'locked',
-          label: 'Started',
-          tdClass: 'text-center'
-        },
-        {
-          key: 'inspected',
-          label: 'Completed',
-          tdClass: 'text-center'
+          key: 'status',
+          tdClass: 'text-center',
+          thClass: 'text-center'
         }
       ]
     }
@@ -57,6 +52,18 @@ export default {
         license.licenseType,
         license.licenseNumber
       ].join('')).join('<br>')
+    },
+
+    status (location) {
+      if (location.inspected) {
+        return 'Completed'
+      }
+
+      if (location.locked) {
+        return 'Started'
+      }
+
+      return ''
     }
   }
 }
@@ -65,45 +72,69 @@ export default {
 <template>
   <b-table
     :fields="fields"
-    :items="items"
     hover
+    :items="items"
     responsive
     striped
   >
+    <template slot="table-colgroup">
+      <col class="name-col">
+      <col class="clp-col">
+      <col class="address-col">
+      <col class="phone-col">
+      <col class="status-col">
+    </template>
     <div
       slot="clp"
-      slot-scope="data"
-      v-html="licenses(data.item)"
+      slot-scope="row"
+      v-html="licenses(row.item)"
     />
     <address
       slot="address"
-      slot-scope="data"
-      v-html="address(data.item)"
+      slot-scope="row"
+      v-html="address(row.item)"
     />
-    <template
-      slot="locked"
-      slot-scope="data"
+    <h6
+      slot="status"
+      slot-scope="row"
     >
-      <fa-sprite
-        v-if="data.value"
-        fixed-width
-        use="fas-fa-check"
-      >
-      </fa-sprite>
-    </template>
-    <template
-      slot="inspected"
-      slot-scope="data"
-    >
-      <fa-sprite
-        v-if="data.value"
-        fixed-width
-        use="fas-fa-check"
-      >
-      </fa-sprite>
-    </template>
+      {{ status(row.item) }}
+    </h6>
   </b-table>
 </template>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixins';
+
+.name-col {
+  width: auto;
+}
+
+.clp-col {
+  @include fixed-width(8rem);
+}
+
+.address-col {
+  width: auto;
+}
+
+.phone-col {
+  @include fixed-width(10rem);
+}
+
+.status-col {
+  @include fixed-width(7rem);
+}
+
+/deep/ td {
+  vertical-align: middle;
+}
+
+/deep/ .status-cell {
+  text-align: center;
+
+  h3 {
+    margin-bottom: 0;
+  }
+}
 </style>

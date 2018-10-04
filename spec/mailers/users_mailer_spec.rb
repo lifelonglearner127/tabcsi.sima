@@ -8,11 +8,13 @@ RSpec.describe UsersMailer do
   describe 'request_pin' do
     let(:email_subject) { t('users_mailer.request_pin.subject') }
     let(:recipient_email) { Faker::Internet.safe_email }
-    let(:pin) { Faker::Number.number(8) }
+    let(:full_name) { Faker::Name.full_name }
+    let(:pin) { Faker::Number.number(Setting.pin_length) }
 
     let(:mail) do
       described_class.with(
         recipient: recipient_email,
+        full_name: full_name,
         pin: pin
       ).request_pin
     end
@@ -29,6 +31,10 @@ RSpec.describe UsersMailer do
       expect(mail.from).to eq([sender_email])
     end
 
+    it 'assigns @full_name' do
+      expect(mail.body.encoded).to match(full_name)
+    end
+
     it 'assigns @pin' do
       expect(mail.body.encoded).to match(pin)
     end
@@ -37,7 +43,7 @@ RSpec.describe UsersMailer do
   describe 'welcome' do
     let(:email_subject) { t('users_mailer.welcome.subject') }
     let(:recipient_email) { Faker::Internet.safe_email }
-    let(:full_name) { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
+    let(:full_name) { Faker::Name.full_name }
 
     let(:mail) do
       described_class.with(
@@ -65,7 +71,5 @@ RSpec.describe UsersMailer do
     it 'assigns @full_name' do
       expect(mail.body.encoded).to match(full_name)
     end
-
-    # TODO: test conditional @company_name
   end
 end

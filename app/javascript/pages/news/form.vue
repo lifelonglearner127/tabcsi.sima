@@ -240,8 +240,7 @@ export default {
               :src="logoSrc"
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
               top
-            >
-            </b-card-img>
+            />
           </a>
           <b-alert
             v-if="haveErrors"
@@ -266,8 +265,8 @@ export default {
             :token-value="tokenValue"
           >
             <b-button
-              v-ujs-method="backMethod"
               v-if="topBackButtonVisible"
+              v-ujs-method="backMethod"
               :href="backHref"
               class="mb-4"
               variant="secondary"
@@ -276,8 +275,7 @@ export default {
                 <fa-sprite
                   fixed-width
                   use="fas-fa-arrow-left"
-                >
-                </fa-sprite>
+                />
                 Back
               </slot>
             </b-button>
@@ -285,20 +283,20 @@ export default {
             <div>
               <template v-for="(options, key) in form">
                 <b-form-group
-                  :data-required="options.required"
                   :id="inputGroupId(key)"
-                  :invalid-feedback="invalidFeedback(key)"
                   :key="key"
+                  :data-required="options.required"
+                  :invalid-feedback="invalidFeedback(key)"
                   :label="options.label"
                   :label-for="inputId(key)"
                   :state="state(key)"
                 >
                   <component
+                    :is="options.component || 'b-form-input'"
+                    :id="inputId(key)"
                     v-model="$v.news[key].$model"
                     :autocomplete="options.autoComplete"
                     :data-path="key"
-                    :id="inputId(key)"
-                    :is="options.component || 'b-form-input'"
                     :name="inputName(key)"
                     :placeholder="options.placeholder"
                     :required="options.required"
@@ -308,15 +306,14 @@ export default {
                     class="form-control"
                     @blur.native="validate"
                     @input.native="validate"
-                  >
-                  </component>
+                  />
                 </b-form-group>
               </template>
             </div>
 
             <b-button
-              v-ujs-method="backMethod"
               v-if="backButtonVisible"
+              v-ujs-method="backMethod"
               :href="backHref"
               class="my-4"
               variant="secondary"
@@ -325,8 +322,7 @@ export default {
                 <fa-sprite
                   fixed-width
                   use="fas-fa-arrow-left"
-                >
-                </fa-sprite>
+                />
                 Back
               </slot>
             </b-button>
@@ -366,7 +362,7 @@ export default {
               size="lg"
               ok-only
             >
-              <div v-html="news.content"/>
+              <div v-html="news.content" />
             </b-modal>
           </rails-form>
         </b-card>

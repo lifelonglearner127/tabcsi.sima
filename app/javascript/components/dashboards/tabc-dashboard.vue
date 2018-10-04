@@ -80,7 +80,7 @@ export default {
           </b-button>
         </b-button-toolbar>
 
-        <news-table :items="news"></news-table>
+        <news-table :items="news" />
       </b-tab>
     </b-tabs>
   </b-card>

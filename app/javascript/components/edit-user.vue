@@ -1,17 +1,29 @@
 <script>
-import { email, fullName, getMessage, phone } from '~/validators'
-import { ensureDebounceFunc, parseDigit } from '~/lib/utils'
+import { email, fullName, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
-import get from 'lodash/get'
+import map from 'lodash/map'
+import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
-
-const DEBOUNCE_DELAY = 250 // milliseconds
+import ValidationMixin from '~/mixins/validation'
 
 export default {
   name: 'EditUser',
 
+  mixins: [ValidationMixin('user')],
+
   props: {
+    isProfile: {
+      type: Boolean,
+      default: false
+    },
+    locations: {
+      type: Array,
+
+      default () {
+        return []
+      }
+    },
     user: {
       type: Object,
       required: true
@@ -56,7 +68,7 @@ export default {
   },
 
   validations () {
-    return {
+    const schema = {
       user: {
         email: {
           required,
@@ -70,11 +82,45 @@ export default {
         phone: { phone }
       }
     }
+
+    if (!this.isProfile) {
+      schema.user.role = { required }
+
+      schema.user.locationClps = {}
+      if (this.isUser) {
+        schema.user.locationClps.required = required
+      }
+    }
+
+    return schema
   },
 
   computed: {
-    submittable () {
-      return !this.$v.$invalid
+    isUser () {
+      return this.user.role === 'user'
+    },
+
+    locationClps () {
+      return map(
+        this.locations,
+        (location) => ({
+          text: `${location.name} (${location.clp})`,
+          value: location.clp
+        })
+      )
+    },
+
+    roles () {
+      return [
+        {
+          text: 'User',
+          value: 'user'
+        },
+        {
+          text: 'Admin',
+          value: 'admin'
+        }
+      ]
     }
   },
 
@@ -89,10 +135,6 @@ export default {
       }
     },
 
-    getValidationField (path) {
-      return get(this.$v.user, path)
-    },
-
     inputGroupId (key) {
       return `${this.inputId(key)}_group`
     },
@@ -105,37 +147,8 @@ export default {
       return `user[${snakeCase(key)}]`
     },
 
-    invalidFeedback (path) {
-      return getMessage(this.getValidationField(path), this.state(path))
-    },
-
     parsePhone (ch) {
       return parseDigit(ch)
-    },
-
-    state (path) {
-      const field = this.getValidationField(path)
-
-      return field ? !field.$error : true
-    },
-
-    validate (e) {
-      const func = ensureDebounceFunc('validateDebounceFunc', this, this.validateDebounced, DEBOUNCE_DELAY)
-
-      func(e)
-    },
-
-    validateBeforeSubmit () {
-      this.$v.$touch()
-
-      return this.submittable
-    },
-
-    validateDebounced (event) {
-      const path = event.target.dataset.path
-      const field = this.getValidationField(path)
-
-      field.$touch()
     }
   }
 }
@@ -144,18 +157,18 @@ export default {
 <template>
   <div>
     <input
-      id="user_is_profile"
-      name="user[is_profile]"
+      id="user_profile"
+      name="user[profile]"
       type="hidden"
-      value="true"
+      :value="isProfile"
     >
     <template v-for="(options, key) in form">
       <b-form-group
         v-if="options.show == null ? true : options.show"
-        :data-required="options.required"
         :id="inputGroupId(key)"
-        :invalid-feedback="invalidFeedback(key)"
         :key="key"
+        :data-required="options.required"
+        :invalid-feedback="invalidFeedback(key)"
         :label="options.label"
         :label-for="inputId(key)"
         :state="state(key)"
@@ -163,30 +176,70 @@ export default {
         <b-input-group>
           <b-input-group-prepend is-text>
             <fa-sprite
-              :use="options.icon"
               fixed-width
-            >
-            </fa-sprite>
+              :use="options.icon"
+            />
           </b-input-group-prepend>
           <component
+            :is="options.component || 'b-form-input'"
+            :id="inputId(key)"
             v-model="$v.user[key].$model"
             :autocomplete="options.autoComplete"
+            class="form-control"
             :data-path="key"
             :format="options.format"
-            :id="inputId(key)"
-            :is="options.component || 'b-form-input'"
             :maxlength="options.maxLength"
             :name="inputName(key)"
             :parse="options.parse"
             :placeholder="options.placeholder"
             :required="options.required"
             :type="options.type || 'text'"
-            class="form-control"
             @blur.native="validate"
             @input.native="validate"
-          >
-          </component>
+          />
         </b-input-group>
+      </b-form-group>
+    </template>
+
+    <template v-if="!isProfile">
+      <b-form-group
+        id="user_role_group"
+        data-required
+        :invalid-feedback="invalidFeedback('role')"
+        label="Role"
+        label-for="user_role"
+        :state="state('role')"
+      >
+        <b-form-radio-group
+          id="user_role"
+          v-model="$v.user.role.$model"
+          data-path="role"
+          name="user[role]"
+          :options="roles"
+          required
+          @change="validate"
+        />
+      </b-form-group>
+
+      <b-form-group
+        v-show="isUser"
+        id="user_location_clps_group"
+        :data-required="isUser"
+        :invalid-feedback="invalidFeedback('locationClps')"
+        label="Locations"
+        label-for="user_location_clps"
+        :state="state('locationClps')"
+      >
+        <b-form-checkbox-group
+          id="user_location_clps"
+          v-model="$v.user.locationClps.$model"
+          data-path="locationClps"
+          name="user[location_clps][]"
+          :options="locationClps"
+          :required="isUser"
+          stacked
+          @change="validate"
+        />
       </b-form-group>
     </template>
   </div>
@@ -204,13 +257,11 @@ export default {
   text-align: left;
 }
 
-.form-group {
-  &[data-required] {
-    /deep/ .col-form-label::after {
-      color: $danger;
-      content: '*';
-      margin-left: 0.25rem;
-    }
-  }
+.custom-controls-stacked {
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+  height: 9.1rem;
+  overflow: auto;
+  padding: 0 0.25rem;
 }
 </style>

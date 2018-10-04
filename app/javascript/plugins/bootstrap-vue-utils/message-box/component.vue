@@ -399,12 +399,12 @@ export default {
 <template>
   <transition name="message-box-fade">
     <b-modal
+      :id="safeId()"
       ref="modal"
       v-model="visible"
+      centered
       :class="containerClasses"
       :hide-header="title == null"
-      :id="safeId()"
-      centered
       @hidden="handleHidden"
       @hide="handleHide"
       @shown="handleShown"
@@ -412,20 +412,18 @@ export default {
       <template slot="modal-title">
         <fa-sprite
           v-if="icon && centerContent"
-          :use="icon"
           class="message-box__icon"
           fixed-width
           size="lg"
-        >
-        </fa-sprite>
+          :use="icon"
+        />
         {{ title }}
       </template>
       <fa-sprite
         slot="modal-header-close"
         fixed-width
         use="fas-fa-times"
-      >
-      </fa-sprite>
+      />
       <b-row
         align-v="center"
         no-gutters
@@ -435,12 +433,11 @@ export default {
           class="col-shrink"
         >
           <fa-sprite
-            :use="icon"
             class="message-box__icon"
             fixed-width
             size="2x"
-          >
-          </fa-sprite>
+            :use="icon"
+          />
         </b-col>
         <b-col class="col-auto">
           <div
@@ -467,25 +464,23 @@ export default {
             >
               <b-form-textarea
                 v-if="inputType === 'textarea'"
+                :id="inputId"
                 ref="input"
                 v-model="inputValue"
-                :id="inputId"
                 :placeholder="inputPlaceholder"
-                :state="inputState"
                 rows="2"
-              >
-              </b-form-textarea>
+                :state="inputState"
+              />
               <b-form-input
                 v-else
+                :id="inputId"
                 ref="input"
                 v-model="inputValue"
-                :id="inputId"
                 :placeholder="inputPlaceholder"
                 :state="inputState"
                 :type="inputType"
                 @keydown.enter.native="handleInputEnter"
-              >
-              </b-form-input>
+              />
             </b-form-group>
           </div>
         </b-col>
@@ -493,9 +488,9 @@ export default {
       <template slot="modal-footer">
         <b-button
           v-for="(value, key) in modalButtons"
-          :data-button="key"
           :key="key"
           :ref="`${key}Button`"
+          :data-button="key"
           :variant="buttonVariant(key, value.variant)"
           @click="handleButtonClick"
         >

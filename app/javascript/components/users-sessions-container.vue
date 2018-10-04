@@ -123,8 +123,7 @@ export default {
   <b-container class="h-100">
     <b-row
       align-h="center"
-      align-v="center"
-      class="row-fluid"
+      class="container-row"
     >
       <b-col
         :cols="cols"
@@ -134,8 +133,9 @@ export default {
         :xl="xl"
       >
         <b-card
-          :title="title"
+          class="my-3"
           header-class="py-4"
+          :title="title"
           title-tag="h5"
         >
           <a
@@ -143,23 +143,24 @@ export default {
             href="/"
           >
             <b-card-img
-              :src="logoSrc"
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
+              :src="logoSrc"
               top
-            >
-            </b-card-img>
+            />
           </a>
           <b-alert
             v-if="haveErrors"
             show
             variant="danger"
           >
-            <span
-              v-for="(error, key, index) in serverErrors"
-              :key="index"
-            >
-              {{ error }}
-            </span>
+            <ul>
+              <li
+                v-for="(error, key, index) in serverErrors"
+                :key="index"
+              >
+                {{ error }}
+              </li>
+            </ul>
           </b-alert>
           <rails-form
             :accept-charset="acceptCharset"
@@ -172,18 +173,17 @@ export default {
             :token-value="tokenValue"
           >
             <b-button
-              v-ujs-method="backMethod"
               v-if="topBackButtonVisible"
-              :href="backHref"
+              v-ujs-method="backMethod"
               class="mb-4"
+              :href="backHref"
               variant="secondary"
             >
               <slot name="back">
                 <fa-sprite
                   fixed-width
                   use="fas-fa-arrow-left"
-                >
-                </fa-sprite>
+                />
                 Back
               </slot>
             </b-button>
@@ -191,18 +191,17 @@ export default {
             <slot />
 
             <b-button
-              v-ujs-method="backMethod"
               v-if="backButtonVisible"
-              :href="backHref"
+              v-ujs-method="backMethod"
               class="my-4"
+              :href="backHref"
               variant="secondary"
             >
               <slot name="back">
                 <fa-sprite
                   fixed-width
                   use="fas-fa-arrow-left"
-                >
-                </fa-sprite>
+                />
                 Back
               </slot>
             </b-button>
@@ -235,8 +234,8 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/variables';
 
-.row-fluid {
-  min-height: 100%;
+.container-row {
+  height: 100% !important;
 }
 
 .card {
@@ -256,6 +255,12 @@ export default {
 
 .card-title {
   text-align: center;
+}
+
+.alert {
+  ul {
+    margin-bottom: 0;
+  }
 }
 
 form {

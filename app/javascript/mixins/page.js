@@ -1,5 +1,7 @@
+import { getBoolean } from '~/lib/utils'
 import isEmpty from 'lodash/isEmpty'
 
+// @vue/component
 export default {
   props: {
     pageOptions: {
@@ -33,7 +35,7 @@ export default {
     },
 
     dataRemote () {
-      return 'dataRemote' in this.pageOptions && Boolean(this.pageOptions.dataRemote)
+      return getBoolean(this.pageOptions, 'dataRemote')
     },
 
     encodingType () {
@@ -41,7 +43,7 @@ export default {
     },
 
     enforceUtf8 () {
-      return 'enforceUtf8' in this.pageOptions && Boolean(this.pageOptions.enforceUtf8)
+      return getBoolean(this.pageOptions, 'enforceUtf8')
     },
 
     flashMessage () {
@@ -61,7 +63,7 @@ export default {
     },
 
     multiPart () {
-      return 'multipart' in this.pageOptions && Boolean(this.pageOptions.multipart)
+      return getBoolean(this.pageOptions, 'multipart')
     },
 
     pageName () {

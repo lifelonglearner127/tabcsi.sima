@@ -1,12 +1,13 @@
 @charset "utf-8";
 
-html {
-  font-size: 100%;
-}
-
 @import '~@/assets/stylesheets/variables';
 @import '~bootstrap/scss/bootstrap';
 @import '~@/assets/stylesheets/mixins';
+
+html {
+  font-size: 100%;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
 
 body {
   min-width: 320px;
@@ -43,7 +44,16 @@ body {
     .row#{$infix}-grow {
       @include row-grow;
     }
+
+    .text#{$infix}-ellipsis {
+      @include text-ellipsis;
+    }
   }
+}
+
+#site-version {
+  padding-bottom: 0.25rem;
+  padding-right: 0.5rem;
 }
 
 .btn {
@@ -57,6 +67,16 @@ body {
 
   color: $tabc-dark-blue;
 }
+
+.form-group {
+   &[data-required] {
+     .col-form-label::after {
+       color: $danger;
+       content: '*';
+       margin-left: 0.25rem;
+     }
+   }
+ }
 
 /*
 .form-error {

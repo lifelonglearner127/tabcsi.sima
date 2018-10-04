@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :require_logged_in_user
+  before_action :set_page_options
+
+  helper_method :current_user, :page_data_options, :site_version
+
+  protected
+
   attr_writer :page_data_options
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
   end
-
-  helper_method :current_user
 
   def logged_in?
     session[:logged_in] && current_user.present?
@@ -17,11 +22,37 @@ class ApplicationController < ActionController::Base
     @page_data_options || {}
   end
 
-  helper_method :page_data_options
-
   def require_logged_in_user
     return if logged_in?
 
     redirect_to log_in_url
+  end
+
+  def reset_page_options(page_options = {})
+    self.page_data_options = default_page_options.deep_merge(page_options)
+  end
+
+  private
+
+  def default_page_options
+    {}
+  end
+
+  def set_page_options
+    if respond_to?(:controller_page_options, true)
+      reset_page_options(controller_page_options)
+    else
+      reset_page_options
+    end
+  end
+
+  def site_version
+    version = "v#{TabcSi::VERSION}"
+
+    version += ' (dev)' if Rails.env.development?
+    version += ' (test)' if Rails.env.test?
+    version += ' (sandbox)' if Rails.env.production? && Nenv.instance.app_debug?
+
+    version
   end
 end
