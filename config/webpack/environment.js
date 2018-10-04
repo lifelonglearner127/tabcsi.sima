@@ -10,12 +10,14 @@ const { VueLoaderPlugin } = require('vue-loader')
 // Load Webpacker config explicitly to allow config modifications before Webpacker environments are built.
 const config = require('./config')
 const { environment: env } = require('@rails/webpacker')
-const eslint = require('./loaders/eslint')
-const vue = require('./loaders/vue')
 
 if (!config.isProduction) {
+  const eslint = require('./loaders/eslint') // eslint-disable-line global-require
+
   env.loaders.prepend('eslint', eslint)
 }
+
+const vue = require('./loaders/vue')
 
 env.plugins.append('VueLoaderPlugin', new VueLoaderPlugin())
 env.loaders.append('vue', vue)
