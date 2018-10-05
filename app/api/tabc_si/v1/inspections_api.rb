@@ -73,6 +73,8 @@ module TabcSi
 
         @questions ||= Question.current_questions
         # @questions ||= Hash[collect_questions]
+      rescue ActiveRecord::NoDatabaseError
+        []
       end
 
       def self.picture_questions
