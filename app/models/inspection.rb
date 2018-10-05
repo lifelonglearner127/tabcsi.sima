@@ -83,6 +83,7 @@ class Inspection < ApplicationRecord
       locked_by_id: nil,
       locked_at: nil,
       inspected: inspected,
+      inspected_by_id: inspected ? user.id : nil,
       inspected_at: inspected ? Time.zone.now : nil
     )
   end
