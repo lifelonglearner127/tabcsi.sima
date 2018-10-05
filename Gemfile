@@ -44,7 +44,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.4', require: false
   # gem 'capistrano-resque', '~> 0.2.3', require: false
   gem 'capistrano-rvm', '~> 0.1.2', require: false
-  # gem 'capistrano-yarn', '~> 2.0', require: false
+  gem 'capistrano-yarn', '~> 2.0', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
   gem 'rubocop', '~> 0.59.2', require: false
