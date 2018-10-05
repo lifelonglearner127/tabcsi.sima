@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   private
 
   def build_page_options(page_name)
-    reset_page_options(provided_page_options(page_name))
+    reset_page_options(controller_page_options(page_name))
   end
 
   def company_locations
