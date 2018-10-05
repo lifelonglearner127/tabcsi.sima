@@ -56,11 +56,11 @@ export default {
 
     status (location) {
       if (location.inspected) {
-        return 'Completed'
+        return `Completed by ${location.inspectedBy.email}`
       }
 
       if (location.locked) {
-        return 'Started'
+        return `Started by ${location.lockedBy.email}`
       }
 
       return ''
