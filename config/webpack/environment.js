@@ -68,6 +68,7 @@ env.config.set('resolve.alias', {
   '@@': rootResolve('../..'),
   '~': rootResolve('.'),
   '~~': rootResolve('../..'),
+  'bootstrap-vue$': 'bootstrap-vue/src/index.js',
   vue$: 'vue/dist/vue.esm.js'
 })
 
