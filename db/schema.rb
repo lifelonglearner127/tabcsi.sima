@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_26_170432) do
+ActiveRecord::Schema.define(version: 2018_10_05_075145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 2018_09_26_170432) do
     t.string "clp"
     t.datetime "locked_at"
     t.datetime "inspected_at"
+    t.bigint "inspected_by_id"
     t.index ["clp"], name: "index_locations_on_clp", unique: true
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"

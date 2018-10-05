@@ -68,7 +68,9 @@ class User < ApplicationRecord
       id: id,
       job_title: job_title,
       license_number: license_number,
-      locations: locations.includes(:licenses).as_json(include: :licenses),
+      locations: locations
+        .includes(:licenses, :locked_by, :inspected_by)
+        .as_json(include: %i[licenses locked_by inspected_by]),
       location_clps: location_clps,
       phone: phone,
       role: role,
