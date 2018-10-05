@@ -1,5 +1,5 @@
 <script>
-import NewsForm from './form'
+import NewsForm from '~/components/news-form'
 import PageMixin from '~/mixins/page'
 
 export default {
@@ -14,11 +14,7 @@ export default {
       news: this.pageOptions.news,
       newsTypes: this.pageOptions.newsTypes
     }
-  },
-
-  computed: {},
-
-  methods: {}
+  }
 }
 </script>
 
@@ -26,6 +22,8 @@ export default {
   <news-form
     :accept-charset="acceptCharset"
     :action="action"
+    back-href="/"
+    cols="12"
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
@@ -34,17 +32,14 @@ export default {
     :token-value="tokenValue"
     :news="news"
     :news-types="newsTypes"
-    submit-text="Update"
-    title="Update a News"
-    back-href="/"
-    cols="12"
     show-back-button
     show-top-back-button
     sm="6"
+    submit-text="Update"
     text-class="font-italic"
+    title="Update a News"
   />
 </template>
 
 <style lang="scss" scoped>
-
 </style>

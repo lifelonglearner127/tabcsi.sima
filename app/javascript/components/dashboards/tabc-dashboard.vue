@@ -1,5 +1,6 @@
 <script>
 import filter from 'lodash/filter'
+import isEmpty from 'lodash/isEmpty'
 import NewsTable from './news-table'
 
 export default {
@@ -15,28 +16,28 @@ export default {
   },
 
   computed: {
+    noNewsSelected () {
+      return isEmpty(this.selectedNews)
+    },
+
+    detailsHref () {
+      const firstItem = this.selectedNews[0]
+
+      return firstItem ? `/news/${firstItem.id}` : ''
+    },
+
+    editHref () {
+      const firstItem = this.selectedNews[0]
+
+      return firstItem ? `/news/${firstItem.id}/edit` : ''
+    },
+
     news () {
       return this.user.news || []
-    }
-  },
+    },
 
-  methods: {
     selectedNews () {
       return filter(this.news, 'selected')
-    },
-    editNews () {
-      const curNews = this.selectedNews()
-
-      if (curNews.length !== 0) {
-        window.location.href = `/news/${curNews[0].id}/edit`
-      }
-    },
-    detailNews () {
-      const curNews = this.selectedNews()
-
-      if (curNews.length !== 0) {
-        window.location.href = `/news/${curNews[0].id}`
-      }
     }
   }
 }
@@ -56,27 +57,29 @@ export default {
         >
           <b-button
             class="mx-1"
+            href="/news/new"
             size="sm"
             variant="outline-secondary"
-            href="/news/new"
           >
             Add
           </b-button>
           <b-button
             class="mx-1"
+            :disabled="noNewsSelected"
+            :href="editHref"
             size="sm"
             variant="outline-secondary"
-            @click="editNews"
           >
             Edit
           </b-button>
           <b-button
             class="mx-1"
+            :disabled="noNewsSelected"
+            :href="detailsHref"
             size="sm"
             variant="outline-secondary"
-            @click="detailNews"
           >
-            Detail
+            Details
           </b-button>
         </b-button-toolbar>
 
