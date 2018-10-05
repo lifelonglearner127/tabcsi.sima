@@ -125,6 +125,10 @@ class User < ApplicationRecord
     valid_for_authentication? { valid_password?(pin) }
   end
 
+  def locked_locations
+    Location.where(locked: true, locked_by_id: id)
+  end
+
   private
 
   def add_error(message)
@@ -216,6 +220,12 @@ class User < ApplicationRecord
 
   def before_update_user
     if email_changed?
+      if locked_locations.count >= 1
+        add_error('User has already locked location.')
+
+        throw :abort
+      end
+
       other = User.with_discarded.find_by(email: email)
 
       if other.present?
