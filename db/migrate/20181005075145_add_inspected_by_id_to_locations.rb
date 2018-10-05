@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class AddInspectedByIdToLocations < ActiveRecord::Migration[5.2]
   def change
-    add_column :locations, :inspected_by_id, :bigint
+    add_reference :locations, :inspected_by, index: true
   end
 end

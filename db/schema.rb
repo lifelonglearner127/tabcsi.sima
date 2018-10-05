@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(version: 2018_10_05_075145) do
     t.index ["clp"], name: "index_locations_on_clp", unique: true
     t.index ["company_id"], name: "index_locations_on_company_id"
     t.index ["discarded_at"], name: "index_locations_on_discarded_at"
+    t.index ["inspected_by_id"], name: "index_locations_on_inspected_by_id"
     t.index ["locked_by_id"], name: "index_locations_on_locked_by_id"
     t.index ["tabc_id"], name: "index_locations_on_tabc_id", unique: true
   end
