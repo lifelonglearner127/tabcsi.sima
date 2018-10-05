@@ -129,7 +129,14 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  config.pepper = Nenv.instance.devise_pepper
+  config.pepper =
+    if Rails.env.test? || Rails.env.development?
+      Digest::MD5.hexdigest(Rails.application.class.name)
+    else
+      server_key = Nenv.instance.app_debug? ? :sandbox : :production
+
+      Rails.application.credentials.dig(server_key, :devise_pepper)
+    end
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
