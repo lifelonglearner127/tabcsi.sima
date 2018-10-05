@@ -7,14 +7,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'bootsnap', '~> 1.3', require: false
-gem 'bundler', '~> 1.16'
 gem 'delayed_job_active_record', '~> 4.1'
 gem 'devise', '~> 4.4'
 gem 'devise-doorkeeper', '~> 1.1'
 gem 'discard', '~> 1.0'
 gem 'doorkeeper', '~> 5.0'
 gem 'dotenv-rails', '~> 2.5'
-gem 'flutie', '~> 2.0'
+gem 'flutie', '~> 2.1'
 gem 'grape', '~> 1.0'
 gem 'grape-entity', '~> 0.7.1'
 gem 'grape-swagger', '~> 0.31.0'
@@ -28,7 +27,7 @@ gem 'oj', '~> 3.6'
 gem 'pg', '~> 1.1'
 gem 'premailer-rails', '~> 1.10'
 gem 'puma', '~> 3.11'
-gem 'rack-attack', '~> 5.2'
+gem 'rack-attack', '~> 5.4'
 gem 'rack-cors', '~> 1.0'
 gem 'rails', '~> 5.2.0'
 gem 'simple_form', '~> 4.0'
@@ -36,7 +35,7 @@ gem 'slim-rails', '~> 3.1'
 gem 'title', '~> 0.0.7'
 gem 'tzinfo-data', '~> 1.2018'
 gem 'uglifier', '~> 4.1'
-gem 'webpacker', '~> 3.5'
+gem 'webpacker', '~> 4.0.0.pre.3'
 
 group :development do
   gem 'capistrano', '~> 3.11', require: false
@@ -69,10 +68,10 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara-webkit', '~> 1.15'
+  gem 'capybara', '~> 3.9'
   gem 'formulaic', '~> 0.4.0'
-  gem 'launchy', '~> 2.4'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'phantomjs', '~> 2.1'
+  gem 'poltergeist', '~> 1.18'
   gem 'simplecov', '~> 0.16.1', require: false
   gem 'timecop', '~> 0.9.1'
   gem 'webmock', '~> 3.4'
