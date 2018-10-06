@@ -1,5 +1,4 @@
 <script>
-import logo from '~/assets/images/logo-white.png'
 import PageMixin from '~/mixins/page'
 
 export default {
@@ -9,15 +8,6 @@ export default {
 
   data () {
     return { news: this.pageOptions.news }
-  },
-
-  computed: {
-    logoSrc () {
-      return logo
-    },
-    editNewsURL () {
-      return `/news/${this.news.id}/edit`
-    }
   }
 }
 </script>
@@ -40,22 +30,22 @@ export default {
             href="/"
           >
             <b-card-img
-              :src="logoSrc"
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
+              src="@/assets/images/logo-white.png"
               top
             />
           </a>
           <h5>{{ news.subject }}</h5>
           <div v-html="news.content" />
           <b-button
-            href="/"
             class="my-4"
+            href="/"
             variant="secondary"
           >
             Back
           </b-button>
           <b-button
-            :href="editNewsURL"
+            :href="`/news/${news.id}/edit`"
             class="my-4"
             variant="tabc-primary"
           >

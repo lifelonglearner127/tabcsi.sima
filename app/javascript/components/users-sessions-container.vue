@@ -1,6 +1,5 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
-import logo from '~/assets/images/logo-white.png'
 import RailsForm from '~/components/rails-form'
 
 export default {
@@ -104,10 +103,6 @@ export default {
       return !isEmpty(this.serverErrors)
     },
 
-    logoSrc () {
-      return logo
-    },
-
     backButtonVisible () {
       return this.showBackButton
     },
@@ -144,7 +139,7 @@ export default {
           >
             <b-card-img
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
-              :src="logoSrc"
+              src="@/assets/images/logo-white.png"
               top
             />
           </a>

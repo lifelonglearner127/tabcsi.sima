@@ -15,13 +15,13 @@ Rails.application.routes.draw do
 
   resources :faqs, only: %i[index]
 
+  resources :news, only: %i[create edit new update]
+
   resources :questions, only: %i[] do
     collection do
       get :help
     end
   end
-
-  resources :news
 
   get :log_in, to: 'sessions#new'
   post :log_in, to: 'sessions#create'

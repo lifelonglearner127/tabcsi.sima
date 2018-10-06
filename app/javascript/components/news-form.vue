@@ -1,6 +1,5 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
-import logo from '~/assets/images/logo-white.png'
 import RailsForm from '~/components/rails-form'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
@@ -14,14 +13,6 @@ export default {
   mixins: [ValidationMixin('news')],
 
   props: {
-    news: {
-      type: Object,
-      required: true
-    },
-    newsTypes: {
-      type: Array,
-      required: true
-    },
     acceptCharset: {
       type: String,
       default: null
@@ -60,6 +51,14 @@ export default {
     },
     method: {
       type: String,
+      required: true
+    },
+    news: {
+      type: Object,
+      required: true
+    },
+    newsTypes: {
+      type: Array,
       required: true
     },
     serverErrors: {
@@ -131,28 +130,22 @@ export default {
   },
 
   validations () {
-    const schema = {
+    return {
       news: {
         newsType: { required },
         subject: { required },
         content: { }
       }
     }
-
-    return schema
   },
 
   computed: {
-    haveErrors () {
-      return !isEmpty(this.serverErrors)
-    },
-
-    logoSrc () {
-      return logo
-    },
-
     backButtonVisible () {
       return this.showBackButton
+    },
+
+    haveErrors () {
+      return !isEmpty(this.serverErrors)
     },
 
     topBackButtonVisible () {
@@ -196,8 +189,8 @@ export default {
         :xl="xl"
       >
         <b-card
-          :title="title"
           header-class="py-4"
+          :title="title"
           title-tag="h5"
         >
           <a
@@ -205,8 +198,8 @@ export default {
             href="/"
           >
             <b-card-img
-              :src="logoSrc"
               alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
+              src="@/assets/images/logo-white.png"
               top
             />
           </a>
@@ -235,8 +228,8 @@ export default {
             <b-button
               v-if="topBackButtonVisible"
               v-ujs-method="backMethod"
-              :href="backHref"
               class="mb-4"
+              :href="backHref"
               variant="secondary"
             >
               <slot name="back">
@@ -264,6 +257,7 @@ export default {
                     :id="inputId(key)"
                     v-model="$v.news[key].$model"
                     :autocomplete="options.autoComplete"
+                    class="form-control"
                     :data-path="key"
                     :name="inputName(key)"
                     :placeholder="options.placeholder"
@@ -271,7 +265,6 @@ export default {
                     :type="options.type || 'text'"
                     :options="options.options"
                     :rows="options.rows"
-                    class="form-control"
                     @blur.native="validate"
                     @input.native="validate"
                   />
@@ -282,8 +275,8 @@ export default {
             <b-button
               v-if="backButtonVisible"
               v-ujs-method="backMethod"
-              :href="backHref"
               class="my-4"
+              :href="backHref"
               variant="secondary"
             >
               <slot name="back">
@@ -326,9 +319,9 @@ export default {
 
             <b-modal
               id="preview-modal"
-              title="Preview News"
-              size="lg"
               ok-only
+              size="lg"
+              title="Preview News"
             >
               <div v-html="news.content" />
             </b-modal>
@@ -341,6 +334,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/variables';
+
 .container-row {
   height: 100% !important;
 }
