@@ -1,7 +1,7 @@
 <script>
+import { DateTime } from 'luxon'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
-import moment from 'moment'
 import sortBy from 'lodash/sortBy'
 import startCase from 'lodash/startCase'
 
@@ -53,7 +53,8 @@ export default {
     },
 
     lastSignInAt (user) {
-      return isEmpty(user.pinLastRequestedAt) ? 'Never logged' : moment(user.pinLastRequestedAt).format('MM/DD/YYYY')
+      return isEmpty(user.pinLastRequestedAt) ? 'Never logged'
+        : DateTime.fromISO(user.pinLastRequestedAt).toFormat('LL/dd/yyyy hh:mm')
     }
   }
 }
