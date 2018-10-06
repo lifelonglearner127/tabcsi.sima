@@ -4,6 +4,7 @@ import http from '~/lib/http'
 import isEmpty from 'lodash/isEmpty'
 import LocationsTable from './locations-table'
 import map from 'lodash/map'
+import NewsTable from './news-table'
 import UsersTable from './users-table'
 
 export default {
@@ -11,6 +12,7 @@ export default {
 
   components: {
     LocationsTable,
+    NewsTable,
     UsersTable
   },
 
@@ -30,6 +32,14 @@ export default {
   },
 
   computed: {
+    userIsAdmin () {
+      return this.user.role === 'admin'
+    },
+
+    userIsTabc () {
+      return this.user.role === 'tabc'
+    },
+
     locations () {
       return this.user.locations || []
     },
@@ -44,6 +54,30 @@ export default {
 
     users () {
       return this.company.users || []
+    },
+
+    news () {
+      return this.user.news || []
+    },
+
+    noNewsSelected () {
+      return isEmpty(this.selectedNews)
+    },
+
+    newsDetailsHref () {
+      const firstItem = this.selectedNews[0]
+
+      return firstItem ? `/news/${firstItem.id}` : ''
+    },
+
+    newsEditHref () {
+      const firstItem = this.selectedNews[0]
+
+      return firstItem ? `/news/${firstItem.id}/edit` : ''
+    },
+
+    selectedNews () {
+      return filter(this.news, 'selected')
     }
   },
 
@@ -166,6 +200,7 @@ export default {
                 :items="users"
               />
             </b-tab>
+
             <b-tab>
               <template slot="title">
                 <fa-sprite
@@ -176,6 +211,48 @@ export default {
               </template>
 
               <locations-table :items="locations" />
+            </b-tab>
+
+            <b-tab
+              v-if = "userIsTabc"
+            >
+              <template slot="title">
+                News
+              </template>
+
+              <b-button-toolbar
+                class="mb-3 ml-3"
+                key-nav
+              >
+                <b-button
+                  class="mx-1"
+                  href="/news/new"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Add
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected"
+                  :href="newsEditHref"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Edit
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected"
+                  :href="newsDetailsHref"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Details
+                </b-button>
+              </b-button-toolbar>
+
+              <news-table :items="news" />
             </b-tab>
           </b-tabs>
         </b-card>
