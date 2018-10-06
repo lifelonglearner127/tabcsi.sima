@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 // Load `.env` before loading Webpacker config to allow it to use any set environment variables.
 dotenv.config()
 
-// const forEach = require('lodash/forEach')
+const forEach = require('lodash/forEach')
 const { resolve } = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 
@@ -22,44 +22,21 @@ const vue = require('./loaders/vue')
 env.plugins.append('VueLoaderPlugin', new VueLoaderPlugin())
 env.loaders.append('vue', vue)
 
-// const STYLE_LOADER_INDEX = 0
+const POSTCSS_LOADER_INDEX = 2
 const SASS_LOADER_INDEX = 3
 const SASS_PRECISION = 12
 
-// const css = env.loaders.get('css')
-// const moduleCss = env.loaders.get('moduleCss')
-const moduleSass = env.loaders.get('moduleSass')
-const sass = env.loaders.get('sass')
+const cssLoaders = ['css', 'moduleCss', 'moduleSass', 'sass']
 
-// For debugging.
-// forEach(
-//   {
-//     css, moduleCss, moduleSass, sass
-//   },
-//   (loader, loaderName) => {
-//     console.log(loaderName, loader)
-//
-//     forEach(loader.use, (use, index) => {
-//       console.log(index, use.options)
-//     })
-//
-//     console.log('')
-//   }
-// )
+forEach(cssLoaders, (cssLoaderName) => {
+  const loader = env.loaders.get(cssLoaderName)
 
-// Switch to the vue-style-loader.
-// forEach([css, moduleCss, moduleSass, sass], (loader) => {
-//   loader.use[STYLE_LOADER_INDEX] = {
-//     loader: 'vue-style-loader',
-//     options: {
-//       hmr: config.isHmr,
-//       sourceMap: true
-//     }
-//   }
-// })
+  loader.use[POSTCSS_LOADER_INDEX].options.config = { path: resolve() }
 
-moduleSass.use[SASS_LOADER_INDEX].options.precision =
-  sass.use[SASS_LOADER_INDEX].options.precision = SASS_PRECISION
+  if (loader.use[SASS_LOADER_INDEX] != null) {
+    loader.use[SASS_LOADER_INDEX].options.precision = SASS_PRECISION
+  }
+})
 
 const rootResolve = (path) => resolve(config.source_path, path)
 
