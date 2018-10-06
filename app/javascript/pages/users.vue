@@ -50,6 +50,10 @@ export default {
       return this.pageOptions.ownerName
     },
 
+    hasLockedLocations () {
+      return this.pageOptions.lockedLocations.length >= 1
+    },
+
     submitText () {
       switch (this.pageName) {
         case 'invite':
@@ -106,6 +110,7 @@ export default {
       ref="editUser"
       :is-profile="isProfile"
       :locations="locations"
+      :has-locked-locations="hasLockedLocations"
       :user="user"
     />
     <new-user

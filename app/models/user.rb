@@ -220,12 +220,6 @@ class User < ApplicationRecord
 
   def before_update_user
     if email_changed?
-      if locked_locations.count >= 1
-        add_error('User has already locked location.')
-
-        throw :abort
-      end
-
       other = User.with_discarded.find_by(email: email)
 
       if other.present?
