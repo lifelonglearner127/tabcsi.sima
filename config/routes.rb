@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :faqs, only: %i[index]
 
-  resources :news, only: %i[create edit new update]
+  resources :news, only: %i[create edit new update show]
 
   resources :questions, only: %i[] do
     collection do

@@ -1,5 +1,5 @@
 <script>
-import { AdminDashboard, TabcDashboard, UserDashboard } from '~/components/dashboards'
+import { AdminDashboard, UserDashboard } from '~/components/dashboards'
 import PageMixin from '~/mixins/page'
 
 export default {
@@ -7,7 +7,6 @@ export default {
 
   components: {
     AdminDashboard,
-    TabcDashboard,
     UserDashboard
   },
 
@@ -39,11 +38,7 @@ export default {
     },
 
     userIsAdmin () {
-      return this.user.role === 'admin'
-    },
-
-    userIsTabcAdmin () {
-      return this.user.role === 'tabc'
+      return this.user.role === 'admin' || this.user.role === 'tabc'
     }
   }
 }
@@ -108,12 +103,8 @@ export default {
       </b-collapse>
     </b-navbar>
 
-    <tabc-dashboard
-      v-if="userIsTabcAdmin"
-      :user="user"
-    />
     <admin-dashboard
-      v-else-if="userIsAdmin"
+      v-if="userIsAdmin"
       :admin-count="adminCount"
       :company="company"
       :user="user"
