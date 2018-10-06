@@ -125,6 +125,10 @@ class User < ApplicationRecord
     valid_for_authentication? { valid_password?(pin) }
   end
 
+  def locked_locations
+    Location.where(locked: true, locked_by_id: id)
+  end
+
   private
 
   def add_error(message)
