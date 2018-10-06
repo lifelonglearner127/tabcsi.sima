@@ -1,5 +1,7 @@
 <script>
+import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
+import moment from 'moment'
 import sortBy from 'lodash/sortBy'
 import startCase from 'lodash/startCase'
 
@@ -26,6 +28,10 @@ export default {
         'phone',
         'type',
         {
+          key: 'pinLastRequestedAt',
+          label: 'Logged In'
+        },
+        {
           key: 'edit',
           label: '',
           tdClass: 'text-center'
@@ -44,6 +50,10 @@ export default {
 
     userType (user) {
       return startCase(user.role)
+    },
+
+    lastSignInAt (user) {
+      return isEmpty(user.pinLastRequestedAt) ? 'Never logged' : moment(user.pinLastRequestedAt).format('MM/DD/YYYY')
     }
   }
 }
@@ -91,6 +101,12 @@ export default {
       slot-scope="row"
     >
       {{ userType(row.item) }}
+    </template>
+    <template
+      slot="pinLastRequestedAt"
+      slot-scope="row"
+    >
+      {{ lastSignInAt(row.item) }}
     </template>
     <a
       slot="edit"
