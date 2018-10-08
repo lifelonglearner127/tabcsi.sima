@@ -3,7 +3,7 @@
 class Company < ApplicationRecord
   has_many :licenses, -> { order(:clp) }
   has_many :locations, -> { order(:name, :clp) }
-  has_many :users, -> { order(:full_name) }
+  has_many :users, -> { with_discarded.order(:full_name) }
 
   validates :owner_name, presence: true, uniqueness: { case_sensitive: false }
 

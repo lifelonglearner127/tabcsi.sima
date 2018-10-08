@@ -1,5 +1,6 @@
 <script>
 import { DateTime } from 'luxon'
+import forEach from 'lodash/forEach'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import sortBy from 'lodash/sortBy'
@@ -40,6 +41,16 @@ export default {
     }
   },
 
+  mounted () {
+    const tdCells = this.$el.querySelectorAll('.discarded-user-name')
+
+    forEach(tdCells, (td) => {
+      const row = td.closest('tr')
+
+      row.setAttribute('class', 'text-muted font-italic')
+    })
+  },
+
   methods: {
     userLicenses (user) {
       return map(
@@ -55,6 +66,9 @@ export default {
     lastSignInAt (user) {
       return isEmpty(user.pinLastRequestedAt) ? 'Never logged'
         : DateTime.fromISO(user.pinLastRequestedAt).toFormat('LL/dd/yyyy hh:mm')
+    },
+    isDiscarded (user) {
+      return !isEmpty(user.discardedAt)
     }
   }
 }
@@ -80,22 +94,24 @@ export default {
       slot="fullName"
       slot-scope="row"
     >
-      <a
-        href="#"
-        @click.prevent.stop="row.toggleDetails"
-      >
-        <fa-sprite
-          fixed-width
-          :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
-        />
-      </a>
-      <b-form-checkbox
-        :id="`user_${row.index}_selected`"
-        v-model="row.item.selected"
-        :disabled="row.item.id === currentUserId"
-      >
-        {{ row.value }}
-      </b-form-checkbox>
+      <div :class="{'discarded-user-name': isDiscarded(row.item)}">
+        <a
+          href="#"
+          @click.prevent.stop="row.toggleDetails"
+        >
+          <fa-sprite
+            fixed-width
+            :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
+          />
+        </a>
+        <b-form-checkbox
+          :id="`user_${row.index}_selected`"
+          v-model="row.item.selected"
+          :disabled="row.item.id === currentUserId"
+        >
+          {{ row.value }}
+        </b-form-checkbox>
+      </div>
     </template>
     <template
       slot="type"

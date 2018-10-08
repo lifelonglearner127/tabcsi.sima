@@ -49,7 +49,15 @@ export default {
     },
 
     selectedUsers () {
-      return filter(this.users, 'selected')
+      return filter(this.users, (user) => user.selected && isEmpty(user.discardedAt))
+    },
+
+    noDiscardedUsersSelected () {
+      return isEmpty(this.selectedDiscardedUsers)
+    },
+
+    selectedDiscardedUsers () {
+      return filter(this.users, (user) => user.selected && !isEmpty(user.discardedAt))
     },
 
     users () {
@@ -96,6 +104,29 @@ export default {
                 .delete(`/users/${user.id}`)
                 .then(() => {
                   this.$message.success(`User "${user.fullName}" deleted.`)
+                })
+            )
+          )
+          .then(() => {
+            window.location.reload(true)
+          })
+      })
+    },
+
+    undiscardUsers () {
+      this.$confirm(
+        'Are you sure you want to restore the selected user(s)?',
+        'Restore User(s)',
+        { variant: 'error' }
+      ).yes(() => {
+        Promise
+          .all(
+            map(
+              this.selectedDiscardedUsers,
+              (user) => http
+                .post(`/users/${user.id}/undiscard`)
+                .then(() => {
+                  this.$message.success(`User "${user.fullName}" restored.`)
                 })
             )
           )
@@ -192,6 +223,16 @@ export default {
                     use="fas-fa-user-times"
                   />
                   Delete
+                </b-button>
+
+                <b-button
+                  class="mx-1"
+                  :disabled="noDiscardedUsersSelected"
+                  size="sm"
+                  variant="outline-secondary"
+                  @click.prevent="undiscardUsers"
+                >
+                  UnDiscard
                 </b-button>
               </b-button-toolbar>
 

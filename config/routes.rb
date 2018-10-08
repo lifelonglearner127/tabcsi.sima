@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     end
 
     member do
+      post :undiscard
       patch :edit, action: :update
     end
   end
