@@ -52,6 +52,13 @@ class UsersController < ApplicationController
     render 'edit'
   end
 
+  def undiscard
+    user = User.with_discarded.find(params[:id])
+    user.undiscard
+
+    head :no_content
+  end
+
   private
 
   def build_page_options(page_name)
