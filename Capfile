@@ -15,16 +15,14 @@ end
   deploy
   bundler
   passenger
-  rails/migrations
+  rails
   rvm
   scm/git
-  yarn
 ].each do |file|
   require "capistrano/#{file}"
 end
 
 require 'slackistrano/capistrano'
-# require 'capistrano-resque'
 
 install_plugin Capistrano::SCM::Git
 

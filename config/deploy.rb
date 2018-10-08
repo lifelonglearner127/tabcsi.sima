@@ -2,12 +2,6 @@
 
 NUMBER_OF_RELEASES_TO_KEEP = 5
 NUMBER_OF_BUNDLE_JOBS = 2
-# NUMBER_OF_BOX_SYNC_WORKERS = 1
-# NUMBER_OF_FOLDER_SYNC_WORKERS = 1
-# NUMBER_OF_UPLOAD_WORKERS = 1
-# NUMBER_OF_FORM_WORKERS = 1
-
-YARN_FLAGS = %w[--production --silent --no-progress].freeze
 
 # config valid only for current version of Capistrano
 lock '~> 3.11.0'
@@ -40,9 +34,6 @@ set :bundle_bins, %w[gem rails rake]
 set :bundle_path, -> { shared_path.join('vendor', 'bundle') }
 set :bundle_jobs, NUMBER_OF_BUNDLE_JOBS
 
-# Yarn
-set :yarn_flags, YARN_FLAGS
-
 # Rails
 set :rails_env, 'production'
 set :migration_role, :app
@@ -60,19 +51,6 @@ set(
   webhook: 'https://hooks.slack.com/services/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'
 )
 
-# Resque
-# set :resque_environment_task, true
-
-# set(
-#   :workers,
-#   'sync-boxes-jobs': NUMBER_OF_BOX_SYNC_WORKERS,
-#   'sync-folders-jobs': NUMBER_OF_FOLDER_SYNC_WORKERS,
-#   'upload-jobs': NUMBER_OF_UPLOAD_WORKERS,
-#   'f4885l-jobs': NUMBER_OF_FORM_WORKERS
-# )
-
 after 'deploy:set_current_revision', 'tabc_si:set_mtimes'
-after 'deploy:updated', 'webpack:compile'
-# after 'deploy:restart', 'resque:restart'
 after 'deploy:published', 'bundler:clean'
 after 'deploy:failed', 'tabc_si:remove_current_release'

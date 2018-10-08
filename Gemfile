@@ -31,7 +31,7 @@ gem 'rack-attack', '~> 5.4'
 gem 'rack-cors', '~> 1.0'
 gem 'rails', '~> 5.2.0'
 gem 'simple_form', '~> 4.0'
-gem 'slim-rails', '~> 3.1'
+gem 'slim-rails', '~> 3.2'
 gem 'title', '~> 0.0.7'
 gem 'tzinfo-data', '~> 1.2018'
 gem 'uglifier', '~> 4.1'
@@ -39,16 +39,13 @@ gem 'webpacker', '~> 4.0.0.pre.3'
 
 group :development do
   gem 'capistrano', '~> 3.11', require: false
-  # gem 'capistrano-nvm', '~> 0.0.7', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false
   gem 'capistrano-rails', '~> 1.4', require: false
-  # gem 'capistrano-resque', '~> 0.2.3', require: false
   gem 'capistrano-rvm', '~> 0.1.2', require: false
-  gem 'capistrano-yarn', '~> 2.0', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
   gem 'rubocop', '~> 0.59.2', require: false
-  gem 'rubocop-rspec', '~> 1.29'
+  gem 'rubocop-rspec', '~> 1.30'
   gem 'slackistrano', '~> 3.8'
   gem 'spring', '~> 2.0'
   gem 'spring-commands-rspec', '~> 1.0'
