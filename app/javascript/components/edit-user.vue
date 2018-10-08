@@ -24,6 +24,10 @@ export default {
         return []
       }
     },
+    hasLockedLocations: {
+      type: Boolean,
+      default: false
+    },
     user: {
       type: Object,
       required: true
@@ -43,6 +47,8 @@ export default {
           autoComplete: 'email',
           icon: 'fas-fa-envelope',
           label: 'E-mail',
+          description: this.hasLockedLocations ? 'Email cannot be changed while there are pending reports.' : '',
+          disabled: this.hasLockedLocations,
           maxLength: 192,
           required: true,
           type: 'email'
@@ -170,6 +176,7 @@ export default {
         :data-required="options.required"
         :invalid-feedback="invalidFeedback(key)"
         :label="options.label"
+        :description="options.description"
         :label-for="inputId(key)"
         :state="state(key)"
       >
@@ -193,6 +200,7 @@ export default {
             :parse="options.parse"
             :placeholder="options.placeholder"
             :required="options.required"
+            :disabled="options.disabled"
             :type="options.type || 'text'"
             @blur.native="validate"
             @input.native="validate"

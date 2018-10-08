@@ -73,6 +73,7 @@ class UsersController < ApplicationController
           html: {
             is_profile: @user.id == current_user.id,
             locations: company_locations,
+            locked_locations: @user.locked_locations,
             page_name: 'edit'
           }
         }
