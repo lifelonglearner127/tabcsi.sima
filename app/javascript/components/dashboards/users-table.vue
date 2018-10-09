@@ -26,9 +26,7 @@ export default {
         {
           key: 'fullName',
 
-          tdClass (value, key, item) {
-            return this.isDiscarded(item) ? 'discarded-user-name' : null
-          }
+          tdClass: (value, key, item) => (this.isDiscarded(item) ? 'discarded-user-name' : null)
         },
         'email',
         'jobTitle',
