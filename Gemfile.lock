@@ -335,7 +335,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    slackistrano (3.8.2)
+    slackistrano (3.8.3)
       capistrano (>= 3.8.1)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
@@ -474,4 +474,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.5
+   1.16.6
