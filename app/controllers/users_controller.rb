@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   skip_before_action(
     :require_logged_in_user, except: %i[destroy edit invite update]
   )
+
   prepend_before_action :set_user, only: %i[destroy edit show update]
   skip_before_action :set_page_options, except: %i[edit invite new]
 
@@ -40,6 +41,13 @@ class UsersController < ApplicationController
     redirect_to(dashboard_url) if logged_in?
   end
 
+  def undiscard
+    user = User.with_discarded.find(params[:id])
+    user.undiscard
+
+    head :no_content
+  end
+
   def update
     if @user.update(normalized_user_params)
       redirect_to dashboard_url
@@ -50,13 +58,6 @@ class UsersController < ApplicationController
     build_page_options('edit')
 
     render 'edit'
-  end
-
-  def undiscard
-    user = User.with_discarded.find(params[:id])
-    user.undiscard
-
-    head :no_content
   end
 
   private

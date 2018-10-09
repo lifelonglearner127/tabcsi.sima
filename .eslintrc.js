@@ -128,6 +128,10 @@ module.exports = {
     'sort-vars': [ERROR, { ignoreCase: true }],
     'switch-colon-spacing': ERROR,
     'vars-on-top': ERROR,
+    'vue/component-name-in-template-casing': [ERROR, 'kebab-case'],
+    'vue/jsx-uses-vars': OFF,
+    'vue/multiline-html-element-content-newline': ERROR,
+    'vue/no-spaces-around-equal-signs-in-attribute': ERROR,
     'vue/no-v-html': OFF,
     // Disabled until https://github.com/vuejs/eslint-plugin-vue/issues/595 is fixed.
     'vue/require-prop-type-constructor': OFF,

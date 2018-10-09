@@ -1,5 +1,6 @@
 <script>
 import { AdminDashboard, UserDashboard } from '~/components/dashboards'
+import includes from 'lodash/includes'
 import PageMixin from '~/mixins/page'
 
 export default {
@@ -22,15 +23,7 @@ export default {
     },
 
     dashboardTitle () {
-      if (this.userIsTabcAdmin) {
-        return 'TABC Dashboard'
-      }
-
-      if (this.userIsAdmin) {
-        return 'Admin Dashboard'
-      }
-
-      return 'User Dashboard'
+      return this.userIsAdmin ? 'Admin Dashboard' : 'User Dashboard'
     },
 
     user () {
@@ -38,7 +31,7 @@ export default {
     },
 
     userIsAdmin () {
-      return this.user.role === 'admin' || this.user.role === 'tabc'
+      return includes(['admin', 'tabc'], this.user.role)
     }
   }
 }

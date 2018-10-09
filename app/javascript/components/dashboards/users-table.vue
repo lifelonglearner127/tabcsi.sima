@@ -23,7 +23,13 @@ export default {
   data () {
     return {
       fields: [
-        'fullName',
+        {
+          key: 'fullName',
+
+          tdClass (value, key, item) {
+            return this.isDiscarded(item) ? 'discarded-user-name' : null
+          }
+        },
         'email',
         'jobTitle',
         'phone',
@@ -52,6 +58,15 @@ export default {
   },
 
   methods: {
+    isDiscarded (user) {
+      return !isEmpty(user.discardedAt)
+    },
+
+    lastSignInAt (user) {
+      return isEmpty(user.pinLastRequestedAt) ? 'Never logged'
+        : DateTime.fromISO(user.pinLastRequestedAt).toFormat('LL/dd/yyyy hh:mm')
+    },
+
     userLicenses (user) {
       return map(
         sortBy(user.licenses, ['licenseType', 'licenseNumber']),
@@ -61,14 +76,6 @@ export default {
 
     userType (user) {
       return startCase(user.role)
-    },
-
-    lastSignInAt (user) {
-      return isEmpty(user.pinLastRequestedAt) ? 'Never logged'
-        : DateTime.fromISO(user.pinLastRequestedAt).toFormat('LL/dd/yyyy hh:mm')
-    },
-    isDiscarded (user) {
-      return !isEmpty(user.discardedAt)
     }
   }
 }
@@ -90,28 +97,27 @@ export default {
       <col class="type-col">
       <col class="edit-col">
     </template>
+
     <template
       slot="fullName"
       slot-scope="row"
     >
-      <div :class="{'discarded-user-name': isDiscarded(row.item)}">
-        <a
-          href="#"
-          @click.prevent.stop="row.toggleDetails"
-        >
-          <fa-sprite
-            fixed-width
-            :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
-          />
-        </a>
-        <b-form-checkbox
-          :id="`user_${row.index}_selected`"
-          v-model="row.item.selected"
-          :disabled="row.item.id === currentUserId"
-        >
-          {{ row.value }}
-        </b-form-checkbox>
-      </div>
+      <a
+        href="#"
+        @click.prevent.stop="row.toggleDetails"
+      >
+        <fa-sprite
+          fixed-width
+          :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
+        />
+      </a>
+      <b-form-checkbox
+        :id="`user_${row.index}_selected`"
+        v-model="row.item.selected"
+        :disabled="row.item.id === currentUserId"
+      >
+        {{ row.value }}
+      </b-form-checkbox>
     </template>
     <template
       slot="type"

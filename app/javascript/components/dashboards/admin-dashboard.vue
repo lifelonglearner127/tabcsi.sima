@@ -32,44 +32,12 @@ export default {
   },
 
   computed: {
-    userIsAdmin () {
-      return this.user.role === 'admin'
-    },
-
-    userIsTabc () {
-      return this.user.role === 'tabc'
-    },
-
     locations () {
       return this.user.locations || []
     },
 
-    noUsersSelected () {
-      return isEmpty(this.selectedUsers)
-    },
-
-    selectedUsers () {
-      return filter(this.users, (user) => user.selected && isEmpty(user.discardedAt))
-    },
-
-    noDiscardedUsersSelected () {
-      return isEmpty(this.selectedDiscardedUsers)
-    },
-
-    selectedDiscardedUsers () {
-      return filter(this.users, (user) => user.selected && !isEmpty(user.discardedAt))
-    },
-
-    users () {
-      return this.company.users || []
-    },
-
     news () {
       return this.user.news || []
-    },
-
-    noNewsSelected () {
-      return isEmpty(this.selectedNews)
     },
 
     newsDetailsHref () {
@@ -84,56 +52,88 @@ export default {
       return firstItem ? `/news/${firstItem.id}/edit` : ''
     },
 
+    noDiscardedUsersSelected () {
+      return isEmpty(this.selectedDiscardedUsers)
+    },
+
+    noNewsSelected () {
+      return isEmpty(this.selectedNews)
+    },
+
+    noUsersSelected () {
+      return isEmpty(this.selectedUsers)
+    },
+
+    selectedDiscardedUsers () {
+      return filter(this.users, (user) => user.selected && !isEmpty(user.discardedAt))
+    },
+
     selectedNews () {
       return filter(this.news, 'selected')
+    },
+
+    selectedUsers () {
+      return filter(this.users, (user) => user.selected && isEmpty(user.discardedAt))
+    },
+
+    userIsTabc () {
+      return this.user.role === 'tabc'
+    },
+
+    users () {
+      return this.company.users || []
     }
   },
 
   methods: {
     deleteUsers () {
-      this.$confirm(
-        'Are you sure you want to delete the selected user(s)?',
-        'Delete User(s)',
-        { variant: 'error' }
-      ).yes(() => {
-        Promise
-          .all(
-            map(
-              this.selectedUsers,
-              (user) => http
-                .delete(`/users/${user.id}`)
-                .then(() => {
-                  this.$message.success(`User "${user.fullName}" deleted.`)
-                })
+      this
+        .$confirm(
+          'Are you sure you want to delete the selected user(s)?',
+          'Delete User(s)',
+          { variant: 'error' }
+        )
+        .yes(() => {
+          Promise
+            .all(
+              map(
+                this.selectedUsers,
+                (user) => http
+                  .delete(`/users/${user.id}`)
+                  .then(() => {
+                    this.$message.success(`User "${user.fullName}" deleted.`)
+                  })
+              )
             )
-          )
-          .then(() => {
-            window.location.reload(true)
-          })
-      })
+            .then(() => {
+              window.location.reload(true)
+            })
+        })
     },
 
     undiscardUsers () {
-      this.$confirm(
-        'Are you sure you want to restore the selected user(s)?',
-        'Restore User(s)',
-        { variant: 'error' }
-      ).yes(() => {
-        Promise
-          .all(
-            map(
-              this.selectedDiscardedUsers,
-              (user) => http
-                .post(`/users/${user.id}/undiscard`)
-                .then(() => {
-                  this.$message.success(`User "${user.fullName}" restored.`)
-                })
+      this
+        .$confirm(
+          'Are you sure you want to restore the selected user(s)?',
+          'Restore User(s)',
+          { variant: 'error' }
+        )
+        .yes(() => {
+          Promise
+            .all(
+              map(
+                this.selectedDiscardedUsers,
+                (user) => http
+                  .post(`/users/${user.id}/undiscard`)
+                  .then(() => {
+                    this.$message.success(`User "${user.fullName}" restored.`)
+                  })
+              )
             )
-          )
-          .then(() => {
-            window.location.reload(true)
-          })
-      })
+            .then(() => {
+              window.location.reload(true)
+            })
+        })
     }
   }
 }
@@ -165,6 +165,46 @@ export default {
       <b-col cols="12">
         <b-card no-body>
           <b-tabs card>
+            <b-tab v-if="userIsTabc">
+              <template slot="title">
+                News
+              </template>
+
+              <b-button-toolbar
+                class="mb-3 ml-3"
+                key-nav
+              >
+                <b-button
+                  class="mx-1"
+                  href="/news/new"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Add
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected"
+                  :href="newsEditHref"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Edit
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected"
+                  :href="newsDetailsHref"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Details
+                </b-button>
+              </b-button-toolbar>
+
+              <news-table :items="news" />
+            </b-tab>
+
             <b-tab active>
               <template slot="title">
                 <fa-sprite
@@ -232,7 +272,7 @@ export default {
                   variant="outline-secondary"
                   @click.prevent="undiscardUsers"
                 >
-                  UnDiscard
+                  Undelete
                 </b-button>
               </b-button-toolbar>
 
@@ -252,48 +292,6 @@ export default {
               </template>
 
               <locations-table :items="locations" />
-            </b-tab>
-
-            <b-tab
-              v-if = "userIsTabc"
-            >
-              <template slot="title">
-                News
-              </template>
-
-              <b-button-toolbar
-                class="mb-3 ml-3"
-                key-nav
-              >
-                <b-button
-                  class="mx-1"
-                  href="/news/new"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Add
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected"
-                  :href="newsEditHref"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Edit
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected"
-                  :href="newsDetailsHref"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Details
-                </b-button>
-              </b-button-toolbar>
-
-              <news-table :items="news" />
             </b-tab>
           </b-tabs>
         </b-card>

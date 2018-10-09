@@ -13,6 +13,10 @@ export default {
   mixins: [ValidationMixin('user')],
 
   props: {
+    hasLockedLocations: {
+      type: Boolean,
+      default: false
+    },
     isProfile: {
       type: Boolean,
       default: false
@@ -23,10 +27,6 @@ export default {
       default () {
         return []
       }
-    },
-    hasLockedLocations: {
-      type: Boolean,
-      default: false
     },
     user: {
       type: Object,
@@ -45,10 +45,10 @@ export default {
         },
         email: {
           autoComplete: 'email',
-          icon: 'fas-fa-envelope',
-          label: 'E-mail',
           description: this.hasLockedLocations ? 'Email cannot be changed while there are pending reports.' : '',
           disabled: this.hasLockedLocations,
+          icon: 'fas-fa-envelope',
+          label: 'E-mail',
           maxLength: 192,
           required: true,
           type: 'email'
@@ -174,9 +174,9 @@ export default {
         :id="inputGroupId(key)"
         :key="key"
         :data-required="options.required"
+        :description="options.description"
         :invalid-feedback="invalidFeedback(key)"
         :label="options.label"
-        :description="options.description"
         :label-for="inputId(key)"
         :state="state(key)"
       >
@@ -194,13 +194,13 @@ export default {
             :autocomplete="options.autoComplete"
             class="form-control"
             :data-path="key"
+            :disabled="options.disabled"
             :format="options.format"
             :maxlength="options.maxLength"
             :name="inputName(key)"
             :parse="options.parse"
             :placeholder="options.placeholder"
             :required="options.required"
-            :disabled="options.disabled"
             :type="options.type || 'text'"
             @blur.native="validate"
             @input.native="validate"

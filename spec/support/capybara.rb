@@ -21,7 +21,10 @@ Capybara.javascript_driver = :poltergeist
 # that render doesn't exist!.
 # def render_page(name)
 #   png_name = name.strip.gsub(/\W+/, '-')
-#   path = File.join(Rails.application.config.integration_test_renders_dir, "#{png_name}.png")
+#   path = File.join(
+#     Rails.application.config.integration_test_renders_dir,
+#     "#{png_name}.png"
+#   )
 #   page.driver.render(path)
 # end
 

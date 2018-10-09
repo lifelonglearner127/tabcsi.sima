@@ -68,13 +68,13 @@ class User < ApplicationRecord
       id: id,
       job_title: job_title,
       license_number: license_number,
+      location_clps: location_clps,
       locations: locations
         .includes(:licenses, :locked_by, :inspected_by)
         .as_json(include: %i[licenses locked_by inspected_by]),
-      location_clps: location_clps,
+      news: news,
       phone: phone,
-      role: role,
-      news: news
+      role: role
     }
   end
 
@@ -84,6 +84,10 @@ class User < ApplicationRecord
 
   def location_clps
     @location_clps || locations.pluck(:clp) unless admin?
+  end
+
+  def locked_locations
+    Location.where(locked: true, locked_by_id: id)
   end
 
   def pin_current?
@@ -123,10 +127,6 @@ class User < ApplicationRecord
 
   def valid_pin?(pin)
     valid_for_authentication? { valid_password?(pin) }
-  end
-
-  def locked_locations
-    Location.where(locked: true, locked_by_id: id)
   end
 
   private

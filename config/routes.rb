@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :faqs, only: %i[index]
 
-  resources :news, only: %i[create edit new update show]
+  resources :news, only: %i[create edit new show update]
 
   resources :questions, only: %i[] do
     collection do
@@ -35,8 +35,8 @@ Rails.application.routes.draw do
     end
 
     member do
-      post :undiscard
       patch :edit, action: :update
+      post :undiscard
     end
   end
   get :sign_up, to: 'users#new'

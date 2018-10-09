@@ -30,6 +30,10 @@ export default {
       }
     },
 
+    hasLockedLocations () {
+      return this.pageOptions.lockedLocations.length >= 1
+    },
+
     isEdit () {
       return this.pageName === 'edit'
     },
@@ -48,10 +52,6 @@ export default {
 
     ownerName () {
       return this.pageOptions.ownerName
-    },
-
-    hasLockedLocations () {
-      return this.pageOptions.lockedLocations.length >= 1
     },
 
     submitText () {
@@ -108,9 +108,9 @@ export default {
     <edit-user
       v-if="isEdit"
       ref="editUser"
+      :has-locked-locations="hasLockedLocations"
       :is-profile="isProfile"
       :locations="locations"
-      :has-locked-locations="hasLockedLocations"
       :user="user"
     />
     <new-user
