@@ -42,6 +42,7 @@ class User < ApplicationRecord
   enum role: %i[user admin tabc]
 
   before_validation :generate_random_password, if: :generate_password?
+  before_validation :check_for_existing_user, if: :invited?
   after_initialize :set_default_role, if: :new_record?
   before_create :before_create_user
   after_create :after_create_user
@@ -171,20 +172,6 @@ class User < ApplicationRecord
 
   def before_create_user
     if invited?
-      invitee = User.with_discarded.find_by(email: email)
-
-      if invitee.present?
-        if invitee.discarded_at.nil?
-          add_error('User already exists. Please try another email address.')
-        else
-          add_error(
-            'User was deleted. Please contact TABC to undelete the user.'
-          )
-        end
-
-        throw :abort
-      end
-
       company = Company.find_by(owner_name: owner_name)
 
       if company.blank?
@@ -230,6 +217,22 @@ class User < ApplicationRecord
     end
 
     @became_admin = role_changed?(from: 'user', to: 'admin')
+  end
+
+  def check_for_existing_user
+    invitee = User.with_discarded.find_by(email: email)
+
+    return if invitee.blank?
+
+    if invitee.discarded_at.nil?
+      add_error('User already exists. Please try another email address.')
+    else
+      add_error(
+        'User was deleted. Please contact TABC to undelete the user.'
+      )
+    end
+
+    throw :abort
   end
 
   def generate_password?
