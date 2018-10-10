@@ -4,8 +4,21 @@ class Location < ApplicationRecord
   belongs_to :company, -> { with_discarded }
   has_many :inspections, -> { order(:created_at) }
   has_many :licenses, -> { order(:clp) }
-  belongs_to :locked_by, class_name: 'User', optional: true
-  belongs_to :inspected_by, class_name: 'User', optional: true
+
+  belongs_to(
+    :locked_by,
+    -> { with_discarded },
+    class_name: 'User',
+    optional: true
+  )
+
+  belongs_to(
+    :inspected_by,
+    -> { with_discarded },
+    class_name: 'User',
+    optional: true
+  )
+
   has_many_attached :photos
   has_and_belongs_to_many :users, -> { order(:full_name) }
 
