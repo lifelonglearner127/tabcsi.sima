@@ -89,8 +89,8 @@ export default {
     deleteNews () {
       this
         .$confirm(
-          'Are you sure you want to delete the selected news(s)?',
-          'Delete News(s)',
+          'Are you sure you want to delete the selected news?',
+          'Delete News',
           { variant: 'error' }
         )
         .yes(() => {

@@ -29,7 +29,7 @@ export default {
     previewNews (news) {
       this.selectedNews = news
 
-      this.$refs.previewModalRef.show()
+      this.$refs.previewModal.show()
     }
   }
 }
@@ -68,7 +68,7 @@ export default {
     </b-table>
 
     <b-modal
-      ref="previewModalRef"
+      ref="previewModal"
       ok-only
       size="lg"
       title="Preview News"
