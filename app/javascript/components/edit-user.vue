@@ -205,9 +205,12 @@ export default {
             @input.native="validate"
           />
         </b-input-group>
-        <div class="feild-description invalid-feedback d-block">
+        <span
+          slot="description"
+          class="text-danger"
+        >
           {{ options.description }}
-        </div>
+        </span>
       </b-form-group>
     </template>
 
