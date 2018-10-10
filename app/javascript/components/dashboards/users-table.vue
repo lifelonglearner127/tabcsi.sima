@@ -78,7 +78,7 @@ export default {
 
     editUser (user) {
       if (this.isDiscarded(user)) {
-        this.$message.error('User is deleted or discarded, reactivate/ undiscard user to edit user details')
+        this.$message.error('User has been deleted. Please reactivate/undelete user to edit the user\'s details.')
       } else {
         window.location.href = `/users/${user.id}/edit`
       }
