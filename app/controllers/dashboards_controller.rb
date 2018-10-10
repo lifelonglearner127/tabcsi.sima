@@ -9,7 +9,7 @@ class DashboardsController < ApplicationController
     relation = User.all
     options = nil
 
-    if current_user.admin?
+    if current_user.admin? || current_user.tabc?
       relation = relation.includes(
         company: {
           locations: :licenses,

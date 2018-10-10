@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
-APPLICATION_HOST = Nenv.instance.application_host
-
 Rails.application.configure do
   config.action_controller.perform_caching = true
-  config.action_mailer.asset_host = APPLICATION_HOST
-  config.action_mailer.default_url_options = { host: APPLICATION_HOST }
   config.action_mailer.delivery_method = :aws_sdk
   config.action_mailer.perform_caching = false
   config.active_record.dump_schema_after_migration = false

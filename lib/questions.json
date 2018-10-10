@@ -1,5 +1,5 @@
 {
-  "build_date": "2018-09-17",
+  "build_date": "2018-10-10",
   "questions": {
     "1": {
       "question_text": "Name of person filling out survey (First & Last)",
@@ -236,8 +236,8 @@
       "question_text": "Choose the vendors that you purchase wine from.",
       "question_type": "drop_down",
       "multiple": true,
-      "label": "Permit Type:",
-      "additional_label": "Permit Number:",
+      "label": "License/Permit Type:",
+      "additional_label": "License/Permit Number:",
       "additional_text": 9,
       "additional_type": "number",
       "choices": [
@@ -257,8 +257,8 @@
       "question_text": "Choose the vendors that you purchase wine from.",
       "question_type": "drop_down",
       "multiple": true,
-      "label": "Permit Type:",
-      "additional_label": "Permit Number:",
+      "label": "License/Permit Type:",
+      "additional_label": "License/Permit Number:",
       "additional_text": 9,
       "additional_type": "number",
       "choices": [
@@ -278,8 +278,8 @@
       "question_text": "Choose the vendors that you purchase distilled spirits from.",
       "question_type": "drop_down",
       "multiple": true,
-      "label": "Permit Type:",
-      "additional_label": "Permit Number:",
+      "label": "License/Permit Type:",
+      "additional_label": "License/Permit Number:",
       "additional_text": 9,
       "additional_type": "number",
       "choices": [
@@ -297,8 +297,8 @@
       "question_text": "Choose the vendors that you purchase distilled spirits from.",
       "question_type": "drop_down",
       "multiple": true,
-      "label": "Permit Type:",
-      "additional_label": "Permit Number:",
+      "label": "License/Permit Type:",
+      "additional_label": "License/Permit Number:",
       "additional_text": 9,
       "additional_type": "number",
       "choices": [

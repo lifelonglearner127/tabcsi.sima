@@ -23,7 +23,7 @@ class Inspection < ApplicationRecord
     sum = time.month + time.day + time.hour + time.min + time.sec
     sequence = sum.to_s(16).rjust(2, '0').upcase
 
-    "RCR#{fiscal_year}-#{location_id}-#{random_sequence}#{sequence}"
+    "CR#{fiscal_year}-#{location_id}-#{random_sequence}#{sequence}"
   end
 
   def finish(finished_at, answers)

@@ -12,9 +12,7 @@ class Answer < ApplicationRecord
       blob = pic.blob
 
       {
-        url: Rails.application.routes.url_helpers.rails_blob_url(
-          pic, host: Nenv.instance.application_host
-        ),
+        url: Rails.application.routes.url_helpers.rails_blob_url(pic),
         content_type: blob.content_type,
         checksum: blob.checksum
       }
