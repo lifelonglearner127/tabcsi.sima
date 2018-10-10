@@ -2,7 +2,7 @@
 
 class NewsController < ApplicationController
   prepend_before_action :set_news, only: %i[destroy edit show update]
-  skip_before_action :set_page_options, only: %i[create update]
+  skip_before_action :set_page_options, only: %i[create update destroy]
 
   def create
     news = News.new(news_params)
@@ -27,6 +27,12 @@ class NewsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @news.discard
+
+    head :no_content
   end
 
   private

@@ -86,6 +86,31 @@ export default {
   },
 
   methods: {
+    deleteNews () {
+      this
+        .$confirm(
+          'Are you sure you want to delete the selected news(s)?',
+          'Delete News(s)',
+          { variant: 'error' }
+        )
+        .yes(() => {
+          Promise
+            .all(
+              map(
+                this.selectedNews,
+                (news) => http
+                  .delete(`/news/${news.id}`)
+                  .then(() => {
+                    this.$message.success(`News "${news.subject}" deleted.`)
+                  })
+              )
+            )
+            .then(() => {
+              window.location.reload(true)
+            })
+        })
+    },
+
     deleteUsers () {
       this
         .$confirm(
@@ -199,6 +224,15 @@ export default {
                   variant="outline-secondary"
                 >
                   Details
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected"
+                  size="sm"
+                  variant="outline-secondary"
+                  @click.prevent="deleteNews"
+                >
+                  Delete
                 </b-button>
               </b-button-toolbar>
 
