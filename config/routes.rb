@@ -15,7 +15,10 @@ Rails.application.routes.draw do
 
   resources :faqs, only: %i[index]
 
-  resources :news, only: %i[create edit new show update]
+  resources :news, only: %i[create destroy edit new show update]
+
+  # HighVoltage
+  get '/pages/*id', to: 'pages#show', as: :page, format: false
 
   resources :questions, only: %i[] do
     collection do

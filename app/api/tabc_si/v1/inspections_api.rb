@@ -165,7 +165,8 @@ module TabcSi
             user: current_user,
             location: location,
             license: license,
-            started_at: params[:started_at]
+            started_at: params[:started_at],
+            fiscal_year: Setting.fiscal_year
           )
 
           respond inspection
