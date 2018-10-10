@@ -13,6 +13,7 @@ module TabcSi
     mount V1::DistributorsApi
     mount V1::InspectionsApi
     mount V1::LocationsApi
+    mount V1::NewsApi
     mount V1::PushTokensApi
     mount V1::SettingsApi
     mount V1::UsersApi
@@ -62,6 +63,10 @@ module TabcSi
           description: 'Locations API'
         },
         {
+          name: 'news',
+          description: 'News API'
+        },
+        {
           name: 'push_tokens',
           description: 'Push Tokens API'
         },
@@ -82,7 +87,7 @@ module TabcSi
         tagGroups: [
           {
             name: 'General',
-            tags: %w[settings users push_tokens]
+            tags: %w[settings users push_tokens news]
           },
           {
             name: 'Vendors',
