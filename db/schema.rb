@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_163707) do
     t.datetime "cancelled_at"
     t.bigint "license_id"
     t.boolean "erroneous", default: false, null: false
-    t.string "fiscal_year", null: false
+    t.string "fiscal_year"
     t.index ["audit_form_id"], name: "index_inspections_on_audit_form_id"
     t.index ["completed_at", "submitted_at", "erroneous"], name: "index_inspections_on_unsubmitted"
     t.index ["completed_at"], name: "index_inspections_on_completed_at"
