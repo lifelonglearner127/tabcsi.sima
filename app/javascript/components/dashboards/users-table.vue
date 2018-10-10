@@ -74,6 +74,14 @@ export default {
 
     userType (user) {
       return startCase(user.role)
+    },
+
+    editUser (user) {
+      if (this.isDiscarded(user)) {
+        this.$message.error('User has been deleted. Please reactivate/undelete user to edit the user\'s details.')
+      } else {
+        window.location.href = `/users/${user.id}/edit`
+      }
     }
   }
 }
@@ -132,8 +140,8 @@ export default {
     <a
       slot="edit"
       slot-scope="row"
-      :href="`/users/${row.item.id}/edit`"
       title="Edit"
+      @click="editUser(row.item)"
     >
       <fa-sprite
         fixed-width
