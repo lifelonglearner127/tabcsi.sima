@@ -14,7 +14,7 @@ module TabcSi
           }
         )
         get do
-          respond News.all
+          respond News.order(created_at: :desc)
         end
       end
     end
