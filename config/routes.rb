@@ -17,6 +17,9 @@ Rails.application.routes.draw do
 
   resources :news, only: %i[create destroy edit new show update]
 
+  # HighVoltage
+  get '/pages/*id', to: 'pages#show', as: :page, format: false
+
   resources :questions, only: %i[] do
     collection do
       get :help
