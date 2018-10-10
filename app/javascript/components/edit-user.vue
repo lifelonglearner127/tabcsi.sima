@@ -174,7 +174,6 @@ export default {
         :id="inputGroupId(key)"
         :key="key"
         :data-required="options.required"
-        :description="options.description"
         :invalid-feedback="invalidFeedback(key)"
         :label="options.label"
         :label-for="inputId(key)"
@@ -206,6 +205,12 @@ export default {
             @input.native="validate"
           />
         </b-input-group>
+        <span
+          slot="description"
+          class="text-danger"
+        >
+          {{ options.description }}
+        </span>
       </b-form-group>
     </template>
 
