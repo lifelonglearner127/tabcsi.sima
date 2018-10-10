@@ -174,7 +174,6 @@ export default {
         :id="inputGroupId(key)"
         :key="key"
         :data-required="options.required"
-        :description="options.description"
         :invalid-feedback="invalidFeedback(key)"
         :label="options.label"
         :label-for="inputId(key)"
@@ -206,6 +205,9 @@ export default {
             @input.native="validate"
           />
         </b-input-group>
+        <div class="feild-description invalid-feedback d-block">
+          {{ options.description }}
+        </div>
       </b-form-group>
     </template>
 
