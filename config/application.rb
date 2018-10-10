@@ -24,6 +24,17 @@ module Web
     config.autoload_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('lib')
 
+    config.load_defaults 5.2
+
+    config.action_controller.action_on_unpermitted_parameters = :raise
+
+    config.action_mailer.default_url_options = {
+      protocol: Nenv.instance.application_protocol,
+      host: Nenv.instance.application_host,
+      port: Nenv.instance.port
+    }
+
+    config.active_job.queue_adapter = :delayed_job
     config.assets.quiet = true
 
     config.generators do |generate|
@@ -36,12 +47,7 @@ module Web
       generate.view_specs false
     end
 
-    config.action_controller.action_on_unpermitted_parameters = :raise
-
-    config.load_defaults 5.2
-
     config.generators.system_tests = nil
-    config.active_job.queue_adapter = :delayed_job
 
     config.middleware.use Rack::Attack
   end
