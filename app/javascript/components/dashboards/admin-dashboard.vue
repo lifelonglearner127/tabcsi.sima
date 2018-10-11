@@ -269,6 +269,7 @@ export default {
               >
                 <b-dropdown
                   class="mx-1"
+                  :disabled="userIsTabc"
                   size="sm"
                   variant="outline-secondary"
                 >
