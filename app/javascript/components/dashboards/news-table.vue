@@ -37,7 +37,7 @@ export default {
 
   methods: {
     createdBy (news) {
-      return news.createdBy.fullName
+      return news.user.fullName
     },
 
     touchedAt (news) {

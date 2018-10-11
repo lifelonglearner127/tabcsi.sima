@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
 class News < ApplicationRecord
-  belongs_to(
-    :created_by,
-    -> { with_discarded },
-    class_name: 'User',
-    foreign_key: 'user_id',
-    optional: true
-  )
+  belongs_to :user, -> { with_discarded }, optional: true
 
   enum news_type: %i[featured]
 
