@@ -42,6 +42,7 @@
     "luxon": "^1.4.3",
     "popper.js": "^1.14.4",
     "vue": "^2.5.17",
+    "vue-cookies": "^1.5.7",
     "vue-loader": "^15.4.2",
     "vue-template-compiler": "^2.5.17",
     "vuelidate": "^0.7.4",

@@ -9,6 +9,7 @@ import isFunction from 'lodash/isFunction'
 import map from 'lodash/map'
 import Ujs from '~/plugins/ujs'
 import Vue from 'vue'
+import VueCookies from 'vue-cookies'
 import VueInput from '~/plugins/vue-input'
 import Vuelidate from 'vuelidate'
 
@@ -25,6 +26,7 @@ Vue.use(BootstrapVueUtils)
 Vue.use(Ujs)
 Vue.use(VueInput)
 Vue.use(Vuelidate)
+Vue.use(VueCookies)
 
 const onReady = (handler) => {
   if (document.readyState === 'loading') {

@@ -94,10 +94,32 @@ export default {
 
     userIsTabc () {
       return this.user.role === 'tabc'
+    },
+
+    isNewsActive () {
+      const oldTab = this.$cookies.get('admin-tab')
+
+      return oldTab === 'news'
+    },
+
+    isUsersActive () {
+      const oldTab = this.$cookies.get('admin-tab')
+
+      return isEmpty(oldTab) || oldTab === 'users'
+    },
+
+    isLocationsActive () {
+      const oldTab = this.$cookies.get('admin-tab')
+
+      return oldTab === 'locations'
     }
   },
 
   methods: {
+    saveTab (name) {
+      this.$cookies.set('admin-tab', name)
+    },
+
     deleteNews () {
       this
         .$confirm(
@@ -203,62 +225,9 @@ export default {
         <b-card no-body>
           <b-tabs card>
             <b-tab
-              v-if="userIsTabc"
-              :active="userIsTabc"
+              :active="isUsersActive"
+              @click="saveTab('users')"
             >
-              <template slot="title">
-                <fa-sprite
-                  fixed-width
-                  use="fas-fa-newspaper"
-                />
-                News
-              </template>
-
-              <b-button-toolbar
-                class="mb-3 ml-3"
-                key-nav
-              >
-                <b-button
-                  class="mx-1"
-                  href="/news/new"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Add
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected || multiNewsSelected"
-                  :href="newsEditHref"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Edit
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected || multiNewsSelected"
-                  :href="newsDetailsHref"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Details
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected"
-                  size="sm"
-                  variant="outline-secondary"
-                  @click.prevent="deleteNews"
-                >
-                  Delete
-                </b-button>
-              </b-button-toolbar>
-
-              <news-table :items="news" />
-            </b-tab>
-
-            <b-tab :active="!userIsTabc">
               <template slot="title">
                 <fa-sprite
                   fixed-width
@@ -337,7 +306,10 @@ export default {
               />
             </b-tab>
 
-            <b-tab>
+            <b-tab
+              :active="isLocationsActive"
+              @click="saveTab('locations')"
+            >
               <template slot="title">
                 <fa-sprite
                   fixed-width
@@ -347,6 +319,63 @@ export default {
               </template>
 
               <locations-table :items="locations" />
+            </b-tab>
+
+            <b-tab
+              v-if="userIsTabc"
+              :active="isNewsActive"
+              @click="saveTab('news')"
+            >
+              <template slot="title">
+                <fa-sprite
+                  fixed-width
+                  use="fas-fa-newspaper"
+                />
+                News
+              </template>
+
+              <b-button-toolbar
+                class="mb-3 ml-3"
+                key-nav
+              >
+                <b-button
+                  class="mx-1"
+                  href="/news/new"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Add
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected || multiNewsSelected"
+                  :href="newsEditHref"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Edit
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected || multiNewsSelected"
+                  :href="newsDetailsHref"
+                  size="sm"
+                  variant="outline-secondary"
+                >
+                  Details
+                </b-button>
+                <b-button
+                  class="mx-1"
+                  :disabled="noNewsSelected"
+                  size="sm"
+                  variant="outline-secondary"
+                  @click.prevent="deleteNews"
+                >
+                  Delete
+                </b-button>
+              </b-button-toolbar>
+
+              <news-table :items="news" />
             </b-tab>
           </b-tabs>
         </b-card>
