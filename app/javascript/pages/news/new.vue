@@ -39,7 +39,7 @@ export default {
     show-back-button
     show-top-back-button
     sm="6"
-    submit-text="Create"
+    submit-text="Submit"
     text-class="font-italic"
     title="Create News"
   />

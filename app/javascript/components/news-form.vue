@@ -1,9 +1,11 @@
 <script>
+import { maxLength, required } from 'vuelidate/lib/validators'
 import isEmpty from 'lodash/isEmpty'
 import RailsForm from '~/components/rails-form'
-import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
 import ValidationMixin from '~/mixins/validation'
+
+const SUBJECT_MAXLENGTH = 255
 
 export default {
   name: 'NewsForm',
@@ -118,7 +120,8 @@ export default {
         },
         subject: {
           label: 'Subject',
-          required: true
+          required: true,
+          maxLength: maxLength(SUBJECT_MAXLENGTH)
         },
         content: {
           label: 'Content',
