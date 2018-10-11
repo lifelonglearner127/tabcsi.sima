@@ -84,6 +84,10 @@ export default {
       return filter(this.users, (user) => user.selected && isEmpty(user.discardedAt))
     },
 
+    showAdminAlert () {
+      return !this.userIsTabc && this.adminCount <= 1
+    },
+
     userIsTabc () {
       return this.user.role === 'tabc'
     }
@@ -170,10 +174,10 @@ export default {
 
 <template>
   <b-container>
-    <b-row>
+    <b-row v-if="showAdminAlert">
       <b-col>
         <b-alert
-          :show="adminCount <= 1"
+          show
           variant="info"
         >
           <h4 class="alert-heading">
