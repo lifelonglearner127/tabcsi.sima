@@ -64,6 +64,7 @@ class DashboardsController < ApplicationController
     info[:news] =
       News
       .includes(:user)
+      .order(created_at: :desc)
       .as_json(include: :user)
 
     info[:users] =
