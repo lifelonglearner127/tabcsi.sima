@@ -73,7 +73,9 @@ class User < ApplicationRecord
       locations: locations
         .includes(:licenses, :locked_by, :inspected_by)
         .as_json(include: %i[licenses locked_by inspected_by]),
-      news: news,
+      news: news
+        .includes(:created_by)
+        .as_json(include: :created_by),
       phone: phone,
       role: role
     }
