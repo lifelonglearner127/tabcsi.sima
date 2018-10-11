@@ -1,4 +1,7 @@
 <script>
+import { DateTime } from 'luxon'
+import isEmpty from 'lodash/isEmpty'
+
 export default {
   name: 'NewsTable',
 
@@ -14,7 +17,14 @@ export default {
       fields: [
         'newsType',
         'subject',
-        'content',
+        {
+          key: 'createdBy',
+          label: 'Created by'
+        },
+        {
+          key: 'touchedAt',
+          label: 'Time'
+        },
         {
           key: 'preview',
           label: '',
@@ -29,6 +39,15 @@ export default {
   },
 
   methods: {
+    createdBy (news) {
+      return news.user.fullName
+    },
+
+    touchedAt (news) {
+      return isEmpty(news.updatedAt) ? DateTime.fromISO(news.updateAt).toFormat('LL/dd/yyyy hh:mm')
+        : DateTime.fromISO(news.createdAt).toFormat('LL/dd/yyyy hh:mm')
+    },
+
     previewNews (news) {
       this.selectedNews = news
 
@@ -61,6 +80,20 @@ export default {
         >
           {{ data.value }}
         </b-form-checkbox>
+      </template>
+
+      <template
+        slot="createdBy"
+        slot-scope="row"
+      >
+        {{ createdBy(row.item) }}
+      </template>
+
+      <template
+        slot="touchedAt"
+        slot-scope="row"
+      >
+        {{ touchedAt(row.item) }}
       </template>
 
       <b-button

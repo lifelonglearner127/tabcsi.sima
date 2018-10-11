@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class News < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, -> { with_discarded }, optional: true
 
   enum news_type: %i[featured]
 
