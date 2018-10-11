@@ -44,8 +44,8 @@ class User < ApplicationRecord
   before_validation :generate_random_password, if: :generate_password?
   before_validation :check_for_existing_user, if: :invited?
   after_initialize :set_default_role, if: :new_record?
-  before_create :before_create_user
-  after_create :after_create_user
+  before_create :before_create_user, unless: :tabc?
+  after_create :after_create_user, unless: :tabc?
   before_update :before_update_user, unless: :requested_pin?
   after_update :after_update_user, unless: :perform_after_update_user?
 
