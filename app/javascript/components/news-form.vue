@@ -123,7 +123,8 @@ export default {
         content: {
           label: 'Content',
           component: 'b-form-textarea',
-          rows: 10
+          rows: 10,
+          description: 'only secure source(https) are allowed to add an image'
         }
       }
     }
@@ -250,6 +251,7 @@ export default {
                   :invalid-feedback="invalidFeedback(key)"
                   :label="options.label"
                   :label-for="inputId(key)"
+                  :description="options.description"
                   :state="state(key)"
                 >
                   <component
