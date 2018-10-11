@@ -60,6 +60,10 @@ export default {
       return isEmpty(this.selectedNews)
     },
 
+    oneNewsSelected () {
+      return this.selectedNews !== 0 && this.selectedNews.length === 1
+    },
+
     noUsersSelected () {
       return isEmpty(this.selectedUsers)
     },
@@ -209,7 +213,7 @@ export default {
                 </b-button>
                 <b-button
                   class="mx-1"
-                  :disabled="noNewsSelected"
+                  :disabled="!oneNewsSelected"
                   :href="newsEditHref"
                   size="sm"
                   variant="outline-secondary"
@@ -218,7 +222,7 @@ export default {
                 </b-button>
                 <b-button
                   class="mx-1"
-                  :disabled="noNewsSelected"
+                  :disabled="!oneNewsSelected"
                   :href="newsDetailsHref"
                   size="sm"
                   variant="outline-secondary"
