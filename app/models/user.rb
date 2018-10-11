@@ -62,23 +62,26 @@ class User < ApplicationRecord
   end
 
   def info
-    {
-      company_name: company_name || company&.name,
+    result = {
       email: email,
       full_name: full_name,
       id: id,
       job_title: job_title,
-      license_number: license_number,
-      location_clps: location_clps,
-      locations: locations
-        .includes(:licenses, :locked_by, :inspected_by)
-        .as_json(include: %i[licenses locked_by inspected_by]),
-      news: news
-        .includes(:user)
-        .as_json(include: :user),
       phone: phone,
       role: role
     }
+
+    unless tabc?
+      result[:company_name] = company_name || company&.name
+      result[:license_number] = license_number
+      result[:location_clps] = location_clps
+      result[:locations] =
+        locations
+        .includes(:inspected_by, :licenses, :locked_by)
+        .as_json(include: %i[inspected_by licenses locked_by])
+    end
+
+    result
   end
 
   def invited?

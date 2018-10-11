@@ -19,27 +19,31 @@ export default {
   props: {
     adminCount: {
       type: Number,
-      required: true
+      default: 0
     },
     company: {
       type: Object,
+      default: null
+    },
+    locations: {
+      type: Array,
       required: true
+    },
+    news: {
+      type: Array,
+      default: null
     },
     user: {
       type: Object,
       required: true
+    },
+    users: {
+      type: Array,
+      default: null
     }
   },
 
   computed: {
-    locations () {
-      return this.user.locations || []
-    },
-
-    news () {
-      return this.user.news || []
-    },
-
     newsDetailsHref () {
       const firstItem = this.selectedNews[0]
 
@@ -78,10 +82,6 @@ export default {
 
     userIsTabc () {
       return this.user.role === 'tabc'
-    },
-
-    users () {
-      return this.company.users || []
     }
   },
 
@@ -190,8 +190,15 @@ export default {
       <b-col cols="12">
         <b-card no-body>
           <b-tabs card>
-            <b-tab v-if="userIsTabc">
+            <b-tab
+              v-if="userIsTabc"
+              :active="userIsTabc"
+            >
               <template slot="title">
+                <fa-sprite
+                  fixed-width
+                  use="fas-fa-newspaper"
+                />
                 News
               </template>
 
@@ -239,7 +246,7 @@ export default {
               <news-table :items="news" />
             </b-tab>
 
-            <b-tab active>
+            <b-tab :active="!userIsTabc">
               <template slot="title">
                 <fa-sprite
                   fixed-width

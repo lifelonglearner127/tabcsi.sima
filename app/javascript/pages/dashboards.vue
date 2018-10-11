@@ -3,6 +3,12 @@ import { AdminDashboard, UserDashboard } from '~/components/dashboards'
 import includes from 'lodash/includes'
 import PageMixin from '~/mixins/page'
 
+const DASHBOARD_TITLES = {
+  admin: 'Admin',
+  tabc: 'TABC',
+  user: 'User'
+}
+
 export default {
   name: 'Dashboards',
 
@@ -23,7 +29,19 @@ export default {
     },
 
     dashboardTitle () {
-      return this.userIsAdmin ? 'Admin Dashboard' : 'User Dashboard'
+      return `${DASHBOARD_TITLES[this.user.role]} Dashboard`
+    },
+
+    locations () {
+      return this.tabc.locations || this.user.locations || []
+    },
+
+    news () {
+      return this.tabc.news || []
+    },
+
+    tabc () {
+      return this.pageOptions.tabc || {}
     },
 
     user () {
@@ -32,6 +50,10 @@ export default {
 
     userIsAdmin () {
       return includes(['admin', 'tabc'], this.user.role)
+    },
+
+    users () {
+      return this.tabc.users || this.company.users || []
     }
   }
 }
@@ -100,7 +122,10 @@ export default {
       v-if="userIsAdmin"
       :admin-count="adminCount"
       :company="company"
+      :locations="locations"
+      :news="news"
       :user="user"
+      :users="users"
     />
     <user-dashboard
       v-else
