@@ -124,7 +124,7 @@ export default {
           label: 'Content',
           component: 'b-form-textarea',
           rows: 10,
-          description: 'only secure source(https) are allowed to add an image'
+          description: 'Only images from secure sources (https) are allowed.'
         }
       }
     }
