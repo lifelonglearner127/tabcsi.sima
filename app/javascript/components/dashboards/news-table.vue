@@ -21,7 +21,10 @@ export default {
           tdClass: 'text-center'
         }
       ],
-      selectedNews: {}
+      selectedNews: {},
+      perPage: 10,
+      currentPage: 1,
+      totalRows: this.items.length
     }
   },
 
@@ -41,8 +44,12 @@ export default {
       :fields="fields"
       hover
       :items="items"
+      :per-page="perPage"
+      :current-page="currentPage"
+      :total-rows="totalRows"
       responsive
       striped
+      pagination
     >
       <template
         slot="newsType"
@@ -66,6 +73,13 @@ export default {
         Preview
       </b-button>
     </b-table>
+
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="totalRows"
+      :per-page="perPage"
+      class="ml-3 my-3"
+    />
 
     <b-modal
       ref="previewModal"
