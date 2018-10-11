@@ -57,9 +57,9 @@ class DashboardsController < ApplicationController
     info[:locations] =
       Location
       .joins(:company)
-      .includes(:company)
+      .includes(:company, :inspected_by, :licenses, :locked_by)
       .where(companies: { owned: true })
-      .as_json(include: :company)
+      .as_json(include: %i[company inspected_by licenses locked_by])
 
     info[:news] =
       News
