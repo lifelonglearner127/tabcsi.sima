@@ -61,7 +61,7 @@ export default {
     },
 
     oneNewsSelected () {
-      return this.selectedNews !== 0 && this.selectedNews.length === 1
+      return this.selectedNews.length === 1
     },
 
     noUsersSelected () {
