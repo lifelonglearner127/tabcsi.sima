@@ -44,6 +44,10 @@ export default {
   },
 
   computed: {
+    locationsTabTitle () {
+      return this.userIsTabc ? 'Locations' : 'My Locations'
+    },
+
     newsDetailsHref () {
       const firstItem = this.selectedNews[0]
 
@@ -330,7 +334,7 @@ export default {
                   fixed-width
                   use="fas-fa-map-marker-alt"
                 />
-                My Locations
+                {{ locationsTabTitle }}
               </template>
 
               <locations-table :items="locations" />
