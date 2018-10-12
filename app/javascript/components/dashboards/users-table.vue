@@ -26,7 +26,15 @@ export default {
         {
           key: 'fullName',
 
-          tdClass: (value, key, item) => (this.isDiscarded(item) ? 'discarded-user-name' : null)
+          tdClass: (value, key, item) => {
+            const classes = ['full-name']
+
+            if (this.isDiscarded(item)) {
+              classes.push('full-name--discarded')
+            }
+
+            return classes
+          }
         },
         'email',
         'jobTitle',
@@ -49,7 +57,7 @@ export default {
   },
 
   mounted () {
-    const tdCells = this.$el.querySelectorAll('.discarded-user-name')
+    const tdCells = this.$el.querySelectorAll('.full-name--discarded')
 
     forEach(tdCells, (td) => {
       const row = td.closest('tr')
@@ -59,8 +67,20 @@ export default {
   },
 
   methods: {
+    editUser (user) {
+      if (this.isDiscarded(user)) {
+        this.$message.error('User has been deleted. Please reactivate/undelete user to edit the user\'s details.')
+      } else {
+        window.location.href = `/users/${user.id}/edit`
+      }
+    },
+
     isDiscarded (user) {
       return !isEmpty(user.discardedAt)
+    },
+
+    isTabc (user) {
+      return user.role === 'tabc'
     },
 
     lastSignInAt (user) {
@@ -77,14 +97,6 @@ export default {
 
     userType (user) {
       return startCase(user.role)
-    },
-
-    editUser (user) {
-      if (this.isDiscarded(user)) {
-        this.$message.error('User has been deleted. Please reactivate/undelete user to edit the user\'s details.')
-      } else {
-        window.location.href = `/users/${user.id}/edit`
-      }
     }
   }
 }
@@ -116,6 +128,7 @@ export default {
         slot-scope="row"
       >
         <a
+          v-if="!isTabc(row.item)"
           href="#"
           @click.prevent.stop="row.toggleDetails"
         >
@@ -156,6 +169,7 @@ export default {
         />
       </a>
       <b-container
+        v-if="!isTabc(row.item)"
         slot="row-details"
         slot-scope="row"
         fluid
@@ -205,5 +219,11 @@ export default {
 
 .edit-col {
   @include fixed-width(3rem);
+}
+
+/deep/ .full-name {
+  > .custom-checkbox:first-child {
+    margin-left: 1.5625rem;
+  }
 }
 </style>
