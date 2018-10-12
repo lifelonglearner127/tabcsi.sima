@@ -301,7 +301,7 @@ export default {
               </b-button-toolbar>
 
               <users-table
-                :current-user-id="user.id"
+                :current-user="user"
                 :items="users"
               />
             </b-tab>

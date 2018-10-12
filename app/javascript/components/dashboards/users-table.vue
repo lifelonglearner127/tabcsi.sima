@@ -10,8 +10,8 @@ export default {
   name: 'UsersTable',
 
   props: {
-    currentUserId: {
-      type: Number,
+    currentUser: {
+      type: Object,
       required: true
     },
     items: {
@@ -127,7 +127,7 @@ export default {
         <b-form-checkbox
           :id="`user_${row.index}_selected`"
           v-model="row.item.selected"
-          :disabled="row.item.id === currentUserId"
+          :disabled="row.item.id === currentUser.id"
         >
           {{ row.value }}
         </b-form-checkbox>
