@@ -7,7 +7,7 @@ module TabcSi
         self.notification_builder = ApnsNotificationBuilder.new
         self.pusher = RubyPushNotifications::APNS::APNSPusher.new(
           File.read(Rails.root.join('apns.pem')),
-          Rails.env.production? && Nenv.instance.app_debug?
+          false
         )
       end
 
