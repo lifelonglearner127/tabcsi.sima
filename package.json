@@ -66,7 +66,7 @@
     "eslint-plugin-standard": ">= 4",
     "eslint-plugin-vue": "^5.0.0-beta.3",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.4",
-    "flow-bin": "^0.82",
+    "flow-bin": "^0.83",
     "gnomon": "^1.5",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.2.1",

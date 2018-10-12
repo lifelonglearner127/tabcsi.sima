@@ -19,7 +19,7 @@ set(
   ]
 )
 
-set(:linked_files, %w[.env config/master.key])
+set(:linked_files, %w[.env config/master.key apns.pem])
 
 # RVM
 set :rvm_type, :system
@@ -51,6 +51,6 @@ set(
   webhook: 'https://hooks.slack.com/services/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'
 )
 
-after 'deploy:set_current_revision', 'tabc_si:set_mtimes'
+# after 'deploy:set_current_revision', 'tabc_si:set_mtimes'
 after 'deploy:published', 'bundler:clean'
 after 'deploy:failed', 'tabc_si:remove_current_release'
