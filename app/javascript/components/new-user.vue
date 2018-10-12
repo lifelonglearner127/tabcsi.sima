@@ -13,10 +13,7 @@ export default {
   mixins: [ValidationMixin('user')],
 
   props: {
-    isInvite: {
-      type: Boolean,
-      default: false
-    },
+    isInvite: Boolean,
     locations: {
       type: Array,
 

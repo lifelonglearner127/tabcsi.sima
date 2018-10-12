@@ -11,10 +11,7 @@ export default {
       type: String,
       default: null
     },
-    enforceUtf8: {
-      type: Boolean,
-      default: false
-    },
+    enforceUtf8: Boolean,
     hiddenMethod: {
       type: String,
       default: null

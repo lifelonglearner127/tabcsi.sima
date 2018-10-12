@@ -5,7 +5,7 @@ import RailsForm from '~/components/rails-form'
 import snakeCase from 'lodash/snakeCase'
 import ValidationMixin from '~/mixins/validation'
 
-const SUBJECT_MAXLENGTH = 255
+const SUBJECT_MAX_LENGTH = 255
 
 export default {
   name: 'NewsForm',
@@ -35,10 +35,7 @@ export default {
       type: [String, Number],
       default: null
     },
-    enforceUtf8: {
-      type: Boolean,
-      default: false
-    },
+    enforceUtf8: Boolean,
     hiddenMethod: {
       type: String,
       default: null
@@ -67,14 +64,8 @@ export default {
       type: Object,
       default: null
     },
-    showBackButton: {
-      type: Boolean,
-      default: false
-    },
-    showTopBackButton: {
-      type: Boolean,
-      default: false
-    },
+    showBackButton: Boolean,
+    showTopBackButton: Boolean,
     sm: {
       type: [Boolean, String, Number],
       default: false
@@ -121,7 +112,7 @@ export default {
         subject: {
           label: 'Subject',
           required: true,
-          maxLength: maxLength(SUBJECT_MAXLENGTH)
+          maxLength: maxLength(SUBJECT_MAX_LENGTH)
         },
         content: {
           label: 'Content',

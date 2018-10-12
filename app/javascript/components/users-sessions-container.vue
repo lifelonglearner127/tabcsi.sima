@@ -28,10 +28,7 @@ export default {
       type: [String, Number],
       default: null
     },
-    enforceUtf8: {
-      type: Boolean,
-      default: false
-    },
+    enforceUtf8: Boolean,
     hiddenMethod: {
       type: String,
       default: null
@@ -52,14 +49,8 @@ export default {
       type: Object,
       default: null
     },
-    showBackButton: {
-      type: Boolean,
-      default: false
-    },
-    showTopBackButton: {
-      type: Boolean,
-      default: false
-    },
+    showBackButton: Boolean,
+    showTopBackButton: Boolean,
     sm: {
       type: [Boolean, String, Number],
       default: false

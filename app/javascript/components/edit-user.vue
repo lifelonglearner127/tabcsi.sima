@@ -13,14 +13,8 @@ export default {
   mixins: [ValidationMixin('user')],
 
   props: {
-    hasLockedLocations: {
-      type: Boolean,
-      default: false
-    },
-    isProfile: {
-      type: Boolean,
-      default: false
-    },
+    hasLockedLocations: Boolean,
+    isProfile: Boolean,
     locations: {
       type: Array,
 

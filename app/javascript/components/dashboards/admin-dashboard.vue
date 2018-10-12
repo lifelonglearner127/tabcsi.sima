@@ -48,6 +48,10 @@ export default {
       return this.userIsTabc ? 'Locations' : 'My Locations'
     },
 
+    multipleNewsSelected () {
+      return this.selectedNews.length > 1
+    },
+
     newsDetailsHref () {
       const firstItem = this.selectedNews[0]
 
@@ -66,10 +70,6 @@ export default {
 
     noNewsSelected () {
       return isEmpty(this.selectedNews)
-    },
-
-    multiNewsSelected () {
-      return this.selectedNews.length > 1
     },
 
     noUsersSelected () {
@@ -228,7 +228,7 @@ export default {
                 </b-button>
                 <b-button
                   class="mx-1"
-                  :disabled="noNewsSelected || multiNewsSelected"
+                  :disabled="noNewsSelected || multipleNewsSelected"
                   :href="newsEditHref"
                   size="sm"
                   variant="outline-secondary"
@@ -237,7 +237,7 @@ export default {
                 </b-button>
                 <b-button
                   class="mx-1"
-                  :disabled="noNewsSelected || multiNewsSelected"
+                  :disabled="noNewsSelected || multipleNewsSelected"
                   :href="newsDetailsHref"
                   size="sm"
                   variant="outline-secondary"
