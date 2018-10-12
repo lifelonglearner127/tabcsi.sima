@@ -112,7 +112,7 @@ export default {
         subject: {
           label: 'Subject',
           required: true,
-          maxLength: maxLength(SUBJECT_MAX_LENGTH)
+          maxLength: SUBJECT_MAX_LENGTH
         },
         content: {
           label: 'Content',
@@ -128,7 +128,10 @@ export default {
     return {
       news: {
         newsType: { required },
-        subject: { required },
+        subject: {
+          required,
+          maxLength: maxLength(SUBJECT_MAX_LENGTH)
+        },
         content: { }
       }
     }
@@ -255,6 +258,7 @@ export default {
                     :autocomplete="options.autoComplete"
                     class="form-control"
                     :data-path="key"
+                    :maxlength="options.maxLength"
                     :name="inputName(key)"
                     :placeholder="options.placeholder"
                     :required="options.required"
