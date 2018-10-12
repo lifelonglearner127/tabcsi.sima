@@ -108,6 +108,7 @@ export default {
     </b-table>
 
     <b-pagination
+      v-if="totalRows > 0"
       v-model="currentPage"
       :total-rows="totalRows"
       :per-page="perPage"
