@@ -66,10 +66,6 @@ class UsersController < ApplicationController
     reset_page_options(controller_page_options(page_name))
   end
 
-  def company_locations
-    current_user.company.locations
-  end
-
   def controller_page_options(page_name = action_name)
     page_options =
       case page_name
@@ -80,7 +76,7 @@ class UsersController < ApplicationController
           local: true,
           html: {
             is_profile: @user.id == current_user.id,
-            locations: company_locations,
+            locations: @user.tabc? ? [] : @user.company.locations,
             locked_locations: @user.locked_locations,
             page_name: 'edit'
           }
@@ -91,7 +87,7 @@ class UsersController < ApplicationController
           method: 'post',
           local: true,
           html: {
-            locations: company_locations,
+            locations: current_user.company.locations,
             owner_name: current_user.company.owner_name,
             page_name: 'invite'
           }
