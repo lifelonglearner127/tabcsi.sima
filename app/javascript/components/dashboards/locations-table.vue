@@ -27,7 +27,10 @@ export default {
           tdClass: 'text-center',
           thClass: 'text-center'
         }
-      ]
+      ],
+      perPage: 10,
+      currentPage: 1,
+      totalRows: this.items.length
     }
   },
 
@@ -70,37 +73,50 @@ export default {
 </script>
 
 <template>
-  <b-table
-    :fields="fields"
-    hover
-    :items="items"
-    responsive
-    striped
-  >
-    <template slot="table-colgroup">
-      <col class="name-col">
-      <col class="clp-col">
-      <col class="address-col">
-      <col class="phone-col">
-      <col class="status-col">
-    </template>
-    <div
-      slot="clp"
-      slot-scope="row"
-      v-html="licenses(row.item)"
-    />
-    <address
-      slot="address"
-      slot-scope="row"
-      v-html="address(row.item)"
-    />
-    <h6
-      slot="status"
-      slot-scope="row"
+  <div>
+    <b-table
+      :fields="fields"
+      hover
+      :items="items"
+      :per-page="perPage"
+      :current-page="currentPage"
+      :total-rows="totalRows"
+      responsive
+      striped
     >
-      {{ status(row.item) }}
-    </h6>
-  </b-table>
+      <template slot="table-colgroup">
+        <col class="name-col">
+        <col class="clp-col">
+        <col class="address-col">
+        <col class="phone-col">
+        <col class="status-col">
+      </template>
+      <div
+        slot="clp"
+        slot-scope="row"
+        v-html="licenses(row.item)"
+      />
+      <address
+        slot="address"
+        slot-scope="row"
+        v-html="address(row.item)"
+      />
+      <h6
+        slot="status"
+        slot-scope="row"
+      >
+        {{ status(row.item) }}
+      </h6>
+    </b-table>
+
+    <b-pagination
+      v-if="totalRows > 0"
+      v-model="currentPage"
+      :total-rows="totalRows"
+      :per-page="perPage"
+      class="ml-3 my-3"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>
