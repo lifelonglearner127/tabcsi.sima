@@ -65,7 +65,7 @@ class DashboardsController < ApplicationController
       .joins(:company)
       .includes(:company, :inspected_by, :licenses, :locked_by)
       .where(companies: { owned: true })
-      .order(:name, :clp)
+      .order(Company.arel_table[:name].asc, :name, :clp)
       .as_json(include: %i[company inspected_by licenses locked_by])
 
     info[:news] =
@@ -77,8 +77,9 @@ class DashboardsController < ApplicationController
     info[:users] =
       User
       .with_discarded
+      .left_outer_joins(:company)
       .includes(:company, licenses: :location)
-      .order(:full_name)
+      .order(Company.arel_table[:name].asc, :full_name)
       .as_json(
         include: {
           company: {},

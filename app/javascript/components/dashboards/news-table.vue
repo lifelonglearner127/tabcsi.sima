@@ -1,7 +1,7 @@
 <script>
 import capitalize from 'lodash/capitalize'
 import DashboardTable from './dashboard-table'
-import { DateTime } from 'luxon'
+import { formatDateTime } from '~/lib/utils'
 
 export default {
   name: 'NewsTable',
@@ -45,12 +45,12 @@ export default {
   },
 
   methods: {
-    formatTimestamp (timestamp) {
-      return DateTime.fromISO(timestamp).toFormat('M/d/yyyy h:mm a')
-    },
-
     newsType (value) {
       return capitalize(value)
+    },
+
+    updatedAt (value) {
+      return formatDateTime(value)
     },
 
     viewNews (news) {
@@ -106,7 +106,7 @@ export default {
       slot="updatedAt"
       slot-scope="row"
     >
-      {{ formatTimestamp(row.item.updatedAt) }}
+      {{ updatedAt(row.item.updatedAt) }}
     </template>
 
     <b-button

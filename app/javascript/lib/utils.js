@@ -1,4 +1,5 @@
 import _isArrayLike from 'lodash/isArrayLike'
+import { DateTime } from 'luxon'
 import debounce from 'lodash/debounce'
 import includes from 'lodash/includes'
 import isPlainObject from 'lodash/isPlainObject'
@@ -105,3 +106,7 @@ const DIGITS = {
 export const parseDigit = (ch) => DIGITS[ch]
 
 export const getBoolean = (object, key) => key in object && Boolean(object[key])
+
+export const formatDateTime = (timestamp) => DateTime.fromISO(timestamp).toFormat('M/d/yyyy h:mm a')
+export const formatDate = (timestamp) => DateTime.fromISO(timestamp).toFormat('M/d/yyyy')
+export const formatTime = (timestamp) => DateTime.fromISO(timestamp).toFormat('h:mm a')

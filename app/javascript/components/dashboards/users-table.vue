@@ -2,14 +2,31 @@
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
-import { DateTime } from 'luxon'
 import forEach from 'lodash/forEach'
+import { formatDateTime } from '~/lib/utils'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import sortBy from 'lodash/sortBy'
 import startCase from 'lodash/startCase'
 
 const DISPLAY_BOXES_PER_ROW = 6
+
+const buildCheckboxField = (self, key) => {
+  const tdClassFunc = function _tdClassFunc (value, _key, item) {
+    const classes = ['first-column']
+
+    if (this.isDiscarded(item)) {
+      classes.push('user-discarded')
+    }
+
+    return classes
+  }
+
+  return {
+    key,
+    tdClass: tdClassFunc.bind(self)
+  }
+}
 
 export default {
   name: 'UsersTable',
@@ -27,22 +44,13 @@ export default {
     }
   },
 
-  data () {
-    return {
-      fields: [
-        {
-          key: 'fullName',
+  computed: {
+    currentUserIsTabc () {
+      return this.isTabc(this.currentUser)
+    },
 
-          tdClass: (value, key, item) => {
-            const classes = ['full-name']
-
-            if (this.isDiscarded(item)) {
-              classes.push('user-discarded')
-            }
-
-            return classes
-          }
-        },
+    fields () {
+      const result = [
         'email',
         'jobTitle',
         'phone',
@@ -57,6 +65,19 @@ export default {
           tdClass: 'text-center'
         }
       ]
+
+      if (this.currentUserIsTabc) {
+        result.unshift('fullName')
+        result.unshift(buildCheckboxField(this, 'company'))
+      } else {
+        result.unshift(buildCheckboxField(this, 'fullName'))
+      }
+
+      return result
+    },
+
+    firstColumnSlot () {
+      return this.currentUserIsTabc ? 'company' : 'fullName'
     }
   },
 
@@ -79,6 +100,14 @@ export default {
       }
     },
 
+    firstColumnValue (row) {
+      if (this.currentUserIsTabc) {
+        return row.value == null ? 'TABC' : row.value.name
+      }
+
+      return row.value
+    },
+
     isDiscarded (user) {
       return !isEmpty(user.discardedAt)
     },
@@ -88,8 +117,7 @@ export default {
     },
 
     lastSignInAt (user) {
-      return isEmpty(user.pinLastRequestedAt) ? 'Never logged'
-        : DateTime.fromISO(user.pinLastRequestedAt).toFormat('LL/dd/yyyy hh:mm')
+      return isEmpty(user.pinLastRequestedAt) ? 'Never logged in.' : formatDateTime(user.pinLastRequestedAt)
     },
 
     locationAddress (location) {
@@ -132,17 +160,21 @@ export default {
     :items="items"
   >
     <template slot="table-colgroup">
-      <col class="company-col">
+      <col
+        v-if="currentUserIsTabc"
+        class="company-col"
+      >
       <col class="full-name-col">
       <col class="email-col">
       <col class="job-title-col">
       <col class="phone-col">
       <col class="type-col">
+      <col class="logged-in-col">
       <col class="edit-col">
     </template>
 
     <template
-      slot="fullName"
+      :slot="firstColumnSlot"
       slot-scope="row"
     >
       <a
@@ -160,7 +192,7 @@ export default {
         v-model="row.item.selected"
         :disabled="row.item.id === currentUser.id"
       >
-        {{ row.value }}
+        {{ firstColumnValue(row) }}
       </b-form-checkbox>
     </template>
 
@@ -181,8 +213,9 @@ export default {
     <a
       slot="edit"
       slot-scope="row"
+      href="#"
       title="Edit"
-      @click="editUser(row.item)"
+      @click.prevent="editUser(row.item)"
     >
       <fa-sprite
         fixed-width
@@ -222,6 +255,10 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixins';
 
+.company-col {
+  width: auto;
+}
+
 .full-name-col {
   width: auto;
 }
@@ -242,11 +279,15 @@ export default {
   @include fixed-width(5rem);
 }
 
+.logged-in-col {
+  @include fixed-width(12.5rem);
+}
+
 .edit-col {
   @include fixed-width(3rem);
 }
 
-/deep/ .company {
+/deep/ .first-column {
   > .custom-checkbox:first-child {
     margin-left: 1.5625rem;
   }
