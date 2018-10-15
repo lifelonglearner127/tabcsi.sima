@@ -77,9 +77,14 @@ class DashboardsController < ApplicationController
     info[:users] =
       User
       .with_discarded
-      .includes(:company, :licenses, :users_licenses)
+      .includes(:company, licenses: :location)
       .order(:full_name)
-      .as_json(include: %i[company licenses])
+      .as_json(
+        include: {
+          company: {},
+          licenses: { include: :location }
+        }
+      )
 
     info
   end

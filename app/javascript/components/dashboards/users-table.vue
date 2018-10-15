@@ -34,7 +34,7 @@ export default {
             const classes = ['full-name']
 
             if (this.isDiscarded(item)) {
-              classes.push('full-name--discarded')
+              classes.push('user-discarded')
             }
 
             return classes
@@ -61,7 +61,7 @@ export default {
   },
 
   mounted () {
-    const tdCells = this.$el.querySelectorAll('.full-name--discarded')
+    const tdCells = this.$el.querySelectorAll('.user-discarded')
 
     forEach(tdCells, (td) => {
       const row = td.closest('tr')
@@ -92,6 +92,21 @@ export default {
         : DateTime.fromISO(user.pinLastRequestedAt).toFormat('LL/dd/yyyy hh:mm')
     },
 
+    locationAddress (location) {
+      return compact([
+        location.address1,
+        location.address2,
+        location.address3,
+        compact([
+          location.city,
+          location.county,
+          location.state,
+          location.postalCode
+        ]).join(' '),
+        location.country
+      ]).join(', ')
+    },
+
     userLicensesByChunk (user) {
       return chunk(
         map(
@@ -106,21 +121,6 @@ export default {
 
     userType (user) {
       return startCase(user.role)
-    },
-
-    locationAddress (location) {
-      return compact([
-        location.address1,
-        location.address2,
-        location.address3,
-        compact([
-          location.city,
-          location.county,
-          location.state,
-          location.postalCode
-        ]).join(' '),
-        location.country
-      ]).join(', ')
     }
   }
 }
@@ -169,18 +169,21 @@ export default {
           {{ row.value }}
         </b-form-checkbox>
       </template>
+
       <template
         slot="type"
         slot-scope="row"
       >
         {{ userType(row.item) }}
       </template>
+
       <template
         slot="pinLastRequestedAt"
         slot-scope="row"
       >
         {{ lastSignInAt(row.item) }}
       </template>
+
       <a
         slot="edit"
         slot-scope="row"
@@ -192,6 +195,7 @@ export default {
           use="fas-fa-user-edit"
         />
       </a>
+
       <b-container
         v-if="!isTabc(row.item)"
         slot="row-details"
@@ -257,15 +261,15 @@ export default {
   @include fixed-width(3rem);
 }
 
+/deep/ .company {
+  > .custom-checkbox:first-child {
+    margin-left: 1.5625rem;
+  }
+}
+
 .license-box {
   border: 1px solid gray;
   margin: 0 5px 5px 0;
   padding: 0.5rem
-}
-
-/deep/ .full-name {
-  > .custom-checkbox:first-child {
-    margin-left: 1.5625rem;
-  }
 }
 </style>
