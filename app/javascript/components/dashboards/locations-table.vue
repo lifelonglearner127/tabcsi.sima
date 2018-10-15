@@ -129,10 +129,6 @@ export default {
   @include fixed-width(7rem);
 }
 
-/deep/ td {
-  vertical-align: middle;
-}
-
 /deep/ .status-cell {
   text-align: center;
 

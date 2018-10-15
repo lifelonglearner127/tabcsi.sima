@@ -77,15 +77,23 @@ export default {
 
     <template
       slot="newsType"
-      slot-scope="data"
+      slot-scope="row"
     >
       <b-form-checkbox
-        :id="`news_${data.index}_selected`"
-        v-model="data.item.selected"
+        :id="`news_${row.index}_selected`"
+        v-model="row.item.selected"
       >
-        {{ newsType(data.value) }}
+        {{ newsType(row.value) }}
       </b-form-checkbox>
     </template>
+
+    <div
+      slot="subject"
+      slot-scope="row"
+      class="text-ellipsis"
+    >
+      {{ row.value }}
+    </div>
 
     <template
       slot="createdBy"
@@ -124,8 +132,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixins';
+
 .news-type-col {
-  width: 8.25rem;
+  @include fixed-width(8.25rem);
 }
 
 .subject-col {
@@ -137,11 +147,11 @@ export default {
 }
 
 .updated-at-col {
-  width: 12.5rem;
+  @include fixed-width(12.5rem);
 }
 
 .actions-col {
-  width: 4.75rem;
+  @include fixed-width(4.75rem);
 }
 
 .modal {
