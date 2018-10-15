@@ -13,14 +13,20 @@ class DashboardsController < ApplicationController
       relation = relation.includes(
         company: {
           locations: :licenses,
-          users: :licenses
+          users: {
+            licenses: :location
+          }
         }
       )
 
       options = {
         include: {
           locations: { include: :licenses },
-          users: { include: :licenses }
+          users: {
+            include: {
+              licenses: { include: :location }
+            }
+          }
         }
       }
     end

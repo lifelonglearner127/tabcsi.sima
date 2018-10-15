@@ -1,10 +1,14 @@
 <script>
+import chunk from 'lodash/chunk'
+import compact from 'lodash/compact'
 import { DateTime } from 'luxon'
 import forEach from 'lodash/forEach'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import sortBy from 'lodash/sortBy'
 import startCase from 'lodash/startCase'
+
+const DISPLAY_BOXES_PER_ROW = 6
 
 export default {
   name: 'UsersTable',
@@ -88,15 +92,35 @@ export default {
         : DateTime.fromISO(user.pinLastRequestedAt).toFormat('LL/dd/yyyy hh:mm')
     },
 
-    userLicenses (user) {
-      return map(
-        sortBy(user.licenses, ['licenseType', 'licenseNumber']),
-        'clp'
-      ).join(', ')
+    userLicensesByChunk (user) {
+      return chunk(
+        map(
+          sortBy(user.licenses, ['licenseType', 'licenseNumber']),
+          (license) => compact([
+            license.location.name,
+            this.locationAddress(license.location),
+            license.clp
+          ]).join('<br>')
+        ), DISPLAY_BOXES_PER_ROW)
     },
 
     userType (user) {
       return startCase(user.role)
+    },
+
+    locationAddress (location) {
+      return compact([
+        location.address1,
+        location.address2,
+        location.address3,
+        compact([
+          location.city,
+          location.county,
+          location.state,
+          location.postalCode
+        ]).join(' '),
+        location.country
+      ]).join(', ')
     }
   }
 }
@@ -177,7 +201,19 @@ export default {
         <b-row>
           <b-col class="col-shrink">
             <b-card header="Licenses/Permits">
-              {{ userLicenses(row.item) }}
+              <div
+                v-for="(chunk, chunkIndex) in userLicensesByChunk(row.item)"
+                :key="chunkIndex"
+                class="d-flex"
+              >
+                <div
+                  v-for="(license, licenseIndex) in chunk"
+                  :key="licenseIndex"
+                  class="license-box"
+                >
+                  <p v-html="license" />
+                </div>
+              </div>
             </b-card>
           </b-col>
         </b-row>
@@ -219,6 +255,12 @@ export default {
 
 .edit-col {
   @include fixed-width(3rem);
+}
+
+.license-box {
+  border: 1px solid gray;
+  margin: 0 5px 5px 0;
+  padding: 0.5rem
 }
 
 /deep/ .full-name {
