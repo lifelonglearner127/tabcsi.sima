@@ -46,6 +46,7 @@
     "vue-cookies": "^1.5.7",
     "vue-loader": "^15.4.2",
     "vue-template-compiler": "^2.5.17",
+    "vue2-editor": "^2.6.6",
     "vuelidate": "^0.7.4",
     "webpack": "^4.20.2"
   },
