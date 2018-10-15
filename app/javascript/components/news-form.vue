@@ -4,13 +4,17 @@ import isEmpty from 'lodash/isEmpty'
 import RailsForm from '~/components/rails-form'
 import snakeCase from 'lodash/snakeCase'
 import ValidationMixin from '~/mixins/validation'
+import { VueEditor } from 'vue2-editor'
 
 const SUBJECT_MAX_LENGTH = 255
 
 export default {
   name: 'NewsForm',
 
-  components: { RailsForm },
+  components: {
+    RailsForm,
+    VueEditor
+  },
 
   mixins: [ValidationMixin('news')],
 
@@ -113,12 +117,6 @@ export default {
           label: 'Subject',
           required: true,
           maxLength: SUBJECT_MAX_LENGTH
-        },
-        content: {
-          label: 'Content',
-          component: 'b-form-textarea',
-          rows: 10,
-          description: 'Only images from secure sources (https) are allowed.'
         }
       }
     }
@@ -131,8 +129,7 @@ export default {
         subject: {
           required,
           maxLength: maxLength(SUBJECT_MAX_LENGTH)
-        },
-        content: { }
+        }
       }
     }
   },
@@ -270,6 +267,23 @@ export default {
                   />
                 </b-form-group>
               </template>
+
+              <b-form-group
+                id="news_content_group"
+                label="Content"
+                label-for="news_content"
+                description="Only images from secure sources (https) are allowed."
+              >
+                <b-textarea
+                  v-show="false"
+                  v-model="news.content"
+                  name="news[content]"
+                />
+                <vue-editor
+                  id="news_content"
+                  v-model="news.content"
+                />
+              </b-form-group>
             </div>
 
             <b-button
