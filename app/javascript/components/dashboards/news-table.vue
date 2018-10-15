@@ -1,6 +1,5 @@
 <script>
 import { DateTime } from 'luxon'
-import isEmpty from 'lodash/isEmpty'
 
 export default {
   name: 'NewsTable',
@@ -19,14 +18,14 @@ export default {
         'subject',
         {
           key: 'createdBy',
-          label: 'Created by'
+          label: 'Created By'
         },
         {
-          key: 'touchedAt',
-          label: 'Time'
+          key: 'updatedAt',
+          label: 'Updated At'
         },
         {
-          key: 'preview',
+          key: 'actions',
           label: '',
           tdClass: 'text-center'
         }
@@ -38,20 +37,21 @@ export default {
     }
   },
 
+  computed: {
+    newsSrc () {
+      return this.selectedNews.id == null ? 'about:blank' : `/news/${this.selectedNews.id}`
+    }
+  },
+
   methods: {
-    createdBy (news) {
-      return news.user.fullName
+    formatTimestamp (timestamp) {
+      return DateTime.fromISO(timestamp).toFormat('M/d/yyyy h:mm a')
     },
 
-    touchedAt (news) {
-      return isEmpty(news.updatedAt) ? DateTime.fromISO(news.updateAt).toFormat('LL/dd/yyyy hh:mm')
-        : DateTime.fromISO(news.createdAt).toFormat('LL/dd/yyyy hh:mm')
-    },
-
-    previewNews (news) {
+    viewNews (news) {
       this.selectedNews = news
 
-      this.$refs.previewModal.show()
+      this.$refs.viewModal.show()
     }
   }
 }
@@ -60,16 +60,23 @@ export default {
 <template>
   <div>
     <b-table
+      :current-page="currentPage"
       :fields="fields"
       hover
       :items="items"
       :per-page="perPage"
-      :current-page="currentPage"
-      :total-rows="totalRows"
       responsive
       striped
-      pagination
+      :total-rows="totalRows"
     >
+      <template slot="table-colgroup">
+        <col class="news-type-col">
+        <col class="subject-col">
+        <col class="created-by-col">
+        <col class="updated-at-col">
+        <col class="actions-col">
+      </template>
+
       <template
         slot="newsType"
         slot-scope="data"
@@ -86,24 +93,24 @@ export default {
         slot="createdBy"
         slot-scope="row"
       >
-        {{ createdBy(row.item) }}
+        {{ row.item.user.fullName }}
       </template>
 
       <template
-        slot="touchedAt"
+        slot="updatedAt"
         slot-scope="row"
       >
-        {{ touchedAt(row.item) }}
+        {{ formatTimestamp(row.item.updatedAt) }}
       </template>
 
       <b-button
-        slot="preview"
+        slot="actions"
         slot-scope="row"
         size="sm"
         variant="info"
-        @click="previewNews(row.item)"
+        @click="viewNews(row.item)"
       >
-        Preview
+        View
       </b-button>
     </b-table>
 
@@ -116,15 +123,42 @@ export default {
     />
 
     <b-modal
-      ref="previewModal"
+      ref="viewModal"
+      centered
       ok-only
       size="lg"
-      title="Preview News"
+      title="View News"
     >
-      <div v-html="selectedNews.content" />
+      <iframe :src="newsSrc" />
     </b-modal>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.news-type-col {
+  width: 8.25rem;
+}
+
+.subject-col {
+  width: auto;
+}
+
+.created-by-col {
+  width: auto;
+}
+
+.updated-at-col {
+  width: 12.5rem;
+}
+
+.actions-col {
+  width: 4.75rem;
+}
+
+.modal {
+  iframe {
+    height: 50vh;
+    width: 100%;
+  }
+}
 </style>
