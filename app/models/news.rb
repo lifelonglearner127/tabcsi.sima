@@ -5,7 +5,7 @@ class News < ApplicationRecord
 
   enum news_type: %i[featured]
 
-  after_create :send_push_notifications
+  after_create :send_push_notifications, if: -> { Rails.env.production? }
 
   def link
     Rails.application.routes.url_helpers.news_url(id: id)
