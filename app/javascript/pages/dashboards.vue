@@ -118,19 +118,21 @@ export default {
       </b-collapse>
     </b-navbar>
 
-    <admin-dashboard
-      v-if="userIsAdmin"
-      :admin-count="adminCount"
-      :company="company"
-      :locations="locations"
-      :news="news"
-      :user="user"
-      :users="users"
-    />
-    <user-dashboard
-      v-else
-      :user="user"
-    />
+    <div class="dashboard-container">
+      <admin-dashboard
+        v-if="userIsAdmin"
+        :admin-count="adminCount"
+        :company="company"
+        :locations="locations"
+        :news="news"
+        :user="user"
+        :users="users"
+      />
+      <user-dashboard
+        v-else
+        :user="user"
+      />
+    </div>
   </div>
 </template>
 
@@ -146,5 +148,9 @@ export default {
     padding-right: 1rem;
     width: 300px;
   }
+}
+
+.dashboard-container {
+  margin: 0 6.25rem 2rem;
 }
 </style>

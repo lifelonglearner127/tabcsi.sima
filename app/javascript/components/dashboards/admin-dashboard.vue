@@ -193,7 +193,7 @@ export default {
 </script>
 
 <template>
-  <b-container>
+  <b-container fluid>
     <b-row v-if="showAdminAlert">
       <b-col>
         <b-alert
