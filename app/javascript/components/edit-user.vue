@@ -1,6 +1,7 @@
 <script>
 import { email, fullName, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
+import compact from 'lodash/compact'
 import map from 'lodash/map'
 import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
@@ -104,7 +105,7 @@ export default {
       return map(
         this.locations,
         (location) => ({
-          text: `${location.name} (${location.clp})`,
+          text: compact([location.name, this.locationAddress(location), location.clp]).join('<br>'),
           value: location.clp
         })
       )
@@ -125,6 +126,21 @@ export default {
   },
 
   methods: {
+    locationAddress (location) {
+      return compact([
+        location.address1,
+        location.address2,
+        location.address3,
+        compact([
+          location.city,
+          location.county,
+          location.state,
+          location.postalCode
+        ]).join(' '),
+        location.country
+      ]).join(', ')
+    },
+
     formatPhone (value) {
       const asYouType = new AsYouType()
       const text = asYouType.input(value)
