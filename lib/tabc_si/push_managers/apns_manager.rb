@@ -21,6 +21,7 @@ module TabcSi
                 body: message[:subject]
               },
               badge: 1,
+              content_available: true,
               sound: 'default'
             },
             news: message
