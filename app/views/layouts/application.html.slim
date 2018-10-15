@@ -27,8 +27,9 @@ html class="h-100" lang="en"
     main data-page=(page_data(**page_data_options).to_json if page_data_options.present?)
       = yield
 
-    #site-version.fixed-bottom.text-right
-      small
-        em = site_version
+    - unless hide_site_version
+      #site-version.fixed-bottom.text-right
+        small
+          em = site_version
 
     = controller_javascript_pack_tags defer: true

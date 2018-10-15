@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def controller_javascript_pack_tags(**options)
+    names = pack_names(:javascript)
+    javascript_pack_tag(*names, **options)
+  end
+
+  def controller_stylesheet_pack_tags(**options)
+    names = pack_names(:stylesheet)
+    stylesheet_pack_tag(*names, **options)
+  end
+
   def full_page_title
     app_title = I18n.t('titles.application')
     i18n_page_title = title
@@ -10,14 +20,8 @@ module ApplicationHelper
     page_title(app_name: app_title, separator: ' | ')
   end
 
-  def controller_stylesheet_pack_tags(**options)
-    names = pack_names(:stylesheet)
-    stylesheet_pack_tag(*names, **options)
-  end
-
-  def controller_javascript_pack_tags(**options)
-    names = pack_names(:javascript)
-    javascript_pack_tag(*names, **options)
+  def hide_site_version
+    @hide_site_version || false
   end
 
   def page_data(model: nil, url: nil, format: nil, **options)
