@@ -1,4 +1,5 @@
 <script>
+import capitalize from 'lodash/capitalize'
 import { DateTime } from 'luxon'
 
 export default {
@@ -52,6 +53,10 @@ export default {
       this.selectedNews = news
 
       this.$refs.viewModal.show()
+    },
+
+    capitalizeNewsType (newsType) {
+      return capitalize(newsType)
     }
   }
 }
@@ -85,7 +90,7 @@ export default {
           :id="`news_${data.index}_selected`"
           v-model="data.item.selected"
         >
-          {{ data.value }}
+          {{ capitalizeNewsType(data.value) }}
         </b-form-checkbox>
       </template>
 
