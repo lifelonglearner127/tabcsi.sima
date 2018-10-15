@@ -1,9 +1,12 @@
 <script>
 import compact from 'lodash/compact'
+import DashboardTable from './dashboard-table'
 import map from 'lodash/map'
 
 export default {
   name: 'LocationsTable',
+
+  components: { DashboardTable },
 
   props: {
     items: {
@@ -27,10 +30,7 @@ export default {
           tdClass: 'text-center',
           thClass: 'text-center'
         }
-      ],
-      perPage: 10,
-      currentPage: 1,
-      totalRows: this.items.length
+      ]
     }
   },
 
@@ -73,50 +73,37 @@ export default {
 </script>
 
 <template>
-  <div>
-    <b-table
-      :current-page="currentPage"
-      :fields="fields"
-      hover
-      :items="items"
-      :per-page="perPage"
-      responsive
-      striped
-      :total-rows="totalRows"
-    >
-      <template slot="table-colgroup">
-        <col class="name-col">
-        <col class="clp-col">
-        <col class="address-col">
-        <col class="phone-col">
-        <col class="status-col">
-      </template>
-      <div
-        slot="clp"
-        slot-scope="row"
-        v-html="licenses(row.item)"
-      />
-      <address
-        slot="address"
-        slot-scope="row"
-        v-html="address(row.item)"
-      />
-      <h6
-        slot="status"
-        slot-scope="row"
-      >
-        {{ status(row.item) }}
-      </h6>
-    </b-table>
+  <dashboard-table
+    :fields="fields"
+    :items="items"
+  >
+    <template slot="table-colgroup">
+      <col class="name-col">
+      <col class="clp-col">
+      <col class="address-col">
+      <col class="phone-col">
+      <col class="status-col">
+    </template>
 
-    <b-pagination
-      v-if="totalRows > 0"
-      v-model="currentPage"
-      :total-rows="totalRows"
-      :per-page="perPage"
-      class="ml-3 my-3"
+    <div
+      slot="clp"
+      slot-scope="row"
+      v-html="licenses(row.item)"
     />
-  </div>
+
+    <address
+      slot="address"
+      slot-scope="row"
+      v-html="address(row.item)"
+    />
+
+    <h6
+      slot="status"
+      slot-scope="row"
+    >
+      {{ status(row.item) }}
+    </h6>
+  </dashboard-table>
 </template>
 
 <style lang="scss" scoped>

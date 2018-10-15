@@ -14,15 +14,15 @@ class News < ApplicationRecord
   private
 
   def send_push_notifications
-    android_tokens = PushToken.where(device_type: :android).pluck(:token)
-    ios_tokens = PushToken.where(device_type: :ios).pluck(:token)
-
     message = {
       id: id,
       subject: subject.truncate(40),
       created_at: created_at,
       link: link
     }
+
+    android_tokens = PushToken.where(device_type: :android).pluck(:token)
+    ios_tokens = PushToken.where(device_type: :ios).pluck(:token)
 
     TabcSi::PushManager.send(android_tokens, ios_tokens, message)
   end

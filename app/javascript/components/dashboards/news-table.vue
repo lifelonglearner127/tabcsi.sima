@@ -1,9 +1,12 @@
 <script>
 import capitalize from 'lodash/capitalize'
+import DashboardTable from './dashboard-table'
 import { DateTime } from 'luxon'
 
 export default {
   name: 'NewsTable',
+
+  components: { DashboardTable },
 
   props: {
     items: {
@@ -31,10 +34,7 @@ export default {
           tdClass: 'text-center'
         }
       ],
-      selectedNews: {},
-      perPage: 10,
-      currentPage: 1,
-      totalRows: this.items.length
+      selectedNews: {}
     }
   },
 
@@ -49,83 +49,67 @@ export default {
       return DateTime.fromISO(timestamp).toFormat('M/d/yyyy h:mm a')
     },
 
+    newsType (value) {
+      return capitalize(value)
+    },
+
     viewNews (news) {
       this.selectedNews = news
 
       this.$refs.viewModal.show()
-    },
-
-    capitalizeNewsType (newsType) {
-      return capitalize(newsType)
     }
   }
 }
 </script>
 
 <template>
-  <div>
-    <b-table
-      :current-page="currentPage"
-      :fields="fields"
-      hover
-      :items="items"
-      :per-page="perPage"
-      responsive
-      striped
-      :total-rows="totalRows"
+  <dashboard-table
+    :fields="fields"
+    :items="items"
+  >
+    <template slot="table-colgroup">
+      <col class="news-type-col">
+      <col class="subject-col">
+      <col class="created-by-col">
+      <col class="updated-at-col">
+      <col class="actions-col">
+    </template>
+
+    <template
+      slot="newsType"
+      slot-scope="data"
     >
-      <template slot="table-colgroup">
-        <col class="news-type-col">
-        <col class="subject-col">
-        <col class="created-by-col">
-        <col class="updated-at-col">
-        <col class="actions-col">
-      </template>
-
-      <template
-        slot="newsType"
-        slot-scope="data"
+      <b-form-checkbox
+        :id="`news_${data.index}_selected`"
+        v-model="data.item.selected"
       >
-        <b-form-checkbox
-          :id="`news_${data.index}_selected`"
-          v-model="data.item.selected"
-        >
-          {{ capitalizeNewsType(data.value) }}
-        </b-form-checkbox>
-      </template>
+        {{ newsType(data.value) }}
+      </b-form-checkbox>
+    </template>
 
-      <template
-        slot="createdBy"
-        slot-scope="row"
-      >
-        {{ row.item.user.fullName }}
-      </template>
+    <template
+      slot="createdBy"
+      slot-scope="row"
+    >
+      {{ row.item.user.fullName }}
+    </template>
 
-      <template
-        slot="updatedAt"
-        slot-scope="row"
-      >
-        {{ formatTimestamp(row.item.updatedAt) }}
-      </template>
+    <template
+      slot="updatedAt"
+      slot-scope="row"
+    >
+      {{ formatTimestamp(row.item.updatedAt) }}
+    </template>
 
-      <b-button
-        slot="actions"
-        slot-scope="row"
-        size="sm"
-        variant="info"
-        @click="viewNews(row.item)"
-      >
-        View
-      </b-button>
-    </b-table>
-
-    <b-pagination
-      v-if="totalRows > 0"
-      v-model="currentPage"
-      :total-rows="totalRows"
-      :per-page="perPage"
-      class="ml-3 my-3"
-    />
+    <b-button
+      slot="actions"
+      slot-scope="row"
+      size="sm"
+      variant="info"
+      @click="viewNews(row.item)"
+    >
+      View
+    </b-button>
 
     <b-modal
       ref="viewModal"
@@ -136,7 +120,7 @@ export default {
     >
       <iframe :src="newsSrc" />
     </b-modal>
-  </div>
+  </dashboard-table>
 </template>
 
 <style lang="scss" scoped>
