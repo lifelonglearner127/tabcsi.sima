@@ -58,15 +58,15 @@ export default {
     paginationContainer = h(false)
     if (this.totalRows > 0) {
       const pagination = h(bPagination, {
-        domProps: { value: this.currentPage },
         on: {
-          input: (e) => {
-            this.currentPage = e.target.value
+          input: (value) => {
+            this.currentPage = value
           }
         },
         props: {
           perPage: this.perPage,
-          totalRows: this.totalRows
+          totalRows: this.totalRows,
+          value: this.currentPage
         }
       })
 
