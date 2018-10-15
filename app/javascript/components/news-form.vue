@@ -118,7 +118,8 @@ export default {
           required: true,
           maxLength: SUBJECT_MAX_LENGTH
         }
-      }
+      },
+      submitDisabled: false
     }
   },
 
@@ -162,8 +163,16 @@ export default {
     },
 
     validateForm (e) {
+      if (this.submitDisabled) {
+        return
+      }
+
+      this.submitDisabled = true
+
       if (this.validateBeforeSubmit()) {
         e.target.submit()
+      } else {
+        this.submitDisabled = false
       }
     }
   }
@@ -314,6 +323,7 @@ export default {
 
             <b-button
               class="my-4"
+              :disabled="submitDisabled"
               type="submit"
               variant="tabc-primary"
             >
