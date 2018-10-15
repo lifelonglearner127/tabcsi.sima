@@ -26,7 +26,9 @@ class NewsController < ApplicationController
 
   def new; end
 
-  def show; end
+  def show
+    @hide_site_version = true
+  end
 
   def update
     if @news.update!(news_params)

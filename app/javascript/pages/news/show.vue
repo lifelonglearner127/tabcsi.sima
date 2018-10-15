@@ -16,14 +16,17 @@ export default {
   <b-container class="h-100">
     <b-row
       align-h="center"
-      class="container-row"
+      class="h-100"
     >
       <b-col
-        :cols="12"
-        :sm="6"
+        :md="6"
+        :sm="9"
+        :xs="12"
       >
         <b-card
+          class="my-3"
           header-class="py-4"
+          :title="news.subject"
         >
           <a
             slot="header"
@@ -35,22 +38,7 @@ export default {
               top
             />
           </a>
-          <h5>{{ news.subject }}</h5>
           <div v-html="news.content" />
-          <b-button
-            class="my-4"
-            href="/"
-            variant="secondary"
-          >
-            Back
-          </b-button>
-          <b-button
-            :href="`/news/${news.id}/edit`"
-            class="my-4"
-            variant="tabc-primary"
-          >
-            Edit
-          </b-button>
         </b-card>
       </b-col>
     </b-row>
@@ -60,18 +48,9 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/variables';
 
-@media only screen and (min-height: 968px) {
-  .container-row {
-    align-items: center;
-  }
-}
-
-.container-row {
-  height: 100% !important;
-}
-
 .card {
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+  min-width: 342px;
 }
 
 .card-header {

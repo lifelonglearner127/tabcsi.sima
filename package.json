@@ -17,7 +17,8 @@
     "restart": "overmind r",
     "start": "overmind s",
     "test": "yarn unit",
-    "unit": "yarn env:test karma start app/javascript/test/unit/karma.conf.js"
+    "unit": "yarn env:test karma start app/javascript/test/unit/karma.conf.js",
+    "webpack": "yarn clean && bin/webpack --watch"
   },
   "dependencies": {
     "@babel/core": "^7",

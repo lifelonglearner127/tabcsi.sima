@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-  <b-container>
+  <b-container fluid>
     <b-row>
       <b-col>
         <locations-table :items="locations" />

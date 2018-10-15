@@ -75,14 +75,14 @@ export default {
 <template>
   <div>
     <b-table
+      :current-page="currentPage"
       :fields="fields"
       hover
       :items="items"
       :per-page="perPage"
-      :current-page="currentPage"
-      :total-rows="totalRows"
       responsive
       striped
+      :total-rows="totalRows"
     >
       <template slot="table-colgroup">
         <col class="name-col">
