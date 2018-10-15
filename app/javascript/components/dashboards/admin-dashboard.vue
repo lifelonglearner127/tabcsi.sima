@@ -70,12 +70,6 @@ export default {
       return this.selectedNews.length > 1
     },
 
-    newsDetailsHref () {
-      const firstItem = this.selectedNews[0]
-
-      return firstItem ? `/news/${firstItem.id}` : ''
-    },
-
     newsEditHref () {
       const firstItem = this.selectedNews[0]
 
@@ -354,15 +348,6 @@ export default {
                   variant="outline-secondary"
                 >
                   Edit
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected || multipleNewsSelected"
-                  :href="newsDetailsHref"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Details
                 </b-button>
                 <b-button
                   class="mx-1"
