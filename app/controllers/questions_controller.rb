@@ -11,5 +11,7 @@ class QuestionsController < ApplicationController
       .includes(:question_help_items)
       .where(question_number: params.require(:number))
       .first
+
+    @hide_site_version = true
   end
 end

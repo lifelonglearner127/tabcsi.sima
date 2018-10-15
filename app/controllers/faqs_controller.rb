@@ -6,5 +6,6 @@ class FaqsController < ApplicationController
 
   def index
     @questions = Question.current_questions.includes(:question_help_items)
+    @hide_site_version = true
   end
 end
