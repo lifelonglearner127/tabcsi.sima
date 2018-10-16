@@ -231,7 +231,10 @@ export default {
     >
       <b-row>
         <b-col class="col-shrink">
-          <b-card header="Licenses/Permits">
+          <b-card
+            header="Licenses/Permits"
+            header-class="h5"
+          >
             <div
               v-for="(chunk, chunkIndex) in userLicensesByChunk(row.item)"
               :key="chunkIndex"
