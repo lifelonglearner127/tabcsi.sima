@@ -312,7 +312,10 @@ export default {
                 {{ locationsTabTitle }}
               </template>
 
-              <locations-table :items="locations" />
+              <locations-table
+                :is-tabc-admin="userIsTabc"
+                :items="locations"
+              />
             </b-tab>
 
             <b-tab

@@ -25,11 +25,16 @@ class Location < ApplicationRecord
   validates :name, :address1, :city, :country, :postal_code, presence: true
 
   def reset(
+    destroy_inspections: false,
     inspection: false,
     location: false,
     lock: false
   )
     attrs = {}
+
+    if destroy_inspections
+      inspections.where(fiscal_year: Setting.fiscal_year).destroy_all
+    end
 
     if inspection
       attrs[:inspected] = false

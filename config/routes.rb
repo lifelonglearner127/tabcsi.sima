@@ -15,6 +15,12 @@ Rails.application.routes.draw do
 
   resources :faqs, only: %i[index]
 
+  resources(:locations, only: %i[]) do
+    member do
+      post :reset
+    end
+  end
+
   resources :news, only: %i[create destroy edit new show update]
 
   # HighVoltage
