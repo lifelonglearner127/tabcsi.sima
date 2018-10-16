@@ -165,7 +165,11 @@ export default {
 
     firstColumnValue (row) {
       if (this.currentUserIsTabc) {
-        return row.value == null ? 'TABC' : row.value.name
+        if (row.value == null) {
+          return 'TABC'
+        }
+
+        return row.value.name || row.value.ownerName
       }
 
       return row.value
