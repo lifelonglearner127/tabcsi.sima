@@ -58,12 +58,12 @@ export default {
     },
 
     status (location) {
-      if (location.inspected) {
-        return `Completed by ${location.inspectedBy.fullName}`
-      }
-
       if (location.locked) {
         return `Started by ${location.lockedBy.fullName}`
+      }
+
+      if (location.inspected) {
+        return `Completed by ${location.inspectedBy.fullName}`
       }
 
       return ''

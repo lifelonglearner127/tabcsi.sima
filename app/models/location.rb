@@ -24,8 +24,17 @@ class Location < ApplicationRecord
 
   validates :name, :address1, :city, :country, :postal_code, presence: true
 
-  def reset(location: true, lock: false, inspection: false)
+  def reset(
+    inspection: false,
+    location: false,
+    lock: false
+  )
     attrs = {}
+
+    if inspection
+      attrs[:inspected] = false
+      attrs[:inspected_at] = nil
+    end
 
     if location
       attrs.merge!(
@@ -44,11 +53,6 @@ class Location < ApplicationRecord
         locked_by_id: nil,
         locked_at: nil
       )
-    end
-
-    if inspection
-      attrs[:inspected] = false
-      attrs[:inspected_at] = nil
     end
 
     update!(attrs) unless attrs.empty?
