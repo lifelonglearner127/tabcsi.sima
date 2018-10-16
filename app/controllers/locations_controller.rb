@@ -9,7 +9,7 @@ class LocationsController < ApplicationController
 
     action_log("#{user} reset location id #{@location.id} on #{current_time}.")
 
-    redirect_to dashboard_url
+    head :no_content
   end
 
   private

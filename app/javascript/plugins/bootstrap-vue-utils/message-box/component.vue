@@ -22,9 +22,8 @@ export const DEFAULTS = {
   callback: null,
   cancelButtonText: CANCEL_TEXT,
   cancelButtonVariant: VARIANT_SECONDARY,
-  centerContent: false,
+  closeButtonAlias: null,
   customClass: null,
-  dangerouslyUseHTMLString: false,
   errorMessage: '',
   iconOptions: null,
   ignoreButtonText: IGNORE_TEXT,
@@ -43,10 +42,8 @@ export const DEFAULTS = {
   okButtonVariant: VARIANT_PRIMARY,
   retryButtonText: RETRY_TEXT,
   retryButtonVariant: VARIANT_PRIMARY,
-  showInput: false,
   title: null,
   variant: null,
-  visible: false,
   yesButtonText: YES_TEXT,
   yesButtonVariant: VARIANT_PRIMARY
 }
@@ -91,9 +88,11 @@ export default {
       default: DEFAULTS.cancelButtonVariant
     },
 
-    centerContent: {
-      type: Boolean,
-      default: DEFAULTS.centerContent
+    centerContent: Boolean,
+
+    closeButtonAlias: {
+      type: String,
+      default: DEFAULTS.closeButtonAlias
     },
 
     confirmButtonName: {
@@ -127,10 +126,7 @@ export default {
       default: DEFAULTS.customClass
     },
 
-    dangerouslyUseHTMLString: {
-      type: Boolean,
-      default: DEFAULTS.dangerouslyUseHTMLString
-    },
+    dangerouslyUseHTMLString: Boolean,
 
     iconOptions: {
       type: [String, Array],
@@ -202,10 +198,7 @@ export default {
       default: DEFAULTS.retryButtonVariant
     },
 
-    showInput: {
-      type: Boolean,
-      default: DEFAULTS.showInput
-    },
+    showInput: Boolean,
 
     title: {
       type: String,
@@ -221,10 +214,7 @@ export default {
       }
     },
 
-    visible: {
-      type: Boolean,
-      default: DEFAULTS.visible
-    },
+    visible: Boolean,
 
     yesButtonText: {
       type: String,
@@ -340,7 +330,7 @@ export default {
 
     handleHide (event) {
       if (event.trigger === 'header-close') {
-        this.button = CLOSE
+        this.button = this.closeButtonAlias || CLOSE
       }
     },
 

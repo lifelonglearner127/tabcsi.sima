@@ -2,6 +2,7 @@
 import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
 import forEach from 'lodash/forEach'
+import http from '~/lib/http'
 import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
@@ -18,22 +19,23 @@ export default {
       required: true
     }
   },
-  
+
   data () {
     return {
       filteredItems: this.items,
+      locationResetDisabled: false,
+      searchKey: null,
+      searchOption: 'name',
       searchOptions: [
         {
-          text: 'Name (Company name)',
+          text: 'Name',
           value: 'name'
         },
         {
           text: 'CLP Number',
           value: 'clp'
         }
-      ],
-      searchOption: 'name',
-      searchKey: null
+      ]
     }
   },
 
@@ -82,6 +84,31 @@ export default {
       ]).join('<br>')
     },
 
+    filterLocations () {
+      this.filteredItems = []
+
+      forEach(
+        this.items,
+        (location) => {
+          if (isEmpty(this.searchKey)) {
+            this.filteredItems.push(location)
+
+            return
+          }
+
+          if (this.searchOption === 'name') {
+            if (includes(location.name.toLowerCase(), this.searchKey.toLowerCase())) {
+              this.filteredItems.push(location)
+            }
+          } else if (this.searchOption === 'clp') {
+            if (location.clp.toLowerCase() === this.searchKey.toLowerCase()) {
+              this.filteredItems.push(location)
+            }
+          }
+        }
+      )
+    },
+
     licenses (location) {
       return map(location.licenses, (license) => [
         license.licenseType,
@@ -90,7 +117,60 @@ export default {
     },
 
     resetDisabled (location) {
-      return !location.locked || location.inspected
+      return this.locationResetDisabled || !location.locked || location.inspected
+    },
+
+    resetLocation (location) {
+      if (this.locationResetDisabled) {
+        return
+      }
+
+      this.locationResetDisabled = true
+
+      const locationInfo = `${location.name} (${location.address1})`
+
+      this
+        .$confirm(
+          `Are you sure you want to reset the location ${locationInfo}?`,
+          'Reset Location',
+          {
+            closeButtonAlias: 'no',
+            variant: 'error'
+          }
+        )
+        .yes(() => {
+          this
+            .$confirm(
+              `Are you absolutely sure you want to reset the location ${locationInfo}? This cannot be undone.`,
+              'Reset Location',
+              {
+                closeButtonAlias: 'no',
+                variant: 'error'
+              }
+            )
+            .yes(() => {
+              http
+                .post(`/locations/${location.id}/reset`)
+                .then(() => {
+                  this.$message.success('The location was successfully reset.')
+
+                  this.$nextTick(() => {
+                    window.location.reload(true)
+                  })
+                })
+                .catch(() => {
+                  this.$message.error('There was a problem resetting the location.')
+
+                  this.locationResetDisabled = false
+                })
+            })
+            .no(() => {
+              this.locationResetDisabled = false
+            })
+        })
+        .no(() => {
+          this.locationResetDisabled = false
+        })
     },
 
     status (location) {
@@ -103,29 +183,6 @@ export default {
       }
 
       return ''
-    },
-
-    filterLocations () {
-      this.filteredItems = []
-      forEach(
-        this.items,
-        (location) => {
-          if (isEmpty(this.searchKey)) {
-            this.filteredItems.push(location)
-
-            return
-          }
-          if (this.searchOption === 'name') {
-            if (includes(location.name.toLowerCase(), this.searchKey.toLowerCase())) {
-              this.filteredItems.push(location)
-            }
-          } else if (this.searchOption === 'clp') {
-            if (location.clp.toLowerCase() === this.searchKey.toLowerCase()) {
-              this.filteredItems.push(location)
-            }
-          }
-        }
-      )
     }
   }
 }
@@ -144,15 +201,15 @@ export default {
       <b-form-select
         v-model="searchOption"
         :options="searchOptions"
-        class="w-25 mx-1"
+        class="w-auto mx-1"
       />
 
-      <b-btn
+      <b-button
         variant="outline-secondary"
         @click="filterLocations"
       >
         Search
-      </b-btn>
+      </b-button>
     </b-button-toolbar>
 
     <dashboard-table
@@ -194,11 +251,10 @@ export default {
         v-if="isTabcAdmin"
         slot="actions"
         slot-scope="row"
-        v-ujs-method="'post'"
         :disabled="resetDisabled(row.item)"
-        :href="`/locations/${row.item.id}/reset`"
         size="sm"
         variant="danger"
+        @click="resetLocation(row.item)"
       >
         Reset
       </b-button>
