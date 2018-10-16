@@ -62,6 +62,7 @@ export default {
           value: 'email'
         }
       ],
+      searchOption: null,
       searchKey: null
     }
   },
@@ -71,7 +72,7 @@ export default {
       return this.isTabc(this.currentUser)
     },
 
-    searchOption () {
+    defaultSearchOption () {
       return this.currentUserIsTabc ? 'company' : 'fullName'
     },
 
@@ -115,6 +116,8 @@ export default {
 
       row.setAttribute('class', 'text-muted font-italic')
     })
+
+    this.searchOption = this.defaultSearchOption
   },
 
   methods: {
@@ -139,8 +142,10 @@ export default {
 
           switch (this.searchOption) {
             case 'company':
-              if (includes(user.company.name.toLowerCase(), this.searchKey.toLowerCase())) {
-                this.filteredItems.push(user)
+              if (user.company && !isEmpty(user.company.name)) {
+                if (includes(user.company.name.toLowerCase(), this.searchKey.toLowerCase())) {
+                  this.filteredItems.push(user)
+                }
               }
 
               break
@@ -224,17 +229,19 @@ export default {
 <template>
   <div>
     <b-button-toolbar
-      class="mb-3 ml-3"
+      class="mb-3 mr-3 justify-content-end"
     >
       <b-form-input
         v-model="searchKey"
         size="sm"
         class="w-25 mx-1"
+        @keydown.enter.native="filterUsers"
       />
 
       <b-form-select
         v-model="searchOption"
         :options="searchOptions"
+        :value="defaultSearchOption"
         size="sm"
         class="w-25 mx-1"
       />
