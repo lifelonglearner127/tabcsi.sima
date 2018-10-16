@@ -12,28 +12,15 @@ export default {
   components: { DashboardTable },
 
   props: {
+    isTabcAdmin: Boolean,
     items: {
       type: Array,
       required: true
     }
   },
-
+  
   data () {
     return {
-      fields: [
-        'name',
-        {
-          key: 'clp',
-          label: 'CLP Number'
-        },
-        'address',
-        'phoneNumber',
-        {
-          key: 'status',
-          tdClass: 'text-center',
-          thClass: 'text-center'
-        }
-      ],
       filteredItems: this.items,
       searchOptions: [
         {
@@ -47,6 +34,35 @@ export default {
       ],
       searchOption: 'name',
       searchKey: null
+    }
+  },
+
+  computed: {
+    fields () {
+      const value = [
+        'name',
+        {
+          key: 'clp',
+          label: 'CLP Number'
+        },
+        'address',
+        'phoneNumber',
+        {
+          key: 'status',
+          tdClass: 'text-center',
+          thClass: 'text-center'
+        }
+      ]
+
+      if (this.isTabcAdmin) {
+        value.push({
+          key: 'actions',
+          label: '',
+          tdClass: 'text-center'
+        })
+      }
+
+      return value
     }
   },
 
@@ -73,13 +89,17 @@ export default {
       ].join('')).join('<br>')
     },
 
-    status (location) {
-      if (location.inspected) {
-        return `Completed by ${location.inspectedBy.fullName}`
-      }
+    resetDisabled (location) {
+      return !location.locked || location.inspected
+    },
 
+    status (location) {
       if (location.locked) {
         return `Started by ${location.lockedBy.fullName}`
+      }
+
+      if (location.inspected) {
+        return `Completed by ${location.inspectedBy.fullName}`
       }
 
       return ''
@@ -145,6 +165,10 @@ export default {
         <col class="address-col">
         <col class="phone-col">
         <col class="status-col">
+        <col
+          v-if="isTabcAdmin"
+          class="actions-col"
+        >
       </template>
 
       <div
@@ -165,6 +189,19 @@ export default {
       >
         {{ status(row.item) }}
       </h6>
+
+      <b-button
+        v-if="isTabcAdmin"
+        slot="actions"
+        slot-scope="row"
+        v-ujs-method="'post'"
+        :disabled="resetDisabled(row.item)"
+        :href="`/locations/${row.item.id}/reset`"
+        size="sm"
+        variant="danger"
+      >
+        Reset
+      </b-button>
     </dashboard-table>
   </div>
 </template>
@@ -189,7 +226,11 @@ export default {
 }
 
 .status-col {
-  @include fixed-width(7rem);
+  width: auto;
+}
+
+.actions-col {
+  @include fixed-width(5rem);
 }
 
 /deep/ .status-cell {

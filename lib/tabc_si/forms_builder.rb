@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 module TabcSi
+  module Builders
+    extend ActiveSupport::Autoload
+
+    autoload :Builder
+    autoload :ChoiceBuilder
+    autoload :ConditionBuilder
+    autoload :FieldBuilder
+    autoload :FormBuilder
+    autoload :FormBuilderMap
+    autoload :FormQuestionBuilder
+    autoload :HelpBuilder
+    autoload :QuestionBuilder
+    autoload :QuestionBuilderMap
+  end
+
   class FormsBuilder
     include Singleton
 

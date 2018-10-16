@@ -15,12 +15,18 @@ Rails.application.routes.draw do
 
   resources :faqs, only: %i[index]
 
+  resources(:locations, only: %i[]) do
+    member do
+      post :reset
+    end
+  end
+
   resources :news, only: %i[create destroy edit new show update]
 
   # HighVoltage
   get '/pages/*id', to: 'pages#show', as: :page, format: false
 
-  resources :questions, only: %i[] do
+  resources(:questions, only: %i[]) do
     collection do
       get :help
     end
@@ -31,7 +37,7 @@ Rails.application.routes.draw do
   post :resend_pin, to: 'sessions#resend_pin'
   delete :log_out, to: 'sessions#destroy'
 
-  resources :users, only: %i[destroy edit] do
+  resources(:users, only: %i[destroy edit]) do
     collection do
       get :invite
       post :invite, action: :create
@@ -42,6 +48,7 @@ Rails.application.routes.draw do
       post :undiscard
     end
   end
+
   get :sign_up, to: 'users#new'
   post :sign_up, to: 'users#create'
 
