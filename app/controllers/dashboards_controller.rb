@@ -40,6 +40,7 @@ class DashboardsController < ApplicationController
   def controller_page_options
     options = {
       html: {
+        tabc_contact_url: Setting.tabc_contact_url,
         user: current_user.info
       }
     }

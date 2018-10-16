@@ -44,6 +44,10 @@ export default {
       return this.pageOptions.tabc || {}
     },
 
+    tabcContactUrl () {
+      return this.pageOptions.tabcContactUrl || 'about:blank'
+    },
+
     user () {
       return this.pageOptions.user || {}
     },
@@ -91,7 +95,7 @@ export default {
               Update Profile
             </b-dropdown-item>
             <b-dropdown-item
-              href="https://www.tabc.texas.gov/mobile/"
+              :href="tabcContactUrl"
               target="_blank"
             >
               <fa-sprite
