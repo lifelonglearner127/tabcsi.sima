@@ -86,6 +86,6 @@ class NewsController < ApplicationController
   end
 
   def set_news
-    @news = News.find(params[:id])
+    @news = News.find(params.require(:id))
   end
 end
