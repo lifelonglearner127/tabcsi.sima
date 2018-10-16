@@ -196,15 +196,18 @@ export default {
       <b-form-input
         v-model="searchKey"
         class="w-25 mx-1"
+        size="sm"
       />
 
       <b-form-select
         v-model="searchOption"
-        :options="searchOptions"
         class="w-auto mx-1"
+        :options="searchOptions"
+        size="sm"
       />
 
       <b-button
+        size="sm"
         variant="outline-secondary"
         @click="filterLocations"
       >
