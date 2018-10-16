@@ -126,6 +126,43 @@ export default {
       }
     },
 
+    filterUsers () {
+      this.filteredItems = []
+      forEach(
+        this.items,
+        (user) => {
+          if (isEmpty(this.searchKey)) {
+            this.filteredItems.push(user)
+
+            return
+          }
+
+          switch (this.searchOption) {
+            case 'company':
+              if (includes(user.company.name.toLowerCase(), this.searchKey.toLowerCase())) {
+                this.filteredItems.push(user)
+              }
+
+              break
+            case 'fullName':
+              if (includes(user.fullName.toLowerCase(), this.searchKey.toLowerCase())) {
+                this.filteredItems.push(user)
+              }
+
+              break
+            case 'email':
+              if (user.email === this.searchKey) {
+                this.filteredItems.push(user)
+              }
+
+              break
+            default:
+              this.filteredItems = user
+          }
+        }
+      )
+    },
+
     firstColumnValue (row) {
       if (this.currentUserIsTabc) {
         return row.value == null ? 'TABC' : row.value.name
@@ -175,43 +212,6 @@ export default {
 
     userType (user) {
       return startCase(user.role)
-    },
-
-    filterUsers () {
-      this.filteredItems = []
-      forEach(
-        this.items,
-        (user) => {
-          if (isEmpty(this.searchKey)) {
-            this.filteredItems.push(user)
-
-            return
-          }
-
-          switch (this.searchOption) {
-            case 'company':
-              if (includes(user.company.name.toLowerCase(), this.searchKey.toLowerCase())) {
-                this.filteredItems.push(user)
-              }
-
-              break
-            case 'fullName':
-              if (includes(user.fullName.toLowerCase(), this.searchKey.toLowerCase())) {
-                this.filteredItems.push(user)
-              }
-
-              break
-            case 'email':
-              if (user.email === this.searchKey) {
-                this.filteredItems.push(user)
-              }
-
-              break
-            default:
-              this.filteredItems = user
-          }
-        }
-      )
     }
   }
 }
@@ -320,7 +320,10 @@ export default {
       >
         <b-row>
           <b-col class="col-shrink">
-            <b-card header="Licenses/Permits">
+            <b-card
+              header="Licenses/Permits"
+              header-class="h5"
+            >
               <div
                 v-for="(chunk, chunkIndex) in userLicensesByChunk(row.item)"
                 :key="chunkIndex"

@@ -50,4 +50,8 @@ class Setting < ApplicationRecord
   def self.pin_expiration
     by_name(:pin_expiration).value.to_i
   end
+
+  def self.tabc_contact_url
+    by_name(:tabc_contact_url).value
+  end
 end
