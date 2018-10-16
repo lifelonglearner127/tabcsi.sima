@@ -68,6 +68,20 @@ body {
   color: $tabc-dark-blue;
 }
 
+.form-control {
+  // IE 10+
+  &:-ms-input-placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+
+  // Redo this to ensure it takes precedence.
+  &::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+}
+
 .form-group {
   &[data-required] {
     .col-form-label::after {
