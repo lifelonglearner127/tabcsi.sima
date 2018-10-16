@@ -4,6 +4,7 @@ import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
 import forEach from 'lodash/forEach'
 import { formatDateTime } from '~/lib/utils'
+import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import sortBy from 'lodash/sortBy'
@@ -44,9 +45,34 @@ export default {
     }
   },
 
+  data () {
+    return {
+      filteredItems: this.items,
+      searchOptions: [
+        {
+          text: 'Company name',
+          value: 'company'
+        },
+        {
+          text: 'Full Name ',
+          value: 'fullName'
+        },
+        {
+          text: 'Email',
+          value: 'email'
+        }
+      ],
+      searchKey: null
+    }
+  },
+
   computed: {
     currentUserIsTabc () {
       return this.isTabc(this.currentUser)
+    },
+
+    searchOption () {
+      return this.currentUserIsTabc ? 'company' : 'fullName'
     },
 
     fields () {
@@ -149,107 +175,171 @@ export default {
 
     userType (user) {
       return startCase(user.role)
+    },
+
+    filterUsers () {
+      this.filteredItems = []
+      forEach(
+        this.items,
+        (user) => {
+          if (isEmpty(this.searchKey)) {
+            this.filteredItems.push(user)
+
+            return
+          }
+
+          switch (this.searchOption) {
+            case 'company':
+              if (includes(user.company.name.toLowerCase(), this.searchKey.toLowerCase())) {
+                this.filteredItems.push(user)
+              }
+
+              break
+            case 'fullName':
+              if (includes(user.fullName.toLowerCase(), this.searchKey.toLowerCase())) {
+                this.filteredItems.push(user)
+              }
+
+              break
+            case 'email':
+              if (user.email === this.searchKey) {
+                this.filteredItems.push(user)
+              }
+
+              break
+            default:
+              this.filteredItems = user
+          }
+        }
+      )
     }
   }
 }
 </script>
 
 <template>
-  <dashboard-table
-    :fields="fields"
-    :items="items"
-  >
-    <template slot="table-colgroup">
-      <col
-        v-if="currentUserIsTabc"
-        class="company-col"
-      >
-      <col class="full-name-col">
-      <col class="email-col">
-      <col class="job-title-col">
-      <col class="phone-col">
-      <col class="type-col">
-      <col class="logged-in-col">
-      <col class="edit-col">
-    </template>
-
-    <template
-      :slot="firstColumnSlot"
-      slot-scope="row"
+  <div>
+    <b-button-toolbar
+      class="mb-3 ml-3"
     >
+      <b-form-input
+        v-model="searchKey"
+        size="sm"
+        class="w-25 mx-1"
+      />
+
+      <b-form-select
+        v-model="searchOption"
+        :options="searchOptions"
+        size="sm"
+        class="w-25 mx-1"
+      />
+
+      <b-btn
+        variant="outline-secondary"
+        size="sm"
+        @click="filterUsers"
+      >
+        Search
+      </b-btn>
+    </b-button-toolbar>
+
+    <dashboard-table
+      :fields="fields"
+      :items="filteredItems"
+    >
+      <template slot="table-colgroup">
+        <col
+          v-if="currentUserIsTabc"
+          class="company-col"
+        >
+        <col class="full-name-col">
+        <col class="email-col">
+        <col class="job-title-col">
+        <col class="phone-col">
+        <col class="type-col">
+        <col class="logged-in-col">
+        <col class="edit-col">
+      </template>
+
+      <template
+        :slot="firstColumnSlot"
+        slot-scope="row"
+      >
+        <a
+          v-if="!isTabc(row.item)"
+          href="#"
+          @click.prevent.stop="row.toggleDetails"
+        >
+          <fa-sprite
+            fixed-width
+            :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
+          />
+        </a>
+        <b-form-checkbox
+          :id="`user_${row.index}_selected`"
+          v-model="row.item.selected"
+          :disabled="row.item.id === currentUser.id"
+        >
+          {{ firstColumnValue(row) }}
+        </b-form-checkbox>
+      </template>
+
+      <template
+        slot="type"
+        slot-scope="row"
+      >
+        {{ userType(row.item) }}
+      </template>
+
+      <template
+        slot="pinLastRequestedAt"
+        slot-scope="row"
+      >
+        {{ lastSignInAt(row.item) }}
+      </template>
+
       <a
-        v-if="!isTabc(row.item)"
+        slot="edit"
+        slot-scope="row"
         href="#"
-        @click.prevent.stop="row.toggleDetails"
+        title="Edit"
+        @click.prevent="editUser(row.item)"
       >
         <fa-sprite
           fixed-width
-          :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
+          use="fas-fa-user-edit"
         />
       </a>
-      <b-form-checkbox
-        :id="`user_${row.index}_selected`"
-        v-model="row.item.selected"
-        :disabled="row.item.id === currentUser.id"
+
+      <b-container
+        v-if="!isTabc(row.item)"
+        slot="row-details"
+        slot-scope="row"
+        fluid
       >
-        {{ firstColumnValue(row) }}
-      </b-form-checkbox>
-    </template>
-
-    <template
-      slot="type"
-      slot-scope="row"
-    >
-      {{ userType(row.item) }}
-    </template>
-
-    <template
-      slot="pinLastRequestedAt"
-      slot-scope="row"
-    >
-      {{ lastSignInAt(row.item) }}
-    </template>
-
-    <a
-      slot="edit"
-      slot-scope="row"
-      href="#"
-      title="Edit"
-      @click.prevent="editUser(row.item)"
-    >
-      <fa-sprite
-        fixed-width
-        use="fas-fa-user-edit"
-      />
-    </a>
-
-    <b-container
-      v-if="!isTabc(row.item)"
-      slot="row-details"
-      slot-scope="row"
-      fluid
-    >
-      <b-row>
-        <b-col class="col-shrink">
-          <b-card header="Licenses/Permits">
-            <div
-              v-for="(chunk, chunkIndex) in userLicensesByChunk(row.item)"
-              :key="chunkIndex"
-              class="d-flex"
-            >
+        <b-row>
+          <b-col class="col-shrink">
+            <b-card header="Licenses/Permits">
               <div
-                v-for="(license, licenseIndex) in chunk"
-                :key="licenseIndex"
-                class="license-box"
+                v-for="(chunk, chunkIndex) in userLicensesByChunk(row.item)"
+                :key="chunkIndex"
+                class="d-flex"
               >
-                <p v-html="license" />
+                <div
+                  v-for="(license, licenseIndex) in chunk"
+                  :key="licenseIndex"
+                  class="license-box"
+                >
+                  <p v-html="license" />
+                </div>
               </div>
-            </div>
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
-  </dashboard-table>
+            </b-card>
+          </b-col>
+        </b-row>
+      </b-container>
+    </dashboard-table>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -18,7 +18,7 @@ export default {
       required: true
     }
   },
-  
+
   data () {
     return {
       filteredItems: this.items,
@@ -138,17 +138,20 @@ export default {
     >
       <b-form-input
         v-model="searchKey"
+        size="sm"
         class="w-25 mx-1"
       />
 
       <b-form-select
         v-model="searchOption"
         :options="searchOptions"
+        size="sm"
         class="w-25 mx-1"
       />
 
       <b-btn
         variant="outline-secondary"
+        size="sm"
         @click="filterLocations"
       >
         Search
