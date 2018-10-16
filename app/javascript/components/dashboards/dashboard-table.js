@@ -20,8 +20,13 @@ export default {
   data () {
     return {
       currentPage: 1,
-      perPage: 10,
-      totalRows: this.items.length
+      perPage: 10
+    }
+  },
+
+  computed: {
+    totalRows () {
+      return this.items.length
     }
   },
 
