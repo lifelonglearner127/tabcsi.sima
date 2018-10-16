@@ -191,12 +191,13 @@ export default {
 <template>
   <div>
     <b-button-toolbar
-      class="mb-3 ml-3"
+      class="mb-3 mr-3 justify-content-end"
     >
       <b-form-input
         v-model="searchKey"
         class="w-25 mx-1"
         size="sm"
+        @keydown.enter.native="filterLocations"
       />
 
       <b-form-select
