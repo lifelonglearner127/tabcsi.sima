@@ -1,6 +1,8 @@
 <script>
 import { AdminDashboard, UserDashboard } from '~/components/dashboards'
 import includes from 'lodash/includes'
+import isEmpty from 'lodash/isEmpty'
+import map from 'lodash/map'
 import PageMixin from '~/mixins/page'
 
 const DASHBOARD_TITLES = {
@@ -57,7 +59,15 @@ export default {
     },
 
     users () {
-      return this.tabc.users || this.company.users || []
+      return map(this.tabc.users || this.company.users || [], (user) => {
+        if (!isEmpty(user.discardedAt)) {
+          user._rowVariant = 'discarded'
+        } else if (user._rowVariant) {
+          delete user._rowVariant
+        }
+
+        return user
+      })
     }
   }
 }

@@ -14,23 +14,6 @@ import startCase from 'lodash/startCase'
 
 const DISPLAY_BOXES_PER_ROW = 6
 
-const buildCheckboxField = (self, key) => {
-  const tdClassFunc = function _tdClassFunc (value, _key, item) {
-    const classes = ['first-column']
-
-    if (this.isDiscarded(item)) {
-      classes.push('user-discarded')
-    }
-
-    return classes
-  }
-
-  return {
-    key,
-    tdClass: tdClassFunc.bind(self)
-  }
-}
-
 export default {
   name: 'UsersTable',
 
@@ -93,10 +76,12 @@ export default {
 
       if (this.currentUserIsTabc) {
         result.unshift('fullName')
-        result.unshift(buildCheckboxField(this, 'company'))
-      } else {
-        result.unshift(buildCheckboxField(this, 'fullName'))
       }
+
+      result.unshift({
+        key: this.firstColumnSlot,
+        tdClass: 'first-column'
+      })
 
       return result
     },
@@ -123,14 +108,6 @@ export default {
   },
 
   mounted () {
-    const tdCells = this.$el.querySelectorAll('.user-discarded')
-
-    forEach(tdCells, (td) => {
-      const row = td.closest('tr')
-
-      row.setAttribute('class', 'text-muted font-italic')
-    })
-
     this.searchOption = this.firstColumnSlot
   },
 
@@ -514,6 +491,11 @@ export default {
 
 .actions-col {
   @include fixed-width(3rem);
+}
+
+/deep/ .table-discarded {
+  color: $text-muted !important;
+  font-style: italic !important;
 }
 
 /deep/ .first-column {
