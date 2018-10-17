@@ -22,4 +22,25 @@ module TabcSi
     logger.formatter = formatter
     ActiveSupport::TaggedLogging.new(logger)
   end
+
+  def self.transform_keys(object)
+    if object.respond_to?(:deep_transform_keys!)
+      object.deep_transform_keys! { |k| k.to_s.underscore.camelize(:lower) }
+    else
+      object
+    end
+  end
+
+  def self.transform_response_json(object)
+    # Ensure object is a JSON object or array.
+    new_object = Oj.load(object.to_json)
+
+    if new_object.is_a?(Array)
+      new_object.each { |o| transform_keys(o) }
+    else
+      transform_keys(new_object)
+    end
+
+    new_object
+  end
 end
