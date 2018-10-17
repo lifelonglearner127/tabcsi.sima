@@ -29,7 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.4",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "@rails/webpacker": "^4.0.0-pre.3",
-    "axios": "^0.18.0",
+    "axios": "^0.18",
     "babel-plugin-lodash": "^3.3.4",
     "babel-preset-vue": "^2.0.2",
     "bluebird": "^3.5.2",
@@ -77,13 +77,14 @@
     "karma-coverage-istanbul-reporter": "^2.0.4",
     "karma-jasmine": "^1.1.2",
     "karma-phantomjs-launcher": "^1.0.4",
-    "karma-phantomjs-shim": "^1.5.0",
+    "karma-phantomjs-shim": "^1.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "^0.0.32",
     "karma-webpack": "^4.0.0-rc.2",
     "stylelint": "^9.6",
     "stylelint-config-standard": "^18.2",
     "stylelint-scss": "^3.3.1",
+    "webpack-dashboard": "^2",
     "webpack-dev-server": "^3.1.9"
   }
 }

@@ -12,9 +12,13 @@ const config = require('./config')
 const { environment: env } = require('@rails/webpacker')
 
 if (!config.isProduction) {
-  const eslint = require('./loaders/eslint') // eslint-disable-line global-require
+  /* eslint-disable global-require */
+  const eslint = require('./loaders/eslint')
+  const DashboardPlugin = require('webpack-dashboard/plugin')
+  /* eslint-enable global-require */
 
   env.loaders.prepend('eslint', eslint)
+  env.plugins.append('DashboardPlugin', new DashboardPlugin())
 }
 
 const vue = require('./loaders/vue')
