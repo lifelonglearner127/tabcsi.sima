@@ -52,11 +52,11 @@ export default {
       filteredItems: this.items,
       searchOptions: [
         {
-          text: 'Company name',
+          text: 'Company Name',
           value: 'company'
         },
         {
-          text: 'Full Name ',
+          text: 'Full Name',
           value: 'fullName'
         },
         {
@@ -74,10 +74,6 @@ export default {
       return this.isTabc(this.currentUser)
     },
 
-    defaultSearchOption () {
-      return this.currentUserIsTabc ? 'company' : 'fullName'
-    },
-
     fields () {
       const result = [
         'email',
@@ -89,7 +85,7 @@ export default {
           label: 'Logged In'
         },
         {
-          key: 'edit',
+          key: 'actions',
           label: '',
           tdClass: 'text-center'
         }
@@ -135,7 +131,7 @@ export default {
       row.setAttribute('class', 'text-muted font-italic')
     })
 
-    this.searchOption = this.defaultSearchOption
+    this.searchOption = this.firstColumnSlot
   },
 
   methods: {
@@ -298,11 +294,11 @@ export default {
 <template>
   <div>
     <b-button-toolbar
-      class="mb-3 ml-3"
+      class="mb-3 mx-3"
       key-nav
     >
       <b-dropdown
-        class="mx-1"
+        class="mr-1"
         :disabled="currentUserIsTabc"
         size="sm"
         variant="outline-secondary"
@@ -351,7 +347,7 @@ export default {
       </b-button>
 
       <b-button
-        class="mx-1"
+        class="ml-1"
         :disabled="noDiscardedUsersSelected"
         size="sm"
         variant="outline-secondary"
@@ -359,25 +355,23 @@ export default {
       >
         Undelete
       </b-button>
-    </b-button-toolbar>
 
-    <b-button-toolbar class="mb-3 mr-3 justify-content-end">
       <b-form-input
         v-model="searchKey"
-        class="w-25 mx-1"
+        class="ml-auto mr-1 w-25"
         size="sm"
         @keydown.enter.native="filterUsers"
       />
 
       <b-form-select
         v-model="searchOption"
-        class="w-25 mx-1"
+        class="mx-1 w-auto"
         :options="searchOptions"
         size="sm"
-        :value="defaultSearchOption"
       />
 
       <b-button
+        class="ml-1"
         size="sm"
         variant="outline-secondary"
         @click="filterUsers"
@@ -401,7 +395,7 @@ export default {
         <col class="phone-col">
         <col class="type-col">
         <col class="logged-in-col">
-        <col class="edit-col">
+        <col class="actions-col">
       </template>
 
       <template
@@ -442,7 +436,7 @@ export default {
       </template>
 
       <a
-        slot="edit"
+        slot="actions"
         slot-scope="row"
         href="#"
         title="Edit"
@@ -518,7 +512,7 @@ export default {
   @include fixed-width(12.5rem);
 }
 
-.edit-col {
+.actions-col {
   @include fixed-width(3rem);
 }
 

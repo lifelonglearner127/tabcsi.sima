@@ -192,22 +192,24 @@ export default {
   <div>
     <b-button-toolbar
       class="mb-3 mr-3 justify-content-end"
+      key-nav
     >
       <b-form-input
         v-model="searchKey"
-        class="w-25 mx-1"
+        class="mr-1 w-25"
         size="sm"
         @keydown.enter.native="filterLocations"
       />
 
       <b-form-select
         v-model="searchOption"
-        class="w-auto mx-1"
+        class="mx-1 w-auto"
         :options="searchOptions"
         size="sm"
       />
 
       <b-button
+        class="ml-1"
         size="sm"
         variant="outline-secondary"
         @click="filterLocations"

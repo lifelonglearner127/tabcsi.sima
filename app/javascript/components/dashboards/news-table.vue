@@ -116,13 +116,14 @@ export default {
       key-nav
     >
       <b-button
-        class="mx-1"
+        class="mr-1"
         href="/news/new"
         size="sm"
         variant="outline-secondary"
       >
         Add
       </b-button>
+
       <b-button
         class="mx-1"
         :disabled="noNewsSelected || multipleNewsSelected"
@@ -132,8 +133,9 @@ export default {
       >
         Edit
       </b-button>
+
       <b-button
-        class="mx-1"
+        class="ml-1"
         :disabled="noNewsSelected"
         size="sm"
         variant="outline-secondary"
