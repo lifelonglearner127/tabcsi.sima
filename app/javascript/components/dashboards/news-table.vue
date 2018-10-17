@@ -38,7 +38,7 @@ export default {
           tdClass: 'text-center'
         }
       ],
-      selectedNewsItem: { id: 0 }
+      selectedNewsItem: {}
     }
   },
 
