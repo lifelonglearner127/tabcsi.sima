@@ -12,7 +12,8 @@ module TabcSi
 
       pusher.push([notification])
 
-      notification.failed.zero?
+      # push was successful as long as at least one token was successful
+      notification.success.positive?
     end
 
     protected
