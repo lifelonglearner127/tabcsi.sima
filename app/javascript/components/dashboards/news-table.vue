@@ -121,7 +121,7 @@ export default {
         size="sm"
         variant="outline-secondary"
       >
-        Add
+        Create
       </b-button>
 
       <b-button
