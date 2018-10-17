@@ -12,7 +12,7 @@ export default {
   data () {
     return {
       news: {
-        newsType: null,
+        newsType: 'featured',
         subject: '',
         content: ''
       },
