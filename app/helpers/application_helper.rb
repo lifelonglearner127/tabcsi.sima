@@ -74,6 +74,8 @@ module ApplicationHelper
   def pack_names(type)
     names =
       [
+        'runtime',
+        'vendors',
         'app',
         controller_path,
         "#{controller_path}/#{action_name}"

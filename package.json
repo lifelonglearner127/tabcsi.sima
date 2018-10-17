@@ -5,7 +5,7 @@
     "attach": "overmind c",
     "build": "yarn clean && yarn build:compile | gnomon",
     "build:compile": "yarn env:prod bin/rails webpacker:compile",
-    "build:dev": "yarn env:dev bin/webpack",
+    "build:dev": "yarn clean && yarn env:dev bin/webpack",
     "clean": "bin/rails webpacker:clobber",
     "env:dev": "cross-env RAILS_ENV=development RACK_ENV=development NODE_ENV=development",
     "env:prod": "cross-env RAILS_ENV=production RACK_ENV=production NODE_ENV=production",
