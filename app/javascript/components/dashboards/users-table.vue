@@ -2,8 +2,10 @@
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
+import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
 import { formatDateTime } from '~/lib/utils'
+import http from '~/lib/http'
 import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
@@ -105,6 +107,22 @@ export default {
 
     firstColumnSlot () {
       return this.currentUserIsTabc ? 'company' : 'fullName'
+    },
+
+    noDiscardedUsersSelected () {
+      return isEmpty(this.selectedDiscardedUsers)
+    },
+
+    noUsersSelected () {
+      return isEmpty(this.selectedUsers)
+    },
+
+    selectedDiscardedUsers () {
+      return filter(this.items, (user) => user.selected && this.isDiscarded(user))
+    },
+
+    selectedUsers () {
+      return filter(this.items, (user) => user.selected && !this.isDiscarded(user))
     }
   },
 
@@ -121,9 +139,34 @@ export default {
   },
 
   methods: {
+    deleteUsers () {
+      this
+        .$confirm(
+          'Are you sure you want to delete the selected user(s)?',
+          'Delete User(s)',
+          { variant: 'error' }
+        )
+        .yes(() => {
+          Promise
+            .all(
+              map(
+                this.selectedUsers,
+                (user) => http
+                  .delete(`/users/${user.id}`)
+                  .then(() => {
+                    this.$message.success(`User "${user.fullName}" deleted.`)
+                  })
+              )
+            )
+            .then(() => {
+              window.location.reload(true)
+            })
+        })
+    },
+
     editUser (user) {
       if (this.isDiscarded(user)) {
-        this.$message.error('User has been deleted. Please reactivate/undelete user to edit the user\'s details.')
+        this.$message.error("User has been deleted. Please reactivate/undelete user to edit the user's details.")
       } else {
         window.location.href = `/users/${user.id}/edit`
       }
@@ -131,6 +174,7 @@ export default {
 
     filterUsers () {
       this.filteredItems = []
+
       forEach(
         this.items,
         (user) => {
@@ -207,6 +251,31 @@ export default {
       ]).join(', ')
     },
 
+    undiscardUsers () {
+      this
+        .$confirm(
+          'Are you sure you want to restore the selected user(s)?',
+          'Restore User(s)',
+          { variant: 'error' }
+        )
+        .yes(() => {
+          Promise
+            .all(
+              map(
+                this.selectedDiscardedUsers,
+                (user) => http
+                  .post(`/users/${user.id}/undiscard`)
+                  .then(() => {
+                    this.$message.success(`User "${user.fullName}" restored.`)
+                  })
+              )
+            )
+            .then(() => {
+              window.location.reload(true)
+            })
+        })
+    },
+
     userLicensesByChunk (user) {
       return chunk(
         map(
@@ -229,30 +298,92 @@ export default {
 <template>
   <div>
     <b-button-toolbar
-      class="mb-3 mr-3 justify-content-end"
+      class="mb-3 ml-3"
+      key-nav
     >
+      <b-dropdown
+        class="mx-1"
+        :disabled="currentUserIsTabc"
+        size="sm"
+        variant="outline-secondary"
+      >
+        <template slot="button-content">
+          <fa-sprite
+            fixed-width
+            use="fas-fa-user-plus"
+          />
+          Invite User
+        </template>
+        <b-dropdown-item
+          class="px-3"
+          href="/users/invite"
+        >
+          <fa-sprite
+            fixed-width
+            use="fas-fa-plus"
+          />
+          Manual Add
+        </b-dropdown-item>
+        <b-dropdown-item
+          class="px-3"
+          disabled
+        >
+          <fa-sprite
+            fixed-width
+            use="fas-fa-file-upload"
+          />
+          Upload CSV (Coming Soon)
+        </b-dropdown-item>
+      </b-dropdown>
+
+      <b-button
+        class="mx-1"
+        :disabled="noUsersSelected"
+        size="sm"
+        variant="outline-secondary"
+        @click.prevent="deleteUsers"
+      >
+        <fa-sprite
+          fixed-width
+          use="fas-fa-user-times"
+        />
+        Delete
+      </b-button>
+
+      <b-button
+        class="mx-1"
+        :disabled="noDiscardedUsersSelected"
+        size="sm"
+        variant="outline-secondary"
+        @click.prevent="undiscardUsers"
+      >
+        Undelete
+      </b-button>
+    </b-button-toolbar>
+
+    <b-button-toolbar class="mb-3 mr-3 justify-content-end">
       <b-form-input
         v-model="searchKey"
-        size="sm"
         class="w-25 mx-1"
+        size="sm"
         @keydown.enter.native="filterUsers"
       />
 
       <b-form-select
         v-model="searchOption"
-        :options="searchOptions"
-        :value="defaultSearchOption"
-        size="sm"
         class="w-25 mx-1"
+        :options="searchOptions"
+        size="sm"
+        :value="defaultSearchOption"
       />
 
-      <b-btn
-        variant="outline-secondary"
+      <b-button
         size="sm"
+        variant="outline-secondary"
         @click="filterUsers"
       >
         Search
-      </b-btn>
+      </b-button>
     </b-button-toolbar>
 
     <dashboard-table

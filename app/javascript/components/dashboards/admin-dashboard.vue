@@ -1,9 +1,6 @@
 <script>
-import filter from 'lodash/filter'
-import http from '~/lib/http'
 import isEmpty from 'lodash/isEmpty'
 import LocationsTable from './locations-table'
-import map from 'lodash/map'
 import NewsTable from './news-table'
 import UsersTable from './users-table'
 
@@ -66,40 +63,6 @@ export default {
       return this.userIsTabc ? 'Locations' : 'My Locations'
     },
 
-    multipleNewsSelected () {
-      return this.selectedNews.length > 1
-    },
-
-    newsEditHref () {
-      const firstItem = this.selectedNews[0]
-
-      return firstItem ? `/news/${firstItem.id}/edit` : ''
-    },
-
-    noDiscardedUsersSelected () {
-      return isEmpty(this.selectedDiscardedUsers)
-    },
-
-    noNewsSelected () {
-      return isEmpty(this.selectedNews)
-    },
-
-    noUsersSelected () {
-      return isEmpty(this.selectedUsers)
-    },
-
-    selectedDiscardedUsers () {
-      return filter(this.users, (user) => user.selected && !isEmpty(user.discardedAt))
-    },
-
-    selectedNews () {
-      return filter(this.news, 'selected')
-    },
-
-    selectedUsers () {
-      return filter(this.users, (user) => user.selected && isEmpty(user.discardedAt))
-    },
-
     showAdminAlert () {
       return !this.userIsTabc && this.adminCount <= 1
     },
@@ -110,83 +73,8 @@ export default {
   },
 
   methods: {
-    deleteNews () {
-      this
-        .$confirm(
-          'Are you sure you want to delete the selected news?',
-          'Delete News',
-          { variant: 'error' }
-        )
-        .yes(() => {
-          Promise
-            .all(
-              map(
-                this.selectedNews,
-                (news) => http
-                  .delete(`/news/${news.id}`)
-                  .then(() => {
-                    this.$message.success(`News "${news.subject}" deleted.`)
-                  })
-              )
-            )
-            .then(() => {
-              window.location.reload(true)
-            })
-        })
-    },
-
-    deleteUsers () {
-      this
-        .$confirm(
-          'Are you sure you want to delete the selected user(s)?',
-          'Delete User(s)',
-          { variant: 'error' }
-        )
-        .yes(() => {
-          Promise
-            .all(
-              map(
-                this.selectedUsers,
-                (user) => http
-                  .delete(`/users/${user.id}`)
-                  .then(() => {
-                    this.$message.success(`User "${user.fullName}" deleted.`)
-                  })
-              )
-            )
-            .then(() => {
-              window.location.reload(true)
-            })
-        })
-    },
-
     saveTab (name) {
       this.$cookies.set('admin-tab', name)
-    },
-
-    undiscardUsers () {
-      this
-        .$confirm(
-          'Are you sure you want to restore the selected user(s)?',
-          'Restore User(s)',
-          { variant: 'error' }
-        )
-        .yes(() => {
-          Promise
-            .all(
-              map(
-                this.selectedDiscardedUsers,
-                (user) => http
-                  .post(`/users/${user.id}/undiscard`)
-                  .then(() => {
-                    this.$message.success(`User "${user.fullName}" restored.`)
-                  })
-              )
-            )
-            .then(() => {
-              window.location.reload(true)
-            })
-        })
     }
   }
 }
@@ -230,70 +118,6 @@ export default {
                 Users
               </template>
 
-              <b-button-toolbar
-                class="mb-3 ml-3"
-                key-nav
-              >
-                <b-dropdown
-                  class="mx-1"
-                  :disabled="userIsTabc"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  <template slot="button-content">
-                    <fa-sprite
-                      fixed-width
-                      use="fas-fa-user-plus"
-                    />
-                    Invite User
-                  </template>
-                  <b-dropdown-item
-                    class="px-3"
-                    href="/users/invite"
-                  >
-                    <fa-sprite
-                      fixed-width
-                      use="fas-fa-plus"
-                    />
-                    Manual Add
-                  </b-dropdown-item>
-                  <b-dropdown-item
-                    class="px-3"
-                    disabled
-                  >
-                    <fa-sprite
-                      fixed-width
-                      use="fas-fa-file-upload"
-                    />
-                    Upload CSV (Coming Soon)
-                  </b-dropdown-item>
-                </b-dropdown>
-
-                <b-button
-                  class="mx-1"
-                  :disabled="noUsersSelected"
-                  size="sm"
-                  variant="outline-secondary"
-                  @click.prevent="deleteUsers"
-                >
-                  <fa-sprite
-                    fixed-width
-                    use="fas-fa-user-times"
-                  />
-                  Delete
-                </b-button>
-
-                <b-button
-                  class="mx-1"
-                  :disabled="noDiscardedUsersSelected"
-                  size="sm"
-                  variant="outline-secondary"
-                  @click.prevent="undiscardUsers"
-                >
-                  Undelete
-                </b-button>
-              </b-button-toolbar>
-
               <users-table
                 :current-user="user"
                 :items="users"
@@ -330,38 +154,6 @@ export default {
                 />
                 News
               </template>
-
-              <b-button-toolbar
-                class="mb-3 ml-3"
-                key-nav
-              >
-                <b-button
-                  class="mx-1"
-                  href="/news/new"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Add
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected || multipleNewsSelected"
-                  :href="newsEditHref"
-                  size="sm"
-                  variant="outline-secondary"
-                >
-                  Edit
-                </b-button>
-                <b-button
-                  class="mx-1"
-                  :disabled="noNewsSelected"
-                  size="sm"
-                  variant="outline-secondary"
-                  @click.prevent="deleteNews"
-                >
-                  Delete
-                </b-button>
-              </b-button-toolbar>
 
               <news-table :items="news" />
             </b-tab>

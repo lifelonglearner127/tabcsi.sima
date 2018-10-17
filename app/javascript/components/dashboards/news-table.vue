@@ -1,7 +1,11 @@
 <script>
 import capitalize from 'lodash/capitalize'
 import DashboardTable from './dashboard-table'
+import filter from 'lodash/filter'
 import { formatDateTime } from '~/lib/utils'
+import http from '~/lib/http'
+import isEmpty from 'lodash/isEmpty'
+import map from 'lodash/map'
 
 export default {
   name: 'NewsTable',
@@ -34,17 +38,60 @@ export default {
           tdClass: 'text-center'
         }
       ],
-      selectedNews: {}
+      selectedNewsItem: { id: 0 }
     }
   },
 
   computed: {
+    multipleNewsSelected () {
+      return this.selectedNews.length > 1
+    },
+
+    newsEditHref () {
+      const firstItem = this.selectedNews[0]
+
+      return firstItem ? `/news/${firstItem.id}/edit` : ''
+    },
+
     newsSrc () {
-      return this.selectedNews.id == null ? 'about:blank' : `/news/${this.selectedNews.id}`
+      return this.selectedNewsItem.id == null ? 'about:blank' : `/news/${this.selectedNewsItem.id}`
+    },
+
+    noNewsSelected () {
+      return isEmpty(this.selectedNews)
+    },
+
+    selectedNews () {
+      return filter(this.news, 'selected')
     }
   },
 
   methods: {
+    deleteNews () {
+      this
+        .$confirm(
+          'Are you sure you want to delete the selected news?',
+          'Delete News',
+          { variant: 'error' }
+        )
+        .yes(() => {
+          Promise
+            .all(
+              map(
+                this.selectedNews,
+                (news) => http
+                  .delete(`/news/${news.id}`)
+                  .then(() => {
+                    this.$message.success(`News "${news.subject}" deleted.`)
+                  })
+              )
+            )
+            .then(() => {
+              window.location.reload(true)
+            })
+        })
+    },
+
     newsType (value) {
       return capitalize(value)
     },
@@ -54,7 +101,7 @@ export default {
     },
 
     viewNews (news) {
-      this.selectedNews = news
+      this.selectedNewsItem = news
 
       this.$refs.viewModal.show()
     }
@@ -63,72 +110,106 @@ export default {
 </script>
 
 <template>
-  <dashboard-table
-    :fields="fields"
-    :items="items"
-  >
-    <template slot="table-colgroup">
-      <col class="news-type-col">
-      <col class="subject-col">
-      <col class="created-by-col">
-      <col class="updated-at-col">
-      <col class="actions-col">
-    </template>
-
-    <template
-      slot="newsType"
-      slot-scope="row"
+  <div>
+    <b-button-toolbar
+      class="mb-3 ml-3"
+      key-nav
     >
-      <b-form-checkbox
-        :id="`news_${row.index}_selected`"
-        v-model="row.item.selected"
+      <b-button
+        class="mx-1"
+        href="/news/new"
+        size="sm"
+        variant="outline-secondary"
       >
-        {{ newsType(row.value) }}
-      </b-form-checkbox>
-    </template>
+        Add
+      </b-button>
+      <b-button
+        class="mx-1"
+        :disabled="noNewsSelected || multipleNewsSelected"
+        :href="newsEditHref"
+        size="sm"
+        variant="outline-secondary"
+      >
+        Edit
+      </b-button>
+      <b-button
+        class="mx-1"
+        :disabled="noNewsSelected"
+        size="sm"
+        variant="outline-secondary"
+        @click.prevent="deleteNews"
+      >
+        Delete
+      </b-button>
+    </b-button-toolbar>
 
-    <div
-      slot="subject"
-      slot-scope="row"
-      class="text-ellipsis"
+    <dashboard-table
+      :fields="fields"
+      :items="items"
     >
-      {{ row.value }}
-    </div>
+      <template slot="table-colgroup">
+        <col class="news-type-col">
+        <col class="subject-col">
+        <col class="created-by-col">
+        <col class="updated-at-col">
+        <col class="actions-col">
+      </template>
 
-    <template
-      slot="createdBy"
-      slot-scope="row"
-    >
-      {{ row.item.user.fullName }}
-    </template>
+      <template
+        slot="newsType"
+        slot-scope="row"
+      >
+        <b-form-checkbox
+          :id="`news_${row.index}_selected`"
+          v-model="row.item.selected"
+        >
+          {{ newsType(row.value) }}
+        </b-form-checkbox>
+      </template>
 
-    <template
-      slot="updatedAt"
-      slot-scope="row"
-    >
-      {{ updatedAt(row.item.updatedAt) }}
-    </template>
+      <div
+        slot="subject"
+        slot-scope="row"
+        class="text-ellipsis"
+      >
+        {{ row.value }}
+      </div>
 
-    <b-button
-      slot="actions"
-      slot-scope="row"
-      size="sm"
-      variant="info"
-      @click="viewNews(row.item)"
-    >
-      View
-    </b-button>
+      <template
+        slot="createdBy"
+        slot-scope="row"
+      >
+        {{ row.item.user.fullName }}
+      </template>
 
-    <b-modal
-      ref="viewModal"
-      centered
-      ok-only
-      size="lg"
-      title="View News"
-    >
-      <iframe :src="newsSrc" />
-    </b-modal>
-  </dashboard-table>
+      <template
+        slot="updatedAt"
+        slot-scope="row"
+      >
+        {{ updatedAt(row.item.updatedAt) }}
+      </template>
+
+      <b-button
+        slot="actions"
+        slot-scope="row"
+        size="sm"
+        variant="info"
+        @click="viewNews(row.item)"
+      >
+        View
+      </b-button>
+
+      <b-modal
+        ref="viewModal"
+        centered
+        ok-only
+        size="lg"
+        title="View News"
+      >
+        <iframe :src="newsSrc" />
+      </b-modal>
+    </dashboard-table>
+  </div>
 </template>
 
 <style lang="scss" scoped>
