@@ -62,7 +62,7 @@ export default {
     },
 
     selectedNews () {
-      return filter(this.news, 'selected')
+      return filter(this.items, 'selected')
     }
   },
 
