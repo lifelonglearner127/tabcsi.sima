@@ -10,7 +10,7 @@ module TabcSi
         fiscal_year: 2018,
         pin_length: 8,
         pin_expiration: 30.minutes,
-        tabc_contact_url: 'https://www.tabc.texas.gov/mobile/'
+        tabc_contact_url: 'https://www.tabc.texas.gov/CRHelpForm'
       }.each do |name, value|
         next if Setting.find_by(name: name).present?
 
