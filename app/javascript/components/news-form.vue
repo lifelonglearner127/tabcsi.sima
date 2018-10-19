@@ -351,6 +351,7 @@ export default {
       size="lg"
       title="Preview News"
     >
+      <h4 v-html="news.subject" />
       <div v-html="news.content" />
     </b-modal>
   </b-container>
@@ -382,14 +383,6 @@ export default {
   text-align: center;
 }
 
-/deep/ #preview-modal {
-  .modal-body {
-    img {
-      max-width: 100%;
-    }
-  }
-}
-
 form {
   color: $gray-600;
   text-align: center;
@@ -400,6 +393,14 @@ form {
 
   small {
     font-size: 75%;
+  }
+}
+
+/deep/ #preview-modal {
+  .modal-body {
+    img {
+      max-width: 100%;
+    }
   }
 }
 </style>
