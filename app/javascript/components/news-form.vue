@@ -382,6 +382,14 @@ export default {
   text-align: center;
 }
 
+/deep/ #preview-modal {
+  .modal-body {
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
 form {
   color: $gray-600;
   text-align: center;

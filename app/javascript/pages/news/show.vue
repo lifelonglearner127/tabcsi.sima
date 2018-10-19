@@ -38,7 +38,10 @@ export default {
               top
             />
           </a>
-          <div v-html="news.content" />
+          <div
+            class="news-content"
+            v-html="news.content"
+          />
         </b-card>
       </b-col>
     </b-row>
@@ -66,5 +69,11 @@ export default {
 
 .card-title {
   text-align: center;
+}
+
+/deep/ .news-content {
+  img {
+    max-width: 100%;
+  }
 }
 </style>
