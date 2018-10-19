@@ -12,7 +12,7 @@
 
 ### General
 
-* Ruby 2.5.1
+* Ruby 2.5.3
 * Node 8 (LTS)
 * Yarn
 
