@@ -4,7 +4,7 @@ NUMBER_OF_RELEASES_TO_KEEP = 5
 NUMBER_OF_BUNDLE_JOBS = 2
 
 # config valid only for current version of Capistrano
-lock '~> 3.11.0'
+lock '~> 3.11'
 
 # main settings
 set :application, 'tabc-si'
