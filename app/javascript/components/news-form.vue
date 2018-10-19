@@ -340,19 +340,19 @@ export default {
                 {{ text }}
               </slot>
             </b-form-text>
-
-            <b-modal
-              id="preview-modal"
-              ok-only
-              size="lg"
-              title="Preview News"
-            >
-              <div v-html="news.content" />
-            </b-modal>
           </rails-form>
         </b-card>
       </b-col>
     </b-row>
+
+    <b-modal
+      id="preview-modal"
+      ok-only
+      size="lg"
+      title="Preview News"
+    >
+      <div v-html="news.content" />
+    </b-modal>
   </b-container>
 </template>
 
