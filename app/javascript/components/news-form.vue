@@ -1,10 +1,11 @@
 <script>
+import '~/vendor/tinymce'
 import { maxLength, required } from 'vuelidate/lib/validators'
+import Editor from '@tinymce/tinymce-vue'
 import isEmpty from 'lodash/isEmpty'
 import RailsForm from '~/components/rails-form'
 import snakeCase from 'lodash/snakeCase'
 import ValidationMixin from '~/mixins/validation'
-import { VueEditor } from 'vue2-editor'
 
 const SUBJECT_MAX_LENGTH = 255
 
@@ -13,7 +14,7 @@ export default {
 
   components: {
     RailsForm,
-    VueEditor
+    Editor
   },
 
   mixins: [ValidationMixin('news')],
@@ -119,7 +120,14 @@ export default {
           maxLength: SUBJECT_MAX_LENGTH
         }
       },
-      submitDisabled: false
+      submitDisabled: false,
+      editorConfig: {
+        branding: false,
+        height: 300,
+        menubar: false,
+        plugins: ['image', 'link'],
+        skin: false
+      }
     }
   },
 
@@ -288,9 +296,10 @@ export default {
                   v-model="news.content"
                   name="news[content]"
                 />
-                <vue-editor
+                <editor
                   id="news_content"
                   v-model="news.content"
+                  :init="editorConfig"
                 />
               </b-form-group>
             </div>
