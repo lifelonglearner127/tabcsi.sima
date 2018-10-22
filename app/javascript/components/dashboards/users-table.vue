@@ -64,7 +64,7 @@ export default {
     },
 
     fields () {
-      const result = [
+      const value = [
         'email',
         'jobTitle',
         'phone',
@@ -81,15 +81,15 @@ export default {
       ]
 
       if (this.currentUserIsTabc) {
-        result.unshift('fullName')
+        value.unshift('fullName')
       }
 
-      result.unshift({
+      value.unshift({
         key: this.firstColumnSlot,
         tdClass: 'first-column'
       })
 
-      return result
+      return value
     },
 
     firstColumnSlot () {

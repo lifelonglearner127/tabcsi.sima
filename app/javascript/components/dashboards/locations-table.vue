@@ -57,6 +57,8 @@ export default {
       ]
 
       if (this.isTabcAdmin) {
+        value.unshift('company')
+
         value.push({
           key: 'actions',
           label: '',
@@ -65,6 +67,10 @@ export default {
       }
 
       return value
+    },
+
+    firstColumnSlot () {
+      return this.isTabcAdmin ? 'company' : 'fullName'
     }
   },
 
@@ -107,6 +113,18 @@ export default {
           }
         }
       )
+    },
+
+    firstColumnValue (row) {
+      if (this.isTabcAdmin) {
+        if (row.value == null) {
+          return 'TABC'
+        }
+
+        return row.value.name || row.value.ownerName
+      }
+
+      return row.value
     },
 
     licenses (location) {
@@ -223,6 +241,10 @@ export default {
       :items="filteredItems"
     >
       <template slot="table-colgroup">
+        <col
+          v-if="isTabcAdmin"
+          class="company-col"
+        >
         <col class="name-col">
         <col class="clp-col">
         <col class="address-col">
@@ -232,6 +254,13 @@ export default {
           v-if="isTabcAdmin"
           class="actions-col"
         >
+      </template>
+
+      <template
+        :slot="firstColumnSlot"
+        slot-scope="row"
+      >
+        {{ firstColumnValue(row) }}
       </template>
 
       <div
@@ -270,6 +299,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixins';
+
+.company-col {
+  width: auto;
+}
 
 .name-col {
   width: auto;
