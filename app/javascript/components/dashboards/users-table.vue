@@ -31,13 +31,9 @@ export default {
   },
 
   data () {
-    return {
+    const obj = {
       filteredItems: this.items,
       searchOptions: [
-        {
-          text: 'Company Name',
-          value: 'company'
-        },
         {
           text: 'Full Name',
           value: 'fullName'
@@ -50,6 +46,16 @@ export default {
       searchOption: null,
       searchKey: null
     }
+
+    // `this.currentUserIsTabc` computed property is not available here.
+    if (this.isTabc(this.currentUser)) {
+      obj.searchOptions.unshift({
+        text: 'Company Name',
+        value: 'company'
+      })
+    }
+
+    return obj
   },
 
   computed: {
