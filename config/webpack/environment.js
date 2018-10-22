@@ -52,17 +52,17 @@ env.config.set('resolve.alias', {
   vue$: 'vue/dist/vue.esm.js'
 })
 
-// disable until minification can be fixed
-// env.config.set('optimization', {
-//   runtimeChunk: 'single',
-//   splitChunks: {
-//     cacheGroups: {
-//       vendors: {
-//         chunks: 'all',
-//         name: 'vendors'
-//       }
-//     }
-//   }
-// })
+env.config.set('optimization', {
+  runtimeChunk: 'single' // ,
+  // disable until minification can be fixed
+  // splitChunks: {
+  //   cacheGroups: {
+  //     vendors: {
+  //       chunks: 'all',
+  //       name: 'vendors'
+  //     }
+  //   }
+  // }
+})
 
 module.exports = env
