@@ -1,11 +1,15 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
 import RailsForm from '~/components/rails-form'
+import TabcCard from '~/components/tabc-card'
 
 export default {
   name: 'UsersSessionsContainer',
 
-  components: { RailsForm },
+  components: {
+    RailsForm,
+    TabcCard
+  },
 
   props: {
     acceptCharset: {
@@ -106,142 +110,97 @@ export default {
 </script>
 
 <template>
-  <b-container class="h-100">
-    <b-row
-      align-h="center"
-      class="container-row"
+  <tabc-card
+    :cols="cols"
+    :lg="lg"
+    :md="md"
+    :sm="sm"
+    :title="title"
+    :xl="xl"
+  >
+    <b-alert
+      v-if="haveErrors"
+      show
+      variant="danger"
     >
-      <b-col
-        :cols="cols"
-        :lg="lg"
-        :md="md"
-        :sm="sm"
-        :xl="xl"
-      >
-        <b-card
-          class="my-3"
-          header-class="py-4"
-          :title="title"
-          title-tag="h5"
+      <ul>
+        <li
+          v-for="(error, key, index) in serverErrors"
+          :key="index"
         >
-          <a
-            slot="header"
-            href="/"
-          >
-            <b-card-img
-              alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
-              src="@/assets/images/logo-white.png"
-              top
-            />
-          </a>
-          <b-alert
-            v-if="haveErrors"
-            show
-            variant="danger"
-          >
-            <ul>
-              <li
-                v-for="(error, key, index) in serverErrors"
-                :key="index"
-              >
-                {{ error }}
-              </li>
-            </ul>
-          </b-alert>
-          <rails-form
-            :accept-charset="acceptCharset"
-            :action="action"
-            :enforce-utf8="enforceUtf8"
-            :hidden-method="hiddenMethod"
-            :method="method"
-            :validation-method="validationMethod"
-            :token-name="tokenName"
-            :token-value="tokenValue"
-          >
-            <b-button
-              v-if="topBackButtonVisible"
-              v-ujs-method="backMethod"
-              class="mb-4"
-              :href="backHref"
-              variant="secondary"
-            >
-              <slot name="back">
-                <fa-sprite
-                  fixed-width
-                  use="fas-fa-arrow-left"
-                />
-                Back
-              </slot>
-            </b-button>
+          {{ error }}
+        </li>
+      </ul>
+    </b-alert>
 
-            <slot />
+    <rails-form
+      :accept-charset="acceptCharset"
+      :action="action"
+      :enforce-utf8="enforceUtf8"
+      :hidden-method="hiddenMethod"
+      :method="method"
+      :validation-method="validationMethod"
+      :token-name="tokenName"
+      :token-value="tokenValue"
+    >
+      <b-button
+        v-if="topBackButtonVisible"
+        v-ujs-method="backMethod"
+        class="mb-4"
+        :href="backHref"
+        variant="secondary"
+      >
+        <slot name="back">
+          <fa-sprite
+            fixed-width
+            use="fas-fa-arrow-left"
+          />
+          Back
+        </slot>
+      </b-button>
 
-            <b-button
-              v-if="backButtonVisible"
-              v-ujs-method="backMethod"
-              class="my-4"
-              :href="backHref"
-              variant="secondary"
-            >
-              <slot name="back">
-                <fa-sprite
-                  fixed-width
-                  use="fas-fa-arrow-left"
-                />
-                Back
-              </slot>
-            </b-button>
+      <slot />
 
-            <b-button
-              class="my-4"
-              type="submit"
-              variant="tabc-primary"
-            >
-              <slot name="submit">
-                {{ submitText }}
-              </slot>
-            </b-button>
+      <b-button
+        v-if="backButtonVisible"
+        v-ujs-method="backMethod"
+        class="my-4"
+        :href="backHref"
+        variant="secondary"
+      >
+        <slot name="back">
+          <fa-sprite
+            fixed-width
+            use="fas-fa-arrow-left"
+          />
+          Back
+        </slot>
+      </b-button>
 
-            <b-form-text
-              v-if="text || $slots.text"
-              :class="textClass"
-            >
-              <slot name="text">
-                {{ text }}
-              </slot>
-            </b-form-text>
-          </rails-form>
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
+      <b-button
+        class="my-4"
+        type="submit"
+        variant="tabc-primary"
+      >
+        <slot name="submit">
+          {{ submitText }}
+        </slot>
+      </b-button>
+
+      <b-form-text
+        v-if="text || $slots.text"
+        :class="textClass"
+      >
+        <slot name="text">
+          {{ text }}
+        </slot>
+      </b-form-text>
+    </rails-form>
+  </tabc-card>
 </template>
 
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/variables';
-
-.container-row {
-  height: 100% !important;
-}
-
-.card {
-  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
-}
-
-.card-header {
-  background-color: $tabc-dark-blue;
-  border-bottom-width: 0;
-  color: $white;
-  text-align: center;
-}
-
-.card-img-top {
-  width: 300px;
-}
-
-.card-title {
-  text-align: center;
-}
 
 .alert {
   ul {

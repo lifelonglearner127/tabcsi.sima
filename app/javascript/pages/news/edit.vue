@@ -22,22 +22,16 @@ export default {
   <news-form
     :accept-charset="acceptCharset"
     :action="action"
-    back-href="/"
-    cols="12"
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
-    :server-errors="serverErrors"
-    :token-name="tokenName"
-    :token-value="tokenValue"
     :news="news"
     :news-types="newsTypes"
-    show-back-button
-    show-top-back-button
-    sm="6"
+    :server-errors="serverErrors"
     submit-text="Update"
-    text-class="font-italic"
-    title="Update a News"
+    title="Update News"
+    :token-name="tokenName"
+    :token-value="tokenValue"
   />
 </template>
 
