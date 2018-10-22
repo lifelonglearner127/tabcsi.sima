@@ -1,6 +1,8 @@
+export { default as companyName } from './company-name'
 export { default as email } from './email'
 export { default as exactLength } from './exact-length'
 export { default as fullName } from './full-name'
+export { default as jobTitle } from './job-title'
 export { default as licenseNumber } from './license-number'
 export { default as getMessage } from './messages'
 export { default as phone } from './phone'

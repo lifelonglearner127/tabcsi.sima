@@ -1,5 +1,5 @@
 <script>
-import { email, fullName, phone } from '~/validators'
+import { email, fullName, jobTitle, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
 import compact from 'lodash/compact'
 import map from 'lodash/map'
@@ -79,7 +79,10 @@ export default {
           required,
           fullName
         },
-        jobTitle: { required },
+        jobTitle: {
+          required,
+          jobTitle
+        },
         phone: { phone }
       }
     }

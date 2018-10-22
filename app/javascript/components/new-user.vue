@@ -1,5 +1,5 @@
 <script>
-import { email, fullName, licenseNumber, phone } from '~/validators'
+import { companyName, email, fullName, jobTitle, licenseNumber, phone } from '~/validators'
 import { AsYouType } from '~/lib/phone-number'
 import compact from 'lodash/compact'
 import map from 'lodash/map'
@@ -112,7 +112,10 @@ export default {
           required,
           fullName
         },
-        jobTitle: { required },
+        jobTitle: {
+          required,
+          jobTitle
+        },
         phone: {
           required,
           phone
@@ -130,7 +133,11 @@ export default {
         schema.user.locationClps.required = required
       }
     } else {
-      schema.user.companyName = { required }
+      schema.user.companyName = {
+        required,
+        companyName
+      }
+
       schema.user.licenseNumber = {
         required,
         licenseNumber
