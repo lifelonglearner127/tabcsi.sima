@@ -21,11 +21,11 @@ export default {
   },
 
   data () {
-    return {
+    const obj = {
       filteredItems: this.items,
       locationResetDisabled: false,
       searchKey: null,
-      searchOption: 'name',
+      searchOption: null,
       searchOptions: [
         {
           text: 'Name',
@@ -37,6 +37,15 @@ export default {
         }
       ]
     }
+
+    if (this.isTabcAdmin) {
+      obj.searchOptions.unshift({
+        text: 'Company Name',
+        value: 'company'
+      })
+    }
+
+    return obj
   },
 
   computed: {
@@ -72,6 +81,10 @@ export default {
     firstColumnSlot () {
       return this.isTabcAdmin ? 'company' : 'fullName'
     }
+  },
+
+  mounted () {
+    this.searchOption = this.firstColumnSlot
   },
 
   methods: {
