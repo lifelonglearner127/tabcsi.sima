@@ -281,7 +281,7 @@ export default {
                 id="news_content_group"
                 label="Content"
                 label-for="news_content"
-                description="Only images from secure sources (https) are allowed."
+                description="Only secure image sources or links (https) are allowed."
               >
                 <b-textarea
                   v-show="false"
