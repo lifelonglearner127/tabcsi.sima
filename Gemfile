@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby File.read('.ruby-version').chomp
+ruby File.read(File.expand_path('.ruby-version', __dir__)).chomp
 
 gem 'bootsnap', '~> 1.3', require: false
 gem 'delayed_job_active_record', '~> 4.1'
