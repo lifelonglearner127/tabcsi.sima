@@ -1,8 +1,8 @@
 {
-  "build_date": "2018-10-10",
+  "build_date": "2018-10-23",
   "questions": {
     "1": {
-      "question_text": "Name of person filling out survey (First & Last)",
+      "question_text": "Name of person filling out report (First & Last)",
       "question_type": "text_box",
       "max_characters": 50,
       "help": [
@@ -10,7 +10,7 @@
       ]
     },
     "2": {
-      "question_text": "Position of person filling out survey",
+      "question_text": "Position of person filling out report",
       "question_type": "text_box",
       "max_characters": 50,
       "help": [
@@ -18,7 +18,7 @@
       ]
     },
     "3": {
-      "question_text": "Name/position of person(s) authorized to purchase alcohol for the business",
+      "question_text": "Who is the primary person who authorizes employees to order and purchase alcohol for the business?",
       "question_type": "text_box",
       "max_characters": 50,
       "multiline": true,
@@ -27,7 +27,7 @@
       ]
     },
     "4": {
-      "question_text": "Is your permit posted where it can be seen by the public?",
+      "question_text": "Is your license/permit posted where it can be seen by the public?",
       "question_type": "radio",
       "choices": [
         {
@@ -313,7 +313,7 @@
       ]
     },
     "17A": {
-      "question_text": "Are you holding any product that is damaged?",
+      "question_text": "Are you holding any alcohol product that is damaged?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
@@ -358,7 +358,7 @@
       ]
     },
     "18B": {
-      "question_text": "If seller training is required for employees, do you have alcohol service policies?",
+      "question_text": "If seller training is required for employees, do you have written alcohol service policies? If \"Yes\", then provide picture of first and last page.",
       "question_type": "radio",
       "choices": [
         {
@@ -380,7 +380,7 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if product tastings occur at the licensed location. An example of this would be allowing a specific alcohol company to come on to the premise and offer free tasting of their alcohol to your customers.",
+        "Answer \"Yes\" if product tastings occur at the licensed location. An example of this would be allowing a specific alcohol company to come on to the premises and offer free tasting of their alcohol to your customers.",
         "Answer \"No\" if product tastings do not occur at the location."
       ]
     },
@@ -421,7 +421,7 @@
       ]
     },
     "23": {
-      "question_text": "Is there a permanent food service facility at the location?",
+      "question_text": "Is there a permanent food service facility (kitchen) at the location?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
@@ -475,27 +475,27 @@
       ]
     },
     "26": {
-      "question_text": "Are food items completely prepared or assembled on the premise?",
+      "question_text": "Are food items completely prepared or assembled on the premises?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if the food items are completely prepared or assembled on the premise. This would mean the food was not prepackaged and involves being put together.",
+        "Answer \"Yes\" if the food items are completely prepared or assembled on the premises. This would mean the food was not prepackaged and involves being put together.",
         "Answer \"No\" if the food is completely prepared or assembled before it is brought onto the premises."
       ]
     },
     "27": {
-      "question_text": "Is prepared food to be consumed on the premise?",
+      "question_text": "Is prepared food to be consumed primarily on the premises?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if the prepared food is to be consumed on the premise.",
-        "Answer \"No\" if the prepared food is not consumed on the premise. E.g., pizza taken to go."
+        "Answer \"Yes\" if the prepared food is to be consumed on the premises.",
+        "Answer \"No\" if the prepared food is not consumed on the premises. E.g., pizza taken to go."
       ]
     },
     "28A": {
@@ -547,7 +547,7 @@
       ]
     },
     "29B": {
-      "question_text": "Which service operates the longer hours?",
+      "question_text": "Which service operates the longer hours, the kitchen or the bar?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Kitchen" },
@@ -618,7 +618,7 @@
       ]
     },
     "31B": {
-      "question_text": "Who did you report any of the Breaches of the Peace to?",
+      "question_text": "Who did you report the Breaches of the Peace to?",
       "question_type": "drop_down",
       "choices": [
         { "choice_text": "Local Law Enforcement" },
