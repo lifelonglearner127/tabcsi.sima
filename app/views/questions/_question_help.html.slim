@@ -1,4 +1,7 @@
-h4 #{question.question_number}. #{question.question_text}
+h4
+  - if show_question_number
+    ' #{question.question_number}.
+  | #{question.question_text}
 
 ul
   - question.question_help_items.each do |item|

@@ -2,4 +2,4 @@
   .row
     .col-12
       - @questions.each do |q|
-        = render 'questions/question_help', question: q
+        = render 'questions/question_help', question: q, show_question_number: true
