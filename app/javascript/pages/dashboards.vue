@@ -1,6 +1,5 @@
 <script>
 import { AdminDashboard, UserDashboard } from '~/components/dashboards'
-import { subscribeToChannels, unsubscribeFromChannels } from '~/channels'
 import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
@@ -70,14 +69,6 @@ export default {
         return user
       })
     }
-  },
-
-  mounted () {
-    subscribeToChannels()
-  },
-
-  beforeDestroy () {
-    unsubscribeFromChannels()
   }
 }
 </script>
