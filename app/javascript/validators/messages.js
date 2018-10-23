@@ -2,14 +2,15 @@ import constant from 'lodash/constant'
 import forEach from 'lodash/forEach'
 
 const MESSAGES = {
+  companyName: constant('Must be a valid company name.'),
   email: constant('Must be a valid email address.'),
 
   exactLength (params) {
     return `Must be exactly ${params.length} characters.`
   },
 
-  fullName: constant('Must have both first and last name.'),
-
+  fullName: constant('Must be a valid full name.'),
+  jobTitle: constant('Must be a valid job title.'),
   licenseNumber: constant('Must be a valid license/permit number.'),
 
   maxLength (params) {
