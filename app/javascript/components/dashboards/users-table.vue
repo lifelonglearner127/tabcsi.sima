@@ -1,12 +1,11 @@
 <script>
+import { addSearchedItem, formatDateTime } from '~/lib/utils'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
 import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
-import { formatDateTime } from '~/lib/utils'
 import http from '~/lib/http'
-import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import sortBy from 'lodash/sortBy'
@@ -165,27 +164,23 @@ export default {
 
           switch (this.searchOption) {
             case 'company':
-              if (user.company && !isEmpty(user.company.name)) {
-                if (includes(user.company.name.toLowerCase(), this.searchKey.toLowerCase())) {
-                  this.filteredItems.push(user)
-                }
-              }
+              addSearchedItem(this.searchKey, [user.company.name, user.company.ownerName], this.filteredItems, user)
 
               break
+
             case 'fullName':
-              if (includes(user.fullName.toLowerCase(), this.searchKey.toLowerCase())) {
-                this.filteredItems.push(user)
-              }
+              addSearchedItem(this.searchKey, user.fullName, this.filteredItems, user)
 
               break
+
             case 'email':
-              if (user.email === this.searchKey) {
+              if (this.searchKey === user.email) {
                 this.filteredItems.push(user)
               }
 
               break
-            default:
-              this.filteredItems = user
+
+            // no default
           }
         }
       )

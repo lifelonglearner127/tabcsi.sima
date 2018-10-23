@@ -2,6 +2,7 @@ import _isArrayLike from 'lodash/isArrayLike'
 import { DateTime } from 'luxon'
 import debounce from 'lodash/debounce'
 import includes from 'lodash/includes'
+import isEmpty from 'lodash/isEmpty'
 import isPlainObject from 'lodash/isPlainObject'
 import isString from 'lodash/isString'
 import map from 'lodash/map'
@@ -110,3 +111,27 @@ export const getBoolean = (object, key) => key in object && Boolean(object[key])
 export const formatDateTime = (timestamp) => DateTime.fromISO(timestamp).toFormat('M/d/yyyy h:mm a')
 export const formatDate = (timestamp) => DateTime.fromISO(timestamp).toFormat('M/d/yyyy')
 export const formatTime = (timestamp) => DateTime.fromISO(timestamp).toFormat('h:mm a')
+
+export const compareSearch = (value, searchItems) => {
+  let i
+
+  if (!isArrayLike(searchItems)) {
+    searchItems = [searchItems]
+  }
+
+  for (i = 0; i < searchItems.length; ++i) {
+    const searchItem = searchItems[i]
+
+    if (!isEmpty(searchItem) && includes(searchItem.toLocaleUpperCase(), value.toLocaleUpperCase())) {
+      return true
+    }
+  }
+
+  return false
+}
+
+export const addSearchedItem = (value, searchItems, filteredItems, item) => {
+  if (compareSearch(value, searchItems)) {
+    filteredItems.push(item)
+  }
+}

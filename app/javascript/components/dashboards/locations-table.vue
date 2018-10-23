@@ -1,9 +1,9 @@
 <script>
+import { addSearchedItem } from '~/lib/utils'
 import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
 import forEach from 'lodash/forEach'
 import http from '~/lib/http'
-import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 
@@ -115,14 +115,22 @@ export default {
             return
           }
 
-          if (this.searchOption === 'name') {
-            if (includes(location.name.toLowerCase(), this.searchKey.toLowerCase())) {
-              this.filteredItems.push(location)
-            }
-          } else if (this.searchOption === 'clp') {
-            if (location.clp.toLowerCase() === this.searchKey.toLowerCase()) {
-              this.filteredItems.push(location)
-            }
+          switch (this.searchOption) {
+            case 'company':
+              addSearchedItem(
+                this.searchKey, [location.company.name, location.company.ownerName], this.filteredItems, location
+              )
+              break
+
+            case 'name':
+              addSearchedItem(this.searchKey, location.name, this.filteredItems, location)
+              break
+
+            case 'clp':
+              addSearchedItem(this.searchKey, location.clp, this.filteredItems, location)
+              break
+
+            // no default
           }
         }
       )
