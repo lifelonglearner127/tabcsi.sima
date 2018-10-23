@@ -1,6 +1,8 @@
 import _isArrayLike from 'lodash/isArrayLike'
 import { DateTime } from 'luxon'
 import debounce from 'lodash/debounce'
+import forEach from 'lodash/forEach'
+import get from 'lodash/get'
 import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import isPlainObject from 'lodash/isPlainObject'
@@ -112,26 +114,40 @@ export const formatDateTime = (timestamp) => DateTime.fromISO(timestamp).toForma
 export const formatDate = (timestamp) => DateTime.fromISO(timestamp).toFormat('M/d/yyyy')
 export const formatTime = (timestamp) => DateTime.fromISO(timestamp).toFormat('h:mm a')
 
-export const compareSearch = (value, searchItems) => {
+export const addSearchedItem = (items, object, value, paths) => {
   let i
 
-  if (!isArrayLike(searchItems)) {
-    searchItems = [searchItems]
+  if (!isArrayLike(paths)) {
+    paths = [paths]
   }
 
-  for (i = 0; i < searchItems.length; ++i) {
-    const searchItem = searchItems[i]
+  for (i = 0; i < paths.length; ++i) {
+    const path = paths[i]
+    const pathValue = get(object, path)
 
-    if (!isEmpty(searchItem) && includes(searchItem.toLocaleUpperCase(), value.toLocaleUpperCase())) {
-      return true
+    if (!isEmpty(pathValue) && includes(pathValue.toLocaleUpperCase(), value.toLocaleUpperCase())) {
+      items.push(object)
+
+      break
     }
   }
-
-  return false
 }
 
-export const addSearchedItem = (value, searchItems, filteredItems, item) => {
-  if (compareSearch(value, searchItems)) {
-    filteredItems.push(item)
-  }
+export const filterItems = (items, value, filterFunc) => {
+  const filteredItems = []
+
+  forEach(
+    items,
+    (item) => {
+      if (isEmpty(value)) {
+        filteredItems.push(item)
+
+        return
+      }
+
+      filterFunc(filteredItems, item, value)
+    }
+  )
+
+  return filteredItems
 }

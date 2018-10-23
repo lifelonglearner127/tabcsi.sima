@@ -1,10 +1,8 @@
 <script>
-import { addSearchedItem } from '~/lib/utils'
+import { addSearchedItem, filterItems } from '~/lib/utils'
 import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
-import forEach from 'lodash/forEach'
 import http from '~/lib/http'
-import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 
 export default {
@@ -104,36 +102,23 @@ export default {
     },
 
     filterLocations () {
-      this.filteredItems = []
+      this.filteredItems = filterItems(this.items, this.searchKey, (filteredItems, item, value) => {
+        switch (this.searchOption) {
+          case 'company':
+            addSearchedItem(filteredItems, item, value, ['company.name', 'company.ownerName'])
+            break
 
-      forEach(
-        this.items,
-        (location) => {
-          if (isEmpty(this.searchKey)) {
-            this.filteredItems.push(location)
+          case 'name':
+            addSearchedItem(filteredItems, item, value, 'name')
+            break
 
-            return
-          }
+          case 'clp':
+            addSearchedItem(filteredItems, item, value, 'clp')
+            break
 
-          switch (this.searchOption) {
-            case 'company':
-              addSearchedItem(
-                this.searchKey, [location.company.name, location.company.ownerName], this.filteredItems, location
-              )
-              break
-
-            case 'name':
-              addSearchedItem(this.searchKey, location.name, this.filteredItems, location)
-              break
-
-            case 'clp':
-              addSearchedItem(this.searchKey, location.clp, this.filteredItems, location)
-              break
-
-            // no default
-          }
+          // no default
         }
-      )
+      })
     },
 
     firstColumnValue (row) {
@@ -229,10 +214,7 @@ export default {
 
 <template>
   <div>
-    <b-button-toolbar
-      class="mb-3 mr-3 justify-content-end"
-      key-nav
-    >
+    <b-button-toolbar class="mb-3 mr-3 justify-content-end">
       <b-form-input
         v-model="searchKey"
         class="mr-1 w-25"

@@ -111,10 +111,7 @@ export default {
 
 <template>
   <div>
-    <b-button-toolbar
-      class="mb-3 ml-3"
-      key-nav
-    >
+    <b-button-toolbar class="mb-3 ml-3">
       <b-button
         class="mr-1"
         href="/news/new"

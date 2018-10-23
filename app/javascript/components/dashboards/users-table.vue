@@ -1,10 +1,9 @@
 <script>
-import { addSearchedItem, formatDateTime } from '~/lib/utils'
+import { addSearchedItem, filterItems, formatDateTime } from '~/lib/utils'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import DashboardTable from './dashboard-table'
 import filter from 'lodash/filter'
-import forEach from 'lodash/forEach'
 import http from '~/lib/http'
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
@@ -151,39 +150,26 @@ export default {
     },
 
     filterUsers () {
-      this.filteredItems = []
+      this.filteredItems = filterItems(this.items, this.searchKey, (filteredItems, item, value) => {
+        switch (this.searchOption) {
+          case 'company':
+            addSearchedItem(filteredItems, item, value, ['company.name', 'company.ownerName'])
+            break
 
-      forEach(
-        this.items,
-        (user) => {
-          if (isEmpty(this.searchKey)) {
-            this.filteredItems.push(user)
+          case 'fullName':
+            addSearchedItem(filteredItems, item, value, 'fullName')
+            break
 
-            return
-          }
+          case 'email':
+            if (value === item.email) {
+              filteredItems.push(item)
+            }
 
-          switch (this.searchOption) {
-            case 'company':
-              addSearchedItem(this.searchKey, [user.company.name, user.company.ownerName], this.filteredItems, user)
+            break
 
-              break
-
-            case 'fullName':
-              addSearchedItem(this.searchKey, user.fullName, this.filteredItems, user)
-
-              break
-
-            case 'email':
-              if (this.searchKey === user.email) {
-                this.filteredItems.push(user)
-              }
-
-              break
-
-            // no default
-          }
+          // no default
         }
-      )
+      })
     },
 
     firstColumnValue (row) {
@@ -271,10 +257,7 @@ export default {
 
 <template>
   <div>
-    <b-button-toolbar
-      class="mb-3 mx-3"
-      key-nav
-    >
+    <b-button-toolbar class="mb-3 mx-3">
       <b-dropdown
         class="mr-1"
         :disabled="currentUserIsTabc"
