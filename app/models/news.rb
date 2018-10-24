@@ -24,6 +24,10 @@ class News < ApplicationRecord
     android_tokens = PushToken.where(device_type: :android).pluck(:token)
     ios_tokens = PushToken.where(device_type: :ios).pluck(:token)
 
-    TabcSi::PushManager.send(android_tokens, ios_tokens, message)
+    begin
+      TabcSi::PushManager.send(android_tokens, ios_tokens, message)
+    rescue StandardError => error
+      Rails.logger.error(error)
+    end
   end
 end
