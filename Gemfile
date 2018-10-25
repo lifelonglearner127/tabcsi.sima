@@ -17,7 +17,7 @@ gem 'fcm-ruby-push-notifications', '~> 1.2'
 gem 'flutie', '~> 2.1'
 gem 'grape', '~> 1.0'
 gem 'grape-entity', '~> 0.7.1'
-gem 'grape-swagger', '~> 0.31.0'
+gem 'grape-swagger', '~> 0.31.1'
 gem 'grape-swagger-entity', '~> 0.3.0'
 gem 'grape_logging', '~> 1.8'
 gem 'high_voltage', '~> 3.1'
@@ -62,11 +62,11 @@ group :development, :test do
   gem 'faker', '~> 1.9'
   gem 'pry-byebug', '~> 3.6'
   gem 'pry-rails', '~> 0.3.6'
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :test do
-  gem 'capybara', '~> 3.9'
+  gem 'capybara', '~> 3.10'
   gem 'formulaic', '~> 0.4.0'
   gem 'phantomjs', '~> 2.1'
   gem 'poltergeist', '~> 1.18'
@@ -77,7 +77,7 @@ end
 
 group :production do
   gem 'aws-sdk-rails', '~> 2.0'
-  gem 'aws-sdk-s3', '~> 1.20'
+  gem 'aws-sdk-s3', '~> 1.23'
   gem 'passenger', '~> 5.3'
   gem 'rack-timeout', '~> 0.5.1'
 end
