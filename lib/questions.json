@@ -1,8 +1,8 @@
 {
-  "build_date": "2018-10-23",
+  "build_date": "2018-10-24",
   "questions": {
     "1": {
-      "question_text": "Name of person filling out report (First & Last)",
+      "question_text": "Full name of person filling out report (first & last)",
       "question_type": "text_box",
       "max_characters": 50,
       "help": [
@@ -23,7 +23,7 @@
       "max_characters": 50,
       "multiline": true,
       "help": [
-        "Please list the first and last name of all individuals who can purchase alcohol at this licensed location."
+        "Please list the first and last name of the individual who can authorize employees to order and purchase alcohol at this licensed location."
       ]
     },
     "4": {
@@ -37,8 +37,8 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if anyone coming in to your establishment can see the TABC Permit/License from an area that customers have access to.",
-        "Answer \"No\" if anyone coming in to your establishment cannot see the TABC Permit/license."
+        "Answer \"Yes\" if anyone coming in to your establishment can see the TABC license/permit from an area that customers have access to. Tap \"Take Picture\" to provide one to three pictures.",
+        "Answer \"No\" if anyone coming in to your establishment cannot see the TABC license/permit."
       ]
     },
     "5": {
@@ -52,7 +52,7 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if you have the Public Information Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"Yes\" if you have the Public Information Sign posted in an area that customers have access to and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
         "Answer \"No\" if you do not have the Public Information Sign posted."
       ]
     },
@@ -67,7 +67,7 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if you have the Consumption Warning Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"Yes\" if you have the Consumption Warning Sign posted on the outside of your business and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
         "Answer \"No\" if you do not have the Consumption Warning Sign posted."
       ]
     },
@@ -90,7 +90,9 @@
         { "choice_text": "None" }
       ],
       "help": [
-        "Answer \"Blue\", \"Red\", or \"Both\" if you have the Blue, Red, or both Blue and Red Weapons Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "*Blue Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises unless the person is licensed to carry the handgun. It is issued to off-premises licenses/permits and on-premises licenses/permits that derive less than 51% of gross income from alcohol sales OR hold a Food & Beverage Certificate.",
+        "*Red Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises. It is issued to on-premises accounts that derive more than 51% of gross income from alcohol sales.",
+        "Answer \"Blue,\" \"Red,\" or \"Both\" if you have the Blue, Red, or both Blue and Red Weapons Sign(s) posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
         "Answer \"None\" if you do not have any of the Weapons Signs posted."
       ]
     },
@@ -105,7 +107,7 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if you have the Fetal Alcohol Sign posted in the Men’s and Women’s restrooms, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"Yes\" if you have the Fetal Alcohol Sign posted in both the Men’s and Women’s restrooms and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
         "Answer \"No\" if you do not have the Fetal Alcohol Sign posted."
       ]
     },
@@ -120,7 +122,7 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if you have the Human Trafficking Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"Yes\" if you have the Human Trafficking Sign posted and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
         "Answer \"No\" if you do not have the Human Trafficking Sign posted."
       ]
     },
@@ -135,7 +137,7 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if you have the \"21\" To Enter Sign posted, and take a photograph of it with your phone when you are prompted to do so.",
+        "Answer \"Yes\" if you have the \"21\" To Enter Sign posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
         "Answer \"No\" if you do not have the \"21\" To Enter Sign posted."
       ]
     },
@@ -153,7 +155,7 @@
         [
           "Are there any prices or brands of alcohol that can be seen from outside the business?",
           "",
-          "* Answer \"Yes\" if you can see any prices, brands, or alcohol advertisements from outside of the business.",
+          "* Answer \"Yes\" if you can see any prices, brands, or alcohol advertisements from outside of the business. Tap \"Take Picture\" to provide one to three pictures.",
           "* Answer \"No\" if you cannot see any prices, brands, or alcohol advertisements from outside of the business."
         ]
       ]
@@ -205,7 +207,7 @@
       ],
       "help": [
         [
-          "Answer \"Yes\" if the location has drink specials from open to close. E.g., drink specials from 10am to 2am, or drink specials all until close.",
+          "Answer \"Yes\" if the location has drink specials from open to close; e.g., drink specials from 10am to 2am or drink specials all day from open until close.",
           "",
           "* Answer \"Yes\" if this location has drink specials from open to close.",
           "* Answer \"No\" if this location does not have drink specials from open to close."
@@ -228,8 +230,9 @@
         { "choice_text": "Unknown" }
       ],
       "help": [
-        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase beer.",
-        "If you do not know, select \"Unknown\"."
+        "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase beer.",
+        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
+        "If you do not know, select \"Unknown.\""
       ]
     },
     "13": {
@@ -249,8 +252,9 @@
         { "choice_text": "Unknown" }
       ],
       "help": [
-        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase wine.",
-        "If you do not know, select \"Unknown\"."
+        "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase wine.",
+        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
+        "If you do not know, select \"Unknown.\""
       ]
     },
     "14": {
@@ -270,8 +274,9 @@
         { "choice_text": "Unknown" }
       ],
       "help": [
-        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase wine.",
-        "If you do not know, select \"Unknown\"."
+        "Select and enter the license/permit number(s) for vendor(s) that the location uses to purchase wine.",
+        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
+        "If you do not know, select \"Unknown.\""
       ]
     },
     "15": {
@@ -289,8 +294,9 @@
         { "choice_text": "Unknown" }
       ],
       "help": [
-        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase distilled spirits.",
-        "If you do not know, select \"Unknown\"."
+        "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase distilled spirits.",
+        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
+        "If you do not know, select \"Unknown.\""
       ]
     },
     "16": {
@@ -308,8 +314,9 @@
         { "choice_text": "Unknown" }
       ],
       "help": [
-        "Select and enter the permit number(s) for the vendor(s) that the location uses to purchase distilled spirits.",
-        "If you do not know, select \"Unknown\"."
+        "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase distilled spirits.",
+        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
+        "If you do not know, select \"Unknown.\""
       ]
     },
     "17A": {
@@ -358,7 +365,7 @@
       ]
     },
     "18B": {
-      "question_text": "If seller training is required for employees, do you have written alcohol service policies? If \"Yes\", then provide picture of first and last page.",
+      "question_text": "If seller training is required for employees, do you have written alcohol service policies? If \"Yes,\" then provide pictures of first and last pages.",
       "question_type": "radio",
       "choices": [
         {
@@ -368,7 +375,7 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if the location has written policies on alcohol service.",
+        "Answer \"Yes\" if the location has written policies on alcohol service. Provide pictures of the first and last pages of the policy. Tap \"Take Picture\" to provide one to three pictures.",
         "Answer \"No\" if there are not any written policies on alcohol service."
       ]
     },
@@ -428,8 +435,8 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if the food service facility is permanent at the location.",
-        "Answer \"No\" if the food service facility is not permanent at the location. E.g., you would answer \"No\" if you call in pizza as your only option for food service."
+        "Answer \"Yes\" if the food service facility (kitchen) is permanently at the location.",
+        "Answer \"No\" if the food service facility (kitchen) is not permanently at the location. For example, you would answer \"No\" if you call in pizza as your only option for food service."
       ]
     },
     "24A": {
@@ -446,8 +453,8 @@
         }
       ],
       "help": [
-        "Answer \"Yes\" if you have food service at the location that is run and operated by a different business entity from what is on the permit. E.g., a concession stand that is owned by a different business than the one that owns the alcohol permit.",
-        "Answer \"No\" if the business entity that owns the alcohol permit also operates the food service."
+        "Answer \"Yes\" if you have food service at the location that is run and operated by a different business entity from what is on the license/permit. For example, a concession stand that is owned by a different business than the one that owns the alcohol license/permit.",
+        "Answer \"No\" if the business entity that owns the alcohol license/permit also operates the food service."
       ]
     },
     "24B": {
@@ -459,7 +466,7 @@
       ],
       "help": [
         "Answer \"Yes\" if the separate business entity maintains records of the food service.",
-        "Answer \"No\" if the business that owns the alcohol permit also maintains the food service records."
+        "Answer \"No\" if the business that owns the alcohol license/permit also maintains the food service records."
       ]
     },
     "25": {
@@ -494,8 +501,8 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if the prepared food is to be consumed on the premises.",
-        "Answer \"No\" if the prepared food is not consumed on the premises. E.g., pizza taken to go."
+        "Answer \"Yes\" if the prepared food is primarily to be consumed on the premises.",
+        "Answer \"No\" if the prepared food is not primarily consumed on the premises; e.g., pizza taken to go."
       ]
     },
     "28A": {
@@ -604,14 +611,14 @@
         [
           "A Breach of the Peace is defined as:",
           "",
-          "1. Law enforcement or emergency medical services personnel respond to the premises of a permit or license; or",
+          "1. Law enforcement or emergency medical services personnel respond to the premises of a license/permit; or",
           "2. A disturbance is created on the premises by a person who does **any of the following:**",
           "   * Causes bodily injury to another person;",
           "   * Threatens another person with a weapon;",
-          "   * Discharges a firearm on the premises of the permit or license; or",
-          "   * Destroys the permittee's or licensee's property, if the incident is reported by the permittee or licensee to a law enforcement agency.",
+          "   * Discharges a firearm on the premises of the license/permit; or",
+          "   * Destroys the licensee’s or permittee’s property, if the incident is reported by the licensee or permittee to a law enforcement agency.",
           "",
-          "   **An incident described in paragraphs (1) and (2) in this section only has to be reported if it:** occurs at a time when the permittee or licensee or any person allowed by the permittee or licensee is on the premises and interferes with, interrupts, or intrudes upon the operation or management of the licensed premises."
+          "   **An incident described in paragraphs (1) and (2) in this section only has to be reported if it:** Occurs at a time when the licensee or permittee, or any person allowed by the licensee or permittee, is on the premises and Interferes with, interrupts, or intrudes upon the operation or management of the licensed premises."
         ],
         "Answer \"Yes\" if there was an incident at the location in the last 12-month period that meets any of the above requirements.",
         "Answer \"No\" if no incident has occurred in the last 12-month period."
@@ -653,15 +660,21 @@
       ]
     },
     "32": {
-      "question_text": "Have there been changes since your original or renewal applications that have not been reported to TABC?",
+      "question_text": "Has there been a change of trade name, ownership, or in business location since your original or renewal applications were last filed?",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
       ],
       "help": [
-        "Answer \"Yes\" if you have changed ownership or persons who are in control of the license and did not notify TABC.",
-        "Answer \"No\" if you have notified TABC of any changes or have not had any changes to your ownership."
+        [
+          "Answer \"Yes\" if one of the following has occurred and TABC has not been notified:",
+          "",
+          "* Change in trade name,",
+          "* Change in ownership or persons who are in control of the license/permit, or",
+          "* Change in business location."
+        ],
+        "Answer \"No\" if you have notified TABC of any change in trade name, change in ownership, or change in business location, or you have not had any changes to your ownership."
       ]
     },
     "33": {
