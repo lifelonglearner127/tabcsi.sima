@@ -16,7 +16,7 @@ class Question < ApplicationRecord
     }
   )
 
-  enum question_type: %i[radio text_box drop_down]
+  enum question_type: %i[radio text_box drop_down time_range]
   enum additional_type: %i[number]
 
   scope(
