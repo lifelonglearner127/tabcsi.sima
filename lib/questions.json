@@ -1,5 +1,5 @@
 {
-  "build_date": "2018-10-24",
+  "build_date": "2018-10-25",
   "questions": {
     "1": {
       "question_text": "Full name of person filling out report (first & last)",
@@ -69,10 +69,13 @@
         },
         { "choice_text": "No" }
       ],
-      "help": [
-        "Answer \"Yes\" if you have the Consumption Warning Sign posted on the outside of your business and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
-        "Answer \"No\" if you do not have the Consumption Warning Sign posted."
-      ]
+      "help": {
+        "items": [
+          "Answer \"Yes\" if you have the Consumption Warning Sign posted on the outside of your business and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
+          "Answer \"No\" if you do not have the Consumption Warning Sign posted."
+        ],
+        "images": ["assets/images/help/consumption_warning_sign.png"]
+      }
     },
     "7": {
       "question_text": "Weapons Sign Posted",
