@@ -47,10 +47,16 @@ export default {
 
     // `this.currentUserIsTabc` computed property is not available here.
     if (this.isTabc(this.currentUser)) {
-      obj.searchOptions.unshift({
-        text: 'Company Name',
-        value: 'company'
-      })
+      obj.searchOptions.unshift(
+        {
+          text: 'Company Name',
+          value: 'companyName'
+        },
+        {
+          text: 'Owner Name',
+          value: 'ownerName'
+        }
+      )
     }
 
     return obj
@@ -79,7 +85,10 @@ export default {
       ]
 
       if (this.currentUserIsTabc) {
-        value.unshift('fullName')
+        value.unshift(
+          'ownerName',
+          'fullName'
+        )
       }
 
       value.unshift({
@@ -91,7 +100,7 @@ export default {
     },
 
     firstColumnSlot () {
-      return this.currentUserIsTabc ? 'company' : 'fullName'
+      return this.currentUserIsTabc ? 'companyName' : 'fullName'
     },
 
     noDiscardedUsersSelected () {
@@ -152,8 +161,12 @@ export default {
     filterUsers () {
       this.filteredItems = filterItems(this.items, this.searchKey, (filteredItems, item, value) => {
         switch (this.searchOption) {
-          case 'company':
+          case 'companyName':
             addSearchedItem(filteredItems, item, value, ['company.name', 'company.ownerName'])
+            break
+
+          case 'ownerName':
+            addSearchedItem(filteredItems, item, value, 'company.ownerName')
             break
 
           case 'fullName':
@@ -174,11 +187,13 @@ export default {
 
     firstColumnValue (row) {
       if (this.currentUserIsTabc) {
-        if (row.value == null) {
+        const company = row.item.company
+
+        if (company == null) {
           return 'TABC'
         }
 
-        return row.value.name || row.value.ownerName
+        return company.name || company.ownerName
       }
 
       return row.value
@@ -346,10 +361,10 @@ export default {
       :items="filteredItems"
     >
       <template slot="table-colgroup">
-        <col
-          v-if="currentUserIsTabc"
-          class="company-col"
-        >
+        <template v-if="currentUserIsTabc">
+          <col class="company-name-col">
+          <col class="owner-name-col">
+        </template>
         <col class="full-name-col">
         <col class="email-col">
         <col class="job-title-col">
@@ -380,6 +395,14 @@ export default {
         >
           {{ firstColumnValue(row) }}
         </b-form-checkbox>
+      </template>
+
+      <template
+        v-if="currentUserIsTabc"
+        slot="ownerName"
+        slot-scope="row"
+      >
+        {{ row.item.company == null ? 'TABC' : row.item.company.ownerName }}
       </template>
 
       <template
@@ -445,7 +468,11 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixins';
 
-.company-col {
+.company-name-col {
+  width: auto;
+}
+
+.owner-name-col {
   width: auto;
 }
 

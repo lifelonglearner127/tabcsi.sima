@@ -37,10 +37,16 @@ export default {
     }
 
     if (this.isTabcAdmin) {
-      obj.searchOptions.unshift({
-        text: 'Company Name',
-        value: 'company'
-      })
+      obj.searchOptions.unshift(
+        {
+          text: 'Company Name',
+          value: 'companyName'
+        },
+        {
+          text: 'Owner Name',
+          value: 'ownerName'
+        }
+      )
     }
 
     return obj
@@ -64,7 +70,10 @@ export default {
       ]
 
       if (this.isTabcAdmin) {
-        value.unshift('company')
+        value.unshift(
+          'companyName',
+          'ownerName'
+        )
 
         value.push({
           key: 'actions',
@@ -77,7 +86,7 @@ export default {
     },
 
     firstColumnSlot () {
-      return this.isTabcAdmin ? 'company' : 'fullName'
+      return this.isTabcAdmin ? 'companyName' : 'name'
     }
   },
 
@@ -104,8 +113,12 @@ export default {
     filterLocations () {
       this.filteredItems = filterItems(this.items, this.searchKey, (filteredItems, item, value) => {
         switch (this.searchOption) {
-          case 'company':
+          case 'companyName':
             addSearchedItem(filteredItems, item, value, ['company.name', 'company.ownerName'])
+            break
+
+          case 'ownerName':
+            addSearchedItem(filteredItems, item, value, 'company.ownerName')
             break
 
           case 'name':
@@ -123,11 +136,13 @@ export default {
 
     firstColumnValue (row) {
       if (this.isTabcAdmin) {
-        if (row.value == null) {
+        const company = row.item.company
+
+        if (company == null) {
           return 'TABC'
         }
 
-        return row.value.name || row.value.ownerName
+        return company.name || company.ownerName
       }
 
       return row.value
@@ -244,10 +259,10 @@ export default {
       :items="filteredItems"
     >
       <template slot="table-colgroup">
-        <col
-          v-if="isTabcAdmin"
-          class="company-col"
-        >
+        <template v-if="isTabcAdmin">
+          <col class="company-name-col">
+          <col class="owner-name-col">
+        </template>
         <col class="name-col">
         <col class="clp-col">
         <col class="address-col">
@@ -264,6 +279,14 @@ export default {
         slot-scope="row"
       >
         {{ firstColumnValue(row) }}
+      </template>
+
+      <template
+        v-if="isTabcAdmin"
+        slot="ownerName"
+        slot-scope="row"
+      >
+        {{ row.item.company == null ? 'TABC' : row.item.company.ownerName }}
       </template>
 
       <div
@@ -303,7 +326,11 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixins';
 
-.company-col {
+.company-name-col {
+  width: auto;
+}
+
+.owner-name-col {
   width: auto;
 }
 
