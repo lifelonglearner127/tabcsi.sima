@@ -5,12 +5,6 @@ import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import PageMixin from '~/mixins/page'
 
-const DASHBOARD_TITLES = {
-  admin: 'Admin',
-  tabc: 'TABC',
-  user: 'User'
-}
-
 export default {
   name: 'Dashboards',
 
@@ -31,7 +25,21 @@ export default {
     },
 
     dashboardTitle () {
-      return `${DASHBOARD_TITLES[this.user.role]} Dashboard`
+      let title
+
+      if (this.user.role === 'tabc') {
+        return 'TABC Dashboard'
+      }
+
+      title = this.user.company_name || this.company.name || 'Unknown Company'
+
+      if (this.user.role === 'admin') {
+        title += ' Admin'
+      }
+
+      title += ' Dashboard'
+
+      return title
     },
 
     locations () {
