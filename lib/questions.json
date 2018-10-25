@@ -95,12 +95,18 @@
         },
         { "choice_text": "None" }
       ],
-      "help": [
-        "*Blue Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises unless the person is licensed to carry the handgun. It is issued to off-premises licenses/permits and on-premises licenses/permits that derive less than 51% of gross income from alcohol sales OR hold a Food & Beverage Certificate.",
-        "*Red Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises. It is issued to on-premises accounts that derive more than 51% of gross income from alcohol sales.",
-        "Answer \"Blue,\" \"Red,\" or \"Both\" if you have the Blue, Red, or both Blue and Red Weapons Sign(s) posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
-        "Answer \"None\" if you do not have any of the Weapons Signs posted."
-      ]
+      "help": {
+        "items": [
+          "*Blue Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises unless the person is licensed to carry the handgun. It is issued to off-premises licenses/permits and on-premises licenses/permits that derive less than 51% of gross income from alcohol sales OR hold a Food & Beverage Certificate.",
+          "*Red Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises. It is issued to on-premises accounts that derive more than 51% of gross income from alcohol sales.",
+          "Answer \"Blue,\" \"Red,\" or \"Both\" if you have the Blue, Red, or both Blue and Red Weapons Sign(s) posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
+          "Answer \"None\" if you do not have any of the Weapons Signs posted."
+        ],
+        "images": [
+          "assets/images/help/handgun_warning_sign-blue-english.png",
+          "assets/images/help/handgun_warning_sign-red-english.png"
+        ]
+      }
     },
     "8": {
       "question_text": "Fetal Alcohol Sign Posted in Men's & Women's Restrooms",
