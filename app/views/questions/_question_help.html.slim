@@ -4,11 +4,11 @@ h4
   | #{question.question_text}
 
 - if question.question_help_images.size.positive?
-  .container.mb-2
+  .container
     .row
       - question.question_help_images.each do |image|
-        .col-3
-          img.img-fluid.img-thumbnail alt="thumbnail" src=asset_pack_path(image.path)
+        .col-12.col-sm-6.col-md-4.col-lg-3
+          img.img-fluid.img-thumbnail.my-3 alt="thumbnail" src=asset_pack_path(image.path)
 
 ul
   - question.question_help_items.each do |item|
