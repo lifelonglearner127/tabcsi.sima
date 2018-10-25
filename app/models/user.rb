@@ -105,7 +105,7 @@ class User < ApplicationRecord
       Time.zone.now >= pin_last_requested_at + Setting.pin_expiration
   end
 
-  def request_pin
+  def request_pin(web:)
     @requested_pin = true
 
     pin = generate_pin
@@ -115,7 +115,8 @@ class User < ApplicationRecord
     UsersMailer.with(
       recipient: email,
       full_name: full_name,
-      pin: pin
+      pin: pin,
+      web: web
     ).request_pin.deliver_now
 
     true

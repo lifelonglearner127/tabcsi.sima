@@ -2,6 +2,9 @@ p Hi #{@full_name},
 p
   ' Here is your one-time registration code:
   strong = @pin
-p Please enter the #{Setting.pin_length}-digit code to gain access to the TABC: Compliance Reporting application.
+p
+  ' Please enter the #{Setting.pin_length}-digit code to gain access to the TABC: Compliance Reporting
+  | #{@web ? 'Administrative Portal' : 'Application'}
+  | .
 p
   em NOTE: This one-time registration code expires 30-minutes after it was requested.

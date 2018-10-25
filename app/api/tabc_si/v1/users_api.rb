@@ -21,7 +21,10 @@ module TabcSi
           user = User.find_for_database_authentication(email: email)
 
           error_bad_request! "user doesn't exist" if user.blank?
-          error! 'could not generate a new pin' unless user.request_pin
+
+          unless user.request_pin(web: false)
+            error! 'could not generate a new pin'
+          end
 
           no_content
         end

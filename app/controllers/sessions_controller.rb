@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
   end
 
   def resend_pin
-    current_user.request_pin if pin_requested?
+    current_user.request_pin(web: true) if pin_requested?
 
     redirect_to log_in_url
   end
@@ -62,7 +62,7 @@ class SessionsController < ApplicationController
     self.session_email = session_params[:email]
 
     user = User.find_for_database_authentication(email: session_email)
-    if user.present? && user.request_pin
+    if user.present? && user.request_pin(web: true)
       self.session_email = nil
       session[:user_id] = user.id
       self.pin_requested = true

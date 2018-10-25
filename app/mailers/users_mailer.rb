@@ -6,6 +6,7 @@ class UsersMailer < ApplicationMailer
   def request_pin
     @full_name = params[:full_name]
     @pin = params[:pin]
+    @web = params[:web]
 
     mail to: params[:recipient]
   end
