@@ -47,9 +47,20 @@ module TabcSi
             Friday: [Alcohol: 10:00-22:00]
       DESC
 
+      TIME_RANGE_FORMAT ||= <<~DESC
+        Value format (braced text should be replaced with actual values):
+
+            {start value, 24H}-{end value, 24H}
+
+        Examples:
+
+          10:00-22:00
+      DESC
+
       QUESTION_DESCRIPTIONS ||= {
         drop_down: DROP_DOWN_FORMAT,
-        radio: RADIO_FORMAT
+        radio: RADIO_FORMAT,
+        time_range: TIME_RANGE_FORMAT
       }.freeze
 
       # def self.collect_questions
