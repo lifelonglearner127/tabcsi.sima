@@ -42,7 +42,7 @@
       ]
     },
     "5": {
-      "question_text": "Public Information Sign Posted",
+      "question_text": "Public Information Sign Posted (See help for sign image.)",
       "question_type": "radio",
       "choices": [
         {
@@ -60,7 +60,7 @@
       }
     },
     "6": {
-      "question_text": "Consumption Warning Sign Posted",
+      "question_text": "Consumption Warning Sign Posted (See help for sign image.)",
       "question_type": "radio",
       "choices": [
         {
@@ -78,7 +78,7 @@
       }
     },
     "7": {
-      "question_text": "Weapons Sign Posted",
+      "question_text": "Weapons Sign Posted (See help for sign images.)",
       "question_type": "radio",
       "choices": [
         {
@@ -109,7 +109,7 @@
       }
     },
     "8": {
-      "question_text": "Fetal Alcohol Sign Posted in Men's & Women's Restrooms",
+      "question_text": "Fetal Alcohol Sign Posted in Men's & Women's Restrooms (See help for sign image.)",
       "question_type": "radio",
       "choices": [
         {
@@ -127,7 +127,7 @@
       }
     },
     "9": {
-      "question_text": "Human Trafficking Sign Posted",
+      "question_text": "Human Trafficking Sign Posted (See help for sign image.)",
       "question_type": "radio",
       "choices": [
         {
@@ -145,7 +145,7 @@
       }
     },
     "10": {
-      "question_text": "\"21\" To Enter Sign Posted",
+      "question_text": "\"21\" To Enter Sign Posted (See help for sign image.)",
       "question_type": "radio",
       "choices": [
         {
@@ -413,16 +413,19 @@
       ]
     },
     "20": {
-      "question_text": "Are TABC Stamps on ALL distilled spirit bottles?",
+      "question_text": "Are TABC Stamps on ALL distilled spirit bottles? (See help for stamp image.)",
       "question_type": "radio",
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
       ],
-      "help": [
-        "Answer \"Yes\" if TABC Stamps are on all bottles of distilled spirits at the location.",
-        "Answer \"No\" if TABC Stamps are not on all bottles of distilled spirits."
-      ]
+      "help": {
+        "items": [
+          "Answer \"Yes\" if TABC Stamps are on all bottles of distilled spirits at the location.",
+          "Answer \"No\" if TABC Stamps are not on all bottles of distilled spirits."
+        ],
+        "images": ["assets/images/help/stamp_graphic_clipped.png"]
+      }
     },
     "21": {
       "question_text": "Do you mutilate the TABC Stamp on the bottle when it's empty?",
