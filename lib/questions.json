@@ -136,10 +136,13 @@
         },
         { "choice_text": "No" }
       ],
-      "help": [
-        "Answer \"Yes\" if you have the Human Trafficking Sign posted and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
-        "Answer \"No\" if you do not have the Human Trafficking Sign posted."
-      ]
+      "help": {
+        "items": [
+          "Answer \"Yes\" if you have the Human Trafficking Sign posted and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
+          "Answer \"No\" if you do not have the Human Trafficking Sign posted."
+        ],
+        "images": ["assets/images/help/human_trafficking_hotline_number_sign.png"]
+      }
     },
     "10": {
       "question_text": "\"21\" To Enter Sign Posted",
