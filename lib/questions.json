@@ -118,10 +118,13 @@
         },
         { "choice_text": "No" }
       ],
-      "help": [
-        "Answer \"Yes\" if you have the Fetal Alcohol Sign posted in both the Men’s and Women’s restrooms and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
-        "Answer \"No\" if you do not have the Fetal Alcohol Sign posted."
-      ]
+      "help": {
+        "items": [
+          "Answer \"Yes\" if you have the Fetal Alcohol Sign posted in both the Men’s and Women’s restrooms and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
+          "Answer \"No\" if you do not have the Fetal Alcohol Sign posted."
+        ],
+        "images": ["assets/images/help/health_risk_warning_sign.png"]
+      }
     },
     "9": {
       "question_text": "Human Trafficking Sign Posted",
