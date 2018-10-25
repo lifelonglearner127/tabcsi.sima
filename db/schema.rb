@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_12_161411) do
+ActiveRecord::Schema.define(version: 2018_10_25_174102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -301,6 +301,19 @@ ActiveRecord::Schema.define(version: 2018_10_12_161411) do
     t.index ["user_id"], name: "index_push_tokens_on_user_id"
   end
 
+  create_table "question_help_images", force: :cascade do |t|
+    t.string "parent_type", null: false
+    t.bigint "parent_id", null: false
+    t.string "path", null: false
+    t.integer "sort_order", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_question_help_images_on_discarded_at"
+    t.index ["parent_type", "parent_id"], name: "index_question_help_images_on_parent_type_and_parent_id"
+    t.index ["sort_order"], name: "index_question_help_images_on_sort_order"
+  end
+
   create_table "question_help_items", force: :cascade do |t|
     t.string "parent_type", null: false
     t.bigint "parent_id", null: false
@@ -309,7 +322,9 @@ ActiveRecord::Schema.define(version: 2018_10_12_161411) do
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_question_help_items_on_discarded_at"
     t.index ["parent_type", "parent_id"], name: "index_question_help_items_on_parent_type_and_parent_id"
+    t.index ["sort_order"], name: "index_question_help_items_on_sort_order"
   end
 
   create_table "questions", force: :cascade do |t|

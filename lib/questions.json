@@ -51,10 +51,13 @@
         },
         { "choice_text": "No" }
       ],
-      "help": [
-        "Answer \"Yes\" if you have the Public Information Sign posted in an area that customers have access to and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
-        "Answer \"No\" if you do not have the Public Information Sign posted."
-      ]
+      "help": {
+        "items": [
+          "Answer \"Yes\" if you have the Public Information Sign posted in an area that customers have access to and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
+          "Answer \"No\" if you do not have the Public Information Sign posted."
+        ],
+        "images": ["assets/images/help/public_information_complaint_sign.png"]
+      }
     },
     "6": {
       "question_text": "Consumption Warning Sign Posted",

@@ -3,6 +3,13 @@ h4
     ' #{question.question_number}.
   | #{question.question_text}
 
+- if question.question_help_images.size.positive?
+  .container.mb-2
+    .row
+      - question.question_help_images.each do |image|
+        .col-3
+          img.img-fluid.img-thumbnail alt="thumbnail" src=asset_pack_path(image.path)
+
 ul
   - question.question_help_items.each do |item|
     li == parse_markdown(item.value)

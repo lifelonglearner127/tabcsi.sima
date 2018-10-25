@@ -3,31 +3,56 @@
 module TabcSi
   module Builders
     class HelpBuilder < Builder
+      attr_reader :images
+      attr_reader :items
       attr_reader :question_builder
-      attr_reader :help
 
       def initialize(question_builder, config)
         super(config)
 
         @question_builder = question_builder
-        @help = nil
       end
 
       def build
-        @help = QuestionHelpItem.create!(
-          parent: question_builder.question,
-          **attributes
-        )
+        items.each(&:build)
+        images.each(&:build)
       end
 
       protected
 
       def parse_config
-        super(%i[value sort_order])
+        super
 
-        return unless attributes[:value].is_a?(Array)
+        @items = wrap_items(config[:items] || [])
+        @images = wrap_images(config[:images] || [])
+      end
 
-        attributes[:value] = attributes[:value].join("\n")
+      private
+
+      def wrap_images(images)
+        sort_order = 0
+        images.map do |image|
+          sort_order += 1
+
+          HelpImageBuilder.new(
+            self,
+            path: image,
+            sort_order: sort_order
+          )
+        end
+      end
+
+      def wrap_items(items)
+        sort_order = 0
+        items.map do |item|
+          sort_order += 1
+
+          HelpItemBuilder.new(
+            self,
+            value: item,
+            sort_order: sort_order
+          )
+        end
       end
     end
   end

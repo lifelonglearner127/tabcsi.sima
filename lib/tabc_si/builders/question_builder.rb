@@ -26,7 +26,7 @@ module TabcSi
         )
 
         choices.each(&:build)
-        help.each(&:build)
+        help.build
       end
 
       protected
@@ -39,7 +39,7 @@ module TabcSi
 
         @choices = wrap_choices(config[:choices] || [])
         @conditions = wrap_conditions(config[:conditions] || [])
-        @help = wrap_help(config[:help] || [])
+        @help = wrap_help(config[:help] || {})
       end
 
       private
@@ -57,16 +57,11 @@ module TabcSi
       end
 
       def wrap_help(help)
-        sort_order = 0
-        help.map do |item|
-          sort_order += 1
-
-          HelpBuilder.new(
-            self,
-            value: item,
-            sort_order: sort_order
-          )
+        unless help.is_a?(Hash)
+          help = { items: help, images: [] }
         end
+
+        HelpBuilder.new(self, help)
       end
     end
   end

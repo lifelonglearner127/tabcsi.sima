@@ -4,6 +4,7 @@ class Question < ApplicationRecord
   has_many :answers, -> { order(:inspection_id) }, dependent: :nullify
   has_many :audit_form_questions, -> { order(:id) }, dependent: :destroy
   has_many :choices, -> { order(:id) }, dependent: :destroy
+  has_many :question_help_images, as: :parent, dependent: :destroy
   has_many :question_help_items, as: :parent, dependent: :destroy
 
   validates :question_number, :question_text, :question_type, presence: true
