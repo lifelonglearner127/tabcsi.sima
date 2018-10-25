@@ -154,10 +154,13 @@
         },
         { "choice_text": "No" }
       ],
-      "help": [
-        "Answer \"Yes\" if you have the \"21\" To Enter Sign posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
-        "Answer \"No\" if you do not have the \"21\" To Enter Sign posted."
-      ]
+      "help": {
+        "items": [
+          "Answer \"Yes\" if you have the \"21\" To Enter Sign posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
+          "Answer \"No\" if you do not have the \"21\" To Enter Sign posted."
+        ],
+        "images": ["assets/images/help/under_21_sign.png"]
+      }
     },
     "11A": {
       "question_text": "Do you have alcohol advertising on the outside of the business?",
