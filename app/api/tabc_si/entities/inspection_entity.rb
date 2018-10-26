@@ -13,7 +13,6 @@ module TabcSi
       end
 
       expose :report_number
-      expose :cancellation_reason
 
       expose(
         :started_at,
@@ -67,6 +66,8 @@ module TabcSi
         }
       )
 
+      expose :cancellation_reason
+
       expose(
         :cancelled_at,
         documentation: {
@@ -79,6 +80,35 @@ module TabcSi
         :updated_at,
         documentation: {
           desc: 'The date-time when the inspection was last updated.',
+          format: 'date-time'
+        }
+      )
+
+      expose(
+        :flagged,
+        documentation: {
+          desc: <<~DESC,
+            Whether or not the inspection was flagged based on answers given.
+          DESC
+          type: 'boolean'
+        }
+      )
+
+      expose(
+        :flag_reason,
+        documentation: {
+          desc: <<~DESC
+            The set of question numbers that caused the inspection to be flagged.
+          DESC
+        }
+      )
+
+      expose(
+        :flagged_at,
+        documentation: {
+          desc: <<~DESC,
+            When the inspection was flagged. This is set whether `flagged` is `true` or `false`.
+          DESC
           format: 'date-time'
         }
       )

@@ -57,9 +57,7 @@ module TabcSi
       end
 
       def wrap_help(help)
-        unless help.is_a?(Hash)
-          help = { items: help, images: [] }
-        end
+        help = { items: help, images: [] } unless help.is_a?(Hash)
 
         HelpBuilder.new(self, help)
       end
