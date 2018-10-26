@@ -49,6 +49,11 @@ module Web
 
     config.generators.system_tests = nil
 
+    if Rails.env.development?
+      config.web_console.whitelisted_ips =
+        Nenv.instance.allowed_ip_addresses.split(',')
+    end
+
     config.middleware.use Rack::Attack
   end
 end

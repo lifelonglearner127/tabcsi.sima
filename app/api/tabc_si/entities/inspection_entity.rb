@@ -98,7 +98,8 @@ module TabcSi
         :flag_reason,
         documentation: {
           desc: <<~DESC
-            The set of question numbers that caused the inspection to be flagged.
+            The set of question numbers that caused the inspection to be
+            flagged.
           DESC
         }
       )
@@ -107,7 +108,8 @@ module TabcSi
         :flagged_at,
         documentation: {
           desc: <<~DESC,
-            When the inspection was flagged. This is set whether `flagged` is `true` or `false`.
+            When the inspection was flagged. This is set whether `flagged` is
+            `true` or `false`.
           DESC
           format: 'date-time'
         }
