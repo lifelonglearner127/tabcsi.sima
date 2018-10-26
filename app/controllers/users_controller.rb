@@ -35,7 +35,9 @@ class UsersController < ApplicationController
 
   def edit; end
 
-  def invite; end
+  def invite
+    redirect_to(dashboard_url) if current_user.tabc?
+  end
 
   def new
     redirect_to(dashboard_url) if logged_in?
@@ -82,16 +84,20 @@ class UsersController < ApplicationController
           }
         }
       when 'invite'
-        {
-          url: invite_users_path,
-          method: 'post',
-          local: true,
-          html: {
-            locations: current_user.company.locations,
-            owner_name: current_user.company.owner_name,
-            page_name: 'invite'
+        if current_user.tabc?
+          { html: {} }
+        else
+          {
+            url: invite_users_path,
+            method: 'post',
+            local: true,
+            html: {
+              locations: current_user.company.locations,
+              owner_name: current_user.company.owner_name,
+              page_name: 'invite'
+            }
           }
-        }
+        end
       else
         {
           url: sign_up_path,
