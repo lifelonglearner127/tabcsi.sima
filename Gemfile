@@ -45,12 +45,12 @@ group :development do
   gem 'capistrano-rvm', '~> 0.1.2', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
-  gem 'rubocop', '~> 0.59.2', require: false
+  gem 'rubocop', '~> 0.60.0', require: false
   gem 'rubocop-rspec', '~> 1.30'
   gem 'slackistrano', '~> 3.8'
   gem 'spring', '~> 2.0'
   gem 'spring-commands-rspec', '~> 1.0'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen', '~> 2.0'
   gem 'web-console', '~> 3.7'
 end
 

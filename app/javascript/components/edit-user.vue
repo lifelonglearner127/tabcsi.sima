@@ -6,6 +6,7 @@ import map from 'lodash/map'
 import { parseDigit } from '~/lib/utils'
 import { required } from 'vuelidate/lib/validators'
 import snakeCase from 'lodash/snakeCase'
+import { titleizeValue } from '~/lib/formatters'
 import ValidationMixin from '~/mixins/validation'
 
 export default {
@@ -34,6 +35,7 @@ export default {
       form: {
         fullName: {
           autoComplete: 'name',
+          formatter: titleizeValue,
           icon: 'fas-fa-user',
           label: 'Full Name',
           required: true
@@ -208,6 +210,7 @@ export default {
             :data-path="key"
             :disabled="options.disabled"
             :format="options.format"
+            :formatter="options.formatter"
             :maxlength="options.maxLength"
             :name="inputName(key)"
             :parse="options.parse"
