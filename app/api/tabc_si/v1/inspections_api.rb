@@ -184,6 +184,39 @@ module TabcSi
         end
 
         desc(
+          'Update Inspection Flag',
+          detail: <<~DESC,
+            Updates the specified inspection's (by report number) flag status.
+          DESC
+          success: {
+            model: Entities::InspectionEntity,
+            message: 'An inspection object.'
+          }
+        )
+        params do
+          requires :report_number, type: String, allow_blank: false
+          requires :flagged, type: Boolean, default: false
+          optional :reason, type: String, allow_blank: false
+        end
+        patch :flag do
+          report_number = params[:report_number]
+          flagged = params[:flagged]
+          reason = params[:reason]
+
+          inspection = Inspection.find_by(report_number: report_number)
+
+          error_bad_request! 'no inspection found' if inspection.blank?
+
+          inspection.update!(
+            flagged: flagged,
+            flag_reason: reason,
+            flagged_at: Time.zone.now.utc
+          )
+
+          respond inspection
+        end
+
+        desc(
           'Get Unsubmitted Inspections',
           detail: <<~DESC,
             Retrieves all inspections where `completed_at` is not `NULL` and
