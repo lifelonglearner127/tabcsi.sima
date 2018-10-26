@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_174102) do
+ActiveRecord::Schema.define(version: 2018_10_26_181251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,12 +152,16 @@ ActiveRecord::Schema.define(version: 2018_10_25_174102) do
     t.bigint "license_id"
     t.boolean "erroneous", default: false, null: false
     t.string "fiscal_year"
+    t.boolean "flagged"
+    t.text "flag_reason"
+    t.datetime "flagged_at"
     t.index ["audit_form_id"], name: "index_inspections_on_audit_form_id"
     t.index ["completed_at", "submitted_at", "erroneous"], name: "index_inspections_on_unsubmitted"
     t.index ["completed_at"], name: "index_inspections_on_completed_at"
     t.index ["discarded_at"], name: "index_inspections_on_discarded_at"
     t.index ["erroneous"], name: "index_inspections_on_erroneous"
     t.index ["fiscal_year"], name: "index_inspections_on_fiscal_year"
+    t.index ["flagged"], name: "index_inspections_on_flagged"
     t.index ["license_id"], name: "index_inspections_on_license_id"
     t.index ["location_id"], name: "index_inspections_on_location_id"
     t.index ["submitted_at"], name: "index_inspections_on_submitted_at"
