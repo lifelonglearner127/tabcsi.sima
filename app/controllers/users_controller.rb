@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   skip_before_action(
     :require_logged_in_user, except: %i[destroy edit invite update]
   )
-
   prepend_before_action :set_user, only: %i[destroy edit show update]
   skip_before_action :set_page_options, except: %i[edit invite new]
 
@@ -33,10 +32,18 @@ class UsersController < ApplicationController
     head :no_content
   end
 
-  def edit; end
+  def edit
+    # security:
+    # * don't allow regular users to edit other users
+    # * don't allow admins to edit non-company users
+    if (current_user.user? && !profile?) ||
+       (current_user.admin? && @user.company_id != current_user.company_id)
+      redirect_to(dashboard_url)
+    end
+  end
 
   def invite
-    redirect_to(dashboard_url) if current_user.tabc?
+    redirect_to(dashboard_url) if current_user.user? || current_user.tabc?
   end
 
   def new
@@ -77,7 +84,7 @@ class UsersController < ApplicationController
           method: 'patch',
           local: true,
           html: {
-            is_profile: @user.id == current_user.id,
+            is_profile: profile?,
             locations: @user.tabc? ? [] : @user.company.locations,
             locked_locations: @user.locked_locations,
             page_name: 'edit'
@@ -130,6 +137,10 @@ class UsersController < ApplicationController
     end
 
     normalized_params
+  end
+
+  def profile?
+    @user.id == current_user.id
   end
 
   def set_user
