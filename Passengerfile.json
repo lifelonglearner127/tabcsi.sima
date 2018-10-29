@@ -5,5 +5,6 @@
   "pid_file": "tmp/pids/passenger.pid",
   "environment": "production",
   "user": "tabcsi",
-  "log_file": "log/passenger.log"
+  "log_file": "log/passenger.log",
+  "unlimited_concurrency_paths": ["/cable"]
 }
