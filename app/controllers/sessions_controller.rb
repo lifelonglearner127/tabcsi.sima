@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out if pin_requested? || logged_in?
+
     redirect_to root_url
   end
 
@@ -24,7 +25,9 @@ class SessionsController < ApplicationController
   end
 
   def resend_pin
-    current_user.request_pin(web: true) if pin_requested?
+    if pin_requested? && current_user.present?
+      current_user.request_pin(web: true)
+    end
 
     redirect_to log_in_url
   end
@@ -55,7 +58,7 @@ class SessionsController < ApplicationController
   end
 
   def pin_requested?
-    current_user.present? && session[:pin_requested]
+    session[:pin_requested]
   end
 
   def request_pin
@@ -63,25 +66,24 @@ class SessionsController < ApplicationController
 
     user = User.find_for_database_authentication(email: session_email)
     if user.present? && user.request_pin(web: true)
-      self.session_email = nil
       session[:user_id] = user.id
-      self.pin_requested = true
+      self.session_email = nil
     else
-      page_data_options[:html][:errors] = {
-        email: 'Login Error: Email is not registered.'
-      }
+      Rails.logger.error('Email address does not exist.')
     end
+
+    self.pin_requested = true
 
     render 'new'
   end
 
   def session_email
-    session[:email]
+    session[:email] || current_user&.email
   end
 
   def session_email=(value)
     session[:email] = value
-    page_data_options[:html][:email] = value
+    page_data_options[:html][:email] = value || current_user&.email
   end
 
   def session_params
