@@ -61,7 +61,6 @@ export default {
           label: 'CLP Number'
         },
         'address',
-        'phoneNumber',
         {
           key: 'status',
           tdClass: 'text-center',
@@ -266,7 +265,6 @@ export default {
         <col class="name-col">
         <col class="clp-col">
         <col class="address-col">
-        <col class="phone-col">
         <col class="status-col">
         <col
           v-if="isTabcAdmin"
@@ -344,10 +342,6 @@ export default {
 
 .address-col {
   width: auto;
-}
-
-.phone-col {
-  @include fixed-width(10rem);
 }
 
 .status-col {
