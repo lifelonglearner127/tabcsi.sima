@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :require_logged_in_user
-  skip_before_action :set_page_options, except: %i[create new]
+  before_action :require_logged_in_user, only: %i[destroy]
+  before_action :set_page_options, only: %i[create new]
 
   def create
     if pin_requested?

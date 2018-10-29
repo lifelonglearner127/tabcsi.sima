@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :require_logged_in_user
-  before_action :set_page_options
-
   helper_method :current_user, :page_data_options, :site_version
 
   protected

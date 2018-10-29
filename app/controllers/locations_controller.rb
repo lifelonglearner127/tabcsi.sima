@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LocationsController < ApplicationController
-  skip_before_action :set_page_options
+  before_action :require_logged_in_user
   before_action :set_location
 
   def reset

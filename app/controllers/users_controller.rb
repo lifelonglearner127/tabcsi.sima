@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  skip_before_action(
-    :require_logged_in_user, except: %i[destroy edit invite update]
-  )
-  prepend_before_action :set_user, only: %i[destroy edit show update]
-  skip_before_action :set_page_options, except: %i[edit invite new]
+  before_action :require_logged_in_user, only: %i[destroy edit invite update]
+  before_action :set_user, only: %i[destroy edit show update]
+  before_action :set_page_options, only: %i[edit invite new]
 
   def create
     @user = User.create(normalized_user_params)

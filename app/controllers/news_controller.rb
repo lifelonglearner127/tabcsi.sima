@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class NewsController < ApplicationController
-  skip_before_action :require_logged_in_user, only: %i[show]
-  prepend_before_action :set_news, only: %i[destroy edit show update]
-  skip_before_action :set_page_options, only: %i[create destroy update]
+  before_action :require_logged_in_user, except: %i[show]
+  before_action :set_news, only: %i[destroy edit show update]
+  before_action :set_page_options, except: %i[create destroy update]
 
   def create
     news = News.new(news_params)
