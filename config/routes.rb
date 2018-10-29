@@ -52,6 +52,8 @@ Rails.application.routes.draw do
   get :sign_up, to: 'users#new'
   post :sign_up, to: 'users#create'
 
+  resource :verification, only: %i[show]
+
   namespace :api do
     get(
       ':version/docs',

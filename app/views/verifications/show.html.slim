@@ -1,0 +1,23 @@
+- url = "tabccr://verification?pin=#{@pin}"
+
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta name="robots" content="noarchive,nocache,nofollow,noimageindex,noindex,none,noodp,nosnippet"
+    meta http-equiv="refresh" content="10; url=#{url}"
+
+    title TABC: Compliance Reporting
+
+    css:
+      h3 {
+        margin: 0 15%;
+        text-align: center;
+      }
+
+  body
+    h3
+      ' You are currently being redirected to the TABC: Compliance Reporting application with your access PIN. If you are
+      | not automatically redirected within ten (10) seconds, then try clicking the following link:
+      br
+      a href=url TABC: Compliance Reporting
