@@ -24,7 +24,7 @@ gem 'high_voltage', '~> 3.1'
 gem 'kramdown', '~> 1.17'
 gem 'nenv', '~> 0.3.0'
 gem 'nokogiri', '~> 1.8'
-gem 'oj', '~> 3.6'
+gem 'oj', '~> 3.7'
 gem 'pg', '~> 1.1'
 gem 'premailer-rails', '~> 1.10'
 gem 'puma', '~> 3.11'
@@ -56,7 +56,7 @@ end
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
-  gem 'bullet', '~> 5.7'
+  gem 'bullet', '~> 5.8'
   gem 'bundler-audit', '~> 0.6.0', require: false
   gem 'factory_bot_rails', '~> 4.11'
   gem 'faker', '~> 1.9'
