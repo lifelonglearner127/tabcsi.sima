@@ -54,6 +54,8 @@ Rails.application.routes.draw do
 
   resource :verification, only: %i[show]
 
+  mount ActionCable.server => '/cable'
+
   namespace :api do
     get(
       ':version/docs',
