@@ -2,7 +2,7 @@
 
 class License < ApplicationRecord
   LICENSE_NUMBER_REGEXP =
-    /^(?<license_type>[A-Z]+)\s*(?<license_number>[0-9]+)$/
+    /^(?<license_type>[A-Z]+)\s*(?<license_number>[0-9]+)$/.freeze
 
   belongs_to :company, -> { with_discarded }
   belongs_to :location, -> { with_discarded }
