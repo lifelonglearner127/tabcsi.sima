@@ -124,17 +124,13 @@ class UsersController < ApplicationController
   end
 
   def normalized_user_params
-    normalized_params = user_params
+    params = user_params
 
-    if normalized_params[:full_name].present?
-      normalized_params[:full_name].strip!
-    end
+    params[:full_name]&.strip!
+    params[:company_name]&.strip!
+    params[:license_number]&.strip!
 
-    if normalized_params[:license_number].present?
-      normalized_params[:license_number].strip!
-    end
-
-    normalized_params
+    params
   end
 
   def profile?

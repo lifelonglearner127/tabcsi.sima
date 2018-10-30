@@ -34,18 +34,18 @@ class ApplicationController < ActionController::Base
     self.page_data_options = default_page_options.deep_merge(page_options)
   end
 
-  private
-
-  def default_page_options
-    {}
-  end
-
   def set_page_options
     if respond_to?(:controller_page_options, true)
       reset_page_options(controller_page_options)
     else
       reset_page_options
     end
+  end
+
+  private
+
+  def default_page_options
+    {}
   end
 
   def site_version
