@@ -19,9 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def new
-    redirect_to(dashboard_url) && return if logged_in?
-
-    log_out unless pin_requested?
+    redirect_to(dashboard_url) if logged_in?
   end
 
   def resend_pin

@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read(File.expand_path('.ruby-version', __dir__)).chomp
 
+gem 'activerecord-session_store', '~> 1.1', '>= 1.1.1'
 gem 'bootsnap', '~> 1.3', require: false
 gem 'delayed_job_active_record', '~> 4.1'
 gem 'devise', '~> 4.4'

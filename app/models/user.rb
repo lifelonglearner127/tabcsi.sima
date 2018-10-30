@@ -6,8 +6,8 @@ class User < ApplicationRecord
   devise(
     :database_authenticatable,
     :doorkeeper,
+    :lockable,
     :registerable,
-    :recoverable,
     :rememberable,
     :trackable,
     :validatable

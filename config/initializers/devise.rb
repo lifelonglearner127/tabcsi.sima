@@ -165,20 +165,20 @@ Devise.setup do |config|
   # `unconfirmed_email` db field (see migrations). Until confirmed, new email is
   # stored in `unconfirmed_email` column, and copied to `email` column on
   # successful confirmation.
-  config.reconfirmable = true
+  # config.reconfirmable = true
 
   # Defines which key will be used when confirming an account.
   # config.confirmation_keys = %i[email]
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 2.weeks
 
   # Invalidates all the "remember me" tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
 
   # If true, extends the user's remember period when remembered via cookie.
-  # config.extend_remember_period = false
+  config.extend_remember_period = false
 
   # Options to be passed to the created cookie. For instance, you can set
   # `secure: true` in order to force SSL only cookies.
@@ -203,10 +203,10 @@ Devise.setup do |config|
   # * `:failed_attempts` = Locks an account after a number of failed attempts to
   #   sign in.
   # * `:none` = No lock strategy. You should handle locking by yourself.
-  # config.lock_strategy = :failed_attempts
+  config.lock_strategy = :failed_attempts
 
   # Defines which key will be used when locking and unlocking an account.
-  # config.unlock_keys = %i[email]
+  config.unlock_keys = %i[email]
 
   # Defines which strategy will be used to unlock an account.
   # * `:email` = Sends an unlock link to the user email.
@@ -214,18 +214,18 @@ Devise.setup do |config|
   #   `:unlock_in` below).
   # * `:both` = Enables both strategies.
   # * `:none` = No unlock strategy. You should handle unlocking by yourself.
-  # config.unlock_strategy = :both
+  config.unlock_strategy = :time
 
   # Number of authentication tries before locking an account if `lock_strategy`
   # is `:failed_attempts`.
-  # config.maximum_attempts = 20
+  config.maximum_attempts = 3
 
   # Time interval to unlock the account if `:time` is enabled as
   # `unlock_strategy`.
-  # config.unlock_in = 1.hour
+  config.unlock_in = 10.minutes
 
   # Warn on the last attempt before the account is locked.
-  # config.last_attempt_warning = true
+  config.last_attempt_warning = true
 
   # ==> Configuration for :recoverable
   # Defines which key will be used when recovering the password for an account.
@@ -234,7 +234,7 @@ Devise.setup do |config|
   # Time interval you can reset your password with a reset password key. Don't
   # put a too small interval or your users won't have the time to change their
   # passwords.
-  config.reset_password_within = 6.hours
+  # config.reset_password_within = 6.hours
 
   # When set to `false`, does not sign a user in automatically after their
   # password is reset. Defaults to `true`, so a user is signed in automatically

@@ -32,10 +32,13 @@ Rails.application.routes.draw do
     end
   end
 
-  get :log_in, to: 'sessions#new'
-  post :log_in, to: 'sessions#create'
-  post :resend_pin, to: 'sessions#resend_pin'
-  delete :log_out, to: 'sessions#destroy'
+  resource(:session, only: %i[], path: '', as: '') do
+    get :log_in, action: :new
+    post :log_in, action: :create
+    delete :log_out, action: :destroy
+
+    post :resend_pin
+  end
 
   resources(:users, only: %i[destroy edit]) do
     collection do
