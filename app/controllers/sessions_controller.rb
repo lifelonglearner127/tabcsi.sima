@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  before_action :require_logged_in_user, only: %i[destroy]
   before_action :set_page_options, only: %i[create new]
 
   def create
