@@ -117,6 +117,7 @@ export default {
           <b-form-input
             id="session_pin"
             v-model="session.pin"
+            autocomplete="off"
             data-path="pin"
             :maxlength="pageOptions.pinLength"
             name="session[pin]"
@@ -163,7 +164,7 @@ export default {
         <b-form-input
           id="session_email"
           v-model="session.email"
-          autocomplete="email"
+          autocomplete="off"
           data-path="email"
           maxlength="192"
           name="session[email]"
