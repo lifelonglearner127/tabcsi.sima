@@ -8,6 +8,7 @@ ruby File.read(File.expand_path('.ruby-version', __dir__)).chomp
 
 gem 'activerecord-session_store', '~> 1.1', '>= 1.1.1'
 gem 'bootsnap', '~> 1.3', require: false
+gem 'daemons', '~> 1.2'
 gem 'delayed_job_active_record', '~> 4.1'
 gem 'devise', '~> 4.4'
 gem 'devise-doorkeeper', '~> 1.1'
