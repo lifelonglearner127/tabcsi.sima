@@ -27,6 +27,9 @@ class UsersController < ApplicationController
   def destroy
     @user.discard
 
+    # reset company; method checks user count first
+    @user.company.reset
+
     head :no_content
   end
 

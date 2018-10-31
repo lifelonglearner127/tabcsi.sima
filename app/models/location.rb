@@ -20,7 +20,11 @@ class Location < ApplicationRecord
   )
 
   has_many_attached :photos
-  has_and_belongs_to_many :users, -> { order(:full_name) }
+
+  has_and_belongs_to_many(
+    :users,
+    -> { where(orphaned: false).order(:full_name) }
+  )
 
   validates :name, :address1, :city, :country, :postal_code, presence: true
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_29_235504) do
+ActiveRecord::Schema.define(version: 2018_10_31_130229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -391,9 +391,12 @@ ActiveRecord::Schema.define(version: 2018_10_29_235504) do
     t.datetime "pin_last_requested_at"
     t.integer "failed_attempts", default: 0, null: false
     t.datetime "locked_at"
+    t.boolean "orphaned", default: false, null: false
+    t.datetime "orphaned_at"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["orphaned"], name: "index_users_on_orphaned"
     t.index ["role"], name: "index_users_on_role"
   end
 

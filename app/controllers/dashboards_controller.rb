@@ -83,6 +83,7 @@ class DashboardsController < ApplicationController
       .with_discarded
       .left_outer_joins(:company)
       .includes(:company, licenses: :location)
+      .where(orphaned: false)
       .order(Company.arel_table[:name].asc, :full_name)
       .as_json(
         include: {

@@ -23,7 +23,10 @@ class License < ApplicationRecord
     optional: true
   )
 
-  has_and_belongs_to_many :users, -> { order(:full_name) }
+  has_and_belongs_to_many(
+    :users,
+    -> { where(orphaned: false).order(:full_name) }
+  )
 
   validates :license_type, :license_number, :status, presence: true
 
