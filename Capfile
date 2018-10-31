@@ -17,6 +17,7 @@ end
   passenger
   rails
   rvm
+  delayed_job
   scm/git
 ].each do |file|
   require "capistrano/#{file}"

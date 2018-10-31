@@ -44,6 +44,7 @@ group :development do
   gem 'capistrano-passenger', '~> 0.2.0', require: false
   gem 'capistrano-rails', '~> 1.4', require: false
   gem 'capistrano-rvm', '~> 0.1.2', require: false
+  gem 'capistrano3-delayed-job', '~> 1.7', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rack-mini-profiler', '~> 1.0', require: false
   gem 'rubocop', '~> 0.60.0', require: false

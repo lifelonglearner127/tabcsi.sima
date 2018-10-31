@@ -124,7 +124,7 @@ class User < ApplicationRecord
       full_name: full_name,
       pin: pin,
       web: web
-    ).request_pin.deliver_now
+    ).request_pin.deliver_later
 
     true
   end
@@ -161,7 +161,7 @@ class User < ApplicationRecord
     UsersMailer.with(
       recipient: email,
       full_name: full_name
-    ).welcome.deliver_now
+    ).welcome.deliver_later
   end
 
   def after_update_user
