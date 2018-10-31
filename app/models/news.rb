@@ -5,11 +5,7 @@ class News < ApplicationRecord
 
   enum news_type: %i[featured]
 
-  after_commit(
-    :send_push_notifications,
-    on: :create,
-    if: -> { Rails.env.production? }
-  )
+  after_commit :send_push_notifications, on: :create
 
   def link
     Rails.application.routes.url_helpers.news_url(id: id)
@@ -18,13 +14,6 @@ class News < ApplicationRecord
   private
 
   def send_push_notifications
-    message = {
-      id: id,
-      subject: subject.truncate(40),
-      created_at: created_at,
-      link: link
-    }
-
-    NewsJob.perform_later(message)
+    NewsJob.perform_later(self)
   end
 end
