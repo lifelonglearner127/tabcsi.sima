@@ -19,7 +19,7 @@ class NewsJob < ApplicationJob
 
     # the joins excludes discarded users
     tokens = PushToken.joins(:user).where(
-      id: PushToken.group_by(:user_id, :device_type).maximum(:id).values
+      id: PushToken.group(:user_id, :device_type).maximum(:id).values
     )
 
     android_tokens = tokens.select(&:android?).map(&:token).uniq
