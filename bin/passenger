@@ -17,4 +17,4 @@ rvm_path="$(which rvm)"
 ruby_version="$(cat .ruby-version)"
 passenger_command="$1"
 shift
-sudo "${rvm_path}" "${ruby_version}" do passenger "${passenger_command}" "$@"
+sudo "${rvm_path}" "${ruby_version}" do bundle exec passenger "${passenger_command}" "$@"
