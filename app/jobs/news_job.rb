@@ -17,8 +17,13 @@ class NewsJob < ApplicationJob
       return
     end
 
-    android_tokens = PushToken.where(device_type: :android).pluck(:token)
-    ios_tokens = PushToken.where(device_type: :ios).pluck(:token)
+    # the joins excludes discarded users
+    tokens = PushToken.joins(:user).where(
+      id: PushToken.group_by(:user_id, :device_type).maximum(:id).values
+    )
+
+    android_tokens = tokens.select(&:android?).map(&:token).uniq
+    ios_tokens = tokens.select(&:ios?).map(&:token).uniq
 
     begin
       TabcSi::PushManager.send(android_tokens, ios_tokens, message)
