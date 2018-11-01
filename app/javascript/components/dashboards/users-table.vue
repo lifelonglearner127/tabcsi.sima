@@ -298,13 +298,13 @@ export default {
         </b-dropdown-item>
         <b-dropdown-item
           class="px-3"
-          disabled
+          href="/import/upload_csv"
         >
           <fa-sprite
             fixed-width
             use="fas-fa-file-upload"
           />
-          Upload CSV (Coming Soon)
+          Upload CSV
         </b-dropdown-item>
       </b-dropdown>
 

@@ -12,6 +12,10 @@ export default {
   },
 
   props: {
+    enctype: {
+      type: String,
+      default: null
+    },
     acceptCharset: {
       type: String,
       default: null
@@ -134,6 +138,7 @@ export default {
     </b-alert>
 
     <rails-form
+      :enctype="enctype"
       :accept-charset="acceptCharset"
       :action="action"
       :enforce-utf8="enforceUtf8"

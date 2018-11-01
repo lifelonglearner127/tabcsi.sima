@@ -1,16 +1,13 @@
 import createChannel from './create-channel'
+import { Notification } from '~/plugins/bootstrap-vue-utils'
 
 const subscription = () => createChannel('csv', {
-  update: (data) => { // eslint-disable-line lodash/prefer-noop
-    // do something
+  completed: (data) => {
+    Notification.success(data.body)
   },
 
-  completed: (data) => { // eslint-disable-line lodash/prefer-noop
-    // do something
-  },
-
-  error: (data) => { // eslint-disable-line lodash/prefer-noop
-    // do something
+  error: (data) => {
+    Notification.error(data.body)
   }
 })
 

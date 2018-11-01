@@ -1,4 +1,5 @@
 <script>
+import CsvChannel from '~/channels/csv'
 import isEmpty from 'lodash/isEmpty'
 import LocationsTable from './locations-table'
 import NewsTable from './news-table'
@@ -70,6 +71,15 @@ export default {
     userIsTabc () {
       return this.user.role === 'tabc'
     }
+  },
+
+  mounted () {
+    this.channelSub = CsvChannel()
+  },
+
+  beforeDestroy () {
+    this.channelSub.unsubscribe()
+    this.channelSub = null
   },
 
   methods: {

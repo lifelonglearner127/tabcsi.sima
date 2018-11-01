@@ -44,10 +44,29 @@ class User < ApplicationRecord
   before_validation :generate_random_password, if: :generate_password?
   before_validation :check_for_existing_user, if: :invited?
   after_initialize :set_default_role, if: :new_record?
-  before_create :before_create_user, unless: :tabc?
-  after_create :after_create_user, unless: :tabc?
+  before_create :before_create_user, unless: %i[tabc? imported]
+  after_create :after_create_user, unless: %i[tabc? imported]
   before_update :before_update_user, unless: :requested_pin?
   after_update :after_update_user, unless: :perform_after_update_user?
+
+  # Validations
+  validates :full_name,
+            presence: true,
+            format: {
+              with: /\A(\w+(?:[\s-]*\w+)?)(?:,\s*\g<1>)*\z/
+            },
+            unless: :requested_pin?
+  validates :phone,
+            format: {
+              with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/
+            },
+            unless: :requested_pin?
+  validates :job_title,
+            presence: true,
+            format: {
+              with: /\A^\s*[,-.0-9A-Za-z]+(\s[,-.0-9A-Za-z]+)*\s*$\z/
+            },
+            unless: :requested_pin?
 
   attr_accessor :company_name
   attr_accessor :invited
@@ -55,6 +74,7 @@ class User < ApplicationRecord
   attr_writer :location_clps
   attr_accessor :owner_name
   attr_accessor :profile
+  attr_accessor :imported
 
   def self.new_pin
     # based on SecureRandom.alphanumeric

@@ -3,6 +3,10 @@ export default {
   name: 'RailsForm',
 
   props: {
+    enctype: {
+      type: String,
+      default: null
+    },
     acceptCharset: {
       type: String,
       default: null
@@ -51,6 +55,7 @@ export default {
 
 <template>
   <b-form
+    :enctype="enctype"
     :accept-charset="acceptCharset"
     :action="action"
     class="needs-validation"

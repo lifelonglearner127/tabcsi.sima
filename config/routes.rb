@@ -52,6 +52,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'import/upload_csv', to: 'import#upload_csv'
+  post 'import/users', to: 'import#users'
+
   get :sign_up, to: 'users#new'
   post :sign_up, to: 'users#create'
 
