@@ -125,7 +125,7 @@ export const addSearchedItem = (items, object, value, paths) => {
     const path = paths[i]
     const pathValue = get(object, path)
 
-    if (!isEmpty(pathValue) && includes(pathValue.toLocaleUpperCase(), value.toLocaleUpperCase())) {
+    if (!isEmpty(pathValue) && includes(pathValue.toLocaleUpperCase(), value.toLocaleUpperCase().trim())) {
       items.push(object)
 
       break
