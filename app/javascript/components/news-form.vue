@@ -150,7 +150,7 @@ export default {
 <template>
   <tabc-card
     cols="12"
-    sm="6"
+    sm="8"
     :title="title"
   >
     <b-alert
