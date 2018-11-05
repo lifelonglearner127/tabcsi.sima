@@ -15,7 +15,7 @@ export default {
       type: Array,
       required: true
     },
-    class: {
+    tableClass: {
       type: String,
       default: null
     }
@@ -57,10 +57,10 @@ export default {
           perPage: this.perPage,
           responsive: true,
           striped: true,
-          totalRows: this.totalRows,
-          class: this.class
+          totalRows: this.totalRows
         },
-        scopedSlots: this.$scopedSlots
+        scopedSlots: this.$scopedSlots,
+        class: this.tableClass
       },
       slots
     )

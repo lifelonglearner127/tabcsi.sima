@@ -145,7 +145,7 @@ export default {
     <dashboard-table
       :fields="fields"
       :items="items"
-      class="news-table"
+      table-class="news-table"
     >
       <template slot="table-colgroup">
         <col class="news-type-col">

@@ -121,7 +121,15 @@ export default {
   },
 
   mounted () {
-    this.searchOption = this.firstColumnSlot
+    const searchParams = this.$cookies.get('users-search-params')
+
+    if (searchParams) {
+      this.searchKey = searchParams.searchKey
+      this.searchOption = searchParams.searchOption
+      this.filterUsers()
+    } else {
+      this.searchOption = this.firstColumnSlot
+    }
   },
 
   methods: {
@@ -159,6 +167,10 @@ export default {
     },
 
     filterUsers () {
+      this.$cookies.set('users-search-params', {
+        searchKey: this.searchKey,
+        searchOption: this.searchOption
+      })
       this.filteredItems = filterItems(this.items, this.searchKey, (filteredItems, item, value) => {
         switch (this.searchOption) {
           case 'companyName':
@@ -362,7 +374,7 @@ export default {
     <dashboard-table
       :fields="fields"
       :items="filteredItems"
-      class="users-table"
+      table-class="users-table"
     >
       <template slot="table-colgroup">
         <template v-if="currentUserIsTabc">

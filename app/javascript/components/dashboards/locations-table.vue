@@ -256,7 +256,7 @@ export default {
     <dashboard-table
       :fields="fields"
       :items="filteredItems"
-      class="locations-table"
+      table-class="locations-table"
     >
       <template slot="table-colgroup">
         <template v-if="isTabcAdmin">
