@@ -94,7 +94,7 @@ export default {
           alt="Texas Alcoholic Beverage Commission: Texans Helping Businesses & Protecting Communities"
           src="@/assets/images/logo-white.png"
         >
-        {{ dashboardTitle }}
+        <span class="dashboard-title">{{ dashboardTitle }}</span>
       </b-navbar-brand>
       <b-collapse
         id="nav_collapse"
@@ -172,7 +172,20 @@ export default {
   }
 }
 
-.dashboard-container {
-  margin: 0 6.25rem 2rem;
+@media (min-width: 768px) {
+  .dashboard-container {
+    margin: 0 6.25rem 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-title {
+    display: none;
+  }
+  .navbar-brand {
+    img {
+      width: 250px;
+    }
+  }
 }
 </style>

@@ -145,6 +145,7 @@ export default {
     <dashboard-table
       :fields="fields"
       :items="items"
+      class="news-table"
     >
       <template slot="table-colgroup">
         <col class="news-type-col">
@@ -239,5 +240,9 @@ export default {
     height: 50vh;
     width: 100%;
   }
+}
+
+/deep/ .news-table table {
+  min-width: 667px;
 }
 </style>

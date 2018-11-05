@@ -256,6 +256,7 @@ export default {
     <dashboard-table
       :fields="fields"
       :items="filteredItems"
+      class="locations-table"
     >
       <template slot="table-colgroup">
         <template v-if="isTabcAdmin">
@@ -358,5 +359,9 @@ export default {
   h3 {
     margin-bottom: 0;
   }
+}
+
+/deep/ .locations-table table {
+  min-width: 934px;
 }
 </style>

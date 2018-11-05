@@ -14,6 +14,10 @@ export default {
     items: {
       type: Array,
       required: true
+    },
+    class: {
+      type: String,
+      default: null
     }
   },
 
@@ -53,7 +57,8 @@ export default {
           perPage: this.perPage,
           responsive: true,
           striped: true,
-          totalRows: this.totalRows
+          totalRows: this.totalRows,
+          class: this.class
         },
         scopedSlots: this.$scopedSlots
       },

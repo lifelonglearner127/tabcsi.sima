@@ -273,92 +273,96 @@ export default {
 <template>
   <div>
     <b-button-toolbar class="mb-3 mx-3">
-      <b-dropdown
-        class="mr-1"
-        :disabled="currentUserIsTabc"
-        size="sm"
-        variant="outline-secondary"
-      >
-        <template slot="button-content">
-          <fa-sprite
-            fixed-width
-            use="fas-fa-user-plus"
-          />
-          Invite User
-        </template>
-        <b-dropdown-item
-          class="px-3"
-          href="/users/invite"
+      <div class="action-btns">
+        <b-dropdown
+          class="mr-1"
+          :disabled="currentUserIsTabc"
+          size="sm"
+          variant="outline-secondary"
         >
-          <fa-sprite
-            fixed-width
-            use="fas-fa-plus"
-          />
-          Manual Add
-        </b-dropdown-item>
-        <b-dropdown-item
-          class="px-3"
-          href="/import/upload_csv"
-        >
-          <fa-sprite
-            fixed-width
-            use="fas-fa-file-upload"
-          />
-          Upload CSV
-        </b-dropdown-item>
-      </b-dropdown>
+          <template slot="button-content">
+            <fa-sprite
+              fixed-width
+              use="fas-fa-user-plus"
+            />
+            Invite User
+          </template>
+          <b-dropdown-item
+            class="px-3"
+            href="/users/invite"
+          >
+            <fa-sprite
+              fixed-width
+              use="fas-fa-plus"
+            />
+            Manual Add
+          </b-dropdown-item>
+          <b-dropdown-item
+            class="px-3"
+            href="/import/upload_csv"
+          >
+            <fa-sprite
+              fixed-width
+              use="fas-fa-file-upload"
+            />
+            Upload CSV
+          </b-dropdown-item>
+        </b-dropdown>
 
-      <b-button
-        class="mx-1"
-        :disabled="noUsersSelected"
-        size="sm"
-        variant="outline-secondary"
-        @click.prevent="deleteUsers"
-      >
-        <fa-sprite
-          fixed-width
-          use="fas-fa-user-times"
+        <b-button
+          class="mx-1"
+          :disabled="noUsersSelected"
+          size="sm"
+          variant="outline-secondary"
+          @click.prevent="deleteUsers"
+        >
+          <fa-sprite
+            fixed-width
+            use="fas-fa-user-times"
+          />
+          Delete
+        </b-button>
+
+        <b-button
+          class="ml-1"
+          :disabled="noDiscardedUsersSelected"
+          size="sm"
+          variant="outline-secondary"
+          @click.prevent="undiscardUsers"
+        >
+          Undelete
+        </b-button>
+      </div>
+      <div class="search-fields">
+        <b-form-input
+          v-model="searchKey"
+          class="mr-1"
+          size="sm"
+          @keydown.enter.native="filterUsers"
         />
-        Delete
-      </b-button>
 
-      <b-button
-        class="ml-1"
-        :disabled="noDiscardedUsersSelected"
-        size="sm"
-        variant="outline-secondary"
-        @click.prevent="undiscardUsers"
-      >
-        Undelete
-      </b-button>
+        <b-form-select
+          v-model="searchOption"
+          class="mx-1 w-auto"
+          :options="searchOptions"
+          size="sm"
+        />
 
-      <b-form-input
-        v-model="searchKey"
-        class="ml-auto mr-1 w-25"
-        size="sm"
-        @keydown.enter.native="filterUsers"
-      />
-
-      <b-form-select
-        v-model="searchOption"
-        class="mx-1 w-auto"
-        :options="searchOptions"
-        size="sm"
-      />
-
-      <b-button
-        class="ml-1"
-        size="sm"
-        variant="outline-secondary"
-        @click="filterUsers"
-      >
-        Search
-      </b-button>
+        <b-button
+          class="ml-1"
+          size="sm"
+          variant="outline-secondary"
+          @click="filterUsers"
+        >
+          Search
+        </b-button>
+      </div>
     </b-button-toolbar>
 
     <dashboard-table
       :fields="fields"
       :items="filteredItems"
+      class="users-table"
     >
       <template slot="table-colgroup">
         <template v-if="currentUserIsTabc">
@@ -504,6 +508,11 @@ export default {
   @include fixed-width(3rem);
 }
 
+.btn-toolbar .search-fields {
+  margin-left: auto;
+  display: flex;
+}
+
 /deep/ .table-discarded {
   color: $text-muted !important;
   font-style: italic !important;
@@ -519,5 +528,16 @@ export default {
   border: 1px solid gray;
   margin: 0 5px 5px 0;
   padding: 0.5rem
+}
+
+/deep/ .users-table table {
+  min-width: 1250px;
+}
+
+@media (max-width: 737px) {
+  .search-fields {
+    margin-top: 0.25rem;
+    margin-left: 0 !important;
+  }
 }
 </style>

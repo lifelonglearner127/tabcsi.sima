@@ -115,7 +115,10 @@ export default {
     <b-row>
       <b-col cols="12">
         <b-card no-body>
-          <b-tabs card>
+          <b-tabs
+            card
+            nav-class="admin-tabs"
+          >
             <b-tab
               :active="isUsersActive"
               @click="saveTab('users')"
@@ -181,5 +184,12 @@ export default {
 
 /deep/ .table {
   margin-bottom: 0;
+}
+
+@media (max-width: 414px) {
+  /deep/ .admin-tabs {
+    font-size: 80%;
+    font-weight: 400;
+  }
 }
 </style>
