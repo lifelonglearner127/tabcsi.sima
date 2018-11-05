@@ -15,6 +15,11 @@ Rails.application.routes.draw do
 
   resources :faqs, only: %i[index]
 
+  resource(:import, only: %i[]) do
+    get :upload_csv
+    post :users
+  end
+
   resources(:locations, only: %i[]) do
     member do
       post :reset
@@ -51,9 +56,6 @@ Rails.application.routes.draw do
       post :undiscard
     end
   end
-
-  get 'import/upload_csv', to: 'import#upload_csv'
-  post 'import/users', to: 'import#users'
 
   get :sign_up, to: 'users#new'
   post :sign_up, to: 'users#create'

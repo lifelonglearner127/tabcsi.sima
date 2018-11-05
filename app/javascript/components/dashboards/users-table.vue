@@ -126,6 +126,7 @@ export default {
     if (searchParams) {
       this.searchKey = searchParams.searchKey
       this.searchOption = searchParams.searchOption
+
       this.filterUsers()
     } else {
       this.searchOption = this.firstColumnSlot
@@ -171,6 +172,7 @@ export default {
         searchKey: this.searchKey,
         searchOption: this.searchOption
       })
+
       this.filteredItems = filterItems(this.items, this.searchKey, (filteredItems, item, value) => {
         switch (this.searchOption) {
           case 'companyName':
@@ -285,7 +287,7 @@ export default {
 <template>
   <div>
     <b-button-toolbar class="mb-3 mx-3">
-      <div class="action-btns">
+      <div class="action-buttons">
         <b-dropdown
           class="mr-1"
           :disabled="currentUserIsTabc"
@@ -345,6 +347,7 @@ export default {
           Undelete
         </b-button>
       </div>
+
       <div class="search-fields">
         <b-form-input
           v-model="searchKey"
@@ -521,8 +524,13 @@ export default {
 }
 
 .btn-toolbar .search-fields {
-  margin-left: auto;
   display: flex;
+  margin-left: auto;
+
+  @media (max-width: 737px) {
+    margin-top: 0.25rem;
+    margin-left: 0 !important;
+  }
 }
 
 /deep/ .table-discarded {
@@ -544,12 +552,5 @@ export default {
 
 /deep/ .users-table table {
   min-width: 1250px;
-}
-
-@media (max-width: 737px) {
-  .search-fields {
-    margin-top: 0.25rem;
-    margin-left: 0 !important;
-  }
 }
 </style>

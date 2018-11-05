@@ -49,6 +49,7 @@ export default {
     const table = h(
       bTable,
       {
+        class: this.tableClass,
         props: {
           currentPage: this.currentPage,
           fields: this.fields,
@@ -59,8 +60,7 @@ export default {
           striped: true,
           totalRows: this.totalRows
         },
-        scopedSlots: this.$scopedSlots,
-        class: this.tableClass
+        scopedSlots: this.$scopedSlots
       },
       slots
     )

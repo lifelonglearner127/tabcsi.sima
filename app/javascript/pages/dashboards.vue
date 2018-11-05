@@ -182,6 +182,7 @@ export default {
   .dashboard-title {
     display: none;
   }
+
   .navbar-brand {
     img {
       width: 250px;

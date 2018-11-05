@@ -4,7 +4,7 @@ import UploadFile from '~/components/upload-file'
 import UsersSessionsContainer from '~/components/users-sessions-container'
 
 export default {
-  name: 'UploadCSV',
+  name: 'ImportUploadCsv',
 
   components: {
     UploadFile,
@@ -12,10 +12,6 @@ export default {
   },
 
   mixins: [PageMixin],
-
-  data () {
-    return {}
-  },
 
   methods: {
     validate (e) {
@@ -29,11 +25,11 @@ export default {
 
 <template>
   <users-sessions-container
-    enctype="multipart/form-data"
     :accept-charset="acceptCharset"
     :action="action"
     back-href="/"
     cols="12"
+    enctype="multipart/form-data"
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
@@ -48,9 +44,7 @@ export default {
     :token-value="tokenValue"
     :validation-method="validate"
   >
-    <upload-file
-      ref="uploadForm"
-    />
+    <upload-file ref="uploadForm" />
   </users-sessions-container>
 </template>
 

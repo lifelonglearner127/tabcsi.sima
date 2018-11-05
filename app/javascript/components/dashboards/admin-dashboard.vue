@@ -1,9 +1,13 @@
 <script>
-import CsvChannel from '~/channels/csv'
 import isEmpty from 'lodash/isEmpty'
 import LocationsTable from './locations-table'
 import NewsTable from './news-table'
 import UsersTable from './users-table'
+
+const TABS = {
+  default: 'users',
+  list: ['users', 'locations', 'news']
+}
 
 export default {
   name: 'AdminDashboard',
@@ -42,24 +46,6 @@ export default {
   },
 
   computed: {
-    isLocationsActive () {
-      const oldTab = this.$cookies.get('admin-tab')
-
-      return oldTab === 'locations'
-    },
-
-    isNewsActive () {
-      const oldTab = this.$cookies.get('admin-tab')
-
-      return oldTab === 'news'
-    },
-
-    isUsersActive () {
-      const oldTab = this.$cookies.get('admin-tab')
-
-      return isEmpty(oldTab) || oldTab === 'users'
-    },
-
     locationsTabTitle () {
       return this.userIsTabc ? 'Locations' : 'My Locations'
     },
@@ -73,16 +59,18 @@ export default {
     }
   },
 
-  mounted () {
-    this.channelSub = CsvChannel()
-  },
-
-  beforeDestroy () {
-    this.channelSub.unsubscribe()
-    this.channelSub = null
-  },
-
   methods: {
+    isTabActive (tabName) {
+      let oldTab
+
+      oldTab = this.$cookies.get('admin-tab')
+      if (isEmpty(oldTab)) {
+        oldTab = TABS.default
+      }
+
+      return oldTab === tabName
+    },
+
     saveTab (name) {
       this.$cookies.set('admin-tab', name)
     }
@@ -120,7 +108,7 @@ export default {
             nav-class="admin-tabs"
           >
             <b-tab
-              :active="isUsersActive"
+              :active="isTabActive('users')"
               @click="saveTab('users')"
             >
               <template slot="title">
@@ -138,7 +126,7 @@ export default {
             </b-tab>
 
             <b-tab
-              :active="isLocationsActive"
+              :active="isTabActive('locations')"
               @click="saveTab('locations')"
             >
               <template slot="title">
@@ -157,7 +145,7 @@ export default {
 
             <b-tab
               v-if="userIsTabc"
-              :active="isNewsActive"
+              :active="isTabActive('news')"
               @click="saveTab('news')"
             >
               <template slot="title">

@@ -3,6 +3,7 @@ import FontAwesome, { FaSprites } from '~/plugins/font-awesome'
 import BootstrapVue from 'bootstrap-vue'
 import BootstrapVueUtils from '~/plugins/bootstrap-vue-utils'
 import camelCase from 'lodash/camelCase'
+import CsvChannel from '~/channels/csv'
 import { deepMapKeys } from '~/lib/utils'
 import icons from '~/lib/icons'
 import isFunction from 'lodash/isFunction'
@@ -58,6 +59,7 @@ export default class App {
 
         data () {
           return {
+            channelSub: null,
             defaultPageSlotTemplates: [],
             pageOptions: {}
           }
@@ -73,6 +75,15 @@ export default class App {
 
           this.pageOptions = deepMapKeys(json, (value, key) => camelCase(key))
           this.defaultPageSlotTemplates = map(this.$el.children, 'outerHTML')
+        },
+
+        mounted () {
+          this.channelSub = CsvChannel()
+        },
+
+        beforeDestroy () {
+          this.channelSub.unsubscribe()
+          this.channelSub = null
         },
 
         render (h) {

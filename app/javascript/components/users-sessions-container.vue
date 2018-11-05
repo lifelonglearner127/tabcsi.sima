@@ -12,10 +12,6 @@ export default {
   },
 
   props: {
-    enctype: {
-      type: String,
-      default: null
-    },
     acceptCharset: {
       type: String,
       default: null
@@ -34,6 +30,10 @@ export default {
     },
     cols: {
       type: [String, Number],
+      default: null
+    },
+    enctype: {
+      type: String,
       default: null
     },
     enforceUtf8: Boolean,
@@ -138,15 +138,15 @@ export default {
     </b-alert>
 
     <rails-form
-      :enctype="enctype"
       :accept-charset="acceptCharset"
       :action="action"
+      :enctype="enctype"
       :enforce-utf8="enforceUtf8"
       :hidden-method="hiddenMethod"
       :method="method"
-      :validation-method="validationMethod"
       :token-name="tokenName"
       :token-value="tokenValue"
+      :validation-method="validationMethod"
     >
       <b-button
         v-if="topBackButtonVisible"

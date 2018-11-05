@@ -3,15 +3,15 @@ export default {
   name: 'RailsForm',
 
   props: {
-    enctype: {
-      type: String,
-      default: null
-    },
     acceptCharset: {
       type: String,
       default: null
     },
     action: {
+      type: String,
+      default: null
+    },
+    enctype: {
       type: String,
       default: null
     },
@@ -55,10 +55,10 @@ export default {
 
 <template>
   <b-form
-    :enctype="enctype"
     :accept-charset="acceptCharset"
     :action="action"
     class="needs-validation"
+    :enctype="enctype"
     :method="method"
     novalidate
     @submit.prevent="handleSubmit"

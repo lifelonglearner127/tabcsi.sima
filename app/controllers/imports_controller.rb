@@ -2,7 +2,7 @@
 
 require 'fileutils'
 
-class ImportController < ApplicationController
+class ImportsController < ApplicationController
   before_action :require_logged_in_user
   before_action :set_page_options, only: %i[upload_csv]
 
@@ -19,23 +19,23 @@ class ImportController < ApplicationController
 
   private
 
-  def move_file(file)
-    target = "tmp/uploads/#{Time.now.to_i}_#{file.original_filename}"
-
-    FileUtils.cp(file.path, target)
-
-    target
+  def controller_page_options
+    {
+      url: users_import_path,
+      method: 'post',
+      local: true
+    }
   end
 
   def import_params
     params.require(:import).permit(:file)
   end
 
-  def controller_page_options
-    {
-      url: import_users_path,
-      method: 'post',
-      local: true
-    }
+  def move_file(file)
+    target = "tmp/uploads/#{Time.now.to_i}_#{file.original_filename}"
+
+    FileUtils.cp(file.path, target)
+
+    target
   end
 end

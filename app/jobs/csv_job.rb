@@ -2,16 +2,12 @@
 
 require 'csv'
 require 'fileutils'
+
 class CsvJob < ApplicationJob
   queue_as :default
 
-  COLUMN_HEADERS = %i[
-    full_name email phone job_title
-  ].freeze
-
-  REQUIRED_COLUMNS = %i[
-    full_name email job_title
-  ].freeze
+  COLUMN_HEADERS = %i[full_name email phone job_title].freeze
+  REQUIRED_COLUMNS = %i[full_name email job_title].freeze
 
   def perform(file, current_user)
     row_number = 0
@@ -27,27 +23,33 @@ class CsvJob < ApplicationJob
         next
       end
 
-      user = User.new(row.to_hash)
+      row = row.to_hash
+      user = User.find_by(email: row[:email])
+      next if user.present? # skip existing users
+
+      user = User.new(row)
       user.imported = true
       row_number += 1
 
-      if user.valid?
-        user.save
-      else
-        message = {
+      unless user.valid?
+        CsvChannel.broadcast_to(
+          current_user,
           type: 'error',
           body: "Line #{row_number}: #{user.errors.full_messages.join(', ')}"
-        }
-        CsvChannel.broadcast_to(current_user, message)
+        )
+
         return false
       end
+
+      user.save
     end
-    message = {
+
+    CsvChannel.broadcast_to(
+      current_user,
       type: 'completed',
       body: 'Users imported successfully.'
-    }
-    CsvChannel.broadcast_to(current_user, message)
+    )
 
-    FileUtils.rm file
+    FileUtils.rm(file)
   end
 end

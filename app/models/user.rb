@@ -49,32 +49,34 @@ class User < ApplicationRecord
   before_update :before_update_user, unless: :requested_pin?
   after_update :after_update_user, unless: :perform_after_update_user?
 
-  # Validations
-  validates :full_name,
-            presence: true,
-            format: {
-              with: /\A(\w+(?:[\s-]*\w+)?)(?:,\s*\g<1>)*\z/
-            },
-            unless: :requested_pin?
-  validates :phone,
-            format: {
-              with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/
-            },
-            unless: :requested_pin?
-  validates :job_title,
-            presence: true,
-            format: {
-              with: /\A^\s*[,-.0-9A-Za-z]+(\s[,-.0-9A-Za-z]+)*\s*$\z/
-            },
-            unless: :requested_pin?
+  validates(
+    :full_name,
+    presence: true,
+    format: {
+      with: /^[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)+$/
+    }
+  )
+
+  validates(
+    :job_title,
+    presence: true,
+    format: {
+      with: /^[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)*$/
+    }
+  )
+
+  validates(
+    :phone,
+    format: { with: /^(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})$/ }
+  )
 
   attr_accessor :company_name
+  attr_accessor :imported
   attr_accessor :invited
   attr_accessor :license_number
   attr_writer :location_clps
   attr_accessor :owner_name
   attr_accessor :profile
-  attr_accessor :imported
 
   def self.new_pin
     # based on SecureRandom.alphanumeric
