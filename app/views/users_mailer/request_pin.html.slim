@@ -1,7 +1,11 @@
 p Hi #{@full_name},
 p
   ' Here is your one-time registration code:
-  strong = @pin
+  strong #{@pin}
+  br
+  ' If you are viewing this email on Android or iOS, you can also click
+  a> href=verification_url(pin: @pin) here
+  | to verify your app.
 p
   ' Please enter the #{Setting.pin_length}-digit code to gain access to the TABC: Compliance Reporting
   | #{@web ? 'Administrative Portal' : 'Application'}
