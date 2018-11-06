@@ -53,7 +53,7 @@ class User < ApplicationRecord
     :full_name,
     presence: true,
     format: {
-      with: /^[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)+$/
+      with: /\A[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)+\z/
     }
   )
 
@@ -61,13 +61,13 @@ class User < ApplicationRecord
     :job_title,
     presence: true,
     format: {
-      with: /^[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)*$/
+      with: /\A[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)*\z/
     }
   )
 
   validates(
     :phone,
-    format: { with: /^(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})$/ }
+    format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/ }
   )
 
   attr_accessor :company_name
