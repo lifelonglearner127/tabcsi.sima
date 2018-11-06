@@ -18,10 +18,10 @@ html class="h-100" lang="en"
   body class=['h-100', body_class]
     /[if lte IE 9]
       p.browser-upgrade
-        | You are using an
-        strong<> outdated
-        | browser. Please
-        a<> href="https://browsehappy.com" upgrade your browser
+        ' You are using an
+        strong> outdated
+        ' browser. Please
+        a> href="https://browsehappy.com" upgrade your browser
         | to improve your experience and security.
 
     main data-page=(page_data(**page_data_options).to_json if page_data_options.present?)

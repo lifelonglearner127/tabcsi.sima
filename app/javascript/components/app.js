@@ -53,8 +53,21 @@ export default class App {
     }
 
     onReady(() => {
+      window.cookieconsent.initialise({
+        palette: {
+          popup: { background: '#00205b' },
+          button: { background: '#ffbf3f' }
+        },
+        theme: 'classic',
+        // position: 'bottom-right',
+        content: {
+          message: 'This web site uses cookies to ensure you get the best experience on our web site.',
+          link: 'Learn more.'
+        }
+      })
+
       // @vue/component
-      new Vue({ // eslint-disable-line no-new
+      return new Vue({
         el: 'main',
 
         data () {
