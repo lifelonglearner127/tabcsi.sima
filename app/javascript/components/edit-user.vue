@@ -102,6 +102,10 @@ export default {
   },
 
   computed: {
+    isTabcAdmin () {
+      return this.user.role === 'tabc'
+    },
+
     isUser () {
       return this.user.role === 'user'
     },
@@ -230,7 +234,7 @@ export default {
       </b-form-group>
     </template>
 
-    <template v-if="!isProfile">
+    <template v-if="!isProfile && !isTabcAdmin">
       <b-form-group
         id="user_role_group"
         data-required
