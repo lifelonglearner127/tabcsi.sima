@@ -19,6 +19,12 @@
       }
     ],
     [
+      "@babel/plugin-transform-arrow-functions",
+      {
+        "useBuiltIns": true
+      }
+    ],
+    [
       "@babel/transform-runtime",
       {
         "helpers": false,

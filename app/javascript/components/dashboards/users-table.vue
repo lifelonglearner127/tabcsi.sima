@@ -11,6 +11,7 @@ import sortBy from 'lodash/sortBy'
 import startCase from 'lodash/startCase'
 
 const DISPLAY_BOXES_PER_ROW = 6
+const RELOAD_DELAY = 1000
 
 export default {
   name: 'UsersTable',
@@ -154,7 +155,7 @@ export default {
               )
             )
             .then(() => {
-              window.location.reload(true)
+              setTimeout(() => window.location.reload(true), RELOAD_DELAY)
             })
         })
     },
@@ -256,7 +257,7 @@ export default {
               )
             )
             .then(() => {
-              window.location.reload(true)
+              setTimeout(() => window.location.reload(true), RELOAD_DELAY)
             })
         })
     },
