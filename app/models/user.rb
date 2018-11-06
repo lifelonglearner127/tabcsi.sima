@@ -59,7 +59,7 @@ class User < ApplicationRecord
 
   validates(
     :job_title,
-    presence: true,
+    allow_blank: true,
     format: {
       with: /\A[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)*\z/
     }
@@ -67,6 +67,7 @@ class User < ApplicationRecord
 
   validates(
     :phone,
+    allow_blank: true,
     format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/ }
   )
 
