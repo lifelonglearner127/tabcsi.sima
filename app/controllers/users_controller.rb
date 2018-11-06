@@ -130,7 +130,10 @@ class UsersController < ApplicationController
     params = user_params
 
     params[:full_name]&.strip!
+    params[:email]&.strip!
+    params[:phone]&.strip!
     params[:company_name]&.strip!
+    params[:job_title]&.strip!
     params[:license_number]&.strip!
 
     params
