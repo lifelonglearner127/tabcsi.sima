@@ -48,6 +48,7 @@ set :passenger_restart_options, nil
 # Slack
 set(
   :slackistrano,
+  klass: Slackistrano::Messaging::CustomMessaging,
   channel: '#tabc-si',
   webhook: 'https://hooks.slack.com/services/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'
 )

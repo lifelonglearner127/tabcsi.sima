@@ -24,6 +24,7 @@ end
 end
 
 require 'slackistrano/capistrano'
+require_relative 'lib/capistrano/slackistrano/messaging/custom_messaging'
 
 install_plugin Capistrano::SCM::Git
 
