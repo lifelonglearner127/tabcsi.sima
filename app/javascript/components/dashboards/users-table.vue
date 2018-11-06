@@ -188,12 +188,8 @@ export default {
             break
 
           case 'email':
-            if (value === item.email) {
-              filteredItems.push(item)
-            }
-
+            addSearchedItem(filteredItems, item, value, 'email')
             break
-
           // no default
         }
       })
