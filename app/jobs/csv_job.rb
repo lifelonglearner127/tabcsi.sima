@@ -9,16 +9,18 @@ class CsvJob < ApplicationJob
   COLUMN_HEADERS = %i[full_name email phone job_title].freeze
   REQUIRED_COLUMNS = %i[full_name email job_title].freeze
 
-  def perform(file, current_user)
+  def perform(current_user, csv_path)
     row_number = 0
 
     User.transaction do
       CSV.foreach(
-        file,
+        csv_path,
         headers: COLUMN_HEADERS,
         return_headers: false,
         skip_blanks: true
       ) do |row|
+        row_number += 1
+
         if row.fields.compact.empty? ||
            !row.to_hash.fetch_values(*REQUIRED_COLUMNS).all?
           next
@@ -41,8 +43,6 @@ class CsvJob < ApplicationJob
         user = User.new(row)
         user.imported = true
         user.company_id = current_user.company_id
-
-        row_number += 1
 
         unless user.valid?
           CsvChannel.broadcast_to(

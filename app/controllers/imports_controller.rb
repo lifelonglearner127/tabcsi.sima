@@ -9,10 +9,10 @@ class ImportsController < ApplicationController
   def upload_users_csv; end
 
   def users
-    upload_file = import_params[:file]
-    csv_file = move_file(upload_file)
+    uploaded_file = import_params[:file]
+    csv_path = move_file(uploaded_file)
 
-    CsvJob.perform_later(csv_file, current_user)
+    CsvJob.perform_later(current_user, csv_path)
 
     redirect_to dashboard_url
   end
@@ -32,10 +32,13 @@ class ImportsController < ApplicationController
   end
 
   def move_file(file)
-    target = "tmp/uploads/#{Time.now.to_i}_#{file.original_filename}"
+    target =
+      Rails.root.join("tmp/uploads/#{Time.now.to_i}_#{file.original_filename}")
+    dir = File.dirname(target)
 
+    FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
     FileUtils.cp(file.path, target)
 
-    target
+    target.to_s
   end
 end
