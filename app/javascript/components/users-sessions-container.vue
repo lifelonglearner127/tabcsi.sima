@@ -127,14 +127,12 @@ export default {
       show
       variant="danger"
     >
-      <ul>
-        <li
-          v-for="(error, key, index) in serverErrors"
-          :key="index"
-        >
-          {{ error }}
-        </li>
-      </ul>
+      <p
+        v-for="(error, key, index) in serverErrors"
+        :key="index"
+      >
+        {{ error }}
+      </p>
     </b-alert>
 
     <rails-form
@@ -208,7 +206,7 @@ export default {
 @import '~@/assets/stylesheets/variables';
 
 .alert {
-  ul {
+  p:last-child {
     margin-bottom: 0;
   }
 }

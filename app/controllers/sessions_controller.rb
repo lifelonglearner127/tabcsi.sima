@@ -62,9 +62,15 @@ class SessionsController < ApplicationController
     self.session_email = session_params[:email]
 
     user = User.find_for_database_authentication(email: session_email)
-    if user.present? && user.request_pin(web: true)
-      session[:user_id] = user.id
-      self.session_email = nil
+    if user.present?
+      if user.request_pin(web: true)
+        session[:user_id] = user.id
+        self.session_email = nil
+      else
+        page_data_options[:html][:errors] = {
+          error: 'Could not generate a new PIN. Please contact TABC.'
+        }
+      end
     else
       Rails.logger.error('Email address does not exist.')
     end
@@ -99,9 +105,7 @@ class SessionsController < ApplicationController
       return
     end
 
-    page_data_options[:html][:errors] = {
-      pin: 'Login Error: Incorrect PIN.'
-    }
+    page_data_options[:html][:errors] = { pin: 'Incorrect PIN.' }
 
     render 'new'
   end
