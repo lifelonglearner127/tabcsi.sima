@@ -41,14 +41,6 @@ class User < ApplicationRecord
 
   enum role: %i[user admin tabc]
 
-  before_validation :generate_random_password, if: :generate_password?
-  before_validation :check_for_existing_user, if: :invited?
-  after_initialize :set_default_role, if: :new_record?
-  before_create :before_create_user, unless: %i[tabc? imported?]
-  after_create :after_create_user, unless: :tabc?
-  before_update :before_update_user, unless: :requested_pin?
-  after_update :after_update_user, unless: :perform_after_update_user?
-
   validates(
     :full_name,
     presence: true,
@@ -57,12 +49,14 @@ class User < ApplicationRecord
     }
   )
 
+  # job_title is required except for tabc role
+  validates :job_title, presence: true, unless: :tabc?
   validates(
     :job_title,
-    allow_blank: true,
     format: {
       with: /\A[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+(\s[,.\p{L}\p{Nd}\p{Nl}\p{Pd}]+)*\z/
-    }
+    },
+    allow_blank: true
   )
 
   validates(
@@ -70,6 +64,14 @@ class User < ApplicationRecord
     allow_blank: true,
     format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/ }
   )
+
+  before_validation :generate_random_password, if: :generate_password?
+  before_validation :check_for_existing_user, if: :invited?
+  after_initialize :set_default_role, if: :new_record?
+  before_create :before_create_user, unless: %i[tabc? imported?]
+  after_create :after_create_user, unless: :tabc?
+  before_update :before_update_user, unless: :requested_pin?
+  after_update :after_update_user, unless: :perform_after_update_user?
 
   attr_accessor :company_name
   attr_accessor :imported
@@ -109,10 +111,6 @@ class User < ApplicationRecord
 
   def invited?
     [true, 'true'].include?(invited)
-  end
-
-  def imported?
-    [true, 'true'].include?(imported)
   end
 
   def location_clps
@@ -293,6 +291,10 @@ class User < ApplicationRecord
 
   def generate_random_password
     self.password = SecureRandom.hex
+  end
+
+  def imported?
+    [true, 'true'].include?(imported)
   end
 
   def perform_after_update_user?
