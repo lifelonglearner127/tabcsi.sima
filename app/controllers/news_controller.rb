@@ -62,7 +62,12 @@ class NewsController < ApplicationController
         }
       }
     else
-      { html: { news: @news } }
+      {
+        html: {
+          news: @news,
+          hide_cookie_consent: true
+        }
+      }
     end
   end
 

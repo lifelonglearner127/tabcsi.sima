@@ -1,10 +1,10 @@
 import '~/vendor'
+import { deepMapKeys, getBoolean } from '~/lib/utils'
 import FontAwesome, { FaSprites } from '~/plugins/font-awesome'
 import BootstrapVue from 'bootstrap-vue'
 import BootstrapVueUtils from '~/plugins/bootstrap-vue-utils'
 import camelCase from 'lodash/camelCase'
 import CsvChannel from '~/channels/csv'
-import { deepMapKeys } from '~/lib/utils'
 import icons from '~/lib/icons'
 import isFunction from 'lodash/isFunction'
 import map from 'lodash/map'
@@ -52,68 +52,68 @@ export default class App {
       preInit(Vue)
     }
 
-    onReady(() => {
-      window.cookieconsent.initialise({
-        palette: {
-          popup: { background: '#00205b' },
-          button: { background: '#ffbf3f' }
-        },
-        theme: 'classic',
-        content: {
-          message: 'This web site uses cookies to ensure you get the best experience on our web site.',
-          link: 'Learn more.'
+    // @vue/component
+    onReady(() => new Vue({
+      el: 'main',
+
+      data () {
+        return {
+          channelSub: null,
+          defaultPageSlotTemplates: [],
+          pageOptions: {}
         }
-      })
+      },
 
-      // @vue/component
-      return new Vue({
-        el: 'main',
+      beforeCreate () {
+        Vue.$rootVm = this
+      },
 
-        data () {
-          return {
-            channelSub: null,
-            defaultPageSlotTemplates: [],
-            pageOptions: {}
-          }
-        },
+      beforeMount () {
+        const pageDataAttr = this.$el.attributes['data-page'] || {}
+        const json = JSON.parse(pageDataAttr.value || '{}')
 
-        beforeCreate () {
-          Vue.$rootVm = this
-        },
+        this.pageOptions = deepMapKeys(json, (value, key) => camelCase(key))
+        this.defaultPageSlotTemplates = map(this.$el.children, 'outerHTML')
 
-        beforeMount () {
-          const pageDataAttr = this.$el.attributes['data-page'] || {}
-          const json = JSON.parse(pageDataAttr.value || '{}')
-
-          this.pageOptions = deepMapKeys(json, (value, key) => camelCase(key))
-          this.defaultPageSlotTemplates = map(this.$el.children, 'outerHTML')
-        },
-
-        mounted () {
-          this.channelSub = CsvChannel()
-        },
-
-        beforeDestroy () {
-          this.channelSub.unsubscribe()
-          this.channelSub = null
-        },
-
-        render (h) {
-          const page = h(
-            pageComponent,
-            {
-              props: { pageOptions: this.pageOptions },
-              scopedSlots: { default: () => map(this.defaultPageSlotTemplates, (template) => h({ template })) }
+        if (!getBoolean(this.pageOptions, 'hideCookieConsent')) {
+          window.cookieconsent.initialise({
+            palette: {
+              popup: { background: '#00205b' },
+              button: { background: '#ffbf3f' }
+            },
+            theme: 'classic',
+            content: {
+              message: 'This web site uses cookies to ensure you get the best experience on our web site.',
+              link: 'Learn more.'
             }
-          )
+          })
+        }
+      },
 
-          const sprites = h(FaSprites)
+      mounted () {
+        this.channelSub = CsvChannel()
+      },
 
-          return h('main', { class: 'h-100' }, [page, sprites])
-        },
+      beforeDestroy () {
+        this.channelSub.unsubscribe()
+        this.channelSub = null
+      },
 
-        ...config
-      })
-    })
+      render (h) {
+        const page = h(
+          pageComponent,
+          {
+            props: { pageOptions: this.pageOptions },
+            scopedSlots: { default: () => map(this.defaultPageSlotTemplates, (template) => h({ template })) }
+          }
+        )
+
+        const sprites = h(FaSprites)
+
+        return h('main', { class: 'h-100' }, [page, sprites])
+      },
+
+      ...config
+    }))
   }
 }
