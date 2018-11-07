@@ -88,6 +88,7 @@ class UsersController < ApplicationController
             is_profile: profile?,
             locations: @user.tabc? ? [] : @user.company.locations,
             locked_locations: @user.locked_locations,
+            logged_in_user_is_tabc: current_user.tabc?,
             page_name: 'edit'
           }
         }

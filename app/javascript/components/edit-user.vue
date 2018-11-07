@@ -24,6 +24,7 @@ export default {
         return []
       }
     },
+    loggedInUserIsTabc: Boolean,
     user: {
       type: Object,
       required: true
@@ -102,10 +103,6 @@ export default {
   },
 
   computed: {
-    isTabcAdmin () {
-      return this.user.role === 'tabc'
-    },
-
     isUser () {
       return this.user.role === 'user'
     },
@@ -131,6 +128,10 @@ export default {
           value: 'admin'
         }
       ]
+    },
+
+    showRoles () {
+      return !this.isProfile && !this.loggedInUserIsTabc
     }
   },
 
@@ -234,7 +235,7 @@ export default {
       </b-form-group>
     </template>
 
-    <template v-if="!isProfile && !isTabcAdmin">
+    <template v-if="showRoles">
       <b-form-group
         id="user_role_group"
         data-required

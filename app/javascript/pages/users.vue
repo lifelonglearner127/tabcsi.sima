@@ -50,6 +50,10 @@ export default {
       return this.pageOptions.locations || []
     },
 
+    loggedInUserIsTabc () {
+      return getBoolean(this.pageOptions, 'loggedInUserIsTabc')
+    },
+
     ownerName () {
       return this.pageOptions.ownerName
     },
@@ -108,6 +112,7 @@ export default {
     <edit-user
       v-if="isEdit"
       ref="editUser"
+      :logged-in-user-is-tabc="loggedInUserIsTabc"
       :has-locked-locations="hasLockedLocations"
       :is-profile="isProfile"
       :locations="locations"
