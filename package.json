@@ -12,7 +12,6 @@
     "env:test": "cross-env RAILS_ENV=test RACK_ENV=test NODE_ENV=test",
     "eslint": "eslint --cache --ext .js,.vue",
     "install:clean": "rm -fr yarn.lock node_modules; yarn",
-    "jobs": "yarn env:dev bin/delayed_job run -n 1 -p tabccr",
     "lint": "yarn eslint app/javascript",
     "metadata:generate": "libphonenumber-generate-metadata app/javascript/assets/files/metadata.json --countries US --extended",
     "restart": "overmind r",
