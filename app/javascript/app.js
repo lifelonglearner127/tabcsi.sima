@@ -59,7 +59,6 @@ export default class App {
           button: { background: '#ffbf3f' }
         },
         theme: 'classic',
-        // position: 'bottom-right',
         content: {
           message: 'This web site uses cookies to ensure you get the best experience on our web site.',
           link: 'Learn more.'
