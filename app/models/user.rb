@@ -44,8 +44,8 @@ class User < ApplicationRecord
   before_validation :generate_random_password, if: :generate_password?
   before_validation :check_for_existing_user, if: :invited?
   after_initialize :set_default_role, if: :new_record?
-  before_create :before_create_user, unless: %i[tabc? imported]
-  after_create :after_create_user, unless: %i[tabc? imported]
+  before_create :before_create_user, unless: %i[tabc? imported?]
+  after_create :after_create_user, unless: :tabc?
   before_update :before_update_user, unless: :requested_pin?
   after_update :after_update_user, unless: :perform_after_update_user?
 
@@ -111,6 +111,10 @@ class User < ApplicationRecord
     [true, 'true'].include?(invited)
   end
 
+  def imported?
+    [true, 'true'].include?(imported)
+  end
+
   def location_clps
     @location_clps || locations.pluck(:clp) unless admin?
   end
@@ -173,12 +177,14 @@ class User < ApplicationRecord
   end
 
   def after_create_user
-    if invited? && user?
-      locations << Location.where(clp: location_clps)
-      licenses << License.where(clp: location_clps)
-    else # sign_up or admin invite
-      locations << company.locations
-      licenses << company.licenses
+    unless imported?
+      if invited? && user?
+        locations << Location.where(clp: location_clps)
+        licenses << License.where(clp: location_clps)
+      else # sign_up or admin invite
+        locations << company.locations
+        licenses << company.licenses
+      end
     end
 
     UsersMailer.with(
