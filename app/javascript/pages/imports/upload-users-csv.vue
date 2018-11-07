@@ -4,7 +4,7 @@ import UploadFile from '~/components/upload-file'
 import UsersSessionsContainer from '~/components/users-sessions-container'
 
 export default {
-  name: 'ImportUploadCsv',
+  name: 'ImportsUploadUsersCsv',
 
   components: {
     UploadFile,
@@ -39,11 +39,36 @@ export default {
     sm="6"
     submit-text="Upload"
     text-class="font-italic"
-    title="Upload CSV"
+    title="Upload Users CSV"
     :token-name="tokenName"
     :token-value="tokenValue"
     :validation-method="validate"
   >
+    <b-form-text class="text-left">
+      <p>
+        Tip: You can export a CSV from your ActiveDirectory or LDAP server, or create one manually.
+        You might want to ask your IT department for this list.
+      </p>
+      <p>
+        Syntax:
+        <br>
+        "Full Name","user@example.com","(555) 555-5555","Job Title"
+      </p>
+      <p>
+        Required fields:
+        <ul>
+          <li>Full Name</li>
+          <li>Email</li>
+          <li>Job Title</li>
+        </ul>
+      </p>
+      <p>
+        Optional fields:
+        <ul>
+          <li>Phone</li>
+        </ul>
+      </p>
+    </b-form-text>
     <upload-file ref="uploadForm" />
   </users-sessions-container>
 </template>

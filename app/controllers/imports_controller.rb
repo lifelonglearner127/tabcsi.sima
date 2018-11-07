@@ -4,9 +4,9 @@ require 'fileutils'
 
 class ImportsController < ApplicationController
   before_action :require_logged_in_user
-  before_action :set_page_options, only: %i[upload_csv]
+  before_action :set_page_options, only: %i[upload_users_csv]
 
-  def upload_csv; end
+  def upload_users_csv; end
 
   def users
     upload_file = import_params[:file]

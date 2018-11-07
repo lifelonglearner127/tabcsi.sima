@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :faqs, only: %i[index]
 
   resource(:import, only: %i[]) do
-    get :upload_csv
+    get :upload_users_csv
     post :users
   end
 

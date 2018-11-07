@@ -310,7 +310,7 @@ export default {
           </b-dropdown-item>
           <b-dropdown-item
             class="px-3"
-            href="/import/upload_csv"
+            href="/import/upload_users_csv"
           >
             <fa-sprite
               fixed-width
