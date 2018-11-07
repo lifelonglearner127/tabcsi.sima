@@ -192,7 +192,7 @@ class User < ApplicationRecord
   end
 
   def after_update_user
-    if user? || became_admin?
+    if (user? && location_clps.present?) || became_admin?
       locations.clear
       licenses.clear
     end
