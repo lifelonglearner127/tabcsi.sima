@@ -12,7 +12,7 @@ class ImportsController < ApplicationController
     uploaded_file = import_params[:file]
     csv_path = move_file(uploaded_file)
 
-    CsvJob.perform_later(current_user, csv_path)
+    CsvJob.set(wait: 5.seconds).perform_later(current_user, csv_path)
 
     redirect_to dashboard_url
   end

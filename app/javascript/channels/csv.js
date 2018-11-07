@@ -3,11 +3,11 @@ import { Notification } from '~/plugins/bootstrap-vue-utils'
 
 const subscription = () => createChannel('csv', {
   completed: (data) => {
-    Notification.success(data.body)
+    Notification.success(data.message)
   },
 
   error: (data) => {
-    Notification.error(data.body)
+    Notification.error(data.error)
   }
 })
 

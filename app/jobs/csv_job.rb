@@ -6,64 +6,58 @@ require 'fileutils'
 class CsvJob < ApplicationJob
   queue_as :default
 
-  COLUMN_HEADERS = %i[full_name email phone job_title].freeze
-  REQUIRED_COLUMNS = %i[full_name email job_title].freeze
+  HEADERS = %i[full_name email phone job_title].freeze
+  REQUIRED_FIELDS = %i[full_name email job_title].freeze
 
-  def perform(current_user, csv_path)
+  def perform(current_user, path)
     row_number = 0
 
     User.transaction do
       CSV.foreach(
-        csv_path,
-        headers: COLUMN_HEADERS,
+        path,
+        headers: HEADERS,
         return_headers: false,
         skip_blanks: true
       ) do |row|
         row_number += 1
 
-        if row.fields.compact.empty? ||
-           !row.to_hash.fetch_values(*REQUIRED_COLUMNS).all?
-          next
+        next if row.fields.compact.empty?
+
+        # convert to hash, and keep only defined fields
+        row = row.to_hash.slice(*HEADERS)
+
+        unless row.fetch_values(*REQUIRED_FIELDS).all?
+          error!(current_user, row_number, 'Missing required fields.')
         end
 
-        row = row.to_hash
+        user = User.create(
+          **row,
+          company_id: current_user.company_id,
+          imported: true
+        )
 
-        # Check if email already exists
-        user = User.find_by(email: row[:email])
-        if user.present?
-          CsvChannel.broadcast_to(
-            current_user,
-            type: 'error',
-            body: "Line #{row_number}: #{user.email} already exists"
-          )
-
-          raise ActiveRecord::Rollback
+        if user.invalid?
+          error!(current_user, row_number, user.errors.full_messages.join(', '))
         end
-
-        user = User.new(row)
-        user.imported = true
-        user.company_id = current_user.company_id
-
-        unless user.valid?
-          CsvChannel.broadcast_to(
-            current_user,
-            type: 'error',
-            body: "Line #{row_number}: #{user.errors.full_messages.join(', ')}"
-          )
-
-          raise ActiveRecord::Rollback
-        end
-
-        user.save
       end
 
       CsvChannel.broadcast_to(
         current_user,
-        type: 'completed',
-        body: 'Users imported successfully.'
+        type: :completed,
+        message: 'Users imported successfully.'
       )
     end
   ensure
-    FileUtils.rm(file)
+    FileUtils.rm(path)
+  end
+
+  def error!(current_user, row_number, message)
+    CsvChannel.broadcast_to(
+      current_user,
+      type: :error,
+      error: "CSV Line #{row_number}: #{message}"
+    )
+
+    raise ActiveRecord::Rollback
   end
 end

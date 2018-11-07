@@ -1,11 +1,5 @@
 ---
-development:
-  adapter: async
-
-test:
-  adapter: async
-
-production:
+shared:
   adapter: redis
   url: <%= Nenv.instance.cable_url %>
   channel_prefix: <%= Nenv.instance.cable_channel_prefix %>
