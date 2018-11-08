@@ -12,16 +12,9 @@ module ApplicationCable
 
     private
 
-    def current_user
-      @current_user ||= User.find_by(id: session[:user_id])
-    end
-
     def find_verified_user
-      current_user.presence || reject_unauthorized_connection
-    end
-
-    def session
-      request.session
+      User.find_by(id: request.session[:user_id]).presence ||
+        reject_unauthorized_connection
     end
   end
 end
