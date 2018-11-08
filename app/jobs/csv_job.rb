@@ -33,6 +33,7 @@ class CsvJob < ApplicationJob
         user = User.create(
           **row,
           company_id: current_user.company_id,
+          role: :user,
           imported: true
         )
 
