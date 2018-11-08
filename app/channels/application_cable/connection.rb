@@ -6,6 +6,8 @@ module ApplicationCable
 
     def connect
       self.cable_user = find_verified_user
+
+      logger.add_tags 'ActionCable', cable_user.id
     end
 
     private
