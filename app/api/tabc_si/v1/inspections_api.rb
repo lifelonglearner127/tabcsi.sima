@@ -3,66 +3,6 @@
 module TabcSi
   module V1
     class InspectionsApi < Grape::API
-      DROP_DOWN_FORMAT ||= <<~DESC
-        Value format (braced text should be replaced with actual values):
-
-            {drop-down value}; {drop-down value}; ...
-
-        If the `multiple` flag is not set, then there will only be one "drop-down value".
-
-        If there's an additional text box, then the format becomes as follows:
-
-            {drop-down value} {additional value}; {drop-down value} {additional value}; ...
-
-        If drop-down value is `Unknown`, then do not provide the additional value.
-
-        Examples:
-
-            Unknown
-
-            BB123456
-
-            BQ123456; P123456
-
-            Local Law Enforcement
-
-            21 years old
-      DESC
-
-      RADIO_FORMAT ||= <<~DESC
-        Value format (braced text should be replaced with actual values):
-
-            {radio text}; {radio text}; ...
-
-        If the `multiple` flag is not set, then there will only be one "radio text" value.
-
-        If a radio choice contains fields, then that radio button's value format becomes as follows:
-
-            {radio text}: [{field label}: {start value, 24H}-{end value, 24H}, ...]
-
-        Examples:
-
-            Yes
-
-            Friday: [Alcohol: 10:00-22:00]
-      DESC
-
-      TIME_RANGE_FORMAT ||= <<~DESC
-        Value format (braced text should be replaced with actual values):
-
-            {start value, 24H}-{end value, 24H}
-
-        Examples:
-
-          10:00-22:00
-      DESC
-
-      QUESTION_DESCRIPTIONS ||= {
-        drop_down: DROP_DOWN_FORMAT,
-        radio: RADIO_FORMAT,
-        time_range: TIME_RANGE_FORMAT
-      }.freeze
-
       # def self.collect_questions
       #   questions = Question.order(id: :asc)
       #   picture_questions =
@@ -281,7 +221,74 @@ module TabcSi
 
           desc(
             'Finish Inspection',
-            detail: 'Finish the specified inspection.',
+            detail: <<~DESC,
+              Finish the specified inspection.
+
+              ### Answer Formats
+
+              Here's how answer values should be formatted based on question
+              type. Braced text should be replaced with actual values.
+
+              If times are involved, then they should always be converted to UTC
+              before submitting.
+
+              #### Text
+
+              The user input.
+
+              #### Drop-Down
+
+                  {drop-down value}; {drop-down value}; ...
+
+              If the `multiple` flag is not set, then there will only be one
+              "drop-down value".
+
+              If there's an additional text box, then the format becomes as
+              follows:
+
+                  {drop-down value} {additional value}; {drop-down value} {additional value}; ...
+
+              If drop-down value is "Unknown", then do not provide the
+              additional value.
+
+              Examples:
+
+                  Unknown
+
+                  BB123456
+
+                  BQ123456; P123456
+
+                  Local Law Enforcement
+
+                  21 years old
+
+              #### Radio/Checkbox (`radio + multiple`)
+
+                  {radio text}; {radio text}; ...
+
+              If the `multiple` flag is not set, then there will only be one
+              "radio text" value.
+
+              If a radio choice contains fields, then that radio button's value
+              format becomes as follows:
+
+                  {radio text}: [{field label}: {start value, 24H}-{end value, 24H}, ...]
+
+              Examples:
+
+                  Yes
+
+                  Friday: [Alcohol: 10:00-22:00]
+
+              #### Time Range
+
+                  {start value, 24H}-{end value, 24H}
+
+              Examples:
+
+                  10:00-22:00
+            DESC
             success: {
               model: Entities::InspectionEntity,
               message: 'An inspection object.'
@@ -296,11 +303,7 @@ module TabcSi
 
             requires(:answers, type: Hash) do
               InspectionsApi.questions.each do |q|
-                optional(
-                  q.question_number,
-                  type: String,
-                  desc: QUESTION_DESCRIPTIONS[q.question_type.to_sym]
-                )
+                optional q.question_number, type: String
               end
             end
 
