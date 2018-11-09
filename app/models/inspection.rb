@@ -15,6 +15,7 @@ class Inspection < ApplicationRecord
   validates :started_at, presence: true
 
   after_create :lock_location
+  after_update :destroy_answer_pictures, if: :submitted_successfully?
 
   def self.generate_report_number(location_id)
     fiscal_year = Setting.fiscal_year
@@ -65,6 +66,12 @@ class Inspection < ApplicationRecord
 
   private
 
+  def destroy_answer_pictures
+    answers.each do |answer|
+      answer.pictures.each(&:purge_later)
+    end
+  end
+
   def generate_report_number
     self.class.generate_report_number(location.id)
   end
@@ -75,6 +82,10 @@ class Inspection < ApplicationRecord
       locked_by_id: user.id,
       locked_at: Time.zone.now
     )
+  end
+
+  def submitted_successfully?
+    submitted_at.present? && !erroneous?
   end
 
   def unlock_location(inspected: true)
