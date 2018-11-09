@@ -25,7 +25,7 @@ export default {
         'newsType',
         'subject',
         {
-          key: 'createdBy',
+          key: 'user',
           label: 'Created By'
         },
         {
@@ -150,7 +150,7 @@ export default {
       <template slot="table-colgroup">
         <col class="news-type-col">
         <col class="subject-col">
-        <col class="created-by-col">
+        <col class="user-col">
         <col class="updated-at-col">
         <col class="actions-col">
       </template>
@@ -176,17 +176,17 @@ export default {
       </div>
 
       <template
-        slot="createdBy"
+        slot="user"
         slot-scope="row"
       >
-        {{ row.item.user.fullName }}
+        {{ row.value.fullName }}
       </template>
 
       <template
         slot="updatedAt"
         slot-scope="row"
       >
-        {{ updatedAt(row.item.updatedAt) }}
+        {{ updatedAt(row.value) }}
       </template>
 
       <b-button
@@ -223,7 +223,7 @@ export default {
   width: auto;
 }
 
-.created-by-col {
+.user-col {
   width: auto;
 }
 
