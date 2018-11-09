@@ -18,12 +18,12 @@ class Company < ApplicationRecord
     transaction do
       users.find_in_batches do |batch|
         batch.each do |user|
-          timestamp = Time.zone.now.strftime('%Y%m%d%H%M%S')
+          timestamp = Time.current.strftime('%Y%m%d%H%M%S')
 
           user.update!(
             email: "#{user.email}.orphaned.#{timestamp}",
             orphaned: true,
-            orphaned_at: Time.zone.now
+            orphaned_at: Time.current
           )
         end
       end
@@ -42,7 +42,7 @@ class Company < ApplicationRecord
         locked: false,
         locked_by_id: nil,
         locked_at: nil,
-        updated_at: Time.zone.now
+        updated_at: Time.current
       )
 
       update!(name: nil, owned: false)

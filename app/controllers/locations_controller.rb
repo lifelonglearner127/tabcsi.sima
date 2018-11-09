@@ -23,7 +23,7 @@ class LocationsController < ApplicationController
   end
 
   def current_time
-    Time.zone.now.strftime('%-m/%-d/%Y at %-l:%M %p %Z')
+    Time.current.strftime('%-m/%-d/%Y at %-l:%M %p %Z')
   end
 
   def sequence_id

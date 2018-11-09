@@ -11,8 +11,8 @@ class CreateAuditFormQuestions < ActiveRecord::Migration[5.2]
       t.timestamps null: true
     end
 
-    change_column_null :audit_form_questions, :created_at, false, Time.zone.now
-    change_column_null :audit_form_questions, :updated_at, false, Time.zone.now
+    change_column_null :audit_form_questions, :created_at, false, Time.current
+    change_column_null :audit_form_questions, :updated_at, false, Time.current
 
     add_foreign_key :audit_form_questions, :audit_forms
     add_foreign_key :audit_form_questions, :questions

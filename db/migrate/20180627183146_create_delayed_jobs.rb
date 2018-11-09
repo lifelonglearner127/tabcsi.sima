@@ -15,7 +15,7 @@ class CreateDelayedJobs < ActiveRecord::Migration[5.2]
       # Reason for last failure (see note below).
       t.text :last_error
 
-      # When to run. Could be Time.zone.now for immediately, or sometime in the
+      # When to run. Could be Time.current for immediately, or sometime in the
       # future.
       t.datetime :run_at
 

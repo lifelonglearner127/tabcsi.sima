@@ -7,7 +7,7 @@ namespace :test do
     message = {
       id: 0,
       subject: 'APNS Test Subject',
-      created_at: Time.zone.now,
+      created_at: Time.current,
       link: 'https://www.apple.com/'
     }
 
@@ -22,7 +22,7 @@ namespace :test do
     message = {
       id: 0,
       subject: 'FCM Test Subject',
-      created_at: Time.zone.now,
+      created_at: Time.current,
       link: 'https://www.google.com/'
     }
 

@@ -150,7 +150,7 @@ module TabcSi
           inspection.update!(
             flagged: flagged,
             flag_reason: reason,
-            flagged_at: Time.zone.now
+            flagged_at: Time.current
           )
 
           respond inspection

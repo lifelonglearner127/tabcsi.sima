@@ -19,7 +19,7 @@ class Inspection < ApplicationRecord
 
   def self.generate_report_number(location_id)
     fiscal_year = Setting.fiscal_year
-    time = Time.zone.now
+    time = Time.current
     random_sequence = SecureRandom.hex(1).upcase
     sum = time.month + time.day + time.hour + time.min + time.sec
     sequence = sum.to_s(16).rjust(2, '0').upcase
@@ -47,7 +47,7 @@ class Inspection < ApplicationRecord
 
       update!(
         finished_at: finished_at,
-        completed_at: Time.zone.now,
+        completed_at: Time.current,
         report_number: generate_report_number
       )
 
@@ -57,7 +57,7 @@ class Inspection < ApplicationRecord
 
   def cancel(reason)
     update!(
-      cancelled_at: Time.zone.now,
+      cancelled_at: Time.current,
       cancellation_reason: reason
     )
 
@@ -80,7 +80,7 @@ class Inspection < ApplicationRecord
     location.update!(
       locked: true,
       locked_by_id: user.id,
-      locked_at: Time.zone.now
+      locked_at: Time.current
     )
   end
 
@@ -95,7 +95,7 @@ class Inspection < ApplicationRecord
       locked_at: nil,
       inspected: inspected,
       inspected_by_id: inspected ? user.id : nil,
-      inspected_at: inspected ? Time.zone.now : nil
+      inspected_at: inspected ? Time.current : nil
     )
   end
 end
