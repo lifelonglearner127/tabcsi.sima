@@ -1,5 +1,5 @@
 {
-  "build_date": "2018-10-30",
+  "build_date": "2018-11-08",
   "questions": {
     "1": {
       "question_text": "Full name of person filling out report (first & last)",
@@ -592,7 +592,19 @@
     },
     "30": {
       "question_text": "What are your hours of operation for alcohol service on Friday?",
-      "question_type": "time_range",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "No Alcohol Service" },
+        {
+          "choice_text": "Service Hours",
+          "fields": [
+            {
+              "label": "Alcohol",
+              "field_type": "time_range"
+            }
+          ]
+        }
+      ],
       "help": [
         "Enter the beginning time when the location starts alcohol service and enter the end time when alcohol service is no longer available.",
         "Enter \"am\" or \"pm\" depending if it is morning or night; e.g., 2pm – 1am."
@@ -600,7 +612,19 @@
     },
     "31": {
       "question_text": "What are your hours of operation for alcohol service on Saturday?",
-      "question_type": "time_range",
+      "question_type": "radio",
+      "choices": [
+        { "choice_text": "No Alcohol Service" },
+        {
+          "choice_text": "Service Hours",
+          "fields": [
+            {
+              "label": "Alcohol",
+              "field_type": "time_range"
+            }
+          ]
+        }
+      ],
       "help": [
         "Enter the beginning time when the location starts alcohol service and enter the end time when alcohol service is no longer available.",
         "Enter \"am\" or \"pm\" depending if it is morning or night; e.g., 2pm – 1am."
@@ -724,10 +748,7 @@
       "question_text": "Is there a bathroom that complies with Title III of the Americans with Disabilities Act of 1990?",
       "question_type": "radio",
       "choices": [
-        {
-          "choice_text": "Yes",
-          "picture_attachment": true
-        },
+        { "choice_text": "Yes" },
         { "choice_text": "No" }
       ],
       "help": [
