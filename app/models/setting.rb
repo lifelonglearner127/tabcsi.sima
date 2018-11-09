@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class Setting < ApplicationRecord
+  DEFAULTS = {
+    business_point_radius: 100, # feet
+    server_status: :active,
+    forms_build_date: Time.new(2018).strftime('%F'),
+    fiscal_year: 2019,
+    pin_length: 8,
+    pin_expiration: 30.minutes,
+    tabc_contact_url: 'https://www.tabc.texas.gov/CRHelpForm'
+  }.freeze
+
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.by_name(name)
