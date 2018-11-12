@@ -127,7 +127,15 @@ class User < ApplicationRecord
   end
 
   def pin_expired?
-    pin_last_requested_at && pin_last_requested_at < Setting.pin_expiration.ago
+    never_logged_in = pin_last_requested_at.blank?
+    pin_expired =
+      if never_logged_in
+        false
+      else
+        Time.zone.now >= (pin_last_requested_at + Setting.pin_expiration)
+      end
+
+    never_logged_in || pin_expired
   end
 
   def request_pin(web:)
