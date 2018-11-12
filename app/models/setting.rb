@@ -6,6 +6,8 @@ class Setting < ApplicationRecord
     server_status: :active,
     forms_build_date: Time.new(2018).strftime('%F'),
     fiscal_year: 2019,
+    fiscal_year_start_day: 1,
+    fiscal_year_start_month: 10,
     pin_length: 8,
     pin_expiration: 30.minutes,
     tabc_contact_url: 'https://www.tabc.texas.gov/CRHelpForm'
@@ -51,6 +53,14 @@ class Setting < ApplicationRecord
 
   def self.fiscal_year
     by_name(:fiscal_year).value.to_i
+  end
+
+  def self.fiscal_year_start_day
+    by_name(:fiscal_year_start_day).value.to_i
+  end
+
+  def self.fiscal_year_start_month
+    by_name(:fiscal_year_start_month).value.to_i
   end
 
   def self.pin_length
