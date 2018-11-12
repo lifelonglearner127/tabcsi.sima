@@ -2,11 +2,12 @@
 import isEmpty from 'lodash/isEmpty'
 import LocationsTable from './locations-table'
 import NewsTable from './news-table'
+import ReportsTable from './reports-table'
 import UsersTable from './users-table'
 
 const TABS = {
   default: 'users',
-  list: ['users', 'locations', 'news']
+  list: ['users', 'locations', 'news', 'reports']
 }
 
 export default {
@@ -15,6 +16,7 @@ export default {
   components: {
     LocationsTable,
     NewsTable,
+    ReportsTable,
     UsersTable
   },
 
@@ -27,11 +29,19 @@ export default {
       type: Object,
       default: null
     },
+    fiscalYears: {
+      type: Array,
+      default: null
+    },
     locations: {
       type: Array,
       required: true
     },
     news: {
+      type: Array,
+      default: null
+    },
+    reports: {
       type: Array,
       default: null
     },
@@ -143,21 +153,40 @@ export default {
               />
             </b-tab>
 
-            <b-tab
-              v-if="userIsTabc"
-              :active="isTabActive('news')"
-              @click="saveTab('news')"
-            >
-              <template slot="title">
-                <fa-sprite
-                  fixed-width
-                  use="fas-fa-newspaper"
-                />
-                News
-              </template>
+            <template v-if="userIsTabc">
+              <b-tab
+                :active="isTabActive('news')"
+                @click="saveTab('news')"
+              >
+                <template slot="title">
+                  <fa-sprite
+                    fixed-width
+                    use="fas-fa-newspaper"
+                  />
+                  News
+                </template>
 
-              <news-table :items="news" />
-            </b-tab>
+                <news-table :items="news" />
+              </b-tab>
+
+              <b-tab
+                :active="isTabActive('reports')"
+                @click="saveTab('reports')"
+              >
+                <template slot="title">
+                  <fa-sprite
+                    fixed-width
+                    use="fas-fa-file-invoice"
+                  />
+                  Reports
+                </template>
+
+                <reports-table
+                  :fiscal-years="fiscalYears"
+                  :items="reports"
+                />
+              </b-tab>
+            </template>
           </b-tabs>
         </b-card>
       </b-col>

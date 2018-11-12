@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_130229) do
+ActiveRecord::Schema.define(version: 2018_11_08_213633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,6 +352,17 @@ ActiveRecord::Schema.define(version: 2018_10_31_130229) do
     t.index ["discarded_at"], name: "index_questions_on_discarded_at"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.boolean "include_received", null: false
+    t.string "fiscal_year", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_reports_on_discarded_at"
+    t.index ["user_id"], name: "index_reports_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -420,5 +431,6 @@ ActiveRecord::Schema.define(version: 2018_10_31_130229) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "push_tokens", "users"
+  add_foreign_key "reports", "users"
   add_foreign_key "users", "companies"
 end

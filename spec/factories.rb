@@ -49,6 +49,9 @@ FactoryBot.define do
   factory :question_help_item do
   end
 
+  factory :report do
+  end
+
   factory :setting do
   end
 

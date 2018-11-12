@@ -42,12 +42,20 @@ export default {
       return title
     },
 
+    fiscalYears () {
+      return this.tabc.fiscalYears || []
+    },
+
     locations () {
       return this.tabc.locations || this.user.locations || []
     },
 
     news () {
       return this.tabc.news || []
+    },
+
+    reports () {
+      return this.tabc.reports || []
     },
 
     tabc () {
@@ -145,8 +153,10 @@ export default {
         v-if="userIsAdmin"
         :admin-count="adminCount"
         :company="company"
+        :fiscal-years="fiscalYears"
         :locations="locations"
         :news="news"
+        :reports="reports"
         :user="user"
         :users="users"
       />

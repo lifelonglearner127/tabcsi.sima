@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :reports, only: %i[create]
+
   resource(:session, only: %i[], path: '', as: '') do
     get :log_in, action: :new
     post :log_in, action: :create
