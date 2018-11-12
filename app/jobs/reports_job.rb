@@ -87,7 +87,7 @@ class ReportsJob < ApplicationJob
   end
 
   def days_to_complete(fiscal_year, completed_at)
-    start_time = Time.zone.local(fiscal_year - 1, 9, 1)
+    start_time = Time.zone.local(fiscal_year.to_i - 1, 9, 1)
     ((completed_at - start_time) / 86_400.0).round(half: :even)
   end
 
