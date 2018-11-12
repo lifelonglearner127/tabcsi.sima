@@ -29,4 +29,6 @@ if Rails.env.production?
       secret_access_key: s3_secret_access_key
     }
   }
+else
+  Rails.configuration.aws = {}
 end
