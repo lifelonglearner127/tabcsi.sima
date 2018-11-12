@@ -106,30 +106,20 @@ export default {
 <template>
   <div>
     <b-button-toolbar class="align-items-center justify-content-center mb-3">
+      <b-form-select
+        id="report_fiscal_year"
+        v-model="fiscalYear"
+        class="mr-2 w-auto"
+        :options="fiscalYears"
+      />
+
       <b-form-checkbox
         id="report_include_received"
         v-model="includeReceived"
-        class="mr-2 w-auto"
+        class="mx-2 w-auto"
       >
         Include Received?
       </b-form-checkbox>
-
-      <b-form-group
-        id="report_fiscal_year_group"
-        class="mb-0 mx-2 w-auto"
-        horizontal
-        label="Fiscal Year"
-        label-cols="6"
-        label-for="report_fiscal_year"
-      >
-        <b-form-select
-          id="report_fiscal_year"
-          v-model="fiscalYear"
-          class="w-auto"
-          :options="fiscalYears"
-          required
-        />
-      </b-form-group>
 
       <b-button
         class="ml-2"
@@ -207,9 +197,9 @@ export default {
   @include fixed-width(7rem);
 }
 
-.reports-table {
-  /deep/ table {
-    min-width: 667px;
+/deep/ .reports-table {
+  table {
+    min-width: 718px;
   }
 }
 </style>
