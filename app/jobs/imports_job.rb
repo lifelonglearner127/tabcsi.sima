@@ -3,7 +3,7 @@
 require 'csv'
 require 'fileutils'
 
-class CsvJob < ApplicationJob
+class ImportsJob < ApplicationJob
   queue_as :default
 
   HEADERS = %i[full_name email phone job_title].freeze
@@ -42,7 +42,7 @@ class CsvJob < ApplicationJob
         end
       end
 
-      CsvChannel.broadcast_to(
+      ImportsChannel.broadcast_to(
         current_user,
         type: :completed,
         message: 'Users imported successfully.'
@@ -53,7 +53,7 @@ class CsvJob < ApplicationJob
   end
 
   def error!(current_user, row_number, message)
-    CsvChannel.broadcast_to(
+    ImportsChannel.broadcast_to(
       current_user,
       type: :error,
       error: "CSV Line #{row_number}: #{message}"

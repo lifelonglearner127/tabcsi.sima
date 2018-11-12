@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CsvChannel < ApplicationCable::Channel
+class ImportsChannel < ApplicationCable::Channel
   def subscribed
     stream_for cable_user
   end

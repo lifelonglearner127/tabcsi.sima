@@ -1,9 +1,9 @@
-import csv from './csv'
+import imports from './imports'
 
 const subs = []
 
 export const subscribeToChannels = () => {
-  subs.push(csv())
+  subs.push(imports())
 }
 
 export const unsubscribeFromChannels = () => {

@@ -1,10 +1,10 @@
 import '~/vendor'
 import { deepMapKeys, getBoolean } from '~/lib/utils'
 import FontAwesome, { FaSprites } from '~/plugins/font-awesome'
+import { subscribeToChannels, unsubscribeFromChannels } from '~/channels'
 import BootstrapVue from 'bootstrap-vue'
 import BootstrapVueUtils from '~/plugins/bootstrap-vue-utils'
 import camelCase from 'lodash/camelCase'
-import CsvChannel from '~/channels/csv'
 import icons from '~/lib/icons'
 import isFunction from 'lodash/isFunction'
 import map from 'lodash/map'
@@ -58,7 +58,6 @@ export default class App {
 
       data () {
         return {
-          channelSub: null,
           defaultPageSlotTemplates: [],
           pageOptions: {}
         }
@@ -91,12 +90,11 @@ export default class App {
       },
 
       mounted () {
-        this.channelSub = CsvChannel()
+        subscribeToChannels()
       },
 
       beforeDestroy () {
-        this.channelSub.unsubscribe()
-        this.channelSub = null
+        unsubscribeFromChannels()
       },
 
       render (h) {

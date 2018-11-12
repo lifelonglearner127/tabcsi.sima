@@ -24,8 +24,11 @@ class ApplicationController < ActionController::Base
     @page_data_options || {}
   end
 
-  def require_logged_in_user
-    return if logged_in?
+  def require_logged_in_user(*roles)
+    roles = User.roles.keys if roles.blank? # set default
+    roles = roles.map(&:to_sym) # we want symbols
+
+    return if logged_in? && roles.include?(current_user.role.to_sym)
 
     redirect_to log_in_url
   end
