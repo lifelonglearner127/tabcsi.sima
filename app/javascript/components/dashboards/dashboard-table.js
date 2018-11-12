@@ -52,11 +52,13 @@ export default {
         class: this.tableClass,
         props: {
           currentPage: this.currentPage,
+          emptyText: 'There are no records to show.',
           fields: this.fields,
           hover: true,
           items: this.items,
           perPage: this.perPage,
           responsive: true,
+          showEmpty: true,
           striped: true,
           totalRows: this.totalRows
         },

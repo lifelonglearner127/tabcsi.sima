@@ -162,6 +162,7 @@ export default {
         <b-form-checkbox
           :id="`news_${row.index}_selected`"
           v-model="row.item.selected"
+          @click.native.stop
         >
           {{ newsType(row.value) }}
         </b-form-checkbox>
@@ -194,7 +195,7 @@ export default {
         slot-scope="row"
         size="sm"
         variant="info"
-        @click="viewNews(row.item)"
+        @click.stop="viewNews(row.item)"
       >
         View
       </b-button>

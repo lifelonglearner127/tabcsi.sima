@@ -314,7 +314,7 @@ export default {
         :disabled="resetDisabled(row.item)"
         size="sm"
         variant="danger"
-        @click="resetLocation(row.item)"
+        @click.stop="resetLocation(row.item)"
       >
         Reset
       </b-button>

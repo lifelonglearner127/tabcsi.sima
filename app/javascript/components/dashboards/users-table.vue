@@ -408,6 +408,7 @@ export default {
           :id="`user_${row.index}_selected`"
           v-model="row.item.selected"
           :disabled="row.item.id === currentUser.id"
+          @click.native.stop
         >
           {{ firstColumnValue(row) }}
         </b-form-checkbox>
@@ -440,7 +441,7 @@ export default {
         slot-scope="row"
         href="#"
         title="Edit"
-        @click.prevent="editUser(row.item)"
+        @click.prevent.stop="editUser(row.item)"
       >
         <fa-sprite
           fixed-width
