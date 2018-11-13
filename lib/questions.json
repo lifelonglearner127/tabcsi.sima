@@ -90,10 +90,6 @@
           "choice_text": "Red",
           "picture_attachment": true
         },
-        {
-          "choice_text": "Both",
-          "picture_attachment": true
-        },
         { "choice_text": "None" }
       ],
       "help": {
@@ -237,19 +233,11 @@
       ]
     },
     "12": {
-      "question_text": "Choose the vendors that you purchase beer from.",
-      "question_type": "drop_down",
-      "multiple": true,
-      "label": "License/Permit Type:",
-      "additional_label": "License/Permit Number:",
-      "additional_text": 9,
-      "additional_type": "number",
+      "question_text": "Do you purchase beer and wine from a retailer? (e.g., Sam's, Costco, Wal-Mart, etc.)",
+      "question_type": "radio",
       "choices": [
-        { "choice_text": "BB" },
-        { "choice_text": "BC" },
-        { "choice_text": "BF" },
-        { "choice_text": "BQ" },
-        { "choice_text": "Unknown" }
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
       ],
       "help": [
         "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase beer.",
@@ -258,20 +246,11 @@
       ]
     },
     "13": {
-      "question_text": "Choose the vendors that you purchase wine from.",
-      "question_type": "drop_down",
-      "multiple": true,
-      "label": "License/Permit Type:",
-      "additional_label": "License/Permit Number:",
-      "additional_text": 9,
-      "additional_type": "number",
+      "question_text": "Do you purchase distilled spirits from a package store with a local distributor's permit?",
+      "question_type": "radio",
       "choices": [
-        { "choice_text": "BQ" },
-        { "choice_text": "P" },
-        { "choice_text": "Q" },
-        { "choice_text": "W" },
-        { "choice_text": "X" },
-        { "choice_text": "Unknown" }
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
       ],
       "help": [
         "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase wine.",
@@ -280,20 +259,11 @@
       ]
     },
     "14": {
-      "question_text": "Choose the vendors that you purchase wine from.",
-      "question_type": "drop_down",
-      "multiple": true,
-      "label": "License/Permit Type:",
-      "additional_label": "License/Permit Number:",
-      "additional_text": 9,
-      "additional_type": "number",
+      "question_text": "Do you purchase distilled spirits from a package store without a local distributor's permit?",
+      "question_type": "radio",
       "choices": [
-        { "choice_text": "BQ" },
-        { "choice_text": "P" },
-        { "choice_text": "Q" },
-        { "choice_text": "W" },
-        { "choice_text": "X" },
-        { "choice_text": "Unknown" }
+        { "choice_text": "Yes" },
+        { "choice_text": "No" }
       ],
       "help": [
         "Select and enter the license/permit number(s) for vendor(s) that the location uses to purchase wine.",
@@ -374,12 +344,6 @@
       "choices": [
         { "choice_text": "Yes" },
         { "choice_text": "No" }
-      ],
-      "conditions": [
-        {
-          "condition_value": "No",
-          "skip_question_group": true
-        }
       ],
       "help": [
         "Answer \"Yes\" if the location requires all employees who sell/serve alcohol to obtain a certificate from a TABC-approved Seller Server Training School.",
