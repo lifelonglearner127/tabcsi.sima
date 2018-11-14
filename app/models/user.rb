@@ -69,7 +69,7 @@ class User < ApplicationRecord
   before_validation :generate_random_password, if: :generate_password?
   before_validation :check_for_existing_user, if: :invited?
   after_initialize :set_default_role, if: :new_record?
-  before_create :before_create_user, unless: %i[tabc? imported?]
+  before_create :before_create_user, unless: :tabc?
   after_create :after_create_user, unless: :tabc?
   before_update :before_update_user, unless: :requested_pin?
   after_update :after_update_user, unless: :perform_after_update_user?
@@ -175,11 +175,15 @@ class User < ApplicationRecord
     errors.add(:base, message)
   end
 
+  def add_location_clps
+    locations << Location.where(clp: location_clps)
+    licenses << License.where(clp: location_clps)
+  end
+
   def after_create_user
     unless imported?
       if invited? && user?
-        locations << Location.where(clp: location_clps)
-        licenses << License.where(clp: location_clps)
+        add_location_clps
       else # sign_up or admin invite
         locations << company.locations
         licenses << company.licenses
@@ -193,14 +197,13 @@ class User < ApplicationRecord
   end
 
   def after_update_user
-    if (user? && location_clps.present?) || became_admin?
+    if (user? && @location_clps.present?) || became_admin?
       locations.clear
       licenses.clear
     end
 
     if user?
-      locations << Location.where(clp: location_clps)
-      licenses << License.where(clp: location_clps)
+      add_location_clps
     elsif became_admin?
       locations << company.locations
       licenses << company.licenses
@@ -212,6 +215,12 @@ class User < ApplicationRecord
   end
 
   def before_create_user
+    if imported?
+      throw :abort if user? && !verify_location_clps
+
+      return
+    end
+
     if invited?
       company = Company.find_by(owner_name: owner_name)
 
@@ -221,8 +230,10 @@ class User < ApplicationRecord
         throw :abort
       end
 
-      self.company = company
+      self.company_id = company.id
       self.role = :user if role.blank?
+
+      throw :abort if user? && !verify_location_clps
 
       return
     end
@@ -258,6 +269,8 @@ class User < ApplicationRecord
     end
 
     @became_admin = role_changed?(from: 'user', to: 'admin')
+
+    throw :abort if user? && !verify_location_clps
   end
 
   def check_for_existing_user
@@ -310,5 +323,16 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role ||= :user
+  end
+
+  def verify_location_clps
+    return true if @location_clps.blank?
+
+    found_clps =
+      Location.where(clp: @location_clps, company_id: company_id).pluck(:clp)
+
+    clps_not_found = @location_clps - found_clps
+
+    clps_not_found.blank?
   end
 end
