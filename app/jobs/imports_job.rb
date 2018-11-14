@@ -6,7 +6,7 @@ require 'fileutils'
 class ImportsJob < ApplicationJob
   queue_as :default
 
-  HEADERS = %i[full_name email phone job_title].freeze
+  HEADERS = %i[full_name email phone job_title location_clps].freeze
   REQUIRED_FIELDS = %i[full_name email job_title].freeze
 
   def perform(current_user, path)
