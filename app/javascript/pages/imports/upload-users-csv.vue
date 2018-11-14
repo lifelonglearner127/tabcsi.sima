@@ -46,13 +46,12 @@ export default {
   >
     <b-form-text class="text-left">
       <p>
-        Tip: You can export a CSV from your ActiveDirectory or LDAP server, or create one manually.
-        You might want to ask your IT department for this list.
+        Tip: You can export a CSV from your ActiveDirectory or LDAP server, or create one manually. You might want to
+        ask your IT department for this list.
       </p>
       <p>
-        Syntax:
-        <br>
-        "Full Name","user@example.com","(555) 555-5555","Job Title"
+        Syntax:<br>
+        <code>"Full Name","user@example.com","(555) 555-5555","Job Title","MB859599,MB859418"</code>
       </p>
       <p>
         Required fields:
@@ -66,6 +65,7 @@ export default {
         Optional fields:
         <ul>
           <li>Phone</li>
+          <li>Location CLPs</li>
         </ul>
       </p>
     </b-form-text>
