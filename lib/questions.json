@@ -1,5 +1,5 @@
 {
-  "build_date": "2018-11-12",
+  "build_date": "2018-11-14",
   "questions": {
     "1": {
       "question_text": "Full name of person filling out report (first & last)",
@@ -96,8 +96,12 @@
         "items": [
           "*Blue Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises unless the person is licensed to carry the handgun. It is issued to off-premises licenses/permits and on-premises licenses/permits that derive less than 51% of gross income from alcohol sales OR hold a Food & Beverage Certificate.",
           "*Red Sign*: This sign gives notice that it is unlawful to carry a weapon on the premises. It is issued to on-premises accounts that derive more than 51% of gross income from alcohol sales.",
-          "Answer \"Blue,\" \"Red,\" or \"Both\" if you have the Blue, Red, or both Blue and Red Weapons Sign(s) posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
-          "Answer \"None\" if you do not have any of the Weapons Signs posted."
+          [
+            "*Only one sign should be posted.*",
+            "",
+            "* Answer \"Blue\" or \"Red\" if you have the Blue or Red Weapons Sign posted on the outside of your premises and take a photograph of it with your phone when you are prompted to do so. Tap \"Take Picture\" to provide one to three pictures.",
+            "* Answer \"None\" if you do not have either of the Weapons Signs posted."
+          ]
         ],
         "images": [
           "assets/images/help/handgun_warning_sign-blue-english.png",
@@ -206,9 +210,8 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase beer.",
-        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
-        "If you do not know, select \"Unknown.\""
+        "Answer \"Yes\" if you purchase beer and wine from a retailer; e.g., Sam's Club, Costco, Wal-Mart, etc.",
+        "Answer \"No\" if you do not purchase beer and wine from a retailer."
       ]
     },
     "13": {
@@ -219,9 +222,8 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Select and enter the license/permit number(s) for the vendor(s) that the location uses to purchase wine.",
-        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
-        "If you do not know, select \"Unknown.\""
+        "Answer \"Yes\" if you purchase distilled spirits from a package store with a local distributor's permit.",
+        "Answer \"No\" if you do not purchase distilled spirits from a package store with a local distributor's permit."
       ]
     },
     "14": {
@@ -232,9 +234,8 @@
         { "choice_text": "No" }
       ],
       "help": [
-        "Select and enter the license/permit number(s) for vendor(s) that the location uses to purchase wine.",
-        "You can find your vendor’s license/permit number on the invoices provided during delivery of the alcoholic beverages.",
-        "If you do not know, select \"Unknown.\""
+        "Answer \"Yes\" if you purchase distilled spirits from a package store without a local distributor's permit.",
+        "Answer \"No\" if you do not purchase distilled spirits from a package store without a local distributor's permit."
       ]
     },
     "17A": {
@@ -482,7 +483,8 @@
       ],
       "help": [
         "Enter the beginning time when the location starts alcohol service and enter the end time when alcohol service is no longer available.",
-        "Enter \"am\" or \"pm\" depending if it is morning or night; e.g., 2pm – 1am."
+        "Enter \"am\" or \"pm\" depending if it is morning or night; e.g., 2pm – 1am.",
+        "If alcohol is not sold, answer \"No Alcohol Service.\""
       ]
     },
     "31": {
@@ -502,7 +504,8 @@
       ],
       "help": [
         "Enter the beginning time when the location starts alcohol service and enter the end time when alcohol service is no longer available.",
-        "Enter \"am\" or \"pm\" depending if it is morning or night; e.g., 2pm – 1am."
+        "Enter \"am\" or \"pm\" depending if it is morning or night; e.g., 2pm – 1am.",
+        "If alcohol is not sold, answer \"No Alcohol Service.\""
       ]
     },
     "32A": {
