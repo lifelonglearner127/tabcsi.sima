@@ -2,7 +2,12 @@
 
 NUMBER_OF_RELEASES_TO_KEEP = 5
 NUMBER_OF_BUNDLE_JOBS = 2
-NUMBER_OF_DELAYED_JOB_WORKERS = 1
+DELAYED_JOB_POOLS = {
+  nil => 1,
+  imports: 1,
+  news: 1,
+  reports: 1
+}
 
 # config valid only for current version of Capistrano
 lock '~> 3.11'
@@ -54,8 +59,8 @@ set(
 )
 
 # Delayed Job
-set :delayed_job_workers, NUMBER_OF_DELAYED_JOB_WORKERS
 set :delayed_job_prefix, 'tabc_cr'
+set :delayed_job_pools, DELAYED_JOB_POOLS
 set :delayed_job_monitor, true
 
 # after 'deploy:set_current_revision', 'tabc_si:set_mtimes'

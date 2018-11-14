@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NewsJob < ApplicationJob
-  queue_as :default
+  queue_as :news
 
   def perform(news)
     message = {

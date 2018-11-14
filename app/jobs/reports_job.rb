@@ -16,7 +16,7 @@ class ReportsJob < ApplicationJob
 
   FULL_HEADERS = (BASE_HEADERS + OTHER_HEADERS).freeze
 
-  queue_as :default
+  queue_as :reports
 
   def perform(report)
     fiscal_year = report.fiscal_year

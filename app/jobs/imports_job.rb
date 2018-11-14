@@ -4,7 +4,7 @@ require 'csv'
 require 'fileutils'
 
 class ImportsJob < ApplicationJob
-  queue_as :default
+  queue_as :imports
 
   HEADERS = %i[full_name email phone job_title location_clps].freeze
   REQUIRED_FIELDS = %i[full_name email job_title].freeze
