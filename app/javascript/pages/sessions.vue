@@ -1,4 +1,5 @@
 <script>
+import { DateTime, Duration } from 'luxon'
 import { email, exactLength } from '~/validators'
 import { getBoolean } from '~/lib/utils'
 import PageMixin from '~/mixins/page'
@@ -18,6 +19,21 @@ export default {
 
   data () {
     return {
+      serverErrorHandlerOptions: {
+        pin (error) {
+          const lockedAt = DateTime.fromISO(error.lockedAt)
+          const unlockIn = Duration.fromObject({ seconds: error.unlockIn })
+          const currentTime = DateTime.local()
+          const ago = currentTime.minus(unlockIn)
+
+          return {
+            messageFormatter: (time) =>
+              `Your account is locked. Please try again in ${time}.`,
+
+            startingSeconds: Math.round(lockedAt.diff(ago, 'seconds').toObject().seconds)
+          }
+        }
+      },
       session: {
         email: this.pageOptions.email || '',
         pin: ''
@@ -90,6 +106,7 @@ export default {
     :enforce-utf8="enforceUtf8"
     :hidden-method="hiddenMethod"
     :method="method"
+    :server-error-handler-options="serverErrorHandlerOptions"
     :server-errors="serverErrors"
     :show-back-button="pinRequested"
     sm="4"

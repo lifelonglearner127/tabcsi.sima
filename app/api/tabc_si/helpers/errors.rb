@@ -6,12 +6,12 @@ module TabcSi
       {
         not_found: 'Resource not found.'
       }.each do |code, message|
-        define_method "error_#{code}!" do
+        define_method "#{code}_error!" do
           raise Error.new(message, status: code)
         end
       end
 
-      def error_bad_request!(title, detail: nil, code: nil)
+      def bad_request_error!(title, detail: nil, code: nil)
         raise Error.new(title, detail: detail, code: code)
       end
 

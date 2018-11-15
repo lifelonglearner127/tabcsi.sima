@@ -112,7 +112,7 @@ module TabcSi
     before do
       if request.path.end_with? '/docs_spec'
         # restrict access to allowed IP addresses
-        error_not_found! unless AllowedIpConstraint.matches?(request)
+        not_found_error! unless AllowedIpConstraint.matches?(request)
       else
         doorkeeper_authorize!
       end

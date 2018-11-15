@@ -1,5 +1,9 @@
 <script>
+import CountdownMessage from '~/components/countdown-message'
+import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
+import isFunction from 'lodash/isFunction'
+import isString from 'lodash/isString'
 import RailsForm from '~/components/rails-form'
 import TabcCard from '~/components/tabc-card'
 
@@ -7,6 +11,7 @@ export default {
   name: 'UsersSessionsContainer',
 
   components: {
+    CountdownMessage, // eslint-disable-line vue/no-unused-components
     RailsForm,
     TabcCard
   },
@@ -53,6 +58,14 @@ export default {
       type: String,
       required: true
     },
+    serverErrorHandlerOptions: {
+      type: Object,
+      default: null
+    },
+    serverErrorHandlers: {
+      type: Object,
+      default: null
+    },
     serverErrors: {
       type: Object,
       default: null
@@ -97,6 +110,10 @@ export default {
     }
   },
 
+  data () {
+    return { cachedServerErrorOptions: {} }
+  },
+
   computed: {
     haveErrors () {
       return !isEmpty(this.serverErrors)
@@ -108,6 +125,40 @@ export default {
 
     topBackButtonVisible () {
       return this.backButtonVisible && this.showTopBackButton
+    }
+  },
+
+  methods: {
+    handleError (error, key, index) {
+      if (
+        isString(error) ||
+        this.serverErrorHandlers == null ||
+        !isFunction(this.serverErrorHandlers[key])
+      ) {
+        return error
+      }
+
+      return this.serverErrorHandlers[key](error, index)
+    },
+
+    serverErrorComponent (error) {
+      return includes(['countdown-message'], error.type) ? error.type : 'p'
+    },
+
+    serverErrorOptions (error, key) {
+      if (
+        error.type == null ||
+        this.serverErrorHandlerOptions == null ||
+        !isFunction(this.serverErrorHandlerOptions[key])
+      ) {
+        return null
+      }
+
+      if (this.cachedServerErrorOptions[key] == null) {
+        this.cachedServerErrorOptions[key] = this.serverErrorHandlerOptions[key](error)
+      }
+
+      return this.cachedServerErrorOptions[key]
     }
   }
 }
@@ -127,12 +178,15 @@ export default {
       show
       variant="danger"
     >
-      <p
+      <component
+        :is="serverErrorComponent(error)"
         v-for="(error, key, index) in serverErrors"
+        :id="`server-error${index}`"
         :key="index"
+        v-bind="serverErrorOptions(error, key)"
       >
-        {{ error }}
-      </p>
+        {{ handleError(error, key, index) }}
+      </component>
     </b-alert>
 
     <rails-form

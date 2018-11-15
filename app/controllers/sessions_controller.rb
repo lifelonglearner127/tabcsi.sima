@@ -105,7 +105,17 @@ class SessionsController < ApplicationController
       return
     end
 
-    page_data_options[:html][:errors] = { pin: 'Incorrect PIN.' }
+    page_data_options[:html][:errors] ||= {}
+    page_data_options[:html][:errors][:pin] =
+      if current_user&.access_locked?
+        {
+          type: 'countdown-message',
+          locked_at: current_user.locked_at,
+          unlock_in: Devise.unlock_in.to_i
+        }
+      else
+        'Invalid email or PIN.'
+      end
 
     render 'new'
   end
