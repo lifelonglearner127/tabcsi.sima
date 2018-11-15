@@ -82,6 +82,10 @@ class User < ApplicationRecord
   attr_accessor :owner_name
   attr_accessor :profile
 
+  def self.pin_expires_in
+    @pin_expires_in ||= ActiveSupport::Duration.build(Setting.pin_expiration)
+  end
+
   def self.new_pin
     # based on SecureRandom.alphanumeric
     SecureRandom.__send__(:choose, PIN_CHARS, Setting.pin_length)
@@ -127,15 +131,8 @@ class User < ApplicationRecord
   end
 
   def pin_expired?
-    never_logged_in = pin_last_requested_at.blank?
-    pin_expired =
-      if never_logged_in
-        false
-      else
-        Time.zone.now >= (pin_last_requested_at + Setting.pin_expiration)
-      end
-
-    never_logged_in || pin_expired
+    pin_last_requested_at &&
+      pin_last_requested_at < self.class.pin_expires_in.ago
   end
 
   def request_pin(web:)
