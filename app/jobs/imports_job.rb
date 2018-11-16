@@ -30,6 +30,10 @@ class ImportsJob < ApplicationJob
           error!(current_user, row_number, 'Missing required fields.')
         end
 
+        if row[:location_clps].present?
+          row[:location_clps] = row[:location_clps].split(',')
+        end
+
         user = User.create(
           **row,
           company_id: current_user.company_id,
