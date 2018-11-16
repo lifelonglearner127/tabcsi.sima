@@ -54,11 +54,11 @@ module TabcSi
 
         def verify_user!(inspection)
           if inspection.user_id != current_user&.id
-            error_bad_request! 'user did not start the inspection'
+            bad_request_error! 'user did not start the inspection'
           end
 
           unless inspection.location.users.include?(current_user)
-            error_bad_request! 'user is no longer assigned to location'
+            bad_request_error! 'user is no longer assigned to location'
           end
 
           # Check for blank license to handle older inspections; this should not
@@ -66,7 +66,7 @@ module TabcSi
           license = inspection.license
           return if license.blank? || license.users.include?(current_user)
 
-          error_bad_request! 'user is no longer assigned to license'
+          bad_request_error! 'user is no longer assigned to license'
         end
       end
 
@@ -98,17 +98,17 @@ module TabcSi
           license = params[:license]
 
           if location.locked?
-            error_bad_request! 'inspection already started for location'
+            bad_request_error! 'inspection already started for location'
           end
 
-          error_bad_request! 'location already inspected' if location.inspected?
+          bad_request_error! 'location already inspected' if location.inspected?
 
           unless location.users.include?(current_user)
-            error_bad_request! 'user is not assigned to location'
+            bad_request_error! 'user is not assigned to location'
           end
 
           unless license.users.include?(current_user)
-            error_bad_request! 'user is not assigned to license'
+            bad_request_error! 'user is not assigned to license'
           end
 
           inspection = Inspection.create!(
@@ -145,7 +145,7 @@ module TabcSi
 
           inspection = Inspection.find_by(report_number: report_number)
 
-          error_bad_request! 'no inspection found' if inspection.blank?
+          bad_request_error! 'no inspection found' if inspection.blank?
 
           inspection.update!(
             flagged: flagged,
@@ -325,7 +325,7 @@ module TabcSi
             inspection = params[:inspection]
 
             if inspection.finished_at.present?
-              error_bad_request! 'inspection has already been finished'
+              bad_request_error! 'inspection has already been finished'
             end
 
             verify_user!(inspection)
@@ -351,7 +351,7 @@ module TabcSi
             inspection = params[:inspection]
 
             if inspection.finished_at.present?
-              error_bad_request! 'cannot cancel a finished inspection'
+              bad_request_error! 'cannot cancel a finished inspection'
             end
 
             verify_user!(inspection)

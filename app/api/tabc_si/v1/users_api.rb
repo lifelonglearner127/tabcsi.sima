@@ -20,7 +20,7 @@ module TabcSi
           email = params[:email]
           user = User.find_for_database_authentication(email: email)
 
-          error_bad_request! "user doesn't exist" if user.blank?
+          bad_request_error! "user doesn't exist" if user.blank?
 
           unless user.request_pin(web: false)
             error! 'could not generate a new pin'

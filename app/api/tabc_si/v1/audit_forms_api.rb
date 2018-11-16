@@ -22,7 +22,7 @@ module TabcSi
             License.split_license_number(params[:license_number])
           )
 
-          error_bad_request! 'license number does not exist' if license.blank?
+          bad_request_error! 'license number does not exist' if license.blank?
 
           audit_form =
             AuditForm
@@ -37,7 +37,7 @@ module TabcSi
             .first
 
           if audit_form.blank?
-            error_bad_request! 'there are no applicable questions for license'
+            bad_request_error! 'there are no applicable questions for license'
           end
 
           respond audit_form

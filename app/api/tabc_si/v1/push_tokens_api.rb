@@ -31,16 +31,16 @@ module TabcSi
         end
         post do
           if current_application.blank?
-            error_bad_request! 'missing OAuth application'
+            bad_request_error! 'missing OAuth application'
           end
 
           if current_user.blank?
-            error_bad_request! 'missing user; please use a password token'
+            bad_request_error! 'missing user; please use a password token'
           end
 
           device_type = params[:device_type] || current_application.name
           unless valid_device_type?(device_type)
-            error_bad_request! <<~MSG
+            bad_request_error! <<~MSG
               invalid device type from authorization token; please specify `device_type` parameter
             MSG
           end
