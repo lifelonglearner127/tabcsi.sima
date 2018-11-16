@@ -77,6 +77,16 @@ class DashboardsController < ApplicationController
           licenses: { include: :location }
         }
       )
+      .map do |u|
+        if u['role'] == 'tabc'
+          u['company'] = {
+            name: 'N/A',
+            owner_name: 'N/A'
+          }.as_json
+        end
+
+        u
+      end
 
     info[:locations] =
       Location

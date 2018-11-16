@@ -15,6 +15,14 @@ export default {
       type: Array,
       required: true
     },
+    sortBy: {
+      type: String,
+      default: null
+    },
+    sortCompare: {
+      type: Function,
+      default: null
+    },
     tableClass: {
       type: String,
       default: null
@@ -59,6 +67,8 @@ export default {
           perPage: this.perPage,
           responsive: true,
           showEmpty: true,
+          sortBy: this.sortBy,
+          sortCompare: this.sortCompare,
           striped: true,
           totalRows: this.totalRows
         },

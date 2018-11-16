@@ -70,38 +70,71 @@ export default {
 
     fields () {
       const value = [
-        'email',
-        'jobTitle',
-        'phone',
-        'type',
         {
-          key: 'pinLastRequestedAt',
-          label: 'Logged In'
+          key: 'fullName',
+          sortable: true
         },
         {
-          key: 'actions',
+          key: 'email',
+          sortable: true
+        },
+        {
+          key: 'jobTitle',
+          sortable: true
+        },
+        {
+          key: 'phone',
+          sortable: true
+        },
+        {
+          key: 'role',
+          label: 'Type',
+          sortable: true,
+
+          formatter (columnValue) {
+            return startCase(columnValue)
+          }
+        },
+        {
+          key: 'pinLastRequestedAt',
+          label: 'Logged In',
+          sortable: true,
+
+          formatter (columnValue) {
+            return isEmpty(columnValue) ? 'Never logged in.' : formatDateTime(columnValue)
+          }
+        },
+        {
+          key: 'tailActions',
           label: '',
-          tdClass: 'text-center'
+          tdClass: 'text-center',
+          sortable: false
         }
       ]
 
       if (this.currentUserIsTabc) {
         value.unshift(
-          'ownerName',
-          'fullName'
+          {
+            key: 'company.name',
+            label: 'Company Name',
+            sortable: true
+          },
+          {
+            key: 'company.ownerName',
+            label: 'Owner Name',
+            sortable: true
+          }
         )
       }
 
       value.unshift({
-        key: this.firstColumnSlot,
-        tdClass: 'first-column'
+        key: 'headActions',
+        label: '',
+        tdClass: 'first-column',
+        sortable: false
       })
 
       return value
-    },
-
-    firstColumnSlot () {
-      return this.currentUserIsTabc ? 'companyName' : 'fullName'
     },
 
     noDiscardedUsersSelected () {
@@ -130,7 +163,7 @@ export default {
 
       this.filterUsers()
     } else {
-      this.searchOption = this.firstColumnSlot
+      this.searchOption = 'fullName'
     }
   },
 
@@ -196,30 +229,12 @@ export default {
       })
     },
 
-    firstColumnValue (row) {
-      if (this.currentUserIsTabc) {
-        const company = row.item.company
-
-        if (company == null) {
-          return 'TABC'
-        }
-
-        return company.name || company.ownerName
-      }
-
-      return row.value
-    },
-
     isDiscarded (user) {
       return !isEmpty(user.discardedAt)
     },
 
     isTabc (user) {
       return user.role === 'tabc'
-    },
-
-    lastSignInAt (user) {
-      return isEmpty(user.pinLastRequestedAt) ? 'Never logged in.' : formatDateTime(user.pinLastRequestedAt)
     },
 
     locationAddress (location) {
@@ -272,10 +287,6 @@ export default {
             license.clp
           ]).join('<br>')
         ), DISPLAY_BOXES_PER_ROW)
-    },
-
-    userType (user) {
-      return startCase(user.role)
     }
   }
 }
@@ -374,70 +385,49 @@ export default {
     <dashboard-table
       :fields="fields"
       :items="filteredItems"
+      sort-by="fullName"
       table-class="users-table"
     >
       <template slot="table-colgroup">
+        <col class="head-actions-col">
         <template v-if="currentUserIsTabc">
           <col class="company-name-col">
-          <col class="owner-name-col">
+          <col class="company-owner-name-col">
         </template>
         <col class="full-name-col">
         <col class="email-col">
         <col class="job-title-col">
         <col class="phone-col">
-        <col class="type-col">
-        <col class="logged-in-col">
-        <col class="actions-col">
+        <col class="role-col">
+        <col class="pin-last-requested-at-col">
+        <col class="tail-actions-col">
       </template>
 
       <template
-        :slot="firstColumnSlot"
+        slot="headActions"
         slot-scope="row"
       >
-        <a
-          v-if="!isTabc(row.item)"
-          href="#"
-          @click.prevent.stop="row.toggleDetails"
-        >
-          <fa-sprite
-            fixed-width
-            :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
-          />
-        </a>
+        <template v-if="!isTabc(row.item)">
+          <a
+            href="#"
+            @click.prevent.stop="row.toggleDetails"
+          >
+            <fa-sprite
+              fixed-width
+              :use="row.detailsShowing ? 'far-fa-minus-square' : 'far-fa-plus-square'"
+            />
+          </a>
+        </template>
         <b-form-checkbox
           :id="`user_${row.index}_selected`"
           v-model="row.item.selected"
           :disabled="row.item.id === currentUser.id"
           @click.native.stop
-        >
-          {{ firstColumnValue(row) }}
-        </b-form-checkbox>
-      </template>
-
-      <template
-        v-if="currentUserIsTabc"
-        slot="ownerName"
-        slot-scope="row"
-      >
-        {{ row.item.company == null ? 'TABC' : row.item.company.ownerName }}
-      </template>
-
-      <template
-        slot="type"
-        slot-scope="row"
-      >
-        {{ userType(row.item) }}
-      </template>
-
-      <template
-        slot="pinLastRequestedAt"
-        slot-scope="row"
-      >
-        {{ lastSignInAt(row.item) }}
+        />
       </template>
 
       <a
-        slot="actions"
+        slot="tailActions"
         slot-scope="row"
         href="#"
         title="Edit"
@@ -485,11 +475,15 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixins';
 
+.head-actions-col {
+  @include fixed-width(4.3125rem);
+}
+
 .company-name-col {
   width: auto;
 }
 
-.owner-name-col {
+.company-owner-name-col {
   width: auto;
 }
 
@@ -509,15 +503,15 @@ export default {
   @include fixed-width(10rem);
 }
 
-.type-col {
+.role-col {
   @include fixed-width(5rem);
 }
 
-.logged-in-col {
+.pin-last-requested-at-col {
   @include fixed-width(12.5rem);
 }
 
-.actions-col {
+.tail-actions-col {
   @include fixed-width(3rem);
 }
 
@@ -537,8 +531,28 @@ export default {
 }
 
 /deep/ .first-column {
-  > .custom-checkbox:first-child {
-    margin-left: 1.5625rem;
+  white-space: nowrap;
+
+  > .custom-checkbox {
+    margin-right: 0;
+    min-height: auto;
+    padding-left: 0;
+    vertical-align: -0.25rem;
+
+    &:first-child {
+      margin-left: 1.5625rem;
+    }
+
+    .custom-control-label {
+      min-height: 1.25rem;
+      min-width: 1.25rem;
+
+      &::before,
+      &::after {
+        left: 0.125rem;
+        top: 0.125rem;
+      }
+    }
   }
 }
 
