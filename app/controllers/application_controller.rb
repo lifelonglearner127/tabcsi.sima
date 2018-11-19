@@ -45,7 +45,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def action_log(tag, message)
+    ActionLog.create!(
+      sequence_id: sequence_id,
+      tag: tag,
+      message: message
+    )
+  end
+
   private
+
+  def sequence_id
+    @sequence_id ||= ActionLog.sequence_id
+  end
 
   def default_page_options
     {}

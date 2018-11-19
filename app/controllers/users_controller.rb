@@ -5,10 +5,26 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[destroy edit show update]
   before_action :set_page_options, only: %i[edit invite new]
 
+  TRACK_ATTRIBUTES = %i[full_name email phone job_title role].freeze
+
   def create
     @user = User.create(normalized_user_params)
 
     if @user.persisted?
+      if @user.invited?
+        admin = User.find(@user.by_whom_id)
+        log_msg =
+          "#{user_to_string(admin)} invited #{user_to_string(@user)} to #{company_to_string(admin.company)}."
+      else
+        log_msg =
+          "#{user_to_string(@user)} registered for #{@user.company.name}."
+      end
+
+      action_log(
+        'users_controller',
+        log_msg
+      )
+
       redirect_to(
         @user.invited? ? dashboard_url : log_in_url,
         notice: successful_create_notice(@user)
@@ -26,9 +42,17 @@ class UsersController < ApplicationController
 
   def destroy
     @user.discard
+    action_log(
+      'users_controller',
+      "#{user_to_string(current_user)} deleted #{user_to_string(@user)}."
+    )
 
     # reset company; method checks user count first
     @user.company.reset
+    action_log(
+      'users_controller',
+      "#{company_to_string(@user.company)} was reset."
+    )
 
     head :no_content
   end
@@ -54,12 +78,39 @@ class UsersController < ApplicationController
   def undiscard
     user = User.with_discarded.find(params[:id])
     user.undiscard
+    action_log(
+      'users_controller',
+      "#{user_to_string(current_user)} undeleted #{user_to_string(@user)}."
+    )
 
     head :no_content
   end
 
   def update
     if @user.update(normalized_user_params)
+      changes_msg = []
+      field_changes = @user.previous_changes
+
+      unless field_changes.empty?
+        TRACK_ATTRIBUTES.each do |attr|
+          unless field_changes[attr].nil?
+            changes_msg << "#{attr}: #{field_changes[attr][0]} => #{field_changes[attr][1]}"
+          end
+        end
+
+        if profile?
+          action_log(
+            'users_controller',
+            "#{user_to_string(@user)} updated their profile. #{changes_msg.join(', ')}."
+          )
+        else
+          action_log(
+            'users_controller',
+            "#{user_to_string(current_user)} updated #{user_to_string(@user)} profile. #{changes_msg.join(', ')}."
+          )
+        end
+      end
+
       redirect_to dashboard_url
 
       return
@@ -86,6 +137,7 @@ class UsersController < ApplicationController
           local: true,
           html: {
             is_profile: profile?,
+            by_whom: current_user,
             locations: @user.tabc? ? [] : @user.company.locations,
             locked_locations: @user.locked_locations,
             logged_in_user_is_tabc: current_user.tabc?,
@@ -101,6 +153,7 @@ class UsersController < ApplicationController
             method: 'post',
             local: true,
             html: {
+              by_whom: current_user,
               locations: current_user.company.locations,
               owner_name: current_user.company.owner_name,
               page_name: 'invite'
@@ -162,7 +215,16 @@ class UsersController < ApplicationController
       .permit(
         :company_name, :email, :full_name, :invited, :job_title,
         :license_number, { location_clps: [] }, :owner_name, :phone, :profile,
-        :role
+        :role,
+        :by_whom_id
       )
+  end
+
+  def user_to_string(user)
+    "#{user.full_name} (#{user.id})"
+  end
+
+  def company_to_string(company)
+    "#{company.name} (#{company.id})"
   end
 end

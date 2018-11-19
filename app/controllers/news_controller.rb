@@ -5,11 +5,17 @@ class NewsController < ApplicationController
   before_action :set_news, only: %i[destroy edit show update]
   before_action :set_page_options, except: %i[create destroy update]
 
+  TRACK_ATTRIBUTES = %i[subject content].freeze
+
   def create
     news = News.new(news_params)
     news.user_id = current_user.id
 
     if news.save
+      action_log(
+        'news_controller',
+        "#{user_to_string} created a news item. #{news_to_string(news)}."
+      )
       redirect_to dashboard_url
     else
       render 'new'
@@ -18,7 +24,10 @@ class NewsController < ApplicationController
 
   def destroy
     @news.discard
-
+    action_log(
+      'news_controller',
+      "#{user_to_string} deleted a news item."
+    )
     head :no_content
   end
 
@@ -32,6 +41,22 @@ class NewsController < ApplicationController
 
   def update
     if @news.update!(news_params)
+      changes_msg = []
+      field_changes = @news.previous_changes
+
+      unless field_changes.empty?
+        TRACK_ATTRIBUTES.each do |attr|
+          unless field_changes[attr].nil?
+            changes_msg << "#{attr}: #{field_changes[attr][0]} => #{field_changes[attr][1]}"
+          end
+        end
+
+        action_log(
+          'news_controller',
+          "#{user_to_string} updated a news item. #{changes_msg.join(', ')}."
+        )
+      end
+
       redirect_to dashboard_url
     else
       render 'edit'
@@ -92,5 +117,13 @@ class NewsController < ApplicationController
 
   def set_news
     @news = News.find(params.require(:id))
+  end
+
+  def user_to_string
+    "#{current_user.full_name} (#{current_user.id})"
+  end
+
+  def news_to_string(news)
+    "subject: #{news.subject}, body: #{news.content}"
   end
 end

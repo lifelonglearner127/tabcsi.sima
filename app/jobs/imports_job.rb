@@ -12,6 +12,12 @@ class ImportsJob < ApplicationJob
   def perform(current_user, path)
     row_number = 0
 
+    ActionLog.create!(
+      sequence_id: sequence_id,
+      tag: 'csv_job',
+      message: "#{file_name(path)}: Import started."
+    )
+
     User.transaction do
       CSV.foreach(
         path,
@@ -27,6 +33,12 @@ class ImportsJob < ApplicationJob
         row = row.to_hash.slice(*HEADERS)
 
         unless row.fetch_values(*REQUIRED_FIELDS).all?
+          ActionLog.create!(
+            sequence_id: sequence_id,
+            tag: 'csv_job',
+            message: "#{file_name(path)}: Missing required fields."
+          )
+
           error!(current_user, row_number, 'Missing required fields.')
         end
 
@@ -42,14 +54,26 @@ class ImportsJob < ApplicationJob
         )
 
         if user.invalid?
+          ActionLog.create!(
+            sequence_id: sequence_id,
+            tag: 'csv_job',
+            message: "#{file_name(path)}: #{user.errors.full_messages.join(', ')}."
+          )
+
           error!(current_user, row_number, user.errors.full_messages.join(', '))
         end
       end
 
+      ActionLog.create!(
+        sequence_id: sequence_id,
+        tag: 'csv_job',
+        message: "#{file_name(path)}: #{row_number} user(s) imported."
+      )
+
       ImportsChannel.broadcast_to(
         current_user,
         type: :completed,
-        message: 'Users imported successfully.'
+        message: "#{row_number} user(s) imported successfully."
       )
     end
   ensure
@@ -64,5 +88,13 @@ class ImportsJob < ApplicationJob
     )
 
     raise ActiveRecord::Rollback
+  end
+
+  def sequence_id
+    @sequence_id ||= ActionLog.sequence_id
+  end
+
+  def file_name(path)
+    @file_name ||= File.basename(path)
   end
 end

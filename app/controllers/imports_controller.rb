@@ -13,6 +13,10 @@ class ImportsController < ApplicationController
     csv_path = move_file(uploaded_file)
 
     ImportsJob.set(wait: 5.seconds).perform_later(current_user, csv_path)
+    action_log(
+      'imports_controller',
+      "#{user} has queued users import #{File.basename(csv_path)}."
+    )
 
     redirect_to dashboard_url
   end
@@ -40,5 +44,9 @@ class ImportsController < ApplicationController
     FileUtils.cp(file.path, target)
 
     target.to_s
+  end
+
+  def user
+    "#{current_user.full_name} (#{current_user.id})"
   end
 end

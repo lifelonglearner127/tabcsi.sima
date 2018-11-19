@@ -77,6 +77,7 @@ class User < ApplicationRecord
   attr_accessor :company_name
   attr_accessor :imported
   attr_accessor :invited
+  attr_accessor :by_whom_id
   attr_accessor :license_number
   attr_writer :location_clps
   attr_accessor :owner_name

@@ -73,6 +73,10 @@ export default {
 
     user () {
       return this.pageOptions.user || undefined
+    },
+
+    byWhom () {
+      return this.pageOptions.byWhom || undefined
     }
   },
 
@@ -117,6 +121,7 @@ export default {
       :is-profile="isProfile"
       :locations="locations"
       :user="user"
+      :by-whom="byWhom"
     />
     <new-user
       v-else
@@ -125,6 +130,7 @@ export default {
       :locations="locations"
       :owner-name="ownerName"
       :user="user"
+      :by-whom="byWhom"
     />
   </users-sessions-container>
 </template>

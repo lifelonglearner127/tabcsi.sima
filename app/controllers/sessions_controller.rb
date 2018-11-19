@@ -47,6 +47,10 @@ class SessionsController < ApplicationController
 
   def log_out
     reset_session
+    action_log(
+      'sessions_controller',
+      "#{user} logged out."
+    )
   end
 
   def pin_requested=(value)
@@ -100,6 +104,11 @@ class SessionsController < ApplicationController
       self.pin_requested = false
       session[:logged_in] = true
 
+      action_log(
+        'sessions_controller',
+        "#{user} logged in."
+      )
+
       redirect_to dashboard_url
 
       return
@@ -118,5 +127,9 @@ class SessionsController < ApplicationController
       end
 
     render 'new'
+  end
+
+  def user
+    "#{current_user.full_name} (#{current_user.id})"
   end
 end

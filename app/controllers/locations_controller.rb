@@ -7,27 +7,18 @@ class LocationsController < ApplicationController
   def reset
     @location.reset(location: true, lock: true, destroy_inspections: true)
 
-    action_log("#{user} reset location id #{@location.id} on #{current_time}.")
+    action_log(
+      'locations_controller',
+      "#{user} reset location id #{@location.id} on #{current_time}."
+    )
 
     head :no_content
   end
 
   private
 
-  def action_log(message)
-    ActionLog.create!(
-      sequence_id: sequence_id,
-      tag: 'locations_controller',
-      message: message
-    )
-  end
-
   def current_time
     Time.current.strftime('%-m/%-d/%Y at %-l:%M %p %Z')
-  end
-
-  def sequence_id
-    @sequence_id ||= ActionLog.sequence_id
   end
 
   def set_location
@@ -35,6 +26,6 @@ class LocationsController < ApplicationController
   end
 
   def user
-    "#{current_user.full_name} <#{current_user.email}>"
+    "#{current_user.full_name} (#{current_user.id})"
   end
 end

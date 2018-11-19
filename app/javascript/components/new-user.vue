@@ -42,6 +42,10 @@ export default {
           role: 'user'
         }
       }
+    },
+    byWhom: {
+      type: Object,
+      default: null
     }
   },
 
@@ -234,13 +238,18 @@ export default {
         value="true"
       >
       <input
+        id="user_by_whom_id"
+        name="user[by_whom_id]"
+        type="hidden"
+        :value="byWhom.id"
+      >
+      <input
         id="user_owner_name"
         name="user[owner_name]"
         type="hidden"
         :value="ownerName"
       >
     </template>
-
     <template v-for="(options, key) in form">
       <b-form-group
         v-if="options.show == null ? true : options.show"
